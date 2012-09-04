@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetCallbacks</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupSetCallbacks</h2>
+<p>Associates several callbacks to an event.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle* IupSetCallbacks(Ihandle* <b>ih</b>, const char *<strong>name</strong>, Icallback <strong>func, ...</strong>); [in C]
+[There is no equivalent in Lua]</pre>
+<p><b>ih</b>: identifier of the interface element. <strong><br>
+</strong><b>name</b>: 
+  attribute name of the callback.<br>
+<b>func</b>: address of a C function. If NULL removes the association.</p>
+<p><span class="style1">Returns:</span> the same <strong>ih</strong> handle.</p>
+<h3>Notes</h3>
+<p>It is useful for setting many callbacks at once while in the creation of an 
+hierarchy of elements, just like <strong>IupSetAttributes</strong>.</p>
+<h3>See Also</h3>
+<p><a href="iupsetcallback.html">IupSetCallback</a>, 
+<a href="iupsetattributes.html">IupSetAttributes</a></p>
+
+</body>
+
+</html>

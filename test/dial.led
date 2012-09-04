@@ -1,0 +1,49 @@
+lbl_h = LABEL[SIZE=50x]("0")
+lbl_v = LABEL[SIZE=50x]("0")
+lbl_c = LABEL[SIZE=50x]("0")
+
+dial_v = DIAL
+[
+  UNIT=DEGREES,
+  MOUSEMOVE_CB="dial_mousemove",
+  BUTTON_PRESS_CB="dial_buttonpress",
+  BUTTON_RELEASE_CB="dial_buttonrelease"
+] ("VERTICAL")
+
+dial_h = DIAL
+[
+  DENSITY=0.1,
+  MOUSEMOVE_CB="dial_mousemove",
+  BUTTON_PRESS_CB="dial_buttonpress",
+  BUTTON_RELEASE_CB="dial_buttonrelease"
+] ("HORIZONTAL")
+
+dial_c = DIAL
+[
+  UNIT=DEGREES,
+  MOUSEMOVE_CB="dial_mousemove",
+  BUTTON_PRESS_CB="dial_buttonpress",
+  BUTTON_RELEASE_CB="dial_buttonrelease"
+] ("CIRCULAR")
+
+dlg = DIALOG[TITLE="IupDial Test"]
+(
+  VBOX[MARGIN=10x10, GAP=10]
+  (
+    HBOX[ALIGNMENT=ACENTER]
+    (
+      dial_v,
+      lbl_v
+    ),
+    HBOX[ALIGNMENT=ACENTER]
+    (
+      dial_h,
+      lbl_h
+    ),
+    HBOX[ALIGNMENT=ACENTER]
+    (
+      dial_c,
+      lbl_c
+    )
+  )
+)

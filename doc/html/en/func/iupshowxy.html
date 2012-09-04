@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupShowXY</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupShowXY</h2>
+<p>Displays a dialog in a given position on the 
+  screen.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupShowXY(Ihandle *<strong>ih</strong>, int <strong>x</strong>, int <strong>y</strong>); [in C]
+iup.ShowXY(<strong>ih</strong>: ihandle[, <strong>x</strong>, <strong>y</strong>: number]) -&gt; (<strong>ret</strong>: number) [in Lua]
+or <strong>ih</strong>:showxy(<strong>[x</strong>, <strong>y</strong>: number]) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><b>ih</b>: identifier of the dialog.<br>
+<b>x</b>: horizontal position of the top left corner of the window, relative to the origin of the main screen. The following 
+definitions can also be used:</p>
+<ul>
+  <li>IUP_LEFT:
+    Positions the dialog on the left corner of 
+    the screen</li>
+  <li>IUP_CENTER:
+    Horizontally centralizes the dialog on the 
+    screen</li>
+  <li>IUP_RIGHT:
+    Positions the dialog on the right corner of 
+    the screen</li>
+  <li>IUP_MOUSEPOS:
+    Positions the dialog on the mouse position</li>
+  <li>IUP_CENTERPARENT: Horizontally centralizes the dialog relative to its 
+  parent (Since 3.0)</li>
+  <li>IUP_CURRENT: use the current position 
+    of the dialog. This is the default value 
+  in Lua if the parameter is not defined. (Since 3.0)</li>
+</ul>
+<p><b>y</b>: vertical position of the top left corner of the window, relative to the origin of the main screen.
+    The following definitions can also be used:</p>
+<ul>
+  <li>IUP_TOP:
+    Positions the dialog on the top of the 
+    screen</li>
+  <li>IUP_CENTER:
+    Vertically centralizes the dialog on the 
+    screen</li>
+  <li>IUP_BOTTOM:
+    Positions the dialog on the base of the 
+    screen</li>
+  <li>IUP_MOUSEPOS:
+    Positions the dialog on the mouse position</li>
+  <li>IUP_CENTERPARENT: Vertically centralizes the dialog relative to its parent 
+	(Since 3.0)</li>
+  <li>IUP_CURRENT: use the current position 
+    of the dialog. This is 
+  the default value in Lua if the parameter is not defined.(Since 3.0)</li>
+</ul>
+<p><span class="style1">Returns:</span> IUP_NOERROR if 
+  successful. Returns IUP_INVALID if not a dialog.&nbsp; If there was an error returns IUP_ERROR.</p>
+<h3>Notes</h3>
+<p>Will call <b>IupMap</b> for the element.</p>
+<p><strong>x</strong> and <strong>y</strong> positions are the same as returned 
+by the <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a> attribute.</p>
+<p>See the <a href="../dlg/iupdialog.html#PLACEMENT">PLACEMENT</a> attribute for other position and show 
+  options.</p>
+<p>When IUP_CENTERPARENT is used but PARENTDIALOG is not defined then it is 
+replaced by IUP_CENTER.</p>
+<p>When IUP_CURRENT is used at the first time the dialog is shown then it will 
+be replaced by IUP_CENTERPARENT.</p>
+<p>The main screen size does not include additional monitors.</p>
+<p>This function can be executed more than once 
+  for the same dialog. This will make the dialog be placed above all other dialogs in the application, 
+  changing its Z-order, and update its position and/or size on screen. </p>
+<p>IMPORTANT: Calling 
+<b>IupShowXY</b> for a visible 
+  dialog shown with <b>IupPopup</b> does nothing.</p>
+<h3>See Also</h3>
+<p><a href="iupshow.html">IupShow</a>, <a href="iuphide.html">IupHide</a>,
+  <a href="iuppopup.html">IupPopup</a>, <a href="iupmap.html">IupMap</a></p>
+
+</body>
+
+</html>

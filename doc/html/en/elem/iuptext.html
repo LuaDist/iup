@@ -1,0 +1,771 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+  <title>IupText</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css">
+
+  <style type="text/css">
+.style1 {
+	margin-left: 40px;
+}
+.style7 {
+	border: 1px solid #808080;
+	text-align: center;
+	background-color: #E1E1E1;
+}
+  </style>
+</head>
+
+
+<body>
+
+<div id="navigation">
+  
+<ul>
+
+    <li><a href="#Creation">Creation</a></li>
+
+    <li><a href="#Attributes">Attributes</a></li>
+
+    <li><a href="#Callbacks">Callbacks</a></li>
+
+    <li><a href="#Notes">Notes</a></li>
+
+    <li><a href="#Examples">Examples</a></li>
+
+    <li><a href="#SeeAlso">See Also</a></li>
+
+  
+</ul>
+
+</div>
+
+
+<h2>IupText</h2>
+
+
+  
+<p>
+  Creates an editable text field.</p>
+
+
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupText(const char *<strong>action</strong>); [in C]<br>iup.text{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]<br>text(<strong>action</strong>) [in LED]</pre>
+
+  
+<p><b>
+  action</b>: name of the action generated when the user types something. It can be NULL.</p>
+
+  
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+
+  
+<p><b>ALIGNMENT</b>&nbsp;[Windows and GTK Only] (<font size="3">non inheritable</font>):
+  text alignment. Possible values:
+  "ALEFT",
+  "ARIGHT",
+  "ACENTER". 
+  Default:
+  "ALEFT". In Motif, text is always left aligned.</p>
+
+
+
+<p><strong>APPEND</strong> (write-only):
+  Inserts a text at the end of the current 
+  text. In the Multiline, if APPENDNEWLINE=YES, a "\n" character will be 
+automatically inserted before the appended text if the current text is not empty(APPENDNEWLINE default is YES). 
+Ignored if set before map.</p>
+
+<p><a href="../attrib/iup_bgcolor.html">BGCOLOR</a>: Background color of the 
+text. Default: the global attribute TXTBGCOLOR.</p>
+
+  
+<p><b>BORDER </b>(creation only):
+  Shows a border around the text. 
+  Default: "YES".</p>
+
+<p><strong>CANFOCUS</strong> (creation only)<strong> </strong>(<font size="3">non inheritable</font>): enables the focus traversal of the control. In Windows the control will still get the focus when clicked. Default: YES. (since 3.0)</p>
+
+  
+<p><strong>CARET</strong> (<font size="3">non inheritable</font>):
+  Position of the insertion point. Its format depends in MULTILINE=YES. The 
+	first position, <strong>lin</strong> or <strong>col</strong>, is "1".</p>
+
+<p class="info"><strong>For multiple lines</strong>: a string 
+  with the "<strong>lin</strong>,<strong>col</strong>" format, where <strong>lin</strong> and 
+<strong>col</strong> 
+  are integer numbers corresponding to the caret's position.</p>
+
+<p class="info"><strong>For single line</strong>: a string 
+  in the "<strong>col</strong>" format, where <strong>col</strong> is an integer number corresponding to 
+  the caret's position.</p>
+
+<p class="info">When 
+  <strong>lin</strong> is greater than the number of lines, the caret is 
+  placed at the last line. When <strong>col</strong> is greater than 
+  the number of characters in the given line, the caret is placed after the last 
+  character of the line.</p>
+
+<p class="info">If the caret is not visible the text is scrolled to make it 
+visible.</p>
+
+<p class="info">In Windows, if the element does not have the focus the returned 
+value is the position of the first character of the current selection. The caret 
+is only displayed if the element has the keyboard focus, but its position can be 
+changed even if not visible. When changed it will also change the selection but 
+the text will be scrolled only when it receives the focus.</p>
+
+<p class="info">See the Notes below if using UTF-8 strings in GTK.</p>
+
+  
+<p><strong>CARETPOS</strong> (<font size="3">non inheritable</font>):
+  Also the position of the insertion point, but using a zero based character 
+	unique index "pos". Useful for indexing the VALUE string. See the 
+	Notes below if using UTF-8 strings in GTK. (since 
+	3.0)</p>
+
+<p><strong>CLIPBOARD</strong> (write-only): clear, cut, copy or paste the selection to 
+or from the clipboard. Values: "CLEAR", "CUT", "COPY" or "PASTE". 
+In Windows UNDO is also available, and REDO is available when FORMATTING=YES. 
+(since 3.0)</p>
+<p><strong>COUNT</strong> (read-only): returns the number of characters in the 
+text. (since 3.5)</p>
+
+<p><strong>CUEBANNER</strong> [Windows Only] (<font size="3">non inheritable</font>): 
+a text that is displayed when there is no text at the control. It works as a 
+textual cue, or tip to prompt the user for input. Valid only for MULTILINE=NO, 
+and it is not available for Windows 2000. (since 3.0)</p>
+
+  
+<p><strong>DROPFILESTARGET</strong> [Windows and GTK Only] (<font SIZE="3">non inheritable</font>): Enable or disable the drop of 
+files. Default: NO, but if DROPFILES_CB is defined when the element is mapped 
+then it will be automatically enabled. (since 3.0)</p>
+
+  
+<p><a href="../attrib/iup_fgcolor.html">FGCOLOR</a>: Text color. Default: the 
+global attribute TXTFGCOLOR.</p>
+
+<p><strong>FILTER</strong> [Windows Only] (<font size="3">non inheritable</font>): 
+allows a custom filter to process the characters: Can be LOWERCASE, UPPERCASE or 
+NUMBER (only numbers allowed). (since 3.0)</p>
+
+<p><a href="../attrib/iup_formatting.html">FORMATTING</a> [Windows and GTK Only] (<font size="3">non inheritable</font>): 
+When enabled allow the use of text formatting attributes. In GTK is always 
+enabled, but only when MULTILINE=YES. Default: NO. (since 3.0)</p>
+
+  
+<p><strong>INSERT</strong> (write-only): Inserts a text 
+	in the caret's position, also replaces the current selection if any. Ignored 
+if set before map.</p>
+<p><strong>LINECOUNT</strong> (read-only): returns the number of characters in 
+the line where the caret is. When MULTILINE=NO returns always &quot;1&quot;. (since 3.5)</p>
+
+<p><strong>LINEVALUE</strong> (read-only): returns the text of the line where 
+the caret is. It does not include the &quot;\n&quot; character. When MULTILINE=NO returns 
+the same as VALUE. (since 3.5)</p>
+
+<p><a href="../attrib/iup_mask.html">MASK</a> (<font size="3">non inheritable</font>): Defines a mask that will filter 
+interactive text input.</p>
+
+<p><strong>MULTILINE</strong> (creation only) (<font size="3">non inheritable</font>): 
+allows the edition of multiple lines. In single line mode some characters are 
+invalid, like "\t", "\r" and "\n". Default: NO. When set to Yes will also reset 
+the SCROLLBAR attribute to Yes.</p>
+
+<p><strong>NC</strong>:
+  Maximum number of characters allowed for keyboard input, larger text can still 
+be set using attributes. 
+  The maximum value is the limit of the VALUE attribute. The "0" value is the 
+same as maximum. Default: maximum.</p>
+
+<p><b>OVERWRITE</b> [Windows and GTK Only] (<font size="3">non inheritable</font>): turns the overwrite mode ON or OFF. 
+Works only when FORMATTING=YES. (since 3.0)</p>
+
+  
+<p><b>PADDING</b>: internal margin. Works just like the MARGIN attribute of 
+  the <strong>IupHbox</strong> and <strong>IupVbox</strong> containers, but uses a different name to avoid 
+  inheritance problems. Default value: "0x0". 
+	In Windows, only the horizontal value is used. (since 3.0) (GTK 2.10 for 
+single line)</p>
+
+<p><b>PASSWORD </b>(creation only) [Windows and GTK Only] (<font size="3">non inheritable</font>): Hide the typed character using an "*". 
+	Default: "NO".</p>
+
+<p><strong>READONLY</strong>:
+  Allows the user only to read the contents, 
+  without changing it. Restricts keyboard input only, text value can still be 
+changed using attributes. Navigation keys are still available. Possible values: "YES", "NO". 
+Default: NO.</p>
+
+  
+<p><strong>SCROLLBAR</strong> (creation only): Valid only when MULTILINE=YES. 
+	Associates an automatic horizontal and/or vertical scrollbar to the 
+	multiline. Can be: "VERTICAL", "HORIZONTAL", "YES" (both) or "NO" (none). 
+	Default: "YES". For all systems, when SCROLLBAR!=NO the natural size will 
+	always include its size even if the native system hides the scrollbar. If 
+	<strong>AUTOHIDE</strong>=YES scrollbars are visible only 
+	if they are necessary, by default AUTOHIDE=NO. In Windows when 
+	FORMATTING=NO, AUTOHIDE is not supported. In Motif AUTOHIDE is not 
+	supported.</p>
+
+<p><strong>SCROLLTO</strong> (<font size="3">non inheritable, write only</font>): 
+Scroll the text to make the given position visible. It uses the same format and 
+reference of the CARET attribute ("lin:col" or "col" starting at 1). 
+In Windows, when FORMATTING=Yes &quot;col&quot; is ignored. (since 3.0)</p>
+
+<p><strong>SCROLLTOPOS</strong> (<font size="3">non inheritable, write only</font>): 
+Scroll the text to make the given position visible. It uses the same format and 
+reference of the CARETPOS attribute ("pos" starting at 0). In Windows, when 
+FORMATTING=Yes &quot;col&quot; is ignored. (since 3.0) </p>
+
+  
+<p><strong>SELECTEDTEXT</strong> (<font size="3">non inheritable</font>):
+  Selection text. Returns NULL if there is no selection. When changed replaces the current selection. 
+	Similar to INSERT, but does nothing if there is no selection.</p>
+
+  
+<p><strong><a name="SELECTION">SELECTION</a></strong> (<font size="3">non inheritable</font>):
+  Selection interval. Returns NULL if there is no selection. Its format depends in MULTILINE=YES. The first position,
+	<strong>lin</strong> or <strong>col</strong>, is "1".</p>
+
+<p class="info"><strong>For multiple lines</strong>: a string in the "<strong>lin1</strong>,<strong>col1</strong>:<strong>lin2</strong>,<strong>col2</strong>" format, where 
+<strong>lin1</strong>,
+  <strong>col1</strong>, <strong>lin2</strong> and <strong>col2</strong> are 
+  integer numbers corresponding to the selection's interval. <strong>col2</strong> 
+correspond to the character after the last selected character.</p>
+
+<p class="info"><strong>For single line</strong>: a string in the "<strong>col1</strong>:<strong>col2</strong>" format, where 
+<strong>col1</strong> and
+  <strong>col2</strong> are integer numbers corresponding to the 
+  selection's interval. <strong>col2</strong> correspond to the character after 
+the last selected character.</p>
+
+<p class="info">In Windows, when changing the selection the caret position is 
+also changed.</p>
+
+<p class="info">The values ALL and NONE are also accepted independently of 
+MULTILINE (since 3.0).</p>
+
+<p class="info">See the Notes below if using UTF-8 strings in GTK. </p>
+
+  
+<p><strong>SELECTIONPOS</strong> (<font size="3">non inheritable</font>):
+  Same as SELECTION but using a zero based character 
+	index "<strong>pos1</strong>:<strong>pos2</strong>". Useful for indexing the VALUE string. 
+	The values ALL and NONE are also accepted. See the Notes below if using 
+	UTF-8 strings in GTK. (since 3.0)</p>
+
+  
+<p><a href="../attrib/iup_size.html">SIZE</a> (<font size="3">non inheritable</font>): 
+	Since the contents can be changed by the user, the <strong>Natural</strong>
+	<strong>Size</strong> is not affected by the text contents (since 3.0). In 
+	IUP 2.x the <strong>Natural</strong> <strong>Size</strong> was defined by 
+	the number of lines in the text and the with of the largest line. For IUP 3, 
+	use VISIBLECOLUMNS and VISIBLELINES to control the <strong>Natural Size</strong>.</p>
+
+<p><strong>SPIN</strong> (<font size="3">non inheritable, </font>creation only): 
+enables a spin control attached to the element. Default: NO. The spin increments 
+and decrements an integer number. The editing in the element is still available. 
+(since 3.0)</p>
+
+<p class="info"><strong>SPINVALUE </strong>(<font size="3">non inheritable)</font>: the current value of the spin. The 
+value is limited to the minimum and maximum values.<br>
+
+<strong>SPINMAX </strong>(<font size="3">non inheritable)</font>: the maximum value. Default: 100.<br>
+
+<strong>SPINMIN </strong>(<font size="3">non inheritable)</font>: the minimum value. Default: 0.<br>
+
+<strong>SPININC </strong>(<font size="3">non inheritable)</font>: the increment value. Default: 1.<br>
+
+<strong>SPINALIGN</strong> (creation only): the position of the spin. Can be LEFT or RIGHT. 
+Default: RIGHT. In GTK is always RIGHT.<br>
+
+<strong>SPINWRAP</strong> (creation only): if the position reach a limit it continues from the 
+opposite limit. Default: NO.<br>
+
+<strong>SPINAUTO</strong> (creation only): enables the automatic update of the text contents. 
+Default: YES. Use SPINAUTO=NO and the VALUE attribute during SPIN_CB to control 
+the text contents when the spin is incremented.</p>
+
+<p class="info">In Windows, the increment is multiplied by 5 after 2 seconds and 
+multiplied by 20 after 5 seconds of a spin button pressed. In GTK, the increment 
+change is progressively accelerated when a spin button is pressed.</p>
+
+  
+<p><b>TABSIZE</b> [Windows and GTK Only]: Valid only when MULTILINE=YES. Controls the number of characters for a tab stop. 
+	Default: 8.</p>
+
+<p><b>VALUE </b>(<font size="3">non inheritable</font>):
+  Text entered by the user. The '\n' character indicates a new line, valid only 
+when MULTILINE=YES. After the element is mapped and if there 
+is no text will return the empty string "".</p>
+<p><b>VALUEMASKED </b>(<font size="3">non inheritable</font>) (write-only): sets 
+VALUE but first checks if it is validated by MASK. If not does nothing. (since 
+3.4)</p>
+
+<p><strong>VISIBLECOLUMNS</strong>: Defines the number of visible columns for 
+the <strong>Natural</strong> <strong>Size</strong>, this means that will act 
+also as minimum number of visible columns. It uses a wider character size then the one used for the SIZE 
+attribute so strings will fit better without the need of extra columns. As for 
+SIZE you can set to NULL after map to use it as an initial value. Default: 
+5 (since 3.0)</p>
+
+<p><strong>VISIBLELINES</strong>: When MULTILINE=YES defines the number of 
+visible lines for the <strong>Natural</strong> <strong>Size</strong>, this means 
+that will act also as minimum number of visible lines. As for SIZE you can set 
+to NULL after map to use it as an initial value. Default: 1 (since 3.0)</p>
+
+<p><strong>WORDWRAP</strong> (creation only): Valid only when MULTILINE=YES. If enabled will force a word wrap of lines that are 
+greater than the with of the control, and the horizontal scrollbar will be removed. Default: NO.</p>
+
+  
+<blockquote>
+    
+  <hr>
+</blockquote>
+
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_font.html">FONT</a>, 
+    <a href="../attrib/iup_expand.html">EXPAND</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.</p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes  
+are supported. See Notes bellow.</p>
+
+
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+
+<p><a href="../call/iup_action.html">ACTION</a>:
+  Action generated when the text is edited, but before its value is actually 
+changed. Can be generated when using the keyboard, undo system or from 
+the clipboard.</p>
+
+  
+    
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>c</strong>, char *<strong>new_value</strong>); [in C]<br><strong>elem</strong>:action(<strong>c</strong>: number, <strong>new_value</strong>: string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>c</strong>: valid alpha numeric character or 0.<br>
+
+    <strong>new_value</strong>:
+    Represents the new text value.</p>
+
+    
+<p class="info">
+    <u>Returns</u>:
+    IUP_CLOSE will be processed, but the change will be ignored. If IUP_IGNORE, the system will ignore the new 
+	value. If <strong>c</strong> is valid and returns a valid alpha numeric 
+	character, this new character will be used instead. The VALUE attribute can 
+	be changed only if IUP_IGNORE is returned.</p>
+
+  
+  
+<p><a href="../call/iup_button_cb.html">BUTTON_CB</a>:
+  Action generated when any mouse button is 
+  pressed or released. Use <a href="../func/iupconvertxytopos.html">IupConvertXYToPos</a> to convert 
+	(x,y) coordinates in character positioning. (since 3.0)</p>
+
+  
+  
+<p><b>CARET_CB</b>:
+  Action generated when the caret/cursor 
+  position is changed. </p>
+
+  
+    
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>lin</strong>, int <strong>col</strong>, int <strong>pos</strong>); [in C]<br><strong>elem</strong>:caret_cb(<strong>lin</strong>, <b>col, pos</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>lin, col</strong>: line and column number (start at 1).<br>
+
+	<strong>pos</strong>: 0 based character position.</p>
+
+<p class="info">For single line controls <strong>lin</strong> is always 1, and
+<strong>pos</strong> is always "<strong>col</strong>-1".</p>
+
+<p><a href="../call/iup_dropfiles_cb.html">DROPFILES_CB</a> [Windows and GTK Only]: Action generated when one or 
+  more files are dropped in the element. (since 3.0)</p>
+
+  
+
+  
+<p><a href="../call/iup_motion_cb.html">MOTION_CB</a>:
+  Action generated when the mouse is moved. Use 
+<a href="../func/iupconvertxytopos.html">IupConvertXYToPos</a> 
+	to convert (x,y) coordinates in character positioning. (since 3.0)</p>
+
+  
+  
+<p><b>SPIN_CB</b>:
+  Action generated when a spin button is pressed. Valid only when SPIN=YES. 
+	When this callback is called the ACTION callback is not called. 
+The VALUE attribute can be changed during this callback only if SPINAUTO=NO. (since 3.0)</p>
+
+  
+    
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>pos</strong>); [in C]<br><strong>elem</strong>:spin_cb(<b>pos</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>pos</strong>: the value of the spin (after it was incremented).</p>
+
+<p class="info">
+    <u>Returns</u>: IUP_IGNORE is processed in Windows and Motif.</p>
+
+
+<p><strong>VALUECHANGED_CB</strong>:
+  Called after the value was interactively changed by the user. (since 3.0)</p>
+
+<pre>int function(Ihandle *<strong>ih</strong>); [in C]<br><strong>elem</strong>:valuechanged_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+
+    
+<hr class="style1">
+
+<p> 
+<a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, <a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> callbacks 
+are supported. See Notes bellow.</p>
+
+
+
+<h3>Auxiliary Functions</h3>
+
+<pre>void <strong>IupTextConvertLinColToPos</strong>(Ihandle* <strong>ih</strong>, int <strong>lin</strong>, int <strong>col</strong>, int *<strong>pos</strong>); [in C]<br><b>iup.</b><strong>TextConvertLinColToPos</strong>(<b>ih</b>: ihandle, <strong>lin</strong>, <strong>col</strong>: number) -&gt; <strong>pos</strong>: number [in Lua]</pre>
+
+<p>Converts a (lin, col) character positioning into an absolute position. For single line controls
+<strong>pos</strong> is always "<strong>col</strong>-1". (since 3.0)</p>
+
+<pre>void <strong>IupTextConvertPosToLinCol</strong>(Ihandle* <strong>ih</strong>, int <strong>pos</strong>, int *<strong>lin</strong>, int *<strong>col</strong>); [in C]<br><b>iup.</b><strong>TextConvertPosToLinCol</strong>(<b>ih</b>: ihandle, <strong>pos</strong>: number) -&gt; <strong>lin</strong>, <strong>col</strong>: number [in Lua]</pre>
+
+<p>Converts an absolute position into a (lin, col) character positioning. For single line controls <strong>lin</strong> is always 1, and
+<strong>col</strong> is always "<strong>pos</strong>+1". (since 3.0)</p>
+
+
+
+<h3><a name="Notes">Notes</a></h3>
+
+
+<p>
+  When MULTILINE=YES the Enter key will add a new line, and the Tab key will 
+	insert a Tab. So the "DEFAULTENTER" button will not be processed when the 
+	element has the keyboard focus, also to change focus to the next element 
+	press &lt;Ctrl&gt;+&lt;Tab&gt;.</p>
+
+<p>In Windows, if you press a Ctrl+key combination that is not supported by the 
+control, then a beep is sound.</p>
+
+<p>When using UTF-8 strings in GTK be aware that all attributes are indexed by 
+characters, NOT by byte index, because some characters in UTF-8 can use more 
+than one byte. This also applies to Windows if FORMATTING=YES depending on the 
+Windows codepage (for example East Asian codepage where some characters take two 
+bytes).</p>
+<p>Internal Drag&amp;Drop support is enabled by default. But in Windows the internal 
+Drag&amp;Drop is enabled only if FORMATTING=YES. In GTK the internal Drag&amp;Drop 
+can NOT be disabled, so it will conflict with the
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes and 
+callbacks.</p>
+
+<h4>Navigation, Selection and Clipboard Keys</h4>
+
+<p>Here is a list of the common keys for all drivers. Other keys are available 
+depending on the driver.</p>
+
+<table align="center">
+
+	<tbody>
+    <tr>
+
+		<th>Keys</th>
+
+		<th>Action</th>
+
+	</tr>
+
+	<tr>
+
+		<td colspan="2" class="style7"><em>Navigation</em></td>
+
+	</tr>
+
+	<tr>
+
+		<td>Arrows</td>
+
+		<td>move by individual characters/lines</td>
+
+	</tr>
+
+	<tr>
+
+		<td>Ctrl+Arrows</td>
+
+		<td>move by words/paragraphs</td>
+
+	</tr>
+
+	<tr>
+
+		<td>Home/End</td>
+
+		<td>move to begin/end line</td>
+
+	</tr>
+
+	<tr>
+
+		<td>Ctrl+Home/End</td>
+
+		<td>move to begin/end text</td>
+
+	</tr>
+
+	<tr>
+
+		<td>PgUp/PgDn</td>
+
+		<td>move vertically by pages</td>
+
+	</tr>
+
+	<tr>
+
+		<td>Ctrl+PgUp/PgDn</td>
+
+		<td>move horizontally by pages</td>
+
+	</tr>
+
+	<tr>
+
+		<td colspan="2" class="style7"><em>Selection</em></td>
+
+	</tr>
+
+	<tr>
+
+		<td>Shift+Arrows</td>
+
+		<td>select charaters</td>
+
+	</tr>
+
+	<tr>
+
+		<td>Ctrl+A</td>
+
+		<td>select all</td>
+
+	</tr>
+
+	<tr>
+
+		<td colspan="2" class="style7"><em>Deleting</em></td>
+
+	</tr>
+
+	<tr>
+
+		<td>Del</td>
+
+		<td>delete the character at right</td>
+
+	</tr>
+
+	<tr>
+
+		<td>Backspace</td>
+
+		<td>delete the character at left</td>
+
+	</tr>
+
+	<tr>
+
+		<td colspan="2" class="style7"><em>Clipboard</em></td>
+
+	</tr>
+
+	<tr>
+
+		<td>Ctrl+C</td>
+
+		<td>copy</td>
+
+	</tr>
+
+	<tr>
+
+		<td>Ctrl+X</td>
+
+		<td>cut</td>
+
+	</tr>
+
+	<tr>
+
+		<td>Ctrl+V</td>
+
+		<td>paste</td>
+
+	</tr>
+
+  </tbody>
+</table>
+
+
+<h3><a name="Examples">Examples</a></h3>
+
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<table align="center">
+
+	<tbody>
+    <tr>
+
+		<th>Motif</th>
+
+		<th>Windows <br>
+
+		Classic</th>
+
+		<th>Windows <br>
+
+		w/ Styles</th>
+
+		<th>GTK</th>
+
+	</tr>
+
+	<tr>
+
+		<td class="bg_mot"><img src="images/iuptext_mot.png"></td>
+
+		<td class="bg_win2k"><img src="images/iuptext_win2k.png"></td>
+
+		<td class="bg_winxp"><img src="images/iuptext_winxp.png"></td>
+
+		<td class="bg_gtk"><img src="images/iuptext_gtk.png"></td>
+
+	</tr>
+
+	
+  </tbody>
+</table>
+
+<p>When FORMATTING=YES in Windows or GTK (formatting attributes are set to a 
+formatag object that it is a <strong>IupUser</strong>):</p>
+
+<table align="center">
+
+	<tbody>
+    <tr>
+
+		<td>
+      <pre>"ALIGNMENT" = "CENTER"<br>"SPACEAFTER" = "10"<br>"FONTSIZE" = "24"<br>"SELECTION" = "3,1:3,50"<br>"ADDFORMATTAG"<br><br>"BGCOLOR" = "255 128 64"<br>"UNDERLINE" = "SINGLE"<br>"WEIGHT" = "BOLD"<br>"SELECTION" = "3,7:3,11"<br>"ADDFORMATTAG"<br>    <br>"ITALIC" = "YES"<br>"STRIKEOUT" = "YES"<br>"SELECTION" = "2,1:2,12"<br>"ADDFORMATTAG"</pre>
+
+		</td>
+
+		<td>
+      <img src="images/iuptext_formatting.png">
+		</td>
+
+	</tr>
+
+	
+  </tbody>
+</table>
+
+	
+<p>When SPIN=YES:</p>
+
+	
+<table align="center">
+
+	<tbody>
+    <tr>
+
+		<th>Motif</th>
+
+		<th>Windows <br>
+
+		Classic</th>
+
+		<th>Windows <br>
+
+		w/ Styles</th>
+
+		<th>GTK</th>
+
+	</tr>
+
+	<tr>
+
+		<td class="bg_mot"><img src="images/iuptext_mot_spin.png"></td>
+
+		<td class="bg_win2k"><img src="images/iuptext_win2k_spin.png"></td>
+
+		<td class="bg_winxp"><img src="images/iuptext_winxp_spin.png"></td>
+
+		<td class="bg_gtk"><img src="images/iuptext_gtk_spin.png"></td>
+
+	</tr>
+
+	
+  </tbody>
+</table>
+
+	
+<h3><a name="SeeAlso">See Also</a></h3>
+
+
+<p><a href="iuplist.html">IupList</a>, <a href="iupmultiline.html">IupMultiLine</a> </p>
+
+
+</body>
+</html>

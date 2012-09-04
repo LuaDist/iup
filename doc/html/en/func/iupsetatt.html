@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetAttributes</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupSetAtt</h2>
+<p>Sets several attributes of an interface element and optionally sets its name.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle* IupSetAtt(const char* <strong>handle_name</strong>, Ihandle* <strong>ih</strong>, const char* <strong>name</strong>, ...); [in C]</pre>
+<p><strong>handle_name: </strong>optional handle name. <strong>IupSetHandle</strong> 
+will be called internally. can be NULL<strong>.<br>
+ih</strong>: Identifier of the interface element.<br>
+<strong>name</strong>: name of the first attribute.<br>
+...: after <strong>name</strong> a <strong>value</strong> must be set, then a 
+sequence of name and value pairs can follow until a NULL name is found. It must 
+be a constant string because <strong>IupSetAttribute</strong> will be used 
+internally.</p>
+<p><span class="style1">Returns:</span> <b>ih</b></p>
+<h3>Examples</h3>
+<p>This function returns the same Ihandle it receives. This way, it is a lot 
+easier to create dialogs in C. See also <a href="iupsetcallbacks.html">
+IupSetCallbacks</a>.</p>
+<pre>dialog = IupSetAtt(&quot;MainDialog&quot;, IupDialog(
+    IupSetAtt(NULL, IupHBox(
+       IupSetAtt(&quot;MainCanvas&quot;, IupCanvas(NULL), &quot;BORDER&quot;, &quot;NO&quot;, &quot;RASTERSIZE&quot;, &quot;100x100&quot;, NULL),
+       NULL), &quot;MARGIN&quot;, &quot;10x10&quot;, NULL),
+    &quot;TITLE&quot;, &quot;Test&quot;, NULL);</pre>
+<p>Creates a list with country names and 
+  defines Japan as the selected option.</p>
+<pre>Ihandle *list = IupList(NULL);
+IupSetAtt(NULL, list, &quot;VALUE&quot;, &quot;3&quot;, &quot;1&quot;, &quot;Brazil&quot;, &quot;2&quot;, &quot;USA&quot;, &quot;3&quot;, &quot;Japan&quot;, &quot;4&quot;, &quot;France&quot;, NULL);</pre>
+<h3>See Also</h3>
+<p><a href="iupgetattribute.html">IupGetAttribute</a>, 
+<a href="iupsetattribute.html">IupSetAttribute</a>, 
+<a href="iupgetattributes.html">IupGetAttributes</a>, 
+<a href="iupstoreattribute.html">IupStoreAttribute</a>, 
+<a href="iupsetattributes.html">IupSetAttributes</a></p>
+
+</body>
+
+</html>

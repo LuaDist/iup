@@ -1,0 +1,663 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+  <title>IupList</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css">
+
+  <style type="text/css">
+.style1 {
+	margin-left: 40px;
+}
+  .style2 {
+	color: #FF0000;
+}
+  .style3 {
+	background-color: #CEE7FF;
+}
+  </style>
+</head>
+
+
+<body>
+
+<div id="navigation">
+  
+<ul>
+
+    <li><a href="#Creation">Creation</a></li>
+
+    <li><a href="#Attributes">Attributes</a></li>
+
+    <li><a href="#Callbacks">Callbacks</a></li>
+
+    <li><a href="#Notes">Notes</a></li>
+
+    <li><a href="#Examples">Examples</a></li>
+
+    <li><a href="#SeeAlso">See Also</a></li>
+
+  
+</ul>
+
+</div>
+
+
+<h2>IupList</h2>
+
+
+  
+<p>
+  Creates an interface element that displays a list of items. The list can be 
+	visible or can be dropped down. It also can have an edit box for text input. 
+	So it is a 4 in 1 element. In native systems the dropped down case is called 
+	Combo Box.</p>
+
+
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupList(const char *<strong>action</strong>); [in C]<br>iup.list{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]<br>list(<strong>action</strong>) [in LED]</pre>
+
+  
+<p><b>
+  action</b>: String with the name of the action generated when the state of an item is changed. 
+  It can be NULL.</p>
+
+  
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+
+<p><strong>"1"</strong>:
+  First item in the list.<br>
+
+  <strong>"2"</strong>:
+  Second item in the list.<br>
+
+  <strong>"3"</strong>:
+  Third item in the list.<br>
+
+  <b>...</b><br>
+
+  <strong>"id"</strong>:
+  id<sup>th</sup> item in the list.</p>
+
+  
+    
+<p class="info">(<font size="3">non inheritable</font>) The values can be any text. Items before "1" are ignored. 
+	Before map the first item with a NULL is considered the end of the list and 
+	items can be set in any order. After map, there are a few rules:</p>
+
+<div class="style1">
+	
+<ul>
+
+		<li>if "1" is set to NULL, all items are removed.</li>
+
+		<li>if "id" is set to NULL, all items after id are removed.</li>
+
+		<li>if "id" is between the first and the last item, the current id<sup>th</sup> 
+		item is replaced. The effect is the same as removing the old item and 
+		inserting a new one at the old position.</li>
+
+		<li>if "id+1" is set then it is appended after the last item.</li>
+
+		<li>Items after "id+1" are ignored. (since 3.0)</li>
+
+	
+</ul>
+
+</div>
+
+<p><strong>APPENDITEM</strong> (write-only): inserts an item after the last 
+item. Ignored if set before map. (since 3.0)</p>
+
+<p><strong>AUTOHIDE</strong>: scrollbars are shown only if they are necessary. Default: "YES".</p>
+  
+<p><strong>AUTOREDRAW</strong> [Windows] (<font size="3">non inheritable</font>): 
+automatically redraws the list when something has change. Set to NO to add many 
+items to the list without updating the display. Default: &quot;YES&quot;. (since 3.3)</p>
+
+<p><a href="../attrib/iup_bgcolor.html">BGCOLOR</a>: Background color of the 
+text. Default: the global attribute TXTBGCOLOR. In GTK does nothing when 
+DROPDOWN=Yes.</p>
+
+<p><strong>CANFOCUS</strong> (creation only) (<font size="3">non inheritable</font>): enables the focus traversal of the control. In Windows the control will still get the focus when clicked. Default: YES. (since 3.0)</p>
+
+<p><strong>COUNT</strong> (read-only) (<font size="3">non inheritable</font>): returns the number of items. Before 
+mapping it counts the number of non NULL items before the first NULL item. 
+(since 3.0)</p>
+
+  
+<p><strong>DROPFILESTARGET</strong> [Windows and GTK Only] (<font SIZE="3">non inheritable</font>): Enable or disable the drop of 
+files. Default: NO, but if DROPFILES_CB is defined when the element is mapped 
+then it will be automatically enabled. (since 3.0)</p>
+
+<p><strong>DROPDOWN</strong> (creation only): Changes the appearance of the list 
+for the user: only the selected item is shown beside a button with the image of 
+an arrow pointing down. To select another option, the user must press this 
+button, which displays all items in the list. Can be "YES" or "NO". Default 
+"NO".</p>
+
+
+  
+<p><b>DROPEXPAND</b> [Windows Only]: When DROPDOWN=Yes the size of the dropped 
+	list will expand to include the largest text. Can be "YES" or "NO". Default: 
+	"YES".</p>
+
+  
+<p>
+  <strong>EDITBOX </strong>(creation only): Adds an edit box to the list.
+  Can be
+  "YES" or
+  "NO". Default
+  "NO".</p>
+
+  
+<p><a href="../attrib/iup_fgcolor.html">FGCOLOR</a>: Text color. Default: the 
+global attribute TXTFGCOLOR.</p>
+<p><strong>IMAGEid</strong> (<font size="3">non inheritable</font>):
+  image name to be used in the specified item, where id is the specified item 
+starting at 1. The item must already exist. Use <a href="../func/iupsethandle.html">IupSetHandle</a> or
+	<a href="../func/iupsetattributehandle.html">IupSetAttributeHandle</a> to 
+	associate an image to a name. See also <a href="iupimage.html">IupImage</a>. 
+The image is always displayed at the left of the text and only when 
+SHOWIMAGE=Yes. When EDITBOX=Yes the image is not display at the edit box. Images 
+don't need to have the same size. (since 
+3.6)</p>
+
+  
+<p><strong>INSERTITEMid</strong> (write-only): inserts an item before the 
+	given id position. id starts at 1. If id=COUNT+1 then it will append after the 
+last item. Ignored if out of bounds. Ignored if set 
+before map. (since 3.0)</p>
+
+  
+<p><b>MULTIPLE</b> (creation only): Allows selecting several items 
+	simultaneously (multiple list). Default: "NO". Only valid when EDITBOX=NO 
+	and DROPDOWN=NO.</p>
+
+<p><strong>REMOVEITEM</strong> (write-only): removes the given value. 
+	value starts at 1. If value is NULL or &quot;ALL&quot; removes all the items. Ignored if set 
+before map. (since 3.0)</p>
+
+  
+  
+<p><strong>SCROLLBAR</strong> (creation only):
+  Associates automatic scrollbars to the list when DROPDOWN=NO. Can be: "YES" 
+	or "NO" 
+	(none). Default: "YES". For all systems, when SCROLLBAR=YES 
+	the natural size will always include its size even if the native system 
+	hides the scrollbars. If <strong>AUTOHIDE</strong>=YES scrollbars are shown only if they are 
+	necessary, by default AUTOHIDE=YES. In Motif, SCROLLBAR=NO is not supported 
+	and if EDITBOX=YES the horizontal scrollbar is never shown.</p>
+
+<p class="info">When DROPDOWN=YES the scrollbars are system 
+dependent, and do NOT depend on the SCROLLBAR or AUTOHIDE attributes. Usually the scrollbars 
+are shown if necessary. In GTK, scrollbars are never shown and all 
+items are always visible. In Motif, the horizontal scrollbar is 
+never shown. In Windows, if DROPEXPAND=YES then the 
+horizontal scrollbar is never shown.</p>
+
+  
+<p><b>
+  SHOWDROPDOWN</b> (write-only): opens or closes the dropdown list. Can be
+  "YES" or
+  "NO". Valid only when
+  DROPDOWN=YES. Ignored if set before map. </p>
+
+  
+<p><b>
+  SHOWIMAGE</b> (creation only): enables the use of an image for each item. Can be
+  "YES" or
+  "NO". Ignored if set before map. (since 3.6) </p>
+
+  
+<p><a href="../attrib/iup_size.html">SIZE</a>:
+  Size of the list. 
+  The <strong>Natural</strong> <strong>Size</strong> is defined by the number of elements in the list and the with 
+	of the largest item, the default has room for 5 characters in 1 item. In IUP 
+	3, the <strong>Natural</strong> <strong>Size</strong> ignores the list 
+	contents if VISIBLECOLUMNS or VISIBLELINES attributes are defined. The text 
+	in the edit box is ignored when considering the list contents.</p>
+<p><strong>SORT</strong> (creation only): force the list to be alphabetically 
+sorted. When using INSERTITEMn or APPENDITEM the position will be ignored. 
+(since 3.0)</p>
+
+<p><strong>TOPITEM</strong> (write-only): position the given item at the top of 
+the list or near to make it visible. Valid only when DROPDOWN=NO. (since 3.0)</p>
+
+<p><strong>SPACING</strong>: internal padding for each item. Notice that 
+vertically the distance between each item will be actually 2x the spacing. It 
+also affects the horizontal margin of the item. In Windows, the text is aligned 
+at the top left of the item always. Valid only when DROPDOWN=NO. (since 3.0)</p>
+
+  
+<p><b>VALUE</b> (<font size="3">non inheritable</font>): Depends on the DROPDOWN+EDITBOX combination:</p>
+
+  
+    
+<div class="style1">
+  
+    
+<ul>
+
+		<li>EDITBOX=YES: Text entered by the user.</li>
+
+		<li>DROPDOWN=YES or MULTIPLE=NO: Integer number representing the selected 
+    item in the list (begins at 1). It can be zero if there is no selected item. 
+The value can be NULL for no item 
+selected (since 3.0) (In Motif when DROPDOWN=YES there is always an item 
+		selected, except only when the list is empty).</li>
+
+		<li>MULTIPLE=YES: Sequence of '+' and '-' symbols indicating 
+    the state of each item. When setting this value, the user must provide the same amount of '+' and '-' symbols as the 
+    amount of items in the list, otherwise the specified items will be deselected.</li>
+
+</ul>
+
+  
+  </div>
+
+  
+  
+<p><b>VISIBLE_ITEMS </b>[Windows and Motif Only]: Number of items that are 
+visible when DROPDOWN=YES is used for the dropdown list. Default: 5.</p>
+
+<p><strong>VISIBLECOLUMNS</strong>: Defines the number of visible columns for 
+the <strong>Natural</strong> <strong>Size</strong>, this means that will act 
+also as minimum number of visible columns. It uses a wider character size then the one used for the SIZE 
+attribute so strings will fit better without the need of extra columns. Set this 
+attribute to speed <strong>Natural</strong> <strong>Size</strong> computation 
+for very large lists. (since 3.0)</p>
+
+<p><strong>VISIBLELINES</strong>: When DROPDOWN=NO defines the number of visible 
+lines for the <strong>Natural</strong> <strong>Size</strong>, this means that 
+will act also as minimum number of visible lines. (since 3.0)</p>
+
+  
+  
+<blockquote>
+    
+  <hr>
+</blockquote>
+
+<p><strong>APPEND, CARET, CARETPOS</strong>, <strong>CLIPBOARD</strong>, <strong>CUEBANNER,</strong> 
+<strong>FILTER,</strong> <strong>INSERT, PADDING</strong>, <strong>MASK, NC, READONLY, SELECTEDTEXT, SELECTION, 
+SELECTIONPOS</strong>, <strong>SCROLLTO</strong>, <strong>SCROLLTOPOS</strong> : 
+Same as the <a href="iuptext.html">IupText</a> attributes, but are valid only 
+when EDITBOX=YES and effective only for the edit box inside the list.</p>
+
+  
+<blockquote>
+    
+  <hr>
+</blockquote>
+
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_font.html">FONT</a>, 
+    <a href="../attrib/iup_expand.html">EXPAND</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.</p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes and callbacks 
+are supported.</p>
+
+
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+
+<p><a href="../call/iup_action.html">ACTION</a>:
+  Action generated when the state of an item 
+  in the list is changed. Also provides information on the changed item:</p>
+
+  
+    
+<pre>int function (Ihandle *<strong>ih</strong>, char *<strong>text</strong>, int <strong>item</strong>, int <strong>state</strong>); [in C]<br><b>elem</b>:action(<b>text</b>: string, <strong>item</strong><b>, </b><strong>state</strong>: number) -&gt; (ret: number) [in Lua]</pre>
+
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>text</strong>: Text of the changed item.<br>
+<strong>item</strong>: Number of the changed item starting at 1.<br>
+
+<strong>state</strong>: Equal to 1 if the option was selected or to 0 if the option was deselected.</p>
+
+<p class="info">The state=0 is simulated internally by IUP in all systems. If 
+you add or remove items to/from the list and you count on the state=0 value, 
+then after adding/removing items set the VALUE attribute to ensure proper 
+state=0 value.</p>
+
+  
+  
+<p><a href="../call/iup_button_cb.html">BUTTON_CB</a>:
+  Action generated when any mouse button is 
+  pressed or released inside the list. Called only when DROPDOWN=NO. If the list 
+	has an editbox the message is called when cursor is at the listbox only 
+	(ignored at the editbox). Use <a href="../func/iupconvertxytopos.html">IupConvertXYToPos</a> to convert 
+	(x,y) coordinates in item position. (since 3.0)</p>
+
+  
+  
+<p><b>CARET_CB</b>:
+  Action generated when the caret/cursor 
+  position is changed. 
+  &nbsp;Valid only when
+  EDITBOX=YES.</p>
+
+  
+    
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>lin</strong>, int <strong>col</strong>, int <strong>pos</strong>); [in C]<br><strong>elem</strong>:caret_cb(<strong>lin</strong>, <b>col, pos</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>lin, col</strong>: line and column number (start at 1).<br>
+
+	<strong>pos</strong>: 0 based character position.</p>
+
+<p class="info">For lists <strong>lin</strong> is always 1, and
+<strong>pos</strong> is always "<strong>col</strong>-1".</p>
+
+<p class="info">This 
+    is the same CARET_CB callback definition as for the <a href="iuptext.html">IupText</a>.</p>
+
+  
+<p><b>DBLCLICK_CB</b>: Action generated when the user double click an item. 
+Called only when DROPDOWN=NO. (since 3.0)</p>
+
+  
+    
+<pre>int function (Ihandle *<strong>ih</strong>, int <strong>item</strong>, char *<strong>text</strong>); [in C]<br><b>elem</b>:action(<strong>item</strong>: number<b>, text</b>: string) -&gt; (ret: number) [in Lua]</pre>
+
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>item</strong>: Number of the selected item starting at 1.<br>
+
+<strong>text</strong>: Text of the selected item.</p>
+
+  
+<p><b>DROPDOWN_CB</b>: Action generated when the list of a dropdown is shown or 
+hidden. 
+Called only when DROPDOWN=YES. (since 3.0)</p>
+
+  
+    
+<pre>int function (Ihandle *<strong>ih</strong>, int <strong>state</strong>); [in C]<br><b>elem</b>:action(<strong>state</strong>: boolean) -&gt; (ret: number) [in Lua]</pre>
+
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>state</strong>: state of the list 1=shown, 0=hidden.</p>
+
+  
+    
+<p><a href="../call/iup_dropfiles_cb.html">DROPFILES_CB</a> [Windows and GTK Only]: Action generated when one or 
+  more files are dropped in the element. (since 3.0)</p>
+
+  
+
+  
+<p><strong>EDIT_CB</strong>:
+  Action generated when the text in the text 
+  box is manually changed by the user, but before its value is actually updated. Valid only when
+  EDITBOX=YES.</p>
+
+  
+    
+<pre>int function(Ihandle *<strong>ih</strong>, int <b>c</b>, char *<strong>new_value</strong>); [in C]<br><strong>elem</strong>:edit_cb(<b>c</b>: number, <strong>new_value</strong>: string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>c</strong>: valid alpha numeric character or 0.<br>
+
+    <strong>new_value</strong>:
+    Represents the new text value.</p>
+
+    
+<p class="info">
+    <u>Returns</u>:
+    IUP_CLOSE will be processed, but the change will be ignored. If IUP_IGNORE, the system will ignore the new 
+	value. If <strong>c</strong> is valid and returns a valid alpha numeric 
+	character, this new character will be used instead. The VALUE attribute can 
+	be changed only if IUP_IGNORE is returned.</p>
+
+  
+  
+<p class="info">This 
+    is the same ACTION callback definition as for the <a href="iuptext.html">IupText</a>.</p>
+
+  
+
+  
+<p><a href="../call/iup_motion_cb.html">MOTION_CB</a>:
+  Action generated when the mouse is moved over the list. Called only when 
+	DROPDOWN=NO. If the list has an editbox the message is called when cursor is 
+	at the listbox only (ignored at the editbox). Use 
+<a href="../func/iupconvertxytopos.html">IupConvertXYToPos</a> 
+	to convert (x,y) coordinates in item position. (since 3.0)</p>
+
+  
+  
+<p><b>MULTISELECT_CB</b>:
+  Action generated when the state of an item 
+  in the multiple selection list is changed. But it is called only when the interaction is over.</p>
+
+  
+    
+<pre>int function (Ihandle *<strong>ih</strong>, char *<b>value</b>); [in C]<br><b>elem</b>:multiselect_cb(<b>value</b>: string) -&gt; (ret: number) [in Lua]</pre>
+
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+	<strong>value</strong>: Similar to the VALUE attribute for a multiple 
+selection list. Items selected are marked with '+', items deselected are marked 
+with '-', and non changed items are marked with an 'x'.</p>
+
+    
+<p class="info">This callback is called only when MULTIPLE=YES. If this callback is defined the <b>ACTION</b> callback will not be called.</p>
+
+<p class="info">The non changed items marked with 'x' are simulated internally 
+by IUP in all systems. If you add or remove items to/from the list and you count 
+on the 'x' values, then after adding/removing items set the VALUE attribute to 
+ensure proper 'x' values.</p>
+
+
+<p><strong>VALUECHANGED_CB</strong>:
+  Called after the value was interactively changed by the user. Called when the 
+selection is changed or when the text is edited. (since 3.0)</p>
+
+<pre>int function(Ihandle *<strong>ih</strong>); [in C]<br><strong>elem</strong>:valuechanged_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+
+    
+    
+<hr class="style1">
+
+<p> 
+<a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, <a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+
+
+
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes and callbacks 
+are supported.</p>
+
+
+
+<h3><a name="Notes">Notes</a></h3>
+
+
+<p>Text is always left aligned.</p>
+
+<p> The <a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a> and
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a> callbacks behave 
+differently depending on the list configuration and on the native system:</p>
+
+<blockquote>
+
+<ul>
+
+	<li>If 
+DROPDOWN=NO and EDITBOX=YES, then the list never gets the focus, the callbacks 
+are called only when the edit box is clicked.</li>
+
+	<li>In Motif if DROPDOWN=YES then when 
+the dropdown button is clicked the list looses its focus and when the dropped 
+list is closed the list regain the focus, also when that happen if the list 
+looses its focus to another control the kill focus callback is not called.</li>
+
+	<li>In 
+GTK, if DROPDOWN=YES and EDITBOX=NO, both callbacks are called only when 
+	navigating with the keyboard (tip: if 
+you need those callbacks with mouse navigation set EDITBOX=YES and READONLY=YES). Also in GTK, if 
+DROPDOWN=YES and EDITBOX=YES then when the dropdown button is clicked the list 
+looses its focus and it gets it back only if the edit box is clicked.</li>
+
+</ul>
+
+</blockquote>
+
+<p> In Windows, if EDITBOX=YES then the tooltips are shown only when the cursor 
+is near the control border or at the dropdown arrow. Also the selection and caret attributes are not 
+preserved if the list loses its focus, or in other words these attributes are 
+only useful in Windows if the list has the focus.</p>
+<p> <span class="style2"><strong>IMPORTANT:</strong></span> In Windows when 
+DROPDOWN=Yes the vertical size is controlled by the system, and has the height 
+just right to include the borders and the text. So the <strong>User</strong> 
+height from RASTERSIZE or SIZE will be always ignored.</p>
+<p> In GTK older than 2.12, the editbox of a dropdown will not follow the list 
+attributes: FONT, BGCOLOR, FGCOLOR and SPACING.</p>
+
+
+<h3>Utility Functions </h3>
+<p>These functions can be used to set and get attributes from the element:</p>
+<pre>void  IupSetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+void  IupStoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+char* IupGetAttribute<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+int   IupGetInt<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+float IupGetFloat<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+void  IupSetfAttribute<span class="style3">Id</span>(Ihandle *ih, const char* name, int id, const char* format, ...);</pre>
+<p>They work just like the respective traditional set and get functions. But the attribute string is complemented with 
+  the id value. For ex:</p>
+<pre>IupSetAttributeId(ih, &quot;&quot;, 3, value) == IupSetAttribute(ih, &quot;3&quot;, value)
+IupSetAttributeId(ih, &quot;INSERTITEM&quot;, 8, value) == IupSetAttribute(ih, &quot;INSERTITEM8&quot;, value)</pre>
+<p>But these functions are faster than the traditional functions because they do 
+not need to parse the attribute name string and the application does not need to 
+concatenate the attribute name with the id.</p>
+
+
+<h3><a name="Examples">Examples</a></h3>
+
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<div align="center">
+  
+<center>
+  
+<table style="border-collapse: collapse;" id="AutoNumber1" border="0" bordercolor="#111111" cellpadding="5" cellspacing="0">
+
+    <tbody>
+    <tr>
+
+      <th>Windows 2000</th>
+
+    </tr>
+
+    <tr>
+
+      <td class="bg_win2k"><img src="images/iuplist_win2k.png" border="0"></td>
+
+    </tr>
+
+    <tr>
+
+      <th>Windows XP</th>
+
+    </tr>
+
+    <tr>
+
+      <td class="bg_winxp"><img src="images/iuplist_winxp.png" border="0"></td>
+
+    </tr>
+
+    <tr>
+
+      <th>Motif</th>
+
+    </tr>
+
+    <tr>
+
+      <td class="bg_mot"><img src="images/iuplist_mot.png" border="0"></td>
+
+    </tr>
+
+    <tr>
+
+      <th>GTK</th>
+
+    </tr>
+
+    <tr>
+
+      <td class="bg_gtk"><img src="images/iuplist_gtk.png" border="0"></td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+  </center>
+
+</div>
+
+<h3><a name="SeeAlso">See Also</a></h3>
+
+
+<p><a href="../dlg/iuplistdialog.html">IupListDialog</a>, <a href="iuptext.html">
+  Iuptext</a></p>
+
+
+
+</body>
+</html>

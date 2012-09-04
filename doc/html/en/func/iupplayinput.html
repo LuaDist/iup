@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupPlayInput</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+</style>
+</head>
+<body>
+
+<h2>IupPlayInput</h2>
+<p>Reproduces all mouse and keyboard input from a given file.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupPlayInput(const char *<strong>filename</strong>); [in C]
+iup.PlayInput(<strong>filename</strong>: string) -&gt; <strong>ret</strong>: number [in Lua]</pre>
+<p><strong>filename</strong>: name of the file to be played. NULL will stop 
+playing. &quot;&quot; will pause and restart a file already being played.</p>
+<p>Returns: IUP_NOERROR if successful, IUP_ERROR if 
+failed to open the file for writing. If already playing</p>
+<h3>Notes</h3>
+<p>The file must had been saved using the <strong>IupRecordInput</strong> 
+function. Record mode will be automatically detected.</p>
+<p>This function will start the play and return the control to the application. 
+If the file ends all internal memory used to play the file will be automatically 
+released.</p>
+<p>It uses the MOUSEBUTTON global attribute to reproduce the events.
+<span class="style1"><strong>IMPORTANT</strong></span>: See the documentation of 
+the <a href="../attrib/iup_globals.html#MOUSEBUTTON">MOUSEBUTTON</a> attribute 
+for further details and current limitations.</p>
+<p>The file must had been generated in the same operating system. Screen size 
+differences can exist, but if different themes are used then mouse precision 
+will be affected.</p>
+
+<h3>See Also</h3>
+<p><a href="../attrib/iup_globals.html#MOUSEBUTTON">MOUSEBUTTON</a>,
+<a href="iuprecordinput.html">IupRecordInput</a></p>
+
+</body>
+
+</html>

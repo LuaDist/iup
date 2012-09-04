@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Dialogs</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h1 align="center" style="text-align:center">
+Dialogs</h1>
+<p>In IUP you can create your own dialogs or use one of the 
+  predefined dialogs. To create your own dialogs you will have to create all the 
+  controls of the dialog before the creation of the dialog. All the controls 
+  must be composed in a hierarchical structure so the root will be used as a 
+  parameter to the dialog creation.</p>
+<p>When a control is created, its parent is not known. After 
+  the dialog is created all elements receive a parent. This mechanism is quite 
+  different from that of native systems, who first create the dialog and then 
+  the element are inserted, using the dialog as a parent. This feature creates 
+  some limitations for IUP, usually related to the insertion and removal of 
+  controls. </p>
+<p>Since the controls are created in a different order from 
+  the native system, native controls can only be created after the dialog. This 
+  will happen automatically when the application call the
+  <b>IupShow</b> function to show the dialog. But we often need the native 
+  controls to be created so we can use some other functionality of those before 
+  they are visible to the user. For that purpose, the <b>IupMap</b> function was created. It forces IUP to map the controls to 
+  their native system controls. The <b>IupShow</b> function 
+  internally uses <b>IupMap</b> 
+  before showing the dialog on the screen. <b>IupShow</b> can be called many times, but 
+  the map process will occur only once.</p>
+<p><b>IupShow</b> can 
+  be replaced by <b>IupPopup</b>. In this case the result will 
+  be a modal dialog and all the other previously shown dialogs will be 
+  unavailable to the user. Also the program will interrupt in the function call 
+  until the application return IUP_CLOSE or <b>IupExitLoop</b> is called. </p>
+<p>All dialogs are automatically destroyed in <strong>IupClose</strong>.</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

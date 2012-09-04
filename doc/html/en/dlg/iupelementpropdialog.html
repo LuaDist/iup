@@ -1,0 +1,81 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupElementPropertiesDialog</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	border-width: 0;
+}
+.style3 {
+	background-color: #CEE7FF;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupElementPropertiesDialog <span class="style1">(since 3.5)</span></h2>
+<p>Creates an Element Properties Dialog. It is a predefined dialog to edit the 
+properties of an element in run time. It is a standard <strong>IupDialog</strong> 
+constructed with other IUP elements. The dialog can be shown with any of 
+the show functions <strong>IupShow</strong>, <strong>IupShowXY</strong> or
+<strong>IupPopup</strong>.</p>
+<p>Any existent element can be edited. It does not need to be mapped on the 
+native system nor visible. It could have been created in C, LED or Lua.</p>
+<p>This is a dialog intended for developers, so they can see and inspect their 
+elements in other ways.</p>
+<p>It contains 3 Tab sections: one for the registered attributes of the 
+element, one for custom attributes set at the hash table, and one for the 
+callbacks. The callbacks are just for inspection, and custom attribute should be 
+handled carefully because they may be not strings. Registered attributes values 
+are shown in red when they were changed by the application. </p>
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupElementPropertiesDialog(Ihandle*<strong> elem</strong>); [in C]
+iup.ElementPropertiesDialog(<strong>elem</strong>: ihandle<span class="style3">)</span> -&gt; (<strong>dlg</strong>: ihandle) [in Lua]
+[NOT available in LED]</pre>
+<div>
+  <strong>elem</strong>: identifier of the element to display the properties. 
+	Not optional.</div>
+<p><u>Returns:</u> the identifier of the 
+  created dialog, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+<p>Check the <a href="iupdialog.html#Attributes">IupDialog</a> attributes.</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+<p>Check the <a href="iupdialog.html#Callbacks">IupDialog</a> callbacks.</p>
+<h3><a name="Examples">Examples</a></h3>
+<pre>IupShow(IupElementPropertiesDialog(button));   [in C]
+
+iup.Show(iup.ElementPropertiesDialog(button))    [in Lua]</pre>
+<p>The following dialog layout is displayed next.</p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+    <tr>
+      <td class="style2"><img border="0" src="images/layoutdlg2.png"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3><a name="SeeAlso">See Also</a></h3>
+<p><a href="iupdialog.html">IupDialog</a>, <a href="../func/iupshow.html">
+IupShow</a>, <a href="../func/iupshowxy.html">IupShowXY</a>,
+<a href="../func/iuppopup.html">IupPopup</a>, <a href="iuplayoutdialog.html">IupLayoutDialog</a></p>
+
+</body>
+
+</html>

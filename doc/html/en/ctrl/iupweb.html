@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupWebBrowser</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-align: center;
+}
+.style2 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupWebBrowser <span class="style2">[GTK and Windows only] (since 3.3)</span></h2>
+<p>Creates a web browser control. It is responsible for managing the drawing of 
+the web browser content and forwarding of its events.</p>
+<p>In Linux, the implementation uses the 
+<a class="http" href="http://webkitgtk.org/" target="_blank">WebKit/GTK+</a>, the new GTK+ port of the
+<a class="http" href="http://webkit.org" target="_blank">WebKit</a>, an open-source web content 
+engine. More information about WebKit/GTK+ (building, dependencies, releases, 
+etc) can be seen in <a href="#Notes">Notes</a> section. It is only available for 
+Linux26g4 and Linux26g4_64 systems.</p>
+<p>In Windows, the implementation uses the <strong>IupOleControl</strong> to 
+embed an instance of the Internet Explorer WebBrowser control. A listener 
+interface is used to capture and handle events using the Active Template Library 
+(<a target="_blank" href="http://msdn.microsoft.com/en-us/library/t9adwcde%28v=VS.80%29.aspx">ATL</a>) 
+classes. <span id="result_box1" class="" lang="en"><span style="" title="">More information 
+about ATL </span></span>can be seen in <a href="#Notes">Notes</a> section. So it 
+is only available for Visual C++ compilers.</p>
+<h3>Initialization and usage</h3>
+<p>The <b>IupWebBrowserOpen</b> function must be called after <b>IupOpen</b>. 
+  The iupweb.h file must also be included in the source code. The program must be linked to the controls 
+  library (iupweb). If static linking is used then in Windows must be linked 
+with the &quot;iupole&quot; library and in Linux must be linked with the &quot;webkit-1.0&quot; 
+library</p>
+<p>To make the control available in Lua use require&quot;iupluaweb&quot; or manually 
+call the initialization function in C, 
+<b>iupweblua_open</b>, after calling <b>iuplua_open</b>.
+  When manually calling the function the iupluaweb.h file must also be included in the source code, 
+and the program must be linked to the lua control 
+  library (iupluaweb).</p>
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupWebBrowser(); [in C]
+iup.webbrowser{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+webbrowser() [in LED]
+</pre>
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>VALUE</strong>: sets a specified URL to load into the webbrowser, or 
+retrieve the current URL.</p>
+<p><strong>BACKFORWARD </strong>(write only): sets the number of steps away from the current 
+page and loads the history item. Negative values represent steps backward while 
+positive values represent steps forward.</p>
+<p><strong>STATUS</strong> (read only): returns the load status. Can be 
+&quot;LOADING&quot;, &quot;COMPLETED&quot; or &quot;FAILED&quot;.</p>
+<p><strong>STOP </strong>(write only): stops any ongoing load in the webbrowser.</p>
+<p><strong>RELOAD</strong> (write only): reloads the page in the webbrowser.</p>
+<p><strong>HTML</strong> (write only): loads a given HTML content.</p>
+<p><strong>BACKCOUNT</strong> [GTK Only] (read only): gets the number of items that precede 
+the current page.</p>
+<p><strong>FORWARDCOUNT</strong> [GTK Only] (read only): gets the number of items that 
+succeed the current page.</p>
+<p><strong>ITEMHISTORYid</strong> [GTK Only] (read only): Returns the URL 
+associated with a specific history item. Negative &quot;id&quot; value represents a backward item while positive &quot;id&quot; 
+value represents a forward item (&quot;0&quot; represents the current item).</p>
+  <blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_font.html">FONT</a>, 
+    <a href="../attrib/iup_expand.html">EXPAND</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><strong>COMPLETED_CB</strong><tt>:</tt> action generated when a page 
+successfully completed. <span>Can be called multiple times when a frame set 
+loads its frames, or when a page loads also other pages.</span></p>
+<pre>int function(Ihandle* <b>ih</b>, char* <b>url</b>);  [in C]<strong>
+elem</strong>:completed_cb(<b>url</b>) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>url</strong>: the URL address that completed.</p>
+
+<p><strong>ERROR_CB</strong><tt>:</tt> action generated when page load fail.</p>
+<pre>int function(Ihandle* <b>ih</b>, char* <b>url</b>);  [in C]<strong>
+elem</strong>:error_cb(<b>url</b>) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>url</strong>: the URL address that caused the error.</p>
+
+<p><strong>NAVIGATE_CB</strong><tt>:</tt> action generated when the browser 
+requests a navigation to another page. It is called before navigation occurs<span>. 
+Can be called multiple times when a frame set loads its frames, or when a page 
+loads also other pages.</span></p>
+<pre>int function(Ihandle* <b>ih</b>, char* <b>url</b>);  [in C]<strong>
+elem</strong>:navigate_cb(<b>url</b>) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+<strong>url</strong>: the URL address to navigate to.</p>
+
+<p class="info"><u>Returns</u>: IUP_IGNORE will abort navigation (since 3.4).</p>
+
+<p><strong>NEWWINDOW_CB</strong><tt>:</tt> action generated when the browser 
+requests a new window.</p>
+<pre>int function(Ihandle* <b>ih</b>, char* <b>url</b>);  [in C]<strong>
+elem</strong>:newwindow_cb(<b>url</b>) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>url</strong>: the URL address that is opened in the new window.</p>
+<blockquote>
+  <hr>
+</blockquote>
+
+<p class="info"> 
+<a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, <a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+<h3><a name="Notes">Notes</a></h3>
+<p>To learn more about WebKit and WebKitGTK+:</p>
+<p class="info">
+<a target="_blank" href="http://webkit.org/">The WebKit Open Source Project</a><br>
+<a target="_blank" href="http://webkitgtk.org/">The WebKitGTK+ web page</a><br>
+<a target="_blank" href="http://live.gnome.org/WebKitGtk">WebKitGTK+ wiki</a><br>
+<a target="_blank" href="http://trac.webkit.org/wiki/WebKitGTK">WebKitGTK+ tracker</a></p>
+<p>To learn more about Internet Explorer WebBrowser control and ATL:</p>
+<p class="info">
+<a target="_blank" href="http://msdn.microsoft.com/en-us/library/aa752044%28VS.85%29.aspx">WebBrowser Control from C/C++</a><br>
+<a target="_blank" href="http://support.microsoft.com/kb/194179/en-us/">Creating ATL sinks</a><br>
+<a target="_blank" href="http://homepage.eircom.net/~codexpert/sink/">Examples of sinking COM events</a></p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<p class="style1">
+<img src="images/iupwebbrowser.png"></p>
+
+</body>
+
+</html>
+

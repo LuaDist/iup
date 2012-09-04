@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+  <title>IupCanvas</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+
+
+<body>
+
+<div id="navigation">
+  
+<ul>
+
+    <li><a href="#Creation">Creation</a></li>
+
+    <li><a href="#Attributes">Attributes</a></li>
+
+    <li><a href="#Callbacks">Callbacks</a></li>
+
+    <li><a href="#Notes">Notes</a></li>
+
+    <li><a href="#Examples">Examples</a></li>
+
+    <li><a href="#SeeAlso">See Also</a></li>
+
+  
+</ul>
+
+</div>
+
+
+<h2>IupCanvas</h2>
+
+
+  
+<p>
+  Creates an interface element that is a 
+  canvas - a working area for your application.</p>
+
+
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupCanvas(const char *<strong>action</strong>); [in C]<br>iup.canvas{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]<br>canvas(<strong>action</strong>) [in LED]</pre>
+
+  
+<p><b>
+  action</b>: Name of the action generated when the canvas needs to be redrawn. It can be 
+  NULL.</p>
+
+  
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+
+  
+<p><strong>BACKINGSTORE</strong> [Motif Only]:
+  Controls the canvas backing store flag. The 
+  default value is "YES".</p>
+
+
+
+<p><a href="../attrib/iup_bgcolor.html">BGCOLOR</a>:
+  Background color. The background is painted only if the ACTION callback is not 
+defined. If the callback is defined the application must draw all the canvas 
+contents. In GTK or Motif if you set the ACTION callback after map then you should 
+also set BGCOLOR to any value just after setting the callback or 
+the first redraw will be lost. Default: "255 255 255".</p>
+
+<p><b>BORDER </b>(creation only):
+  
+  Shows a border around the 
+  canvas. Default: "YES".</p>
+
+<p><strong>CANFOCUS</strong> (creation only)<strong> </strong>(<font size="3">non inheritable</font>): enables the focus traversal of the control. In Windows the canvas will respect CANFOCUS in 
+opposite to the other controls. Default: YES. (since 3.0)</p>
+
+<p><strong>CLIPRECT</strong> [Windows and GTK Only] (only during ACTION): 
+Specifies a rectangle that has its region invalidated for painting, it could be 
+used for clipping. Format: "%d %d %d %d"="x1 y1 x2 y2".</p>
+
+<p><a href="../attrib/iup_cursor.html">CURSOR</a> (<font size="3">non inheritable</font>):
+    Defines a cursor for the canvas.</p>
+
+  
+<p><a href="../attrib/iup_expand.html">EXPAND</a> (<font size="3">non inheritable</font>):
+  The default value is "YES". The natural size is the size of 1 
+  character.</p>
+
+  
+<p><strong>DROPFILESTARGET</strong> [Windows and GTK Only] (<font SIZE="3">non inheritable</font>): Enable or disable the drop of 
+files. Default: NO, but if DROPFILES_CB is defined when the element is mapped 
+then it will be automatically enabled.</p>
+
+  
+<p><b>DRAWSIZE </b>(<font size="3">non inheritable</font>): The size of the drawing area in pixels. This size is also 
+  used in the RESIZE_CB callback.</p>
+
+<p class="info">Notice that the drawing area size is not the same as RASTERSIZE. 
+The SCROLLBAR and BORDER attributes affect the size of the drawing area.</p>
+
+  
+<p><b>HDC_WMPAINT</b> [Windows Only] (<font size="3">non inheritable</font>): Contains the HDC created with the BeginPaint 
+  inside the WM_PAINT message. Valid only during the ACTION callback.</p>
+
+<p><strong>HWND</strong> [Windows Only] (<font size="3">non inheritable, 
+read-only</font>): Returns the Windows Window handle. Available in the Windows 
+driver or in the GTK driver in Windows.</p>
+
+
+  
+<p><a href="../attrib/iup_scrollbar.html">SCROLLBAR</a> (creation only):
+  Associates a horizontal and/or vertical 
+  scrollbar to the canvas. Default: "NO". The secondary attributes are all n<font size="3">on 
+inheritable.</font></p>
+
+  
+<p class="info"><a href="../attrib/iup_dx.html">DX</a>:
+  Size of the thumb in the horizontal 
+  scrollbar. Also the horizontal page size. Default: "0.1".<br>
+
+	<a href="../attrib/iup_dy.html">DY</a>:
+  Size of the thumb in the vertical scrollbar. Also the vertical page size. Default: "0.1".<br>
+
+	<a href="../attrib/iup_posx.html">POSX</a>:
+  Position of the thumb in the horizontal 
+  scrollbar. Default: "0.0".<br>
+
+	<a href="../attrib/iup_posy.html">POSY</a>:
+  Position of the thumb in the vertical 
+  scrollbar. Default: "0.0".<br>
+
+	<a href="../attrib/iup_xmin.html">XMIN</a>:
+  Minimum value of the horizontal scrollbar. Default: "0.0".<br>
+
+	<a href="../attrib/iup_xmax.html">XMAX</a>:
+  Maximum value of the horizontal scrollbar. Default: "1.0".<br>
+
+	<a href="../attrib/iup_ymin.html">YMIN</a>:
+  Minimum value of the vertical scrollbar. Default: "0.0".<br>
+
+	<a href="../attrib/iup_ymax.html">YMAX</a>:
+  Maximum value of the vertical scrollbar. Default: "1.0".<br>
+
+	<b>LINEX</b>: The amount the thumb moves when an horizontal step is performed. 
+  Default: 1/10th of DX. (since 3.0)<br>
+
+	<b>LINEY</b>: The amount the thumb moves when a vertical step is performed. 
+  Default: 1/10th of DY. (since 3.0)<br>
+
+	<b><a name="XAUTOHIDE">XAUTOHIDE</a></b>: When enabled, if DX &gt;= XMAX-XMIN then 
+  the horizontal scrollbar is hidden. Default: "YES". (since 3.0)<br>
+
+	<b><a name="YAUTOHIDE">YAUTOHIDE</a></b>: When enabled, if DY &gt;= YMAX-YMIN then 
+  the vertical scrollbar is hidden. Default: "YES". (since 3.0)</p>
+
+<p><strong>TOUCH</strong> [Windows 7 Only]: enable the multi-touch events 
+processing. (Since 3.3)</p>
+<p><strong>XDISPLAY</strong> [UNIX Only](<font size="3">non inheritable, 
+read-only</font>): Returns the X-Windows Display. Available in the Motif driver 
+or in the GTK driver in UNIX.</p>
+
+<p><strong>XWINDOW</strong> [UNIX Only](<font size="3">non inheritable, 
+read-only</font>): Returns the X-Windows Window (Drawable). Available in the 
+Motif driver or in the GTK driver in UNIX.</p>
+
+<blockquote>
+  
+  <hr>
+</blockquote>
+
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, <a href="../attrib/iup_size.html">SIZE</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.</p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes and callbacks 
+are supported.&nbsp;</p>
+
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+
+<p><a href="../call/iup_action.html">ACTION</a>: Action generated when the 
+canvas needs to be redrawn.</p>
+
+  
+    
+<pre>int function(Ihandle *<strong>ih</strong>, float <strong>posx</strong>, float <strong>posy</strong>); [in C]<br><strong>elem</strong>:action(<b>posx, posy</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+    <strong>posx</strong>:
+    thumb position in the horizontal scrollbar. The POSX attribute value.<br>
+
+    <strong>posy</strong>:
+    thumb position in the vertical scrollbar. The POSY attribute value.</p>
+
+  
+  
+<p><a href="../call/iup_button_cb.html">BUTTON_CB</a>:
+  Action generated when any mouse button is 
+  pressed or released.</p>
+
+<p><a href="../call/iup_dropfiles_cb.html">DROPFILES_CB</a> [Windows and GTK Only]: Action generated when one or 
+  more files are dropped in the element.</p>
+
+  
+<p><b>FOCUS_CB</b>: Called when the canvas gets or looses the focus. It is called 
+  after the common callbacks GETFOCUS_CB and KILL_FOCUS_CB.</p>
+
+  
+    
+<pre>int function(Ihandle *<b>ih</b>, int <b>focus</b>); [in C]<br>elem:focus_cb(<b>focus</b>: number) -&gt; (ret: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+    <strong>focus</strong>: is non zero if the canvas is getting the focus, is zero 
+    if it is loosing the focus.</p>
+
+  
+
+  
+<p><a href="../call/iup_motion_cb.html">MOTION_CB</a>:
+  Action generated when the mouse is moved.</p>
+
+  
+<p><a href="../call/iup_keypress_cb.html">KEYPRESS_CB</a>:
+  Action generated when a key is pressed or 
+  released. It is called after the common callback K_ANY.</p>
+
+<p class="info">When the canvas has the focus, pressing the arrow keys may 
+change the focus to another control in some systems. If your callback process 
+the arrow keys, we recommend you to return IUP_IGNORE so it will not lose its 
+focus.</p>
+
+  
+<p><a href="../call/iup_resize_cb.html">RESIZE_CB</a>:
+  Action generated when the canvas size is 
+  changed. </p>
+
+  
+<p><a href="../call/iup_scroll_cb.html">SCROLL_CB</a>:
+  Called when the scrollbar is manipulated.
+  (GTK 2.8) Also the POSX and POSY values will not be correctly updated for 
+older GTK versions.</p>
+
+<p><strong>TOUCH_CB</strong> [Windows 7 Only]:
+  Action generated 
+  when a touch event occurred. Multiple touch events will trigger several calls. 
+Must set TOUCH=Yes to receive this event. (Since 3.3)</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <strong>id</strong>, int <strong>x</strong>, int <strong>y</strong>, char* <strong>state</strong>); [in C]
+<strong>elem</strong>:touch_cb(<strong>id</strong>, <strong>x</strong>,<strong> y</strong>: number,<strong> state</strong>: string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifies the element that activated the 
+event.<br>
+<strong>id</strong>: identifies the touch point.
+<strong><br>
+x</strong>, <strong>y</strong>: position in pixels, relative to the 
+top-left corner of the canvas.<br>
+<strong>state</strong>: the touch point state. Can be: DOWN, MOVE or UP. If the 
+point is a &quot;primary&quot; point then &quot;-PRIMARY&quot; is appended to the string.</p>
+<p class="info"><u>Returns</u>: IUP_CLOSE will be processed.</p>
+<p><strong>MULTITOUCH_CB</strong> [Windows 7 Only]: Action generated when 
+multiple touch events occurred. Must set TOUCH=Yes to receive this event. (Since 3.3)</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>count</strong>, int* <strong>pid</strong>, int* <strong>px</strong>, int* <strong>py</strong>, int* <strong>pstate</strong>) [in C]
+<strong>elem</strong>:multitouch_cb(<strong>count:</strong> number<strong>, pid, px, py, pstate: </strong>table) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event.<br>
+<strong>count</strong>: Number of touch points in the array.<br>
+<strong>pid</strong>:
+    Array of touch point ids.<br>
+<strong>px</strong>:
+    Array of touch point x coordinates in pixels, relative to the top-left corner of 
+the canvas.<br>
+<strong>py</strong>:
+    Array of touch point y coordinates in pixels, relative to the top-left corner of 
+the canvas.<br>
+<strong>pstate</strong>: Array of touch point states. Can be &#39;D&#39; (DOWN), &#39;U&#39; 
+(UP) or &#39;M&#39; (MOVE).<br>
+</p>
+<p class="info"><u>Returns</u>: IUP_CLOSE will be processed.</p>
+
+  
+<p><a href="../call/iup_wheel_cb.html">WHEEL_CB</a>: Action generated when the mouse wheel is 
+  rotated.</p>
+
+  
+<p><a href="../call/iup_wom_cb.html">WOM_CB</a>
+  [Windows Only]: Action generated when an audio device 
+  receives an event.</p>
+
+  
+<blockquote>
+  
+  <hr>
+</blockquote>
+
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, <a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes and callbacks 
+are supported.</p>
+
+
+
+<h3><a name="Notes">Notes</a></h3>
+
+
+<p>
+  Note that some keys might remove the focus 
+  from the canvas. To avoid this, return IGNORE in the <a href="../call/iup_k_any.html">
+  K_ANY</a>
+  callback. </p>
+
+  
+<p>The mouse cursor position can be programmatically controlled using the global attribute
+  <a href="../attrib/iup_globals.html#cursorpos">CURSORPOS</a>.</p>
+
+
+<h3><a name="Examples">Examples</a></h3>
+
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+
+<table align="center">
+
+	<tbody>
+    <tr>
+
+		<th>Windows <br>
+
+		Classic</th>
+
+		<th>Windows <br>
+
+		w/ Styles</th>
+
+	</tr>
+
+	<tr>
+
+		<td class="bg_win2k"><img src="images/iupcanvas_win2k.png"></td>
+
+		<td class="bg_winxp"><img src="images/iupcanvas_winxp.png"></td>
+
+	</tr>
+
+	<tr>
+
+		<th>Motif</th>
+
+		<th>GTK</th>
+
+	</tr>
+
+	<tr>
+
+		<td class="bg_mot"><img src="images/iupcanvas_mot.png"></td>
+
+		<td class="bg_gtk"><img src="images/iupcanvas_gtk.png"></td>
+
+	</tr>
+
+  </tbody>
+</table>
+
+
+</body>
+</html>

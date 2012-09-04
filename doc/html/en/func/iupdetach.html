@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupDetach</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupDetach</h2>
+<p><b>Detaches</b> an interface element from its 
+  parent.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupDetach(Ihandle *<strong>child</strong>); [in C]
+iup.Detach(<strong>child</strong>: ihandle) [in Lua]
+or <strong>child</strong>:detach() [in Lua]</pre>
+<p><strong>child</strong>: Identifier of the interface element to be detached.</p>
+<h3>Notes</h3>
+<p>It will automatically call <strong>IupUnmap</strong> to <b>unmap</b> the element if 
+necessary, and then <strong>detach</strong> the element.</p>
+<p>If left <b>detached</b> it is still necessary to call <b>IupDestroy</b> to <b>
+destroy</b> the IUP element.</p>
+<p>The elements are NOT immediately repositioned. Call
+  <b>IupRefresh</b> for the container (or any other element in the dialog) to 
+update the dialog layout.</p>
+<p>When the element is mapped some attributes are stored only in the native 
+system. If the element is <b>unmaped</b> those attributes are lost. Use the 
+function <a href="iupsaveclassattributes.html">IupSaveClassAttributes</a> when 
+you want to <b>unmap</b> the element and keep its attributes.&nbsp;</p>
+<h3>See Also</h3>
+<p><a href="iupappend.html">IupAppend</a>, 
+  <a href="iupinsert.html">IupInsert</a>, 
+  <a href="iuprefresh.html">IupRefresh</a>, <a href="iupunmap.html">IupUnmap</a>,
+<a href="iupcreate.html">IupCreate</a>, <a href="iupdestroy.html">IupDestroy</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetClassName</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetClassName <span class="style1">(renamed from IupGetType in 2.7)</span></h2>
+<p>Returns the name of the class of an interface 
+  element.</p>
+<h3>
+Parameters/Return</h3>
+<pre>char* IupGetClassName(Ihandle* <strong>ih</strong>); [in C]
+iup.GetClassName(<strong>ih</strong>: ihandle) -&gt; (<strong>name</strong>: string) [in Lua]</pre>
+<p><b>ih</b>: Identifier of the interface element.</p>
+<p><span class="style2">Returns:</span> the name of the class.</p>
+<h3>Notes</h3>
+<p>The following names are known:</p>
+<pre>&quot;image&quot;
+&quot;button&quot;
+&quot;canvas&quot;
+&quot;dialog&quot;
+&quot;fill&quot;
+&quot;frame&quot; 
+&quot;hbox&quot;
+&quot;item&quot;
+&quot;separator&quot;
+&quot;submenu&quot;
+&quot;label&quot;
+&quot;list&quot;
+&quot;menu&quot;
+&quot;radio&quot;
+&quot;text&quot; 
+&quot;toggle&quot;
+&quot;vbox&quot;
+&quot;zbox&quot;
+&quot;multiline&quot;
+&quot;user&quot;
+&quot;matrix&quot;
+&quot;tree&quot;
+&quot;dial&quot;
+&quot;gauge&quot;
+&quot;val&quot;
+&quot;glcanvas&quot;
+&quot;tabs&quot;
+&quot;cells&quot;
+&quot;colorbrowser&quot;
+&quot;colorbar&quot;
+&quot;spin&quot;
+&quot;sbox&quot;
+&quot;cbox&quot;
+&quot;progressbar&quot;
+&quot;olecontrol&quot;
+</pre>
+
+<h3>See Also</h3>
+<p>
+<a href="iupclassmatch.html">IupClassMatch</a>,
+<a href="iupgetclasstype.html">IupGetClassType</a>,
+<a href="iupgetclassattributes.html">IupGetClassAttributes</a></p>
+
+</body>
+
+</html>

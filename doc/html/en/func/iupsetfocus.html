@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetFocus</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupSetFocus</h2>
+<p>Sets the interface element that will 
+  receive the keyboard focus, i.e., the element that will receive keyboard events. 
+But this will be processed only after the con</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle *IupSetFocus(Ihandle *<strong>ih</strong>); [in C]
+iup.SetFocus(<strong>ih</strong>: ihandle) -&gt; <strong>ih</strong>: ihandle [in Lua]</pre>
+<p><b>ih</b>: identifier of the interface element that will receive the keyboard focus. Only 
+  elements that can have the keyboard focus, are mapped, active and visible can be used, other elements are ignored.</p>
+<p><span class="style1">Returns:</span> the identifier of the interface 
+  element that previously had the keyboard focus.</p>
+<h3>Notes</h3>
+<p>The value returned by <strong>IupGetFocus</strong> will be updated only after 
+the main loop regain the control and the control actually receive the focus. So 
+if you call <strong>IupGetFocus</strong> right after <strong>IupSetFocus</strong> 
+the return value will be different. You could call <strong>IupFlush</strong> 
+between the two functions to obtain the same value.</p>
+<h3>See Also</h3>
+<p><a href="iupgetfocus.html">IupGetFocus</a>.</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

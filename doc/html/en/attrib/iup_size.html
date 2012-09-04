@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>SIZE</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	margin-left: 40px;
+}
+.style2 {
+	font-size: large;
+}
+.style3 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>SIZE<span class="style2"> (non inheritable)</span></h2>
+<p>Specifies the element <b>User</b> size, and 
+  returns the <b>Current</b> size, in units proportional to the size of a character.</p>
+<p>See the <a href="../layout_guide.html">Layout Guide</a> for more details 
+  on sizes.</p>
+<h3>Value</h3>
+<p>&quot;<i>width</i>x<i>height</i>&quot;, where width 
+  and height
+  are integer values corresponding to the 
+  horizontal and vertical size, respectively, in characters fraction unit (see Notes 
+below). 
+</p>
+<p>You can also set only one of the 
+  parameters by removing the other one and maintaining the separator &quot;x&quot;, 
+but this is equivalent of setting the other value to 0. For example: &quot;x40&quot; (height only 
+= &quot;0x40&quot;) or &quot;40x&quot; (width only = &quot;40x0&quot;).</p>
+<p>When this attribute is consulted the <b>Current</b> size of the control is returned.</p>
+<h3>Notes</h3>
+<p>The size units observes the following 
+  heuristics:</p>
+<ul>
+  <li>Width in 1/4's of the average width of a 
+    character for the current <strong>FONT</strong> of each control.</li>
+  <li>Height in 1/8's of the average height of a 
+    character 
+    for the current <strong>FONT</strong> of each control.</li>
+</ul>
+<p>So, a SIZE=&quot;4x8&quot; means 1 character width and 1 character height.</p>
+<p>Notice that this is the <span class="style3">average</span> character size, 
+the space occupied by a specific string is always different than its number of 
+character times its average character size, except when using a monospaced font 
+like Courier. Usually for common strings this size is smaller than the actual 
+size, so it is a good practice to leave more room than expected if you use the 
+SIZE attribute. For smaller font sizes this difference is more noticeable than 
+for larger font sizes.</p>
+<p>When this attribute is changed, the 
+  <a href="iup_rastersize.html">RASTERSIZE</a>
+  attribute is automatically updated.</p>
+<p>SIZE depends on <a href="iup_font.html">FONT</a>, so when <strong>FONT</strong> is changed and
+<strong>SIZE</strong> 
+is set, then <strong>RASTERSIZE</strong> is also updated.</p>
+<p>The average character size of the current <strong>FONT</strong> can be 
+obtained from the <a href="iup_font3.html#CHARSIZE">CHARSIZE</a> attribute.</p>
+<p>To obtain the last computed <strong>Natural</strong> size of the control in pixels, use the read-only 
+attribute <strong>NATURALSIZE</strong>. (Since 3.6)</p>
+<hr class="style1">
+<p>A <b>User</b> size of &quot;0x0&quot; can be set, it can also be set using NULL.</p>
+<p>If you wish to use the <b>User</b> size only as an initial size, change this attribute to NULL after the control is mapped, the returned size in 
+<strong>IupGetAttribute</strong> will still be the 
+  <b>Current</b> size.</p>
+<p>The element is NOT immediately repositioned. Call
+  <b>IupRefresh</b> to update the dialog layout. </p>
+<p><b>IupMap</b> also updates the dialog layout even if it is already mapped, so 
+  calling it or calling <b>IupShow</b>, 
+  <b>IupShowXY</b> or 
+  <b>IupPopup</b> (they all call 
+  <b>IupMap</b>) will also update the dialog layout.</p>
+<p>See the <a href="../layout_guide.html">Layout Guide</a> for mode details 
+  on sizes.</p>
+<h3>Affects</h3>
+<p>All, except menus.</p>
+<h3>See Also</h3>
+<p><a href="iup_font.html">FONT</a>,
+  <a href="iup_rastersize.html">RASTERSIZE</a>, 
+<a href="../func/iuprefresh.html">IupRefresh</a></p>
+
+</body>
+
+</html>

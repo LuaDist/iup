@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>K_ANY</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+</style>
+</head>
+<body>
+
+<h2>K_ANY</h2>
+<p>Action generated when a keyboard event 
+  occurs.</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>c</strong>); [in C]
+<strong>elem</strong>:k_any(<strong>c</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that activated the event.<br>
+<strong>c</strong>:
+  identifier of typed key. Please refer to the
+  <a href="../attrib/key.html">Keyboard Codes</a>
+  table for a list of possible values.</p>
+<p><u>Returns</u>: If IUP_IGNORE is returned the key is ignored and not 
+processed by the control and not propagated. If returns IUP_CONTINUE, the key will be processed and the event will be 
+propagated to the parent of the element receiving it, this is the default 
+behavior. If returns
+  IUP_DEFAULT the key is processed but it is not propagated. IUP_CLOSE will be 
+processed. </p>
+<h3>Notes</h3>
+<p>Keyboard callbacks depend on the keyboard usage of the control with the focus. 
+So if you return IUP_IGNORE the control will usually not process the key. But be 
+aware that sometimes the control process the key in another event so even 
+returning IUP_IGNORE the key can get processed. Although it will not be 
+propagated.</p>
+<p><span class="style1">IMPORTANT</span>: The callbacks &quot;K_*&quot; of the dialog or 
+native containers depend on the IUP_CONTINUE return value to work while the 
+control is in focus.</p>
+<p>If the callback does not exists it is automatically propagated to the parent of the element.</p>
+<h4>K_* callbacks</h4>
+<p>All defined keys are also callbacks of any 
+  element, called when the respective key is activated. For example: &quot;K_cC&quot; is also a callback activated when the user 
+  press Ctrl+C, when the focus is at the element or at a children with focus. This is the way an application can create shortcut keys, also called 
+  hot keys. These callbacks are not available in IupLua.</p>
+<h3>Affects</h3>
+<p>All elements with keyboard interaction.</p>
+
+</body>
+
+</html>

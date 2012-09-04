@@ -1,0 +1,3 @@
+EXPORTS
+  iup_mglplotlua_open
+  luaopen_iuplua_mglplot

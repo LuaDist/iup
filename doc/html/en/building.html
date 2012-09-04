@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Guide</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h1 align="center" style="text-align:center">Building Lua, IM, CD and IUP in 
+Linux</h1>
+<p>This is a guide to build all the Lua, IM, CD and IUP libraries in Linux. 
+Notice that you may not use all the libraries, although this guide will show you 
+how to build all of 
+them. You may then choose to build specific libraries.</p>
+<p>The Linux used as reference is the Ubuntu distribution.</p>
+<h3>System Configuration</h3>
+<p>To build the libraries you will have to download the development version of some packages installed 
+on your system. Although the run time version of some of these packages are 
+already installed, the development versions are usually not. The packages 
+described here are for Ubuntu, but you will be able to identify them for other 
+systems as well.</p>
+<p>To build Lua you will need:</p>
+			<pre>libreadline5-dev</pre>
+		<p>To build IM you will need:</p>
+			<pre>g++</pre>
+		<p>To build CD you will need:</p>
+<pre>libfreetype6-dev
+libx11-dev
+libxpm-dev
+libxmu-dev
+  libxft-dev (for the XRender driver, OPTIONAL)
+libgtk2.0-dev (for the GDK driver)</pre>
+
+<p>To build IUP you will need:</p>
+<pre>libgtk2.0-dev (for the GTK driver) [already installed for CD]
+  libmotif-dev and x11proto-print-dev (for the Motif driver, OPTIONAL)
+libgl1-mesa-dev and libglu1-mesa-dev (for the IupGLCanvas)
+libwebkitgtk-dev (for the IupWebBrowser)</pre>
+<p>To install them you can use the Synaptic Package Manager and select the 
+packages, or can use the command line and type:</p>
+<pre>sudo apt-get install package_name</pre>
+<h3>Source Download</h3>
+<p>Download the &quot;xxx-X.X_Sources.tar.gz&quot; package from the &quot;<strong>Docs and Sources</strong>&quot; 
+directory for the version you want to build. Here are links for the <strong>Files</strong> section 
+in <strong>Source Forge</strong>:</p>
+<p>Lua - <a href="http://sourceforge.net/projects/luabinaries/files/">
+http://sourceforge.net/projects/luabinaries/files/</a><br>
+IM - <a href="http://sourceforge.net/projects/imtoolkit/files/">
+http://sourceforge.net/projects/imtoolkit/files/</a><br>
+CD - <a href="http://sourceforge.net/projects/canvasdraw/files/">
+http://sourceforge.net/projects/canvasdraw/files/</a><br>
+IUP - <a href="http://sourceforge.net/projects/iup/files/">
+http://sourceforge.net/projects/iup/files/</a></p>
+<h3>Unpacking</h3>
+<p>To extract the files use the tar command at a common directory, for example:</p>
+<pre>mkdir -p xxxx
+cd xxxx
+
+[copy the downloaded files, to the xxxx directory]
+
+tar -xpvzf lua5_1_4_Sources.tar.gz    [optional, see note below]
+tar -xpvzf im-3.6.2_Sources.tar.gz
+tar -xpvzf cd-5.4_Sources.tar.gz
+tar -xpvzf iup-3.2_Sources.tar.gz
+</pre>
+<p>If you are going to build all the libraries, the makefiles and projects 
+expect the following directory tree:</p>
+<pre>/xxxx/
+      lua5.1/    [optional, see note below]
+      im/
+      cd/
+      iup/</pre>
+
+<p>If you unpack all the source packages in the same directory, that structure will 
+be automatically created.</p>
+<p>If you want to use some of these libraries that are installed on the system 
+(see Installation section below) you will have to define some environment 
+variables before building them. For example:</p>
+<pre class="example">export IM_INC=/usr/include/im
+export IM_LIB=/usr/lib           [not necessary, already included by gcc]
+
+export CD_INC=/usr/include/cd
+export CD_LIB=/usr/lib           [not necessary, already included by gcc]
+
+export IUP_INC=/usr/include/iup
+export IUP_LIB=/usr/lib          [not necessary, already included by gcc]</pre>
+<h3>Lua</h3>
+<p>Although we use Lua from LuaBinaries, any Lua installation can also be used. 
+In Ubuntu, the Lua run time package is:</p>
+<pre>lua5.1</pre>
+<p>And the Lua development package is:</p>
+<pre>liblua5.1-0-dev</pre>
+<p>To use them, instead of using the directory &quot;/xxxx/lua5.1&quot; described above, you will have to define some environment variables before building IM, CD and 
+IUP:</p>
+<pre class="example">export LUA_SUFFIX=
+export LUA_INC=/usr/include/lua5.1</pre>
+<h3>Building</h3>
+
+<p>As a general rule (excluding system dependencies): IUP depends on CD and IM, 
+and CD depends on IM. So start by build IM, then CD, then IUP.</p>
+<p>To start building go the the &quot;<strong>src</strong>&quot; directory and type &quot;<strong>make</strong>&quot;. In IUP there are 
+many &quot;srcxxx&quot; folders, so go to the up directory &quot;iup&quot; and type 
+&quot;<strong>make</strong>&quot; that all the 
+sub folders will be built. For example:</p>
+<pre>cd im/src
+make
+cd ../..
+
+cd cd/src
+make
+cd ../..
+
+cd iup
+make
+cd ..</pre>
+<p><strong>TIP</strong>: Instead of building all the libraries, try building only the libraries you 
+are going to use. The provided makefiles will build all the libraries, but take 
+a look inside them and you will figure out how to build just one library.</p>
+<p><strong>TIP</strong>: If GTK headers or libraries are not being found, even 
+when the libgtk2.0-dev package is installed, then their installation folder is 
+not where our Makefiles expect. Build the GTK/GDK dependent libraries using 
+&quot;make
+<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:black;mso-ansi-language:PT-BR;
+mso-fareast-language:PT-BR;mso-bidi-language:AR-SA">USE_PKGCONFIG=Yes&quot;.</span></p>
+<h3>Pre-compiled Binaries</h3>
+<p>Instead of building from sources you can try to use the pre-compiled 
+binaries. Usually they were build in the latest Ubuntu versions for 32 and 64 
+bits. The packages are located in the &quot;<strong>Linux Libraries</strong>&quot; 
+directory 
+under the <strong>Files</strong> section 
+in <strong>Source Forge</strong>, with <strong>&quot;xxx-X.X_Linux26g4_lib</strong>.<strong>tar.gz&quot;</strong> 
+and <strong>&quot;xxx-X.X_Linux26g4_64_lib.tar.gz&quot;</strong> names.</p>
+<p>Do not extract different pre-compiled binaries in the same directory, create a 
+subdirectory for each one, for example:</p>
+<pre>mkdir im
+cd im
+tar -xpvzf ../im-3.6.2_Linux26g4_lib.tar.gz
+cd ..
+
+mkdir cd
+cd cd
+tar -xpvzf ../cd-5.4_Linux26g4_lib.tar.gz
+cd ..
+
+mkdir iup
+cd iup
+tar -xpvzf ../iup-3.2_Linux26g4_lib.tar.gz
+cd ..
+</pre>
+<p>For the installation instructions below, remove the &quot;lib/Linux26g4&quot; from the 
+following examples if you are using the pre-compiled binaries.</p>
+<h3>Installation (System Directory)</h3>
+
+<p>After building you can copy the libraries files to the system directory. If you are inside 
+the main directory, to install the run time libraries you can type, for example:</p>
+<pre>sudo cp -f im/lib/Linux26g4/*.so /usr/lib               [script version: <a href="../download/install">install</a> ]
+sudo cp -f cd/lib/Linux26g4/*.so /usr/lib
+sudo cp -f iup/lib/Linux26g4/*.so /usr/lib
+</pre>
+<p>To install the development files, 
+then do:</p>
+<pre>sudo mkdir -p /usr/include/im                           [script version: <a href="../download/install_dev">install_dev</a> ]
+sudo cp -fR im/include/*.h /usr/include/im
+sudo cp -f im/lib/Linux26g4/*.a /usr/lib
+
+sudo mkdir -p /usr/include/cd
+sudo cp -f cd/include/*.h /usr/include/cd
+sudo cp -f cd/lib/Linux26g4/*.a /usr/lib
+
+sudo mkdir -p /usr/include/iup
+sudo cp -f iup/include/*.h /usr/include/iup             
+sudo cp -f iup/lib/Linux26g4/*.a /usr/lib                               
+</pre>
+<p>Then in your makefile use -Iim -Icd -Iiup for includes. There is no need to 
+specify the libraries directory with -L. Development files are only necessary if 
+you are going to compile an application or library in C/C++ that uses there 
+libraries. To just run Lua scripts they are not necessary.</p>
+<h4>Installation (Build Directory) [Alternative]</h4>
+<p>If you <strong>don't</strong> want to copy the run time libraries to your system 
+directory, you can use them from build directory. You will need to add the run time 
+libraries folders to 
+the LD_LIBRARY_PATH (DYLD_LIBRARY_PATH in MacOSX), for example:</p>
+<pre>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/xxxx/im/lib/Linux26g4:/xxxx/cd/lib/Linux26g4:/xxxx/iup/lib/Linux26g4</pre>
+<p>And in your makefile will will also need to specify those paths 
+when linking using -L/xxxx/iup/lib/Linux26g4, and for compiling use 
+-I/xxxx/iup/include.</p>
+<h3>Installation (Lua Modules)</h3>
+<p>Lua modules in Ubuntu are installed in the &quot;/usr/lib/lua/5.1&quot; 
+directory. So to 
+be able to use the Lua &quot;require&quot; with IUP, CD and IM you must create symbolic links inside 
+that directory.</p>
+<pre>sudo mkdir -p /usr/lib/lua/5.1                          [script version: <a href="../download/config_lua_module">config_lua_module</a> ]
+cd /usr/lib/lua/5.1  
+       
+sudo ln -fs /usr/lib/libiuplua51.so iuplua.so
+sudo ln -fs /usr/lib/libiupluacontrols51.so iupluacontrols.so
+...</pre>
+<p>Using those links you do not need any extra configuration. </p>
+<h4>Installation (Lua Modules) [Alternative]</h4>
+<p>If you use the <strong>alternative</strong> installation directory, and you also 
+do NOT use the LuaBinaries installation, then you must set the LUA_CPATH environment variable:</p>
+<pre>export LUA_CPATH=./\?.so\;./lib\?.so\;./lib\?51.so\;</pre>
+<p><br>
+</p>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>KEY</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>KEY</h2>
+<p>Associates a key to a menu item or submenu. 
+  Such key works as a shortcut when the menu is open, this is not a hot key.</p>
+<h3>Value</h3>
+<p>String containing a key description. Its is a string representation of an IUP 
+key code. Please 
+  refer to the <a href="key.html">Keyboard Codes</a>
+  table for a list of the possible values.</p>
+<p>Default: NULL</p>
+<h3>Notes</h3>
+<p>IUP automatically underlines the first 
+  appearance of the chosen menu letter. For such, the chosen letter must necessarily be a part of the menu text.</p>
+<p>In Windows, when used will also set an underscore on the respective letter of 
+the submenu title.</p>
+<p>The key will be used when navigating in the parent menu that contains the 
+item. If the same character key is present in the title, then it will be 
+underlined.</p>
+<p>In the menu bar, some systems automatically 
+  associate the ALT+&lt;letter&gt; combination for the chosen letter. This is valid for the Windows driver, but not for the 
+  Motif driver.</p>
+<p>Be careful not to misuse this attribute in 
+  relation to 
+<a href="../call/iup_k_any.html">K_ANY</a> 
+  or K_* callbacks.</p>
+<h3>Affects</h3>
+<p><a href="../elem/iupitem.html">IupItem</a>,
+  <a href="../elem/iupsubmenu.html">IupSubMenu</a>.</p>
+
+</body>
+
+</html>

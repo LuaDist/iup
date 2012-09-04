@@ -1,0 +1,797 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMglPlot</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+.style2 {
+	text-decoration: underline;
+}
+.style4 {
+	font-size: large;
+}
+.style7 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupMglPlot <span class="style4">(since 3.6)</span></h2>
+<p>Creates a MathGL plot. It inherits from 
+<a href="../elem/iupcanvas.html">IupCanvas</a>. </p>
+<p>MathGL is a library for creating plots that is system independent. It is 
+maintained by Alexey Balakin (balakin@appl.sci-nnov.ru) and available at SourceForge
+<a href="http://mathgl.sourceforge.net/">http://mathgl.sourceforge.net/</a> with a 
+LGPL license. IupMglPlot library includes the MathGL source code so no external 
+references are needed. Also the standard MathGL distribution source code was 
+changed to improve features and visual appearance.</p>
+<h3>Initialization and Usage</h3>
+<p>The <b>IupMglPlotOpen</b> function must be called after a <b>IupOpen</b>, so that the control can be used. 
+  The &quot;iup_mglplot.h&quot; file must also be included in the source code. The program must be linked to the controls 
+  library (iup_mglplot), and with the OpenGL library.</p>
+<p>To make the control available in Lua use require&quot;iuplua_mglplot&quot; or manually 
+call the initialization function in C, 
+<b>iupmglplotlua_open</b>, after calling <b>iuplua_open</b>.
+  &nbsp;When manually calling the function the iuplua_mglplot.h file must also be included in the source code 
+and the program must be linked to the 
+Lua control 
+  library (iuplua_mglplot).</p>
+<h3>Guide</h3>
+<p>Each plot can contain 2 or 3 <b>axes</b> (X and Y and/or Z), a <b>title</b>, a <b>
+legend</b> <b>box</b>, a <strong>colorbar</strong>, a <b>grid</b>, a <b>dataset</b> <b>area</b> and as many
+<b>datasets</b> you want. </p>
+<p>Each dataset is added using the <b>IupMglPlotAdd*</b>, <b>IupMglPlotInsert*</b> 
+and<b> IupMglPlotSet* </b>functions. All other plot 
+parameters are configured by attributes.</p>
+<p>If no attribute is set, the default values were selected to best display 
+the plot.</p>
+<p><strong>IMPORTANT</strong>: When setting attributes the plot is NOT redrawn until the REDRAW attribute is 
+set or a redraw event occurs.</p>
+<p>The <b>dataset area</b> is delimited by the min/max axis attributes. Data is 
+only plotted inside the dataset area. This area defines the 2D or 3D plot 
+coordinate space. The screen area is a 2D pixels coordinate space. And finally 
+the dataset also defines a normalized space, that means min/max is converted 
+to 0-1.</p>
+<p>The <b>legend box</b> is a list of the dataset names, each one drawn with the 
+same color of the correspondent dataset. The box is located in one of the four 
+corners of the dataset area.</p>
+<p>The <strong>colorbar</strong> is an additional axis showing the the colors 
+used to pseudo color the data for some plot modes.</p>
+<p>The <b>grid</b> is automatically spaced accordingly the current axis 
+displayed values.</p>
+<p>The <b>title</b> is always centered in the top of the plot.</p>
+<p>The <b>axes</b> are positioned at the origin (0,0,0), but can be automatically positioned at the left-bottom. If values are only positive then the 
+origin will be placed in left 
+bottom position. If values are negative and positive then origin will be placed 
+inside the plot. The ticks in the axis are also automatically distributed.&nbsp;</p>
+<h3>Data</h3>
+<p>MathGL supports several kinds of data. IupMglPlot restricts this to a few 
+combinations. First there are 3 major classes:</p>
+<p><strong>Linear</strong> sequential data are simply a sequence of points 
+whether in 1D, 2D or 3D coordinates.</p>
+<p><strong>Planar</strong> data is a bi-dimensional array of values, just like a 
+digital image. Each value is f(x,y), where x belongs to [-1, 1] and y to 
+[-1, 1].</p>
+<p><strong>Volumetric</strong> data is a tri-dimensional array of values, that 
+represents a 3D volume. Each value is f(x,y,z), where x belongs to [-1, 1], y to [-1, 
+1] and z to [-1, 1].</p>
+<p>Planar and volumetric data can be very memory consuming, so be careful when 
+using them. Linear data is the same representation accepted by IupPPlot, with 
+the exception that IupMglPlot has support for 3D coordinates. Also planar and 
+volumetric data in IupMglPlot have x, y and z coordinates equidistantly 
+distributed from 0 to count-1. Planar and volumetric data are stored in a 1D 
+dataset created by IupMglPlotNewDataSet, and filled with IupMglPlotSetData, IupMglPlotLoadData 
+or IupMglPlotSetFromFormula functions only.</p>
+<h3>Interaction</h3>
+<h4>Zoom and Pan</h4>
+<p>Zoom and Pan operations can be done using keyboard or mouse actions in 2D and 
+3D plots.</p>
+<p>Zoom can be done using the mouse wheel (Zoom in: scroll up; Zoom out: scroll 
+down), the Ctrl+Left mouse button pressed and vertical mouse movements (Zoom in: 
+bottom-up; Zoom out: top-down) or the plus '+' (Zoom in) and minus '&minus;' 
+(Zoom out) keys. </p>
+<p>Pan is done using horizontal and vertical mouse movements with the left mouse 
+button pressed. By keyboard, the Ctrl+arrow keys combinations can be used to 
+shift the window. Arrow keys can also be used without using the Ctrl key to 
+slower movements.</p>
+<h4>Rotation</h4>
+<p>Rotation operations can also be done using keyboard or mouse actions, but 
+only for 3D plots.</p>
+<ul>
+	<li>Rotation in X axis: right mouse button pressed and vertical mouse 
+	movements, or 'w' and 's' keys.</li>
+	<li>Rotation in Y axis: right mouse button pressed and horizontal mouse 
+	movements, or 'a' and 'd' keys. </li>
+	<li>Rotation in Z axis: Ctrl+right mouse button pressed and vertical mouse 
+	movements, or 'e' and 'q' keys. </li>
+</ul>
+<h4>Reseting</h4>
+<p>The interaction can be reset with a mouse double-click inside the plot area 
+or by pressing the HOME key. This action restores
+the plot to the default view (no zoom, no pan and no rotation).</p>
+<h3>Text and Fonts</h3>
+<p>MathGL provides support for parsing LaTeX-like syntax. So all labels and 
+title can contain formatting commands and equation symbols. For example: \b 
+(bold), \i (italic), \u (underline), \big (bigger size), @ (smaller size), ^ 
+(upper), _ (lower),&nbsp; etc. The full list contain approximately 2000 
+commands. Multiline text is accepted. </p>
+<p>For example:</p>
+<pre>&quot;It can be \\wire{wire}, \\big{big} or #r{colored}&quot; 
+&quot;One can change style in string: &quot; &quot;\\b{bold}, \\i{italic, \\b{both}}&quot;
+&quot;Easy to \\a{overline} or \\u{underline}&quot; 
+&quot;Easy to change indexes ^{up} _{down} @{center}&quot;
+&quot;It parse TeX: \\int \\alpha \\cdot \\sqrt3{sin(\\pi x)^2 + \\gamma_{i_k}} dx&quot;
+&quot;\\sqrt{\\frac{\\alpha^{\\gamma^2}+&quot; &quot;\\overset 1{\\big\\infty}}{\\sqrt3{2+b}}}&quot;</pre>
+<p class="style7">
+<img src="images/iup_mglplot_text.png" width="540" height="244"></p>
+<h3><a name="Creation">Creation</a></h3>
+<div>
+  <pre>Ihandle* IupMglPlot(void); [in C]
+iup.mglplot{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+mglplot() [in LED]</pre>
+</div>
+<p>This function returns the identifier of the 
+  created plot, or NULL if an error occurs.</p>
+<h3>Auxiliary Functions</h3>
+<pre>void <b>IupMglPlotBegin</b>(Ihandle* <b>ih</b>, int <b>dim</b>); [in C]
+<b>iup.MglPlotBegin</b>(<b>ih</b>: ihandle, <b>dim</b>: number) [in Lua]</pre>
+<p>Prepares a dataset to receive samples. The dimension of the data can be 1, 2 or 3. 
+<em>Linear data only.</em></p>
+<hr>
+<pre>void <b>IupMglPlotAdd1D</b>(Ihandle* <b>ih</b>, const char* <b>name</b>, float <b>y</b>); [in C]
+<b>iup.MglPlotAdd1D</b>(<b>ih</b>: ihandle, <b>name</b>: string, <b>y</b>: number) [in Lua]</pre>
+<p>Adds a sample to the dataset. Can only be called if <b>IupMglPlotBegin</b> was 
+called with dim=1. <strong>name</strong> is an optional string used for tick 
+labels in the X axis, and it can be NULL (nil in Lua). Names are allowed only 
+for the first dataset and when set ticks configuration for the X axis is 
+ignored, all the names are shown. The X axis data is automatically generated (0,1,2,3,...). 
+<em>Linear data only.</em></p>
+<hr>
+<pre>void <b>IupMglPlotAdd2D</b>(Ihandle* <b>ih</b>, float <b>x</b>, float <b>y</b>); [in C]
+<b>iup.MglPlotAdd2D</b>(<b>ih</b>: ihandle, <b>x</b>, <b>y</b>: number) [in Lua]</pre>
+<p>Adds a sample to the dataset. Can only be called if <b>IupMglPlotBegin</b> was 
+called with dim=2. <em>Linear data only.</em></p>
+<hr>
+<pre>void <b>IupMglPlotAdd3D</b>(Ihandle* <b>ih</b>, float <b>x</b>, float <b>y</b>, float <b>z</b>); [in C]
+<b>iup.MglPlotAdd3D</b>(<b>ih</b>: ihandle, <b>x</b>, <b>y</b>, <b>z</b>: number) [in Lua]</pre>
+<p>Adds a sample to the dataset. Can only be called if <b>IupMglPlotBegin</b> was 
+called with dim=3. <em>Linear data only.</em></p>
+<hr>
+<pre>int <b>IupMglPlotEnd</b>(Ihandle* <b>ih</b>); [in C]
+<b>iup.MglPlotEnd</b>(<b>ih</b>: ihandle) -&gt; (<b>index</b>: number) [in Lua]</pre>
+<p>Adds the dataset to the plot and returns the dataset <strong>index</strong>. 
+The dataset can be empty. Redraw is NOT 
+done until the REDRAW attribute is set. Also it will change the current dataset 
+index (CURRENT) to the return value. You can only set attributes of a dataset AFTER you 
+added the dataset.&nbsp;Can only be called if <b>IupMglPlotBegin</b> was called. 
+Whenever you create a dataset all its &quot;DS_*&quot; attributes will be set to the 
+default values. Notice that DS_MODE must be set before other &quot;DS_*&quot; attributes. 
+<em>Linear data only.</em></p>
+<hr>
+<pre>void <b>IupMglPlotNewDataSet</b>(Ihandle* <b>ih</b>, int <b>dim</b>); [in C]
+<b>iup.MglPlotNewDataSet</b>(<b>ih</b>: ihandle, <b>dim</b>: number) [in Lua]</pre>
+<p>Creates an empty dataset to receive samples. The dimension of the data can be 1, 2 or 3. 
+Linear data can have 1, 2 or 3 dimensions. Planar data has 2 dimensions, but use 
+dim=1. Volumetric data has 3 dimensions, but use dim=1.</p>
+<p>Planar and volumetric data distribute their data in 2D and 3D continuous 
+arrays, so the number of dimensions is given only when the array is set in <b>IupMglPlotSetData</b>, <b>IupMglPlotLoadData</b> 
+or <b>IupMglPlotSetFromFormula</b>. You can convert planar data into linear data 
+using the DS_REARRANGE and DS_SPLIT attributes.</p>
+<hr>
+<pre>void <b>IupMglPlotInsert1D</b>(Ihandle *<b>ih</b>, int <b>ds_index</b>, int <b>sample_index</b>, const char** <b>names</b>, float* <b>y</b>, int <strong>count</strong>); [in C]
+void <b>IupMglPlotInsert2D</b>(Ihandle *<b>ih</b>, int <b>ds_index</b>, int <b>sample_index</b>, float* <b>x</b>, float* <b>y</b>, int <strong>count</strong>);
+void <b>IupMglPlotInsert3D</b>(Ihandle *<b>ih</b>, int <b>ds_index</b>, int <b>sample_index</b>, float* <b>x</b>, float* <b>y</b>, float* <b>z</b>, int <strong>count</strong>);
+<b>iup.IupMglPlotInsert1D</b>(<b>ih</b>: ihandle, <b>ds_index, sample_index</b>: number, <b>names</b>: table of string, <b>y</b>: table of number) [in Lua]
+<b>iup.IupMglPlotInsert2D</b>(<b>ih</b>: ihandle, <b>ds_index, sample_index</b>: number, <b>x, y</b>: table of number)
+<b>iup.IupMglPlotInsert3D</b>(<b>ih</b>: ihandle, <b>ds_index, sample_index</b>: number, <b>x, y, z</b>: table of number)
+</pre>
+<p>Inserts an array of samples in the dataset <strong>ds_index</strong> at the given <strong>sample_index</strong>. 
+Can be used only after the dataset is added to the plot. <strong>sample_index</strong> 
+can be after the last sample so data is appended to the array. Current data is 
+shifted if necessary. <strong>names</strong> 
+are optional strings used for tick labels in the X axis, and it can be NULL (nil 
+in Lua). Names are allowed only for the first dataset and when set ticks 
+configuration for the X axis is ignored, all the names are shown. Also for the 1D version, the X axis data is automatically generated (0,1,2,3,...). 
+<em>Linear data only.</em></p>
+<hr>
+<pre>void <b>IupMglPlotSet1D</b>(Ihandle *<b>ih</b>, int <b>ds_index</b>, const char** <b>names</b>, float* <b>y</b>, int <strong>count</strong>); [in C]
+void <b>IupMglPlotSet2D</b>(Ihandle *<b>ih</b>, int <b>ds_index</b>, float* <b>x</b>, float* <b>y</b>, int <strong>count</strong>);
+void <b>IupMglPlotSet3D</b>(Ihandle *<b>ih</b>, int <b>ds_index</b>, float* <b>x</b>, float* <b>y</b>, float* <b>z</b>, int <strong>count</strong>);
+<b>iup.IupMglPlotSet1D</b>(<b>ih</b>: ihandle, <b>ds_index</b>: number, <b>names</b>: table of string, <b>y</b>: table of number) [in Lua]
+<b>iup.IupMglPlotSet2D</b>(<b>ih</b>: ihandle, <b>ds_index</b>: number, <b>x, y</b>: table of number)
+<b>iup.IupMglPlotSet3D</b>(<b>ih</b>: ihandle, <b>ds_index</b>: number, <b>x, y, z</b>: table of number)
+</pre>
+<p>Sets an array of samples in the dataset <strong>ds_index</strong>.&nbsp; 
+Existing data is removed. Can be used only after the dataset is added to the plot. <strong>names</strong> 
+is an optional array of strings used for tick labels in the X axis, and it can be NULL (nil 
+in Lua). Names are allowed only for the first dataset and when set ticks 
+configuration for the X axis is ignored, all the names are shown. Also for the 1D version, the X axis data is automatically generated (0,1,2,3,...). 
+<em>Linear data only.</em></p>
+<hr>
+<pre>
+void <strong>IupMglPlotSetFormula</strong>(Ihandle* <strong>ih</strong>, int <strong>ds_index</strong>, const char* <strong>formulaX</strong>, const char* <strong>formulaY</strong>, const char* <strong>formulaZ</strong>, int <strong>count</strong>);
+<strong>iup.MglPlotSetFormula</strong>(<b>ih</b>: ihandle, <b>ds_index</b>: number, <strong>formulaX</strong>, <strong>formulaY</strong>, <strong>formulaZ</strong>: string, <strong>count</strong>: number);
+</pre>
+<p>Same as IupMglPlotSet* but data is generated from a formula. If <strong>count</strong> 
+is 0 the current size is used.&nbsp;If 2D data then <strong>
+formulaY</strong> must be non NULL. If 3D data then <strong>formulaZ</strong> 
+must be non NULL. The variables of the formulas must be x, y and/or z. Coordinates are evaluated 
+in the [0,1] interval. There is no difference between lower or upper case in 
+formulas.<em> Linear data only.</em> </p>
+<p>The operators and functions can be:</p>
+<pre>+ - * / ^      (^=integer power)
+&lt; &gt; = &amp; |      (logical operators, &amp;=true if a and b both nonzero, |=true if x or y nonzero)
+sqrt(a)  pow(a,b)  log(a,b)  ln(a)    lg(a)            (ln(a)=log(e,a)  lg(a)=log(10,a)
+abs(a)   sign(a)   mod(a,b)  step(a)  int(a)   rnd      pi
+sin(a)   cos(a)    tan(a)    asin(a)  acos(a)  atan(a)
+sinh(a)   cosh(a)  tanh(a)   asinh(a) acosh(a) atanh(a)</pre>
+<hr>
+<pre>void <b>IupMglPlotSetData</b>(Ihandle *<b>ih</b>, int <b>ds_index</b>, float* <b>data</b>, int <strong>count_x</strong>, int <strong>count_y</strong>, int <strong>count_z</strong>); [in C]
+<b>iup.MglPlotSetData</b>(<b>ih</b>: ihandle, <b>ds_index</b>: number, <b>data</b>: table of number) [in Lua]
+</pre>
+<p>Sets an array of samples in the dataset <strong>ds_index</strong>. 
+All previous values are removed. Can be used only after a 1D dataset is added to the plot, 
+the actual dimension will be defined by the <strong>count_</strong>* parameters. 
+If <strong>count_y</strong> is greater than 1 the data will be planar (like a 
+raster 2D image), if <strong>count_z</strong> is also greater than 1 the data 
+will be volumetric (a 3D volume).</p>
+<p>Notice that when <strong>count_y</strong> 
+and/or <strong>count_z</strong> are greater than 0 a large amount of memory is 
+used. All previous functions create linear data (a sequence of points) even 
+though their coordinates can have 1, 2 or 3 dimensions. The data should be 
+arranged so the element (x0, y0, z0) is accessed using the position [x0 + count_x*y0 
++ count_x*count_y*z0]. </p>
+<p>DS_COUNT is set to count_x*count_x*count_y. Existing data 
+is removed.</p>
+<p><em>Can be used for linear, planar or volumetric data, but linear data is 
+limited to 1D coordinates. You can convert planar data into linear data using 
+the DS_REARRANGE and DS_SPLIT attributes.</em></p>
+<hr>
+<pre>void <b>IupMglPlotLoadData</b>(Ihandle *<b>ih</b>, int <b>ds_index</b>, const char* <b>filename</b>, int <strong>count_x</strong>, int <strong>count_y</strong>, int <strong>count_z</strong>); [in C]
+<b>iup.MglPlotLoadData</b>(<b>ih</b>: ihandle, <b>ds_index</b>: number, <b>filename</b>: string[, <strong>count_x</strong>, <strong>count_y</strong>, <strong>count_z</strong>: number]) [in Lua]
+</pre>
+<p>Same as <strong>IupMglPlotSetData</strong> but loads the data from a file. 
+The file must contains space (&#39; &#39;) separated numeric data in text format. The text can contains 
+line comments starting with &#39;#&#39;.</p>
+<p>DS_COUNT is set to count_x*count_x*count_y. Existing data is removed. Linear 
+data is limited to 1D coordinates.</p>
+<p>If any <strong>count_*</strong> is 0 all their values are automatically 
+calculated. The number of elements in the first line defines <strong>count_x</strong>, 
+the number of lines before an empty line or before a form feed (&#39;\f&#39;) defines <strong>count_y</strong>, and the number of empty lines or the number of form 
+feeds (&#39;\f&#39;) defines <strong>count_z</strong>.</p>
+<p><em>Can be used for linear, planar or volumetric data, but linear data is 
+limited to 1D coordinates.</em>&nbsp;<em>You can convert planar data into linear 
+data using the DS_REARRANGE and DS_SPLIT attributes.</em></p>
+<hr>
+<pre>void <b>IupMglPlotSetFromFormula</b>(Ihandle *<b>ih</b>, nt <b>ds_index</b>,, const char* <b>formula</b>, int <strong>count_x</strong>, int <strong>count_y</strong>, int <strong>count_z</strong>)); [in C]
+<b>iup.MglPlotSetFromFormula</b>(<b>ih</b>: ihandle, <b>ds_index</b>: number, <b>formula</b>: string[, <strong>count_x</strong>, <strong>count_y</strong>, <strong>count_z</strong>: number]) [in Lua]
+</pre>
+<p>Same as <strong>IupMglPlotSetData</strong> but data is generated from a 
+formula. If all <strong>count_*</strong> are 0 the current size remains, and the 
+existing data is preserved but overwritten if the formula results that. If any <strong>count_*</strong> 
+is NOT zero then the existing data size is removed. The variables of the formulas must be x, y and/or z. Coordinates are evaluated 
+in the [0,1] interval. There is no difference between lower or upper case in 
+formulas. The operators and functions can be:</p>
+<pre>+ - * / ^      (^=integer power)
+&lt; &gt; = &amp; |      (logical operators, &amp;=true if a and b both nonzero, |=true if x or y nonzero)
+sqrt(a)  pow(a,b)  log(a,b)  ln(a)    lg(a)            (ln(a)=log(e,a)  lg(a)=log(10,a)
+abs(a)   sign(a)   mod(a,b)  step(a)  int(a)   rnd      pi
+sin(a)   cos(a)    tan(a)    asin(a)  acos(a)  atan(a)
+sinh(a)   cosh(a)  tanh(a)   asinh(a) acosh(a) atanh(a)</pre>
+<p>DS_COUNT is set to count_x*count_x*count_y.</p>
+<p><em>Can be used for linear, planar or volumetric data, but linear data is limited to 1D coordinates. 
+You can convert planar data into linear data using the DS_REARRANGE and DS_SPLIT 
+attributes.</em></p>
+<hr>
+<pre>void <b>IupMglPlotTransform</b>(Ihandle* <b>ih</b>, float <b>x</b>, float <b>y</b>, float <b>z</b>, int *<b>ix</b>, int *<b>iy</b>); [in C]
+<b>iup.MglPlotTransform</b>(<b>ih</b>: ihandle, <b>x, y, z</b>: number) -&gt; (<b>ix</b>, <b>iy</b>: number) [in Lua]</pre>
+<p>Converts coordinates from plot coordinates to pixels. It can be used only inside PREDRAW_CB 
+and POSTDRAW_CB callbacks. Output variables can be NULL if not used.</p>
+<hr>
+<pre>void <b>IupMglPlotTransformXYZ</b>(Ihandle* <b>ih</b>, int <b>ix</b>, int <b>iy</b>, float *<b>x</b>, float *<b>y</b>, float *<b>z</b>); [in C]
+<b>iup.MglPlotTransform</b>(<b>ih</b>: ihandle, <b>ix, iy</b>: number) -&gt; (<b>x</b>, <b>y</b>, <b>z</b>: number) [in Lua]</pre>
+<p>Converts coordinates from pixels to plot coordinates. It can be used only inside PREDRAW_CB 
+and POSTDRAW_CB callbacks. Output variables can be NULL if not used.</p>
+<hr>
+<pre>void <b>IupMglPlotDrawMark</b>(Ihandle* <b>ih</b>, float <b>x</b>, float <b>y</b>, float <b>z</b>); [in C]
+<b>iup.MglDrawMark</b>(<b>ih</b>: ihandle, <b>x, y, z</b>: number) [in Lua]</pre>
+<p>Draws a mark at given position in plot coordinates. It can be used only inside PREDRAW_CB 
+and POSTDRAW_CB callbacks. The attributes DRAWCOLOR, DRAWMARKSTYLE and DRAWMARKSIZE can be used to control mark appearance. </p>
+<hr>
+<pre>void <b>IupMglPlotDrawLine</b>(Ihandle* <b>ih</b>, float <b>x1</b>, float <b>y1</b>, float <b>z1</b>, float <b>x2</b>, float <b>y2</b>, float <b>z2</b>); [in C]
+<b>iup.MglDrawLine</b>(<b>ih</b>: ihandle, <b>x1, y1, z1, x2, y2, z2</b>: number) [in Lua]</pre>
+<p>Draws a line from position 1 to position 2 in plot coordinates. It can be used only inside PREDRAW_CB 
+and POSTDRAW_CB callbacks. The attributes DRAWCOLOR, DRAWLINESTYLE and DRAWLINEWIDTH can be used to control line appearance. </p>
+<hr>
+<pre>void <b>IupMglPlotDrawText</b>(Ihandle* <b>ih</b>, const char* <b>text</b>, float <b>x</b>, float <b>y</b>, float <b>z</b>); [in C]
+<b>iup.MglDrawText</b>(<b>ih</b>: ihandle, <b>text</b>: string, <b>x, y, z</b>: number) [in Lua]</pre>
+<p>Draws a text at given position in plot coordinates. It can be used only inside PREDRAW_CB 
+and POSTDRAW_CB callbacks. The attributes DRAWCOLOR, DRAWTEXTALIGN,&nbsp; DRAWFONTSTYLE and DRAWFONTSIZE can be used to control 
+text appearance. DRAWTEXTALIGN can be LEFT, CENTER or RIGHT.</p>
+<hr>
+<pre>void <b>IupMglPlotPaintTo</b>(Ihandle* <b>ih</b>, const char* <b>format</b>, int <strong>w</strong>, int <strong>h</strong>, float <strong>dpi</strong>, void* <strong>data</strong>); [in C]
+<b>iup.MglPlotPaintTo</b>(<b>ih</b>: ihandle, <b>format</b>: string, <strong>w</strong>, <strong>h</strong>, <strong>dpi</strong>:number, <strong>data</strong>: string or lightuserdata) [in Lua]</pre>
+<p>Plots to a metafile or a bitmap instead of the display canvas. <strong>format</strong> will define the 
+interpretation of the <strong>data</strong> parameter. <strong>format</strong> can be: 
+&quot;EPS&quot;, &quot;SVG&quot;, &quot;RGB&quot;, 
+or &quot;RGBA&quot;. When <strong>format</strong> is EPS or SVG, <strong>data</strong> is a 
+<strong>filename</strong> string. When format 
+is RGB or RGBA data is the image <strong>buffer</strong> where the pixels will 
+be copied, must be already allocated. <strong>w</strong> and <strong>h</strong> 
+is the size in pixels, and <strong>dpi</strong> is the resolution in dots or 
+pixels per inch. If <strong>w, h </strong> or <strong>dpi</strong> are 0 the screen 
+equivalent is used.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><b>ALPHA </b>(non inheritable): Alpha value for overall transparency. 
+Used only when TRANSPARENT=Yes. Default: 0.5</p>
+<p><strong>ANTIALIAS</strong> (non inheritable): Enable or disable the 
+anti-aliasing support. For screen display only, ignored when OPENGL=NO. Default: 
+Yes. <font SIZE="3">When enabled text has a much better rendering, but 3D graphs 
+will not process depth properly.</p>
+</font>
+<p><b><a href="../attrib/iup_bgcolor.html">BGCOLOR</a></b>:  the background color. 
+Default: &quot;255 255 
+255&quot;.</p>
+<p><strong>ERRORMESSAGE</strong> (read-only)(non inheritable): If not NULL 
+returns the last error message reported by MathGL.</p>
+<p><strong><a href="../attrib/iup_font.html">FONT</a></strong>:
+  the default font used in all text elements of the plot: title, legend and labels. 
+Font support is done using the libraries Freetype and FTGL, so TrueType (*.ttf) 
+and OpenType (*.otf) font files can be loaded. If the font is not located in the 
+system, then it will try to find the font file in the current directory, or in 
+the path from the &quot;IUP_MGLFONTS&quot; environment variable, or in the path from the 
+&quot;MGLFONTS&quot; global attribute, or in a system folder. The font name will be 
+combined with the path to compose a file name. A full path can also be used. If 
+the font load fail, an internal MathGL font is used.</p>
+<p><b><a href="../attrib/iup_fgcolor.html">FGCOLOR</a></b>:  the default color 
+used in all text elements of the plot: title, legend and labels. Default: &quot;0 0 0&quot;.</p>
+<p><strong>OPENGL</strong> (non inheritable): Enable or disable the rendering in 
+OpenGL. Default: No. When NO the rendering is slower, but when Yes some features 
+does not behave as expected. See <a href="#KnownIssues">Known Issues</a>.</p>
+<p><b>REDRAW</b> (write-only)(non inheritable): redraw the plot and update the display. Value is 
+ignored. All other attributes will <span class="style1"><strong>NOT</strong></span> update the display, so you can set many 
+attributes without visual output. If the element is redraw by the system because 
+of a redraw event or by a call to IupUpdate, it will have the 
+same effect as if REDRAW was set.</p>
+<p><strong>RESET</strong> (write-only) (non inheritable): restores all 
+attributes to their default values. Value is ignored. </p>
+
+
+<p><b>TRANSPARENT </b>(non inheritable): Enable or disable the transparency support. 
+Default: No.</p>
+<h4>Interaction (non inheritable)</h4>
+<p><b>ROTATE </b>(non inheritable): define the angles of the axis rotation in 
+degrees for 3D plots. The format is &quot;angleX:angleY:angleZ&quot;. As example, the 
+&quot;0.0:90:0.0&quot; rotates the Y-axis plot in 90 degrees. Partial values are also 
+accepted, like &quot;60::&minus;45&quot; or &quot;::30&quot; or &quot;120&quot;. 
+Default: 0:0:0.</p>
+<p><b>ZOOM </b>(non inheritable): define the zoom to 2D and 3D plots. The 
+format is &quot;x1,y1:x2,y2&quot; in normalized coordinates, limited to the 
+interval [0-1]. As example, the &quot;0,0:1,1&quot; set a plot to default view (centered 
+in the drawing 
+area). Partial values are also accepted, like &quot;0.2,0.2&quot; or &quot;,0.3:,1.3&quot; or &quot;&minus;0.4&quot;. 
+If values are set only to x1 and/or x2 coordinates, the zoom is restricted to 
+the X axis. On the other hand, if values are set only to y1 and/or y2 
+coordinates, the zoom is restricted to the Y axis. Default: 0,0:1,1</p>
+<h4>Title Configuration (non inheritable)</h4>
+<p><b>TITLE </b>(non inheritable): the  title. Located always at the top center area.</p>
+<p><b>TITLECOLOR</b>: title color. Default: FGCOLOR.</p>
+<p><b>TITLEFONTSIZE</b>: title font size factor. It is a multiple of the FONT 
+size. Default: 1.6</p>
+<p><b>TITLEFONTSTYLE</b>: title font style. 
+If not defined the FONT attribute will be used instead. Set to 
+NULL, to use the FONT attribute values. Style can be &quot;PLAIN&quot;, &quot;BOLD&quot;, &quot;ITALIC&quot; 
+or &quot;BOLDITALIC&quot;.</p>
+<h4>Legend Configuration (non inheritable)</h4>
+<p><b>LEGEND</b>: shows or hides the legend box. Can be YES or NO. Default: 
+NO. LEGENDSHOW is also accepted.</p>
+<p><b>LEGENDBOX</b>: draws a box around the legend area. Default: YES.</p>
+<p><b>LEGENDCOLOR</b>: title color. Default: FGCOLOR.</p>
+<p><b>LEGENDFONTSIZE</b>: legend font size factor. It is a multiple of the FONT 
+size. Default: 0.8</p>
+<p><b>LEGENDFONTSTYLE</b>: legend font style. 
+If not defined the FONT attribute will be used instead. Set to NULL, to use the 
+FONT attribute values. Style can be &quot;PLAIN&quot;, &quot;BOLD&quot;, &quot;ITALIC&quot; or &quot;BOLDITALIC&quot;.</p>
+<p><b>LEGENDPOS</b>: legend box position. Can be: &quot;TOPLEFT&quot;, &quot;TOPRIGHT&quot;, 
+&quot;BOTTOMLEFT&quot;, or &quot;BOTTOMRIGHT. Default: &quot;TOPRIGHT&quot;.</p>
+<h4>Colorbar Configuration (non inheritable)</h4>
+<p><strong>COLORBAR</strong>: shows or hides the colorbar. Can be YES or NO. 
+Default: NO.</p>
+<p><strong>COLORBAR</strong><b>POS</b>: colorbar position. Can be: &quot;LEFT, &quot;TOP&quot;, &quot;RIGHT&quot;, 
+&quot;BOTTOM&quot;. Default: &quot;RIGHT&quot;.</p>
+<p><strong>COLORBARRANGE</strong>: interval of data values used for pseudo 
+coloring in some plot modes. Must be &quot;min:max&quot; (&quot;%g:%g in C). Default from 
+AXS_?MIN to AXS_?MAX according to COLORBARAXISTICKS.</p>
+<p><strong>COLORBARAXISTICKS</strong>: axis used as reference for colorbar 
+ticks. Default: Z</p>
+<h4>Grid Configuration (non inheritable)</h4>
+<p><b>GRID</b>: shows or hides the grid in both or a 
+specific axis. Can be: XYZ (YES), X, Y, Z, XY, XZ, YZ or NO. Default: NO. The 
+values HORIZONTAL (Y) and X (VERTICAL) are accepted for IupPPlot compatibility.</p>
+<p><b>GRIDCOLOR</b>: grid color. Default: &quot;200 200 200&quot;.</p>
+<p><b>GRIDLINESTYLE</b>: line style of the grid. Can be: &quot;CONTINUOUS&quot;, 
+&quot;DASHED&quot;, &quot;DOTTED&quot;, &quot;DASH_DOT&quot;, &quot;DASH_DOT_DOT&quot;. Default is &quot;CONTINUOUS&quot;.</p>
+<h4>Box Configuration (non inheritable)</h4>
+<p><b>BOX</b>: draws a bounding box around the dataset area. Default: NO.</p>
+<p><b>BOXTICKS</b>: if BOX=Yes then major ticks are also drawn along the 
+box. Default: YES.</p>
+<p><b>BOXCOLOR</b>: box color. Default: FGCOLOR.</p>
+<h4>Dataset List Management (non inheritable)</h4>
+<p><b>CLEAR</b> (write-only): removes all datasets. Value is ignored.</p>
+<p><b>COUNT</b> (read-only): <font SIZE="3">total number of datasets.</font></p>
+<p><b>CURRENT</b>: <font SIZE="3">current  dataset index. Default is 
+-1. When a dataset is added it becomes the current dataset. The index starts at 
+0. All &quot;DS_*&quot; attributes are dependent on this value.</font></p>
+<p><b>REMOVE</b> (write-only): removes a dataset given its index.</p>
+<h4>Dataset Configuration (non inheritable)</h4>
+<p><b>DS_COLOR</b>: color of the current dataset and it legend text. Default&nbsp; 
+is dynamically generated for the 6 first datasets, others are default to black 
+&quot;0 0 0&quot;. The first 6 are: 0=&quot;255 0 0&quot;, 1=&quot;0 0 255&quot;, 2=&quot;0 255 0&quot;, 3=&quot;0 255 255&quot;, 
+4=&quot;255 0 255&quot;, 5=&quot;255 255 0&quot;.</p>
+<p><strong>DS_COUNT</strong> (read-only): returns the number of samples of the current 
+dataset. For planar or volumetric datasets returns count_x * count_y * count_z.</p>
+<p><strong>DS_DIMENSION</strong> (read-only): returns the number of dimensions 
+of the data: 1, 2 or 3. For planar and volumetric datasets returns the actual size of 
+each dimension &quot;&lt;count_x&gt;x&lt;count_y&gt;x&lt;count_y&gt;&quot;, for example &quot;600x400x1&quot; (planar) 
+or &quot;512x512x512&quot; (volumetric). </p>
+<p><b>DS_LEGEND</b>: legend text of the current dataset. Default is dynamically 
+generated: &quot;plot 0&quot;, &quot;plot 1&quot;, &quot;plot 2&quot;, ...</p>
+<p><b>DS_LINESTYLE</b>: line style of the current dataset. Can be: &quot;CONTINUOUS&quot;, 
+&quot;LONGDASHED&quot;, &quot;DASHED&quot;, &quot;SMALLDASHED&quot;, &quot;DOTTED&quot;, &quot;DASH_DOT&quot;, &quot;SMALLDASH_DOT&quot;. Default is &quot;CONTINUOUS&quot;.</p>
+<p><b>DS_LINEWIDTH</b>: line width of the current dataset. Default: 1.0.</p>
+<p><b>DS_MARKSTYLE</b>: mark style of the current dataset. Can be: &quot;PLUS&quot;, 
+&quot;STAR&quot;, &quot;CIRCLE&quot;, &quot;X&quot;, &quot;BOX&quot;, &quot;DIAMOND&quot;, &quot;HOLLOW_CIRCLE&quot;, &quot;HOLLOW_BOX&quot;, 
+&quot;HOLLOW_DIAMOND&quot;. Default is &quot;X&quot;.</p>
+<p><b>DS_MARKSIZE</b>: mark size of the current dataset in normalized 
+coordinates. Default: 0.02.</p>
+<p><b>DS_MODE</b>: drawing mode of the current dataset. Default: &quot;LINE&quot;.</p>
+<blockquote>
+	<p>Can be: LINE, BAR, MARK, MARKLINE, RADAR, AREA, BARHORIZONTAL, CHART, STEP or 
+	STEM for linear datasets.</p>
+<p>Can be: PLANAR_MESH, PLANAR_FALL, PLANAR_BELT, PLANAR_SURFACE, PLANAR_BOXES, 
+PLANAR_TILE, PLANAR_DENSITY, PLANAR_CONTOUR, PLANAR_AXIALCONTOUR or 
+PLANAR_GRADIENTLINES for planar datasets.</p>
+<p>Can be: VOLUME_ISOSURFACE, VOLUME_DENSITY, VOLUME_CONTOUR or 
+VOLUME_CLOUD for volumetric datasets.</p>
+	<p>Each of these modes can have secondary attributes, that can be configured 
+	only for the plot, and not for a specific dataset. See more at
+	<a href="iup_mglplot_modes.html">DS_MODE Options</a>.</p>
+</blockquote>
+<p><strong>DS_REARRANGE</strong> (write-only): rearrange planar data into linear 
+data. Value is ignored. It can rearrange planar data with count_y=2 or count_y=3, 
+into 2D or 3D linear data accordingly. It can also rearrange planar data with count_y!=1 and count_x=2 or 
+count_x=3 into 2D or 3D linear data accordingly.</p>
+<p><strong>DS_SPLIT</strong> (write-only): rearrange planar data into linear 
+data, but spliting into different datasets. It can rearrange planar data with count_y=2 or count_y=3, 
+into 2 or 3 datasets of 1D linear data accordingly. The current dataset is 
+modified and 1 or 2 new datasets are created accordingly.</p>
+<p><b>DS_SHOWVALUES</b>: enable or disable the display of the values near each 
+sample. Can be YES or NO. Default: NO. Values are drawn with LEGENDFONTSIZE and LEGENDFONTSTYLE.</p>
+<p><b>DS_REMOVE</b> (write-only): removes a sample from the current dataset given its index. 
+It can specify a range of samples using &quot;index:count&quot; (%d:%d). Ignored 
+for planar and volumetric datasets.</p>
+<h4>Axis Configuration (non inheritable) (for X, Y and Z)</h4>
+<p><b>AXS_?</b>: enable or disable the axis display. Can be 
+YES or NO. Default: YES.</p>
+<p><b>AXS_?AUTOMIN, AXS_?AUTOMAX</b>:  configures the automatic scaling of the minimum and maximum display values. 
+Can be YES or NO. Default: YES.</p>
+<p><b>AXS_?ARROW</b>: enable or disable the axis arrow display. Can be 
+YES or NO. Default: YES.</p>
+<p><b>AXS_?COLOR</b>: ticks values and label color. Default: &quot;0 0 0&quot;.</p>
+<p><b>AXS_?CROSSORIGIN</b>: same as setting AXS_?ORIGIN to 0 or NULL. Can be YES 
+or NO. Default: NO. Returns YES if AXS_?ORIGIN is 0 and returns NO if AXS_?ORIGIN 
+in NULL. Available for compatibility with IupPPlot, but the default is different.</p>
+<p><b>AXS_?FONTSIZE</b>: axis label font size factor. It is a multiple of the 
+FONT size. Default: 1.0</p>
+<p><b>AXS_?FONTSTYLE</b>: axis label font style. If 
+not defined the FONT attribute will be used instead. Set to NULL, to use the 
+FONT attribute values. Can be &quot;PLAIN&quot;, &quot;BOLD&quot;, &quot;ITALIC&quot; or &quot;BOLDITALIC&quot;.</p>
+<p><b>AXS_?LABEL</b>: text label of the&nbsp;respective axis.</p>
+<p><b>AXS_?LABELCENTERED</b>: text label position at 
+center (YES) or at top/right (NO). Default: YES. Will set/get AXS_?LABELPOSITION 
+to CENTER or MAX. Available for compatibility with IupPPlot.</p>
+<p><b>AXS_?LABELPOSITION</b>: text label position. Can be CENTER, MAX or MIN. 
+Default: CENTER.</p>
+<p><b>AXS_?LABELROTATION</b>: enable or disable the text label rotation along 
+the 3D axis. Can be YES or NO. 
+Default: Yes. This means that text will be aligned with the axis even when 
+rotating the graph. When NO text will be horizontal, always facing the camera, 
+independently from graph rotation. For 2D graphs is useful to the Y axis only.</p>
+<p><b>AXS_?MAX, AXS_?MIN</b>: minimum and maximum displayed 
+values of the respective axis in plot coordinates. Automatically calculated values when AUTOMIN or 
+AUTOMAX are enabled. Default: 1.0 and 0.0.</p>
+<p><strong>AXS_?ORIGIN</strong>: position the origin of the axis in plot 
+coordinates (%g). But if set to NULL will automatically position 
+the origin at the bottom left corner of the dataset area. Default: not defined.</p>
+<p><b>AXS_?REVERSE</b>: reverse the axis direction. Can be YES or 
+NO. Default: NO. Default is Y oriented bottom to top, and X oriented from left 
+to right.</p>
+<p><b>AXS_?SCALE</b>: configures the scale of the respective axis. 
+Can be: LIN (linear) or LOG10 (decimal logarithm base 10). Default: 
+LIN.</p>
+<h4>Axis Ticks Configuration (non inheritable) (for X, Y and Z)</h4>
+<p><b>AXS_?TICK</b>: enable or disable the axis tick display. Can be 
+YES or NO. Default: YES.</p>
+<p><b>AXS_?TICKAUTO: </b>configures the automatic tick spacing. Can be YES or 
+NO. Default: YES. AXS_?AUTOTICK is also accepted.</p>
+<p><b>AXS_?TICKAUTOSIZE</b>: configures <font SIZE="3">the 
+automatic tick size.</font> Can be YES or NO. Default: YES. AXS_?AUTOTICKSIZE is 
+also accepted.</p>
+<p><b>AXS_?TICKFONTSIZE</b>: axis tick number font size factor. It is a multiple 
+of the FONT size. Default: 0.8</p>
+<p><b>AXS_?TICKFONTSTYLE</b>: axis tick number font style. If not defined the 
+FONT attribute will be used instead. Set to NULL, to use the FONT attribute 
+values. Can be &quot;PLAIN&quot;, &quot;BOLD&quot;, &quot;ITALIC&quot; or &quot;BOLDITALIC&quot;.</p>
+<p><b>AXS_?TICKFORMAT</b>: axis tick number C format string. 
+Default: is internally computed according to the Min-Max range.</p>
+<p><b>AXS_?TICKMAJORSIZE</b>: <font SIZE="3">axis major 
+ticks size </font>in normalized coordinates<font SIZE="3">. </font>Default is 
+0.1. Used only when TICKAUTOSIZE is disabled.</p>
+<p><b>AXS_?TICKMAJORSPAN</b>: spacing between 
+major ticks in plot coordinates if positive, or number of major ticks along the 
+axis range if negative. Default is -5 when TICKAUTO is disabled.</p>
+<p><b>AXS_?TICKMINORDIVISION</b>: number of minor ticks intervals between 
+each major tick. Default is 5 when TICKAUTO is disabled. AXS_?TICKDIVISION is 
+also accepted.</p>
+<p><b>AXS_?TICKMINORSIZE</b>: <font SIZE="3">axis minor ticks size factor. It is 
+a multiple of the
+</font>AXS_?TICKMAJORSIZE. Default is 0.6. Used only when AUTOTICKSIZE is disabled. 
+AXS_?TICKSIZE is also accepted.</p>
+<p><b>AXS_?TICKVALUES</b>: enable or disable the axis tick values display. Can be 
+YES or NO. Default: YES.</p>
+<p><strong>AXS_?TICKVALUESROTATION</strong>: enable or disable the axis tick 
+values rotation along the 3D axis. Can be YES or NO. Default: YES. This means 
+that text will be aligned with the axis even when rotating the graph. When NO 
+text will be horizontal, always facing the camera, independently from graph 
+rotation. For 2D graphs is useful to the Y axis only.</p>
+<blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_size.html">SIZE</a>,
+    <a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><b>PREDRAW_CB, POSTDRAW_CB</b>: Actions generated before and after the redraw 
+operation. They can 
+be used to draw additional information in the plot. Use only the IupMglPlotDraw* 
+functions. For display output OpenGL primitives can also be used.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>); [in C]
+<strong>elem</strong>:predraw_cb() -&gt; (<strong>ret</strong>: number) [in Lua]
+<strong>elem</strong>:postdraw_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+  <blockquote>
+  <hr>
+</blockquote>
+<p><b>DELETE_CB</b>:
+  Action generated when the Del key is pressed to removed a sample from a 
+dataset.
+    If multiple points are selected it is called once for each selected point. 
+Called only when DS_EDIT=Yes.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>, int <b>index</b>, int <b>sample_index</b>, float <strong>x</strong>, float <strong>y</strong>); [in C]
+<strong>elem</strong>:delete_cb(<b>index, sample_index, x, y</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info"><strong>index</strong>: index of the dataset<br>
+    <b>sample_index</b>: index of the sample in the dataset<strong><br>
+    x</strong>: X coordinate value of the sample<br>
+    <strong>y</strong>: Y coordinate value of the sample</p>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If IUP_IGNORE then the sample is not deleted.</p>
+  
+<p><b>DELETEBEGIN_CB, DELETEEND_CB</b>: Actions generated when a delete operation 
+will begin or end. But they are called only if DELETE_CB is also defined. Called 
+only when DS_EDIT=Yes.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>); [in C]
+<strong>elem</strong>:deletebegin_cb() -&gt; (<strong>ret</strong>: number) [in Lua]
+<strong>elem</strong>:deleteend_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If DELETEBEGIN_CB returns IUP_IGNORE the delete operation for 
+    all the selected samples are aborted.</p>
+  
+<p><b>SELECT_CB</b>:
+  Action generated when  a sample is selected.
+    If multiple points are selected it is called once for each new selected point. 
+It is called only if the selection state of the sample is about to be changed. 
+Called only when DS_EDIT=Yes.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>, int <b>index</b>, int <b>sample_index</b>, float <strong>x</strong>, float <strong>y, </strong>int <strong>select</strong>); [in C]
+<strong>elem</strong>:select_cb(<b>index, sample_index, x, y, select</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info"><strong>index</strong>: index of the dataset<br>
+    <b>sample_index</b>: index of the sample in the dataset<strong><br>
+    x</strong>: X coordinate value of the sample<br>
+    <strong>y</strong>: Y coordinate value of the sample<br>
+    <b>select</b>: boolean value that a non zero value indicates if the point is 
+    to be selected.</p>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If IUP_IGNORE then the sample is not selected.</p>
+  
+<p><b>SELECTBEGIN_CB, SELECTEND_CB</b>: Actions generated when a selection 
+operation will begin or end. But they are called only if SELECT_CB is also 
+defined. Called only when DS_EDIT=Yes.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>); [in C]
+<strong>elem</strong>:selectbegin_cb() -&gt; (<strong>ret</strong>: number) [in Lua]
+<strong>elem</strong>:selectend_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If SELECTBEGIN_CB returns IUP_IGNORE the selection operation is 
+    aborted.</p>
+  
+<p><b>EDIT_CB</b>:
+  Action generated when  a sample is selected.
+    If multiple points are selected it is called once for each new selected point. 
+It is called only if the selection state of the sample is about to be changed. 
+Called only when DS_EDIT=Yes.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>, int <b>index</b>, int <b>sample_index</b>, float <strong>x</strong>, float <strong>y, </strong>float <strong>*new_x</strong>, float <strong>*new_y</strong>); [in C]
+<strong>elem</strong>:edit_cb(<b>index, sample_index, x, y, </b><strong>new_x, new_y</strong>: number) -&gt; (<strong>new_x, new_y, ret</strong>: number) [in Lua]</pre>
+    <p class="info"><strong>index</strong>: index of the dataset<br>
+    <b>sample_index</b>: index of the sample in the dataset<strong><br>
+    x</strong>: X coordinate value of the sample<br>
+    <strong>y</strong>: Y coordinate value of the sample<br>
+    <strong>new_x</strong>: the new X coordinate value of the sample<br>
+    <strong>new_y</strong>: the new Y coordinate value of the sample</p>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If IUP_IGNORE then the sample is not edited. The 
+    application can changed the new value before it is edited.</p>
+  
+<p><b>EDITBEGIN_CB, EDITEND_CB</b>: Actions generated when an editing 
+operation will begin or end. But they are called only if EDIT_CB is also 
+defined. Called only when DS_EDIT=Yes.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>); [in C]
+<strong>elem</strong>:editbegin_cb() -&gt; (<strong>ret</strong>: number) [in Lua]
+<strong>elem</strong>:editend_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If EDITBEGIN_CB returns IUP_IGNORE the editing operation is 
+    aborted.</p>
+  <blockquote>
+  <hr>
+</blockquote>
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>,  
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, 
+<a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+  
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="6" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td><img border="0" src="images/iup_mglplot0.png"></td>
+      <td><img border="0" src="images/iup_mglplot1.png"></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/iup_mglplot2.png"></td>
+      <td><img border="0" src="images/iup_mglplot3.png"></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/iup_mglplot4.png"></td>
+      <td></td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+<h3>Differences from IupPPlot</h3>
+
+<p>Uses OpenGL for screen output and internal drivers for metafile output. 
+<strong>IupPPlot</strong> uses CD for screen and metafile output.</p>
+<p>New support for 3D data and 3D plots. New support for planar and volumetric 
+data. New ALPHA, ANTIALIAS, DS_DIMENSION, LEGENDBOX, BOX, 
+BOXTICKS, 
+BOXCOLOR, AXS_*ORIGIN, AXS_?LABELPOSITION, AXS_?LABELROTATION, 
+AXS_?TICKVALUESROTATION, LEGENDCOLOR, TITLECOLOR, LIGHT, COLORBAR*, COLORSCHEME attributes. Many new DS_MODE 
+options.</p>
+<p>USE_IMAGERGB and USE_GDI+ attributes are NOT supported. MARGIN* attributes 
+are NOT supported. AXS_?SCALE attribute does NOT support the LOG2 and LOGN 
+values. The Crosshair cursor is not supported.</p>
+<p>The PREDRAW_CB, POSTDRAW_CB callbacks does not includes the CD canvas 
+parameter. *FONTSIZE attributes are now a multiple factor of the FONT size. 
+DASH_DOT_DOT line style is not supported, but has new line styles: LONGDASHED, 
+SMALLDASHED and SMALLDASH_DOT. AXS_?TICKMAJORSIZE, MARKSIZE are in normalized 
+coordinates. New options for GRID: 
+Z, XYZ, XZ, YZ. AXS_?TICKSIZE renamed to AXS_?TICKMINORSIZE, and now is a factor 
+of the AXS_?TICKMAJORSIZE. AXS_?TICKMAJORSPAN default value is now -5. 
+AXS_?TICKFORMAT default is now internally computed according to the Min-Max 
+range.</p>
+<p>Function Mapping:</p>
+<pre>IupPPlotBegin  -&gt; IupMglPlotBegin    (IMPORTANT: parameter is now the dimension 1, 2 or 3)
+IupPPlotAddStr -&gt; IupMglPlotAdd1D
+IupPPlotAdd    -&gt; IupMglPlotAdd2D
+   (none)         IupMglPlotAdd3D
+IupPPlotEnd    -&gt; IupMglPlotEnd
+   (none)            IupMglPlotNewDataSet
+IupPPlotInsertStr    (not mapped, use IupMglPlotInsert1D)
+IupPPlotInsert       (not mapped, use IupMglPlotInsert2D)
+IupPPlotInsertStrPoints -&gt; IupMglPlotInsert1D   (names array is optional)
+IupPPlotInsertPoints    -&gt; IupMglPlotInsert2D
+   (none)                  IupMglPlotInsert3D
+IupPPlotAddStrPoints    -&gt; IupMglPlotInsert1D   (insert at DS_COUNT)
+IupPPlotAddPoints       -&gt; IupMglPlotInsert2D   (insert at DS_COUNT)
+   (none)                  IupMglPlotInsert3D
+   (none)                  IupMglPlotSet1D
+   (none)                  IupMglPlotSet2D
+   (none)                  IupMglPlotSet3D
+   (none)                  IupMglPlotSetData
+   (none)                  IupMglPlotLoadData
+   (none)                  IupMglPlotSetFromFormula
+IupPPlotTransform       -&gt; IupMglPlotTransform  (now includes z coordinate)
+   (none)                  IupMglPlotTransformXYZ
+   (cdCanvasMark)       -&gt; IupMglPlotDrawMark
+   (cdCanvasLine)       -&gt; IupMglPlotDrawLine
+   (cdCanvasText)       -&gt; IupMglPlotDrawText
+IupPPlotPaintTo         -&gt; IupMglPlotPaintTo    (parameters are different)</pre>
+
+<h3><a name="KnownIssues">Known Issues</a></h3>
+<ul>
+	<li>Selection and editing of a dataset using the DS_EDIT attribute are not 
+	implemented.</li>
+	<li>Automatic ticks computation needs to be improved.</li>
+	<li>BOLD and ITALIC styles are not working inside TeX formatting.</li>
+	<li>There is still lots of MathGL features not available in IupMglPlot.</li>
+	<li><font SIZE="3">When OPENGL=Yes and ANTIALIAS=Yes, 3D graphs will not 
+	process depth properly. (OpenGL configuration?)</font></li>
+	<li><font SIZE="3">When OPENGL=Yes</font>, Graph is disappearing during zoom in, after a zoom factor. Maybe a depth clipping 
+	problem.<font SIZE="3"> (OpenGL 
+	configuration?)</font></li>
+	<li><font SIZE="3">When OPENGL=Yes</font>, Legend box is not being 
+	displayed. (MathGL)</li>
+	<li><font SIZE="3">When OPENGL=Yes aspect ratio of text and marks are not 
+	respected.(MathGL)</font></li>
+	<li>The control of ticks being oriented inside or outside the graph is not 
+	working. (MathGL)</li>
+	<li>Bar graph is clipped at 0 and at n-1. (MathGL)</li>
+	<li>When tick labels are specified all ticks are displayed regardless of 
+	tick spacing configuration. (MathGL)</li>
+	<li>Axis color is always drawn in black. (MathGL)</li>
+</ul>
+
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupcanvas.html">IupCanvas</a>, <a href="iup_pplot.html">
+IupPPlot</a></p>
+
+</body>
+
+</html>

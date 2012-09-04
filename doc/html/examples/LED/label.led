@@ -1,0 +1,4 @@
+#IupLabel Example in LED 
+#Creates a label with the text “Press the button to exit the program” written in blue. 
+
+mensagem = label[FGCOLOR="0 0 255"]("Press the button to exit the program")

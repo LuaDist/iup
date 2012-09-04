@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>PARENTDIALOG</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+</style>
+</head>
+<body>
+
+<h2>PARENTDIALOG</h2>
+
+<p>The parent dialog of a dialog.</p>
+
+<h3>Value</h3>
+
+<p>Name of a dialog to be used as parent.</p>
+<p>Default: NULL.</p>
+
+<h3>Notes</h3>
+
+<p>This dialog will be always in front of the parent dialog. If the parent is 
+minimized, this dialog is automatically minimized. The parent dialog must be 
+mapped before mapping the child dialog. If PARENTDIALOG is not defined then the 
+NATIVEPARENT attribute is consulted. This one must be a native handle of an 
+existing dialog.</p>
+<p>Use <a href="../func/iupsethandle.html">IupSetHandle</a> or
+	<a href="../func/iupsetattributehandle.html">IupSetAttributeHandle</a> to 
+associate a dialog to a name.</p>
+<p><span class="style1"><strong>IMPORTANT</strong></span>: When the parent is destroyed the child dialog is 
+      also destroyed, then the CLOSE_CB callback of the child dialog is NOT called. The application must take care of 
+      destroying the children dialogs before destroying the parent. This is usually done when CLOSE_CB of the parent 
+      dialog is called.</p>
+
+<h3>Affects</h3>
+
+<p><a href="../dlg/iupdialog.html">IupDialog</a></p>
+</body>
+</html>

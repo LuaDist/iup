@@ -1,0 +1,38 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupRecordInput</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupRecordInput</h2>
+<p>Records all mouse and keyboard input in a file for later reproduction.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupRecordInput(const char *<strong>filename</strong>, int <strong>mode</strong>); [in C]
+iup.RecordInput(<strong>filename</strong>: string, <strong>mode</strong>: number) -&gt; <strong>ret</strong>: number [in Lua]</pre>
+<p><strong>filename</strong>: name of the file to be saved. NULL will stop 
+recording.<br>
+<strong>mode</strong>: flag for controlling the file generation. Can be: 
+IUP_RECBINARY or IUP_RECTEXT.</p>
+<p><span class="style1">Returns:</span> IUP_NOERROR if successful, IUP_ERROR if 
+failed to open the file for writing.</p>
+<h3>Notes</h3>
+<p>Any existing file will be replaced.</p>
+<p>Must stop recording before exiting the application.</p>
+<p>It uses the global callbacks enabled by the INPUTCALLBACKS global attribute.</p>
+<p>Mouse position is relative to the top left corner of the screen and it is 
+independent from the controls and dialogs being manipulated.</p>
+<p>The generated file can be used by <strong>IupPlayInput</strong> to reproduce 
+the same events.</p>
+
+<h3>See Also</h3>
+<p><a href="../attrib/iup_globals.html#INPUTCALLBACKS">INPUTCALLBACKS</a>,
+<a href="iupplayinput.html">IupPlayInput</a></p>
+
+</body>
+
+</html>

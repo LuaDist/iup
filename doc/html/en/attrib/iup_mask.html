@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>iupMask</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	margin-left: 40px;
+}
+.style2 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>MASK <span class="style2">(non inheritable) (since 3.0)</span></h2>
+<p>Defines a mask that will filter interactive text input.</p>
+<h3>Value</h3>
+<p>string</p>
+<p>Set to NULL to remove the mask.</p>
+<h3>Notes</h3>
+<p>Since the validation process is performed key by key when the user is typing, 
+an intermediate value cannot be typed if it does not follow the mask rules.</p>
+<p>If you set the VALUE attribute any text can be used. To set a value that is 
+validated by the current MASK use VALUEMASKED.</p>
+<h3>Pre-Defined Masks</h3>
+<table align="center">
+	<tr>
+		<th>Definition</th>
+		<th>Value</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>IUP_MASK_INT</td>
+		<td>&quot;[+/-]?/d+&quot;</td>
+		<td>integer number</td>
+	</tr>
+	<tr>
+		<td>IUP_MASK_UINT</td>
+		<td>&quot;/d+&quot;</td>
+		<td>unsigned integer number</td>
+	</tr>
+	<tr>
+		<td>IUP_MASK_FLOAT</td>
+		<td>&quot;[+/-]?(/d+/.?/d*|/./d+)&quot;&nbsp;</td>
+		<td>floating point number</td>
+	</tr>
+	<tr>
+		<td>IUP_MASK_UFLOAT</td>
+		<td>&quot;(/d+/.?/d*|/./d+)&quot;</td>
+		<td>unsigned floating point number</td>
+	</tr>
+	<tr>
+		<td>IUP_MASK_EFLOAT</td>
+		<td>&quot;[+/-]?(/d+/.?/d*|/./d+)([eE][+/-]?/d+)?&quot;</td>
+		<td>floating point number with exponential notation</td>
+	</tr>
+	</table>
+    
+<h3>Auxiliar Attributes</h3>
+<h4>MASKCASEI (non inheritable) </h4>
+<font SIZE="3">
+<p>If YES, will turn the filter case insensitive. Default: NO<font SIZE="3">. 
+Must be set before MASK.</font></p>
+</font>
+<h4>MASKINT (non inheritable) (write only)</h4>
+<font SIZE="3">
+<p>Defines an integer mask with limits. Format: &quot;%d:%d&quot; (&quot;min:max&quot;). It will 
+replace MASK.</p>
+</font>
+<h4>MASKFLOAT (non inheritable) (write only)</h4>
+<font SIZE="3">
+<p>Defines a floating point mask with limits. Format: &quot;%g:%g&quot;<font SIZE="3">
+(&quot;min:max&quot;)</font>.<font SIZE="3">
+It will replace MASK.</font></p>
+</font>
+<h3>Pattern Specification</h3>
+<p>The pattern to be searched in the text can be defined by the rules given 
+below.
+  </p>
+<ul>
+  <li>&quot;Function&quot; codes (such as /l,
+  /D, /w) cannot 
+  be used inside a class ([...]). </li>
+  <li>If the character following a / does not 
+  mean a special case (such as /w or
+  /n), it is matched with no
+  / - that means that 
+  /x will match only x, and not
+  /x. If you want to match
+  /x, use //x.
+  </li>
+  <li>The caret (^) character has different 
+  meanings when used inside or outside a class - inside a class it means 
+  negative, and outside a class it is an anchor to the beginning of a line. </li>
+  <li>The boundary function (/b) anchors the 
+  pattern to a word boundary - it does not match anything. A word boundary is a 
+  point between a /w and a
+  /W character. </li>
+  <li>Capture operators (f and
+  g) group patterns and are also used to keep 
+  matched sections of texts. </li>
+  <li>A word on precedence: concatenation has precedence over the alternation (j) 
+  operator - that is, faj fej fi will match
+  fa OR fe OR
+  fi. </li>
+  <li>The @ character is used to determine that, 
+  instead of searching the text until the first match is made, the function 
+  should try to match the pattern only with the first character. If present, it 
+  must be the first character of the pattern. </li>
+  <li>The % character is used to determine that 
+  the text should be searched to its end, independently of the number of matches 
+  found. If present, it must be the first character of the pattern. This is only 
+  useful when combined with the capture feature. </li>
+</ul>
+<h3>Allowed pattern characters</h3>
+<table cellspacing="1" cellpadding="3" style="border-style: none; border-width: 1px" align="center">
+  <tr>
+    <td>c</td>
+    <td>Matches a &quot;c&quot; (non-special) character </td>
+  </tr>
+  <tr>
+    <td>.</td>
+    <td>Matches any single character</td>
+  </tr>
+  <tr>
+    <td>[abc]</td>
+    <td>Matches an &quot;a&quot;, &quot;b&quot; 
+    or &quot;c&quot; characters</td>
+  </tr>
+  <tr>
+    <td>[a-d]</td>
+    <td>Matches any character between &quot;a&quot; and
+    &quot;d&quot;, including them (just like
+    [abcd])</td>
+  </tr>
+  <tr>
+    <td>[^a-dg]</td>
+    <td>Matches any character which is neither between 
+    &quot;a&quot; and &quot;d&quot; nor &quot;a&quot; &quot;g&quot;</td>
+  </tr>
+  <tr>
+    <td>/d</td>
+    <td>Matches any digit (just like [0-9])</td>
+  </tr>
+  <tr>
+    <td>/D</td>
+    <td>Matches any non-digit (just like [^0-9])</td>
+  </tr>
+  <tr>
+    <td>/l</td>
+    <td>Matches any letter (just like [a-zA-Z])</td>
+  </tr>
+  <tr>
+    <td>/L</td>
+    <td>Matches any non-letter (just like [^a-zA-Z])</td>
+  </tr>
+  <tr>
+    <td>/w</td>
+    <td>Matches any alphanumeric character (just like 
+    [0-9a-zA-Z ])</td>
+  </tr>
+  <tr>
+    <td>/W</td>
+    <td>Matches any non-alphanumeric character (just like
+    [^0-9a-zA-Z ])</td>
+  </tr>
+  <tr>
+    <td>/s</td>
+    <td>Matches any &quot;blank&quot; character (TAB, SPACE, CR)</td>
+  </tr>
+  <tr>
+    <td>/S</td>
+    <td>Matches any non-blank character</td>
+  </tr>
+  <tr>
+    <td>/n</td>
+    <td>Matches a newline character</td>
+  </tr>
+  <tr>
+    <td>/t</td>
+    <td>Matches a tabulation character</td>
+  </tr>
+  <tr>
+    <td>/nnn</td>
+    <td>Matches an ASCII character with a nnn 
+    value (decimal)</td>
+  </tr>
+  <tr>
+    <td>/xnn</td>
+    <td>Matches an ASCII character with a nn 
+    value (hexadecimal)</td>
+  </tr>
+  <tr>
+    <td>/special</td>
+    <td>Matches the special character literally (/[,
+    //, /.)</td>
+  </tr>
+  <tr>
+    <td>abc</td>
+    <td>Matches a sequence of a,
+    b and c 
+    patterns in order</td>
+  </tr>
+  <tr>
+    <td>aj bj c</td>
+    <td>Matches a pattern a,
+    b or c</td>
+  </tr>
+  <tr>
+    <td>a*</td>
+    <td>Matches 0 or more characters a</td>
+  </tr>
+  <tr>
+    <td>a+</td>
+    <td>Matches 1 or more characters a</td>
+  </tr>
+  <tr>
+    <td>a?</td>
+    <td>Matches 1 or no characters a</td>
+  </tr>
+  <tr>
+    <td>(pattern)</td>
+    <td>Considers pattern as one character for the above</td>
+  </tr>
+  <tr>
+    <td>fpatterng</td>
+    <td>Captures pattern for later reference</td>
+  </tr>
+  <tr>
+    <td>/b</td>
+    <td>Anchors to a word boundary</td>
+  </tr>
+  <tr>
+    <td>/B</td>
+    <td>Anchors to a non-boundary</td>
+  </tr>
+  <tr>
+    <td>^pattern</td>
+    <td>Anchors pattern to the beginning of a line</td>
+  </tr>
+  <tr>
+    <td>pattern$</td>
+    <td>Anchors pattern to the end of a line</td>
+  </tr>
+  <tr>
+    <td>@pattern</td>
+    <td>Returns the match found only in the beginning of the text</td>
+  </tr>
+  <tr>
+    <td>%pattern</td>
+    <td>Returns the firstmatch found, but searches all the text </td>
+  </tr>
+</table>
+<h3>Examples</h3>
+<table align="center" class="style1">
+  <tr>
+    <td>(my|his)</td>
+    <td>Matches both my pattern and
+    his pattern. </td>
+  </tr>
+  <tr>
+    <td>/d/d:/d/d(:/d/d)?</td>
+    <td>Matches time with seconds (01:25:32) or without seconds (02:30). </td>
+  </tr>
+  <tr>
+    <td>[A-D]/l+</td>
+    <td>Matches names such as Australia, Bolivia, Canada or Denmark, but not 
+    England, Spain or single letters such as A. </td>
+  </tr>
+  <tr>
+    <td>/l/w*</td>
+    <td>my variable = 23 * width; </td>
+  </tr>
+  <tr>
+    <td>^Subject:[^/n]*/n</td>
+    <td>Subject: How to match a subject line.1 </td>
+  </tr>
+  <tr>
+    <td>/b[ABab]/w*</td>
+    <td>Matches any word that begins with A or B </td>
+  </tr>
+  <tr>
+    <td>from:/s*/w+</td>
+    <td>Captures &quot;sender&quot; in a message from sender
+    </td>
+  </tr>
+</table>
+
+<h3>Affects</h3>
+<p><a href="../elem/iuptext.html">IupText</a>, 
+<a href="../elem/iupmultiline.html">IupMultiline</a>,
+<a href="../elem/iuplist.html">IupList</a> and <a href="../ctrl/iupmatrix.html">
+IupMatrix</a></p>
+
+</body>
+
+</html>

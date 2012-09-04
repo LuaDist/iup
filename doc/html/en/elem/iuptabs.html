@@ -1,0 +1,272 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupTabs</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style3 {
+	background-color: #CEE7FF;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupTabs<span class="style1"> (since 3.0)</span></h2>
+<p>Creates a Tabs element. Allows a single dialog to have several screens, 
+grouping options. The grouping is done in a single line of tabs arranged 
+according to the tab type. Also known as Notebook in native systems. </p>
+<h3><a name="Creation">Creation</a></h3>
+<div>
+  <pre>Ihandle* IupTabs(Ihandle*<strong> child</strong>, ...); [in C]
+Ihandle* IupTabsv(Ihandle**<strong> children</strong>); [in C]
+iup.tabs{<strong>child</strong>, ...: ihandle} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+tabs(<strong>child</strong>, ...) [in LED]</pre>
+</div>
+  <p><strong>child, ... </strong>: List of the elements that will be placed in 
+	the box. NULL must be used to define the end of the list in C. It can be 
+	empty.</p>
+  <p>
+  <u>Returns:</u> the identifier of the created element, or NULL if an error 
+	occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+  <p>
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>: In Windows and in GTK when in 
+Windows, the tab buttons background it will be always defined by the system. In 
+Windows the default background is different from the dialog background. Default: 
+the global attribute DLGBGCOLOR.</p>
+<p><b>COUNT</b> (read-only) (<font SIZE="3">non inheritable</font>)<b>:</b> 
+returns the number of tabs. Same value returned by <strong>IupGetChildCount</strong>. 
+(since 3.3)</p>
+<p><a href="../attrib/iup_expand.html">EXPAND</a> (<font SIZE="3">non 
+inheritable</font>): The default value is &quot;YES&quot;.</p>
+<p><a href="../attrib/iup_fgcolor.html">FGCOLOR</a>: Tabs title color. Default: 
+the global attribute DLGFGCOLOR.</p>
+<p><strong>MULTILINE</strong> [Windows Only]<strong> </strong>(<font SIZE="3">non 
+inheritable</font>): Enable multiple lines of tab buttons. This will hide the 
+tab scroll and fits to make all tab buttons visible. Can be &quot;YES&quot; or &quot;NO&quot;. 
+Default &quot;NO&quot;. It is always enabled when TABTYPE=LEFT or TABTYPE=RIGHT. (since 
+3.0)</p>
+  <p><b>PADDING</b> (<font SIZE="3">non 
+inheritable</font>): internal margin of the tab title. Works just like the 
+	MARGIN attribute of the IupHbox and IupVbox containers, but uses a different 
+	name to avoid inheritance problems. Default value: &quot;0x0&quot;. (since 3.0)</p>
+
+
+  <p><a href="../attrib/iup_size.html">SIZE</a> (<font SIZE="3">non inheritable</font>): 
+	The default size is the smallest size that fits its largest child. All child 
+	elements are considered even invisible ones.</p>
+
+  <p><strong>TABIMAGEn </strong>(<font SIZE="3">non inheritable</font>): image 
+	name to be used in the respective tab. Use <a href="../func/iupsethandle.html">
+	IupSetHandle</a> or
+	<a href="../func/iupsetattributehandle.html">IupSetAttributeHandle</a> to 
+	associate an image to a name. n starts at 0. See also <a href="iupimage.html">IupImage</a>. 
+	In Motif, the image is shown only if <strong>TABTITLEn</strong> is NULL. In 
+	Windows and Motif set the BGCOLOR attribute before setting the image. (since 
+	3.0)</p>
+
+<p><strong>TABORIENTATION </strong>(<font SIZE="3">non inheritable</font>): 
+Indicates the orientation of tab text, which can be &quot;HORIZONTAL&quot; or &quot;VERTICAL&quot;. 
+Default is &quot;HORIZONTAL&quot;. VERTICAL is supported only in GTK and in Windows. In 
+Windows, it can NOT be set, it is dependent on the TABTYPE attribute, if 
+TABTYPE=LEFT or TABTYPE=RIGHT then TABORIENTATION=VERTICAL, if TABTYPE=TOP or 
+TABTYPE=BOTTOM then TABORIENTATION=HORIZONTAL. (GTK 
+2.6)</p>
+<p><strong>TABTITLEn </strong>(<font SIZE="3">non inheritable</font>): Contains 
+the text to be shown in the respective tab title. n starts at 0. If this value is NULL, it will 
+remain empty. The &quot;&amp;&quot; character can be used to define a mnemonic, the next 
+character will be used as key. Use &quot;&amp;&amp;&quot; to show the &quot;&amp;&quot; character instead on 
+defining a mnemonic. The button can be activated from any control in the dialog 
+using the &quot;Alt+key" combination. (mnemonic support since 3.3) (since 3.0)</p>
+<p><strong>TABTYPE </strong>(<font SIZE="3">non inheritable</font>) (creation 
+only in Windows): Indicates the type of tab, which can be &quot;TOP&quot;, &quot;BOTTOM&quot;, 
+&quot;LEFT&quot; or &quot;RIGHT&quot;. Default is &quot;TOP&quot;. In Windows, if LEFT or RIGHT then 
+MULTILINE=YES and TABORIENTATION<strong>=</strong>VERTICAL are set, if TOP or 
+BOTTOM then 
+TABORIENTATION<strong>=</strong>HORIZONTAL is set. In Windows, 
+when not TOP, then visual style is removed from tabs.</p>
+<p><strong>VALUE </strong>(<font SIZE="3">non inheritable</font>): Changes the 
+active tab by its name. The value passed must be the name of one of the elements 
+contained in the tabs. Use <a href="../func/iupsethandle.html">
+IupSetHandle</a> or <a href="../func/iupsetattributehandle.html">
+IupSetAttributeHandle</a> to associate a child to a name. In Lua you can also 
+use the element reference directly.</p>
+<p><b>VALUE_HANDLE</b> (<font SIZE="3">non inheritable</font>): Changes the 
+active tab by its handle. The value passed must be the handle of a child 
+contained in the tabs. When the tabs is created, the first element inserted is 
+set as the visible child. (since 3.0)</p>
+<p><strong>VALUEPOS </strong>(<font SIZE="3">non inheritable</font>): Changes 
+the active tab by its position, starting at 0. When the tabs is created, the 
+first element inserted is set as the visible child. In GTK, inside the callback 
+the returned value is still the previous one. (since 3.0)</p>
+  <blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, 
+<a href="../attrib/iup_clientsize.html">CLIENTSIZE</a>, 
+	<a href="../attrib/iup_clientoffset.html">CLIENTOFFSET</a>, 
+	<a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, 
+<a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">
+VISIBLE</a>: also accepted.</p>
+
+<h3>Attributes (at Children)</h3>
+<p><strong>TABTITLE </strong>(<font SIZE="3">non inheritable</font>) <strong>(at 
+children only)</strong>: Same as <strong>TABTITLEn</strong> but set in each 
+child. Works only before the child is added to the tabs.</p>
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><strong>TABCHANGE_CB</strong>: Callback called when the user shifts the 
+active tab.</p>
+<div align="left">
+  <pre>int function(Ihandle* <strong>ih</strong>, Ihandle* <strong>new_tab</strong>, Ihandle* <strong>old_tab</strong>); [in C]
+<strong>elem</strong>:tabchange_cb(<strong>new_tab, old_tab</strong>: ihandle) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+</div>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event.<br>
+    <strong>new_tab</strong>: the new tab selected by the user 
+  <br>
+<strong>old_tab</strong>: the previously selected tab </p>
+<p><strong>TABCHANGEPOS_CB</strong>: Callback called when the user shifts the 
+active tab. Called only when TABCHANGE_CB is not defined. (since 3.3)</p>
+<div align="left">
+  <pre>int function(Ihandle* <strong>ih</strong>, int <strong>new_pos</strong>, int <strong>old_pos</strong>); [in C]
+<strong>elem</strong>:tabchange_cb(<strong>new_pos, old_pos</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+</div>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event.<br>
+    <strong>new_pos</strong>: the new tab position selected by the user 
+  <br>
+<strong>old_pos</strong>: the previously selected tab position</p>
+  <blockquote>
+  <hr>
+</blockquote>
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, <a href="../call/iup_getfocus_cb.html">
+GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+  
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>The Tabs can be created with no children and be dynamic filled using
+  <a href="../func/iupappend.html">IupAppend</a>.</p>
+<p>The ENTERWINDOW_CB and LEAVEWINDOW_CB callbacks are called only when the 
+mouse enter or leaves the tabs buttons area.</p>
+
+<p>The Tabs children, differently from a <strong>IupZbox</strong>, automatically receives a name if 
+does not already have one when it is appended to the tabs in the native system. 
+Also <strong>IupTabs</strong> does NOT depends on the VISIBLE attribute.</p>
+<p>In GTK, when the tabs buttons are scrolled, the active tab is also changed.</p>
+<p>When you change the active tab the focus is usually not changed. If you want 
+to control the focus behavior call 
+<strong>IupSetFocus</strong> 
+  in the TABCHANGE_CB callback.</p>
+<h3>Utility Functions </h3>
+<p>These functions can be used to set and get attributes from the element:</p>
+<pre>void  IupSetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+void  IupStoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+char* IupGetAttribute<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+int   IupGetInt<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+float IupGetFloat<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+void  IupSetfAttribute<span class="style3">Id</span>(Ihandle *ih, const char* name, int id, const char* format, ...);</pre>
+<p>They work just like the respective traditional set and get functions. But the attribute string is complemented with 
+  the id value. For ex:</p>
+<pre>IupSetAttributeId(ih, &quot;TABTITLE&quot;, 3, value) == IupSetAttribute(ih, &quot;TABTITLE3&quot;, value)</pre>
+<p>But these functions are faster than the traditional functions because they do 
+not need to parse the attribute name string and the application does not need to 
+concatenate the attribute name with the id.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p>In Windows, the Visual Styles work only when TABTYPE is TOP.</p>
+
+<table align="center">
+	<tr>
+		<th>Windows <br>
+		Classic</th>
+		<th>Windows <br>
+		w/ Styles</th>
+	</tr>
+	<tr>
+		<td class="bg_win2k"><img src="images/iuptabs_win2k_top.png"></td>
+		<td class="bg_winxp"><img src="images/iuptabs_winxp_top.png"></td>
+	</tr>
+	<tr>
+		<td class="bg_win2k"><img src="images/iuptabs_win2k_left.png"></td>
+		<td class="bg_winxp"><img src="images/iuptabs_winxp_left.png"></td>
+	</tr>
+	<tr>
+		<td class="bg_win2k"><img src="images/iuptabs_win2k_top_multi.png"></td>
+		<td class="bg_winxp"><img src="images/iuptabs_winxp_top_multi.png"></td>
+	</tr>
+</table>
+
+<p>GTK is the only one that supports vertical text in the TOP configuration, but 
+does not supports multiple lines of tab buttons.</p>
+
+<table align="center">
+	<tr>
+		<th colspan="2">GTK</th>
+	</tr>
+	<tr>
+		<td class="bg_gtk"><img src="images/iuptabs_gtk_top.png"></td>
+		<td class="bg_gtk"><img src="images/iuptabs_gtk_left.png"></td>
+	</tr>
+	<tr>
+		<td class="bg_gtk"><img src="images/iuptabs_gtk_top_vert.png"></td>
+		<td class="bg_gtk"><img src="images/iuptabs_gtk_left_vert.png"></td>
+	</tr>
+</table>
+
+<p>Motif does not supports vertical text.</p>
+
+<table align="center">
+	<tr>
+		<th>Motif</th>
+	</tr>
+	<tr>
+		<td class="bg_mot"><img src="images/iuptabs_mot_top.png"></td>
+	</tr>
+	<tr>
+		<td class="bg_mot"><img src="images/iuptabs_mot_left.png"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>

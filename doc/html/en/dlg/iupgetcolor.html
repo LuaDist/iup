@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetColor</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupGetColor</h2>
+<p>Shows a modal dialog which allows the user 
+  to select a color. Based on <a href="iupcolordlg.html">IupColorDlg</a>.</p>
+<h3><a name="Creation">Creation</a> and Show</h3>
+<dl>
+  <dl>
+	<pre>int IupGetColor(int <b>x</b>, int <b>y</b>, unsigned char *<b>r</b>, unsigned char *<b>g</b>, unsigned char *<b>b</b>); [in C]
+iup.GetColor(<strong>x</strong>, <strong>y[, r, g, b</strong>: number]) -&gt; (<strong>r</strong>, <strong>g</strong>, <strong>b</strong>: number)  [in Lua]</pre>
+	<b>
+	<p>x, y</b>:
+    x, y values of the <b>IupPopup</b> function.<br>
+	<b>r, g, b</b>:
+    Pointers to variables that will receive the 
+    color selected by the user if the OK button is pressed. The value in the variables at the moment the function is 
+    called defines the color being selected when the dialog is shown. If the OK button is not pressed, the r, g and b values are not changed. These values cannot be NULL 
+    in C, in Lua they are optional and used for initialization only.</p>
+	</dl>
+	<dl>
+		<p><span class="style1">Returns:</span> in C a code 1 if the OK button is pressed, or 0 otherwise. 
+		In Lua the code is not returned, instead the r,g,b values are returned 
+		or nil otherwise.</p>
+	</dl>
+</dl>
+<h3><a name="Notes">Notes</a></h3>
+<p>The dialog uses a global attribute called &quot;PARENTDIALOG&quot; as the parent dialog if it is defined. It also uses a 
+  global attribute called &quot;ICON&quot; as the dialog icon if it is defined.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="iupmessage.html">IupMessage</a>, 
+<a href="iupscanf.html">IupScanf</a>,
+  <a href="iuplistdialog.html">IupListDialog</a>, 
+<a href="iupalarm.html">IupAlarm</a>,
+  <a href="iupgetfile.html">IupGetFile</a>. </p>
+
+</body>
+
+</html>

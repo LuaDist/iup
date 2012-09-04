@@ -1,0 +1,24 @@
+--- This file is part of LuaDist project:
+
+name = "iup"
+version = "3.6"
+
+desc = "IUP is a portable toolkit for building graphical user interfaces."
+author = "Marcelo Gattass, Luiz Henrique de Figueiredo, Carlos Henrique Levy, Antonio Scuri"
+license = "Tecgraf Library License/MIT"
+url = "http://www.tecgraf.puc-rio.br/iup"
+maintainer = "Peter Kapec"
+
+depends = {
+	"cd >= 5.5",
+	"im >= 3.8",
+	"lua ~> 5.1",
+	Linux = {
+--		"libgtk2 >= 2.0",
+	},
+	Windows = {
+		"freetype >= 2.4",
+	}
+}
+-- on ubuntu, install package libgtk2.0-dev
+

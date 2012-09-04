@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSaveClassAttributes</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupSaveClassAttributes</h2>
+<p>Saves all registered attributes on the internal hash table.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupSaveClassAttributes(Ihandle*<strong> ih</strong>); [in C]
+iup.SaveClassAttributes(<strong>ih</strong>: ihandle) [in Lua]</pre>
+<p>
+  <b>ih</b>: identifier of the interface element.
+</p>
+<h3>Notes</h3>
+<p>When the element is mapped some attributes are stored only in the native 
+system. If the element is <b>unmaped</b> those attributes are lost. So this 
+function is useful when you want to <b>unmap</b> the element and keep its 
+attributes.</p>
+<p>It will not save id dependent attributes, like those which has a 
+complementary number. For example: items in a <strong>IupList</strong>, <strong>
+IupTree</strong> or <strong>IupMatrix</strong>.</p>
+<h3>See Also</h3>
+<p>
+<a href="iupgetclassattributes.html">IupGetClassAttributes</a>,
+<a href="iupgetclassname.html">IupGetClassName</a>,
+<a href="iupgetclasstype.html">IupGetClassType</a>,
+<a href="iupgetallattributes.html">IupGetAllAttributes</a>,
+<a href="iupcopyclassattributes.html">IupCopyClassAttributes</a></p>
+
+</body>
+
+</html>

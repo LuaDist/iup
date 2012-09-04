@@ -1,0 +1,192 @@
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+<meta name="generator" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>RSSGui - A C++ wrapper for the IUP GUI&nbsp;toolkit</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1>RSSGui - A C++ wrapper for the IUP GUI&nbsp;toolkit</h1>
+<blockquote>
+  <p>This is a short introduction to the GUI tookit RSSGui which is a simple and 
+  easy to use C++ wrapper for the ANSI C GUI toolkit IUP.</p>
+  <p>The current version of RSSGui is 0.5. This release contains wrappers for 
+  most of the IUP widgets and adds a widget type that can be used to create 
+  wizards. Not all events and functions availabe in IUP are already wrapped by 
+  RSSGui, but the event handling mechanism is very simple and easy to extend. If 
+  you miss somethin, please tell <a href="mailto:dr@rsas.de">me</a>. The current 
+  version is only tested on the Windows platform. If you can successfully use it 
+  on any other platform or if you have any problems anywhere, please tell me!</p>
+</blockquote>
+<h2>The goals</h2>
+<blockquote>
+  <p>I know a lot of C++ GUI toolkits. Most of them have some drawbacks: Either 
+  they come with a lot of classes that represent strings, lists, vectors etc. 
+  which are already defined in a wunderful way in the C++ STL, they don't use 
+  native widgets or they have a complicated and error prone event handling (like 
+  MFC or wxWidgets) or they use language extensions (like Qt). So my goals when 
+  designing RSSGui where:</p>
+  <p>Simplicity</p>
+  <ul>
+    <li type="square">STL conformance, compatibility and interoperability </li>
+    <li type="square">A simple yet powerful event handling mechanism </li>
+    <li type="square">Native C++, no language extensions </li>
+    <li type="square">Completely free for comeracial as for non comercial usage
+    </li>
+  </ul>
+  <p>I think I reached these goals quite good. The event handling is really 
+  simple and easy to understand as well as easy to use. Unfortunately it is not 
+  typesafe. It could have been realized in a type safe way as I saw it in a 
+  signal and slot library that I found on the web. But, well - I don't consider 
+  type safety as a primary design goal, so I am happy with the current design.</p>
+</blockquote>
+<h2>Some examples</h2>
+<blockquote>
+  <p>If you are still interested in using RSSGui for your applications, please 
+  have a look at the following examples...</p>
+</blockquote>
+<h3>Basics</h3>
+<blockquote>
+  <p>The only file you need to include is <code>RSSGui.h</code>. You don't need 
+  to include any IUP headers if you don't want to use IUP functions directly. At 
+  the beginning of your program you should call the function <code>rssGuiInit()</code> 
+  and at the end <code>rssGuiRelease()</code>. Just by the way: You can use IUP 
+  functions directly on your RSSGui widgets - you can receive a widget pointer 
+  by calling the method <code>getHandle()</code> and cast the returned pointer 
+  from <code>void *</code> to <code>Ihandle *</code>, but this is not really 
+  tested or suggested...</p>
+</blockquote>
+<h3>Example 1: Creating a a dialog with a button</h3>
+<blockquote>
+  <p>This simple example creates a dialog, places a button on it and starts the 
+  main event loop (but doesn't use an event handler):</p>
+  <pre>#include &quot;RSSGui.h&quot;
+
+int main()
+{
+  rssGuiInit(); 
+
+  // create a dialog with a simple button
+  RSSButton *b1 = new RSSButton(&quot;Click me!&quot;);
+  RSSDialog *d1 = new RSSDialog(b1, &quot;RSSGui Example&quot;); 
+
+  // set a tool tip for the button
+  b1-&gt;setToolTip(&quot;A cool button&quot;); 
+
+  // show the dialog
+  d1-&gt;show(); 
+
+  // Start the main event loop
+  RSSEventManager *eventManager = RSSEventManager::getInstance();
+  eventManager-&gt;mainLoop(); 
+
+  delete d1; 
+
+  rssGuiRelease();
+  return 0;
+}</pre>
+  <p>The button gets a tool tip simply by calling the method <code>setToolTip()</code> 
+  that is inherited from <code>RSSWidget</code>.</p>
+</blockquote>
+<h3>Example 2: Event handler</h3>
+<blockquote>
+  <pre>#include &quot;RSSGui.h&quot;
+
+class MyDialog : RSSEventHandler
+{
+public:
+  int button1Event(RSSEvent &amp;event)
+  {
+    static int flag = 0;
+    flag = 1 - flag; // toggle between 0 and 1
+
+    ((RSSButton *)(event.getWidget()))-&gt;setLabel(flag ? &quot;text1&quot; : &quot;text2&quot;);
+    return RSSGUIDEFAULT;
+  }
+
+  int button2Event(RSSEvent &amp;event)
+  {
+    return RSSGUICLOSE;
+  }
+
+  void doIt()
+  {
+    // create a dialog with a simple button
+    RSSButton *b1 = new RSSButton(&quot;Button 1&quot;);
+    RSSButton *b2 = new RSSButton(&quot;Close&quot;);
+    RSSVBox *v1 = new RSSVBox(b1, b2, 0);
+    RSSDialog *d1 = new RSSDialog(v1, &quot;RSSGui Example&quot;);
+
+    // set tool tips for the buttons
+    b1-&gt;setToolTip(&quot;A cool button&quot;);
+    b2-&gt;setToolTip(&quot;Close this wunderful application&quot;);
+
+    // show the dialog
+    d1-&gt;show();
+
+    // register the event handlers
+    rssRegisterEvent(b1, MyDialog::button1Event);
+    rssRegisterEvent(b2, MyDialog::button2Event);
+
+    // Start the main event loop
+    RSSEventManager *eventManager = RSSEventManager::getInstance();
+    eventManager-&gt;mainLoop();
+
+    delete d1;
+  }
+};
+
+int main()
+{
+  rssGuiInit();
+
+  MyDialog d;
+  d.doIt();
+
+  rssGuiRelease();
+  return 0;
+}</pre>
+</blockquote>
+<blockquote>
+  <p>An event handler is a method in a class that is derived from <code>
+  RSSEventHandler</code>. All event handlers are methods that receive an 
+  argument of type <code>RSSEvent</code> and that return an integer value. This 
+  return value controls if the application should be continued or terminated 
+  etc. - exactly as in IUP itself. The class RSSEvent has a lot of member 
+  functions that you can use to access information about the event. For example 
+  you can use the method <code>getWidget()</code> to access the widget that 
+  caused the event - in this case the button that has been clicked.</p>
+  <p>The idea of the event handling mechanism is really simple - call the macro
+  <code>rssRegisterEvent</code> and connect an event handler to an event type of 
+  a widget. That's it. No magic macros in your headers that are similarly 
+  repeated in the implementation files and no language extension. Simply calling 
+  a macro to connect the event and the event handler.</p>
+</blockquote>
+<h2>Support</h2>
+<blockquote>
+  <p>The project RSSGui is not officially supported. But if you have any 
+  problems, need any missing features or just want to talk about the system, 
+  don't hesitate to contact
+  <a href="mailto:dr@rsas.de" target="mailto:dr@rsas.de">me</a>.</p>
+</blockquote>
+<h2>The License</h2>
+<blockquote>
+  <p>RSSGui is distributed under the same license conditions as IUP itself. This 
+  means that you can use it in modified or unmodified form for any comercial and 
+  non comercial purpose. You should mention the copyright notice of the IUP 
+  project and additionally the following copyright notice somewhere in your 
+  program or in your documentation and you should put a Tecgraf and a Reinhold 
+  Software Services logo somewhere on your website:</p>
+  <p>RSSGui (C) 2005 by Reinhold Software Services</p>
+  <p>RSSGui is developed and sponsored by
+  <a href="http://www.reinhold-software-services.de">Reinhold Software Services</a>.</p>
+</blockquote>
+
+</body>
+
+</html>

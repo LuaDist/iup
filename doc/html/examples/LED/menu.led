@@ -1,0 +1,8 @@
+#IupMenu Example in LED 
+#Defines a menu and associates it to a dialog. 
+
+item_new = item ("New", "acao_new");
+item_open = item ("Open", "acao_open");'
+item_exit = item ("Exit" , "acao_exit");'
+mymenu = menu (item_new, item_open, separator(),item_exit)
+main = dialog [MENU = mymenu] (...)

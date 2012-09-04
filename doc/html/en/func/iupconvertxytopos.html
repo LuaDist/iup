@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupConvertXYToPos</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupConvertXYToPos <span class="style1">(since 3.0)</span></h2>
+<p>Converts a (x,y) coordinate in an item position.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupConvertXYToPos(Ihandle *<strong>ih</strong>, int <strong>x</strong>, int <strong>y</strong>); [in C]
+iup.ConvertXYToPos(<strong>ih</strong>: ihandle, <strong>x</strong>, <strong>y</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><b>ih</b>: Identifier of the element.<br>
+<b>x</b>: X coordinate relative to the left corner of the element. <br>
+<b>y</b>: Y coordinate relative to the top corner of the element.</p>
+<p><span class="style2">Returns:</span> the position starting at 0 (except for
+<strong>IupList</strong> that starts at 1). If fails 
+returns -1.</p>
+<h3>Notes</h3>
+<p>It can be used for <strong>IupText</strong> (returns a position in the 
+string), <strong>IupList</strong> (returns an item), <strong>IupTree</strong> 
+(returns a node identifier) or IupMatrix (returns a cell position, where pos=lin*numcol 
++ col).</p>
+<h3>See Also</h3>
+<p><a href="../elem/iuptext.html">IupText</a>, <a href="../elem/iuplist.html">IupList</a>,
+  <a href="../elem/iuptree.html">IupTree</a></p>
+
+</body>
+
+</html>

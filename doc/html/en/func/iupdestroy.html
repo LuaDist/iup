@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupDestroy</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupDestroy</h2>
+<p>Destroys an interface element and all its 
+  children. Only dialogs, timers, popup menus and images should be normally destroyed, but 
+<b>detached</b> controls 
+  can also be destroyed.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupDestroy(Ihandle *<strong>ih</strong>); [in C]
+iup.Destroy(<strong>ih</strong>: ihandle) [in Lua]
+or <strong>ih</strong>:destroy() [in Lua]</pre>
+<p><strong>ih</strong>: Identifier of the interface element to be destroyed.</p>
+<h3>Notes</h3>
+<p>It will automatically <b>unmap</b> and <b>detach</b> the element if 
+necessary, and then <strong>destroy</strong> the element.</p>
+<p>This function also deletes the main names 
+  associated to the interface element being destroyed, but if it has more than 
+one name then some names may be left behind. </p>
+<p><strong>Menu</strong> bars associated with dialogs are automatically destroyed 
+when the dialog is destroyed.  </p>
+
+<p><strong>Images</strong> associated with controls are NOT automatically destroyed,
+  because images can be reused in several controls the application 
+  must destroy them when they are not used anymore.</p>
+<p>All dialogs and all 
+	elements that have names are automatically destroyed in <strong>IupClose</strong>.</p>
+
+<h3>See Also</h3>
+<p><a href="iupappend.html">IupAppend</a>, <a href="iupdetach.html">IupDetach</a>, 
+<a href="iupmap.html">IupMap</a>, <a href="iupunmap.html">IupUnmap</a>,
+<a href="iupcreate.html">IupCreate</a></p>
+
+</body>
+
+</html>

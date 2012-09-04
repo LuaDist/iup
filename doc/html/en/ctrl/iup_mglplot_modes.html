@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMglPlot DS_MODES Options</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	border-width: 0;
+}
+</style>
+</head>
+<body>
+
+
+<h2>IupMglPlot DS_MODES Options</h2>
+
+
+<h3>For Linear Datasets</h3>
+<h4>LINE</h4>
+<p>Draws lines between points. DS_COLOR, DS_LINESTYLE and DS_LINEWIDTH are used 
+to configure the lines.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_line.png" width="348"></td>
+		<td class="style1" valign="top">(3 plots)<br>BOX=Yes</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_line3d.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		</td>
+	</tr>
+</table>
+<h4>MARK</h4>
+<p>Draws a mark in each point. DS_COLOR, DS_MARKSTYLE and DS_MARKSIZE are used 
+to configure the marks.</p>
+<h4>MARKLINE</h4>
+<p>Draws lines between points and draws a mark in each point. Same as if LINE 
+and MARK where set together.</p>
+<h4>RADAR</h4>
+<p>Draws a radar chart. Like a LINE plot in polar coordinates. RADARSHIFT 
+configures an additional radial shift of the data [If rs&lt;0 then rs=max(0, 
+-min(a))], default=-1. If DATAGRID=Yes then a grid of radial lines and a circle 
+for rs are drawn. DS_COLOR, DS_LINESTYLE and DS_LINEWIDTH are used to configure the lines. DS_COLOR, DS_MARKSTYLE and DS_MARKSIZE are used to configure the marks.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_radar.png" width="348"></td>
+		<td class="style1" valign="top">(3 plots)<br>RADARSHIFT=0.4<br>DATAGRID=Yes<br>BOX=Yes</td>
+	</tr>
+</table>
+<h4>AREA</h4>
+<p>Draws lines between points and fills it to axis plane. DS_COLOR is used to 
+configure fill color. The order of the datasets will define which one will be 
+drawn first.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_area.png" width="348"></td>
+		<td class="style1" valign="top">(3 plots)<br>AXS_XORIGIN=0<br>
+		AXS_YORIGIN=0<br>BOX=Yes</td>
+	</tr>
+</table>
+<h4>BAR</h4>
+<p>Draws vertical bars from points to axis plane. If DATAGRID=Yes then grid 
+lines are drawn, default=No. BARWIDTH sets relative width of rectangles, 
+default=0.7.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_bar.png" width="348"></td>
+		<td class="style1" valign="top">AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>BOX=Yes</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_bar3d.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		</td>
+	</tr>
+</table>
+<h4>BARHORIZONTAL</h4>
+<p>Draws horizontal bars from points to axis plane. If DATAGRID=Yes then grid 
+lines are drawn, default=No. BARWIDTH sets relative width of rectangles, 
+default=0.7. </p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_barhorizontal.png" width="348"></td>
+		<td class="style1" valign="top">AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>BOX=Yes</td>
+	</tr>
+</table>
+<h4>CHART</h4>
+<p>Draws colored stripes (boxes). If DATAGRID=Yes then black border lines are 
+drawn, default=No. If PIECHART=Yes cylindrical coordinates are used, default=No.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_chart.png" width="348"></td>
+		<td class="style1" valign="top">DATAGRID=Yes<br>BOX=Yes</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_chartpie.png" width="348"></td>
+		<td class="style1" valign="top">DATAGRID=Yes<br>BOX=Yes<br>
+		PIECHART=Yes<br>COLORSCHEME=bgr cmy</td>
+	</tr>
+</table>
+<h4>STEP</h4>
+<p>Draws continuous stairs for points to axis plane. DS_COLOR, DS_LINESTYLE and DS_LINEWIDTH are used to configure the lines. DS_COLOR, DS_MARKSTYLE and DS_MARKSIZE are used to configure the marks.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_step.png" width="348"></td>
+		<td class="style1" valign="top">(3 plots)<br>BOX=Yes</td>
+	</tr>
+</table>
+<h4>STEM</h4>
+<p>Draws vertical lines from points to axis plane. DS_COLOR, DS_LINESTYLE and DS_LINEWIDTH are used to configure the lines. DS_COLOR, DS_MARKSTYLE and DS_MARKSIZE are used to configure the marks.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_stem.png" width="348"></td>
+		<td class="style1" valign="top">(3 plots)<br>DS_MARKSTYLE=HOLLOW_CIRCLE<br>
+		DS_SHOWMARKS=Yes<br>AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>BOX=Yes</td>
+	</tr>
+</table>
+<h4>DOTS</h4>
+<p>Draws arbitrary placed points. Colors will be used from the previous color 
+scheme or from COLORSCHEME if defined.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_dots.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+	</tr>
+</table>
+<h4>CRUST</h4>
+<p>This will reconstruct and draw the surface for arbitrary placed points. 
+Parameter CRUSTRADIUS set relative radius (increase it for removing holes), 
+default=0. If DATAGRID=Yes then wire plot is produced, default=No. Colors will 
+be used from the previous color scheme or from COLORSCHEME if defined.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_crust.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+	</tr>
+</table>
+<h3>For Planar Datasets</h3>
+<p>For all planar modes colors will be used from the previous color scheme or 
+from COLORSCHEME if defined. COLORSCHEME is a string that can specify a group of 
+colors to be used by the plot.</p>
+<p>Colors in a color scheme are specified by the codes &quot;wkrgbcymhRGBCYMHWlenupqLENUPQ&quot; 
+only. A brightness weight from 1 to 9 can also be used to change the default 
+value from 5 normal, to 1 very dark, and to 9 very bright.</p>
+<p>Also the symbol ‘d’ denotes the interpolation by 3D position instead of the 
+coloring by amplitude. Symbol ‘|’ disables color interpolation in color scheme, 
+which can be useful, for example, for sharp colors during matrix plotting.</p>
+<p>For coloring by amplitude (most common) the final color is a linear 
+interpolation of color array. The color array is constructed from the string 
+ids. The argument is the amplitude normalized based on COLORBARRANGE. When 
+coloring by coordinate, the final color is determined by the position of the 
+point in 3D space and is calculated from combining the first three elements of 
+color array with the x, y and z normalizes values. This type of coloring is 
+useful for isosurface plot where color may show the exact position of a piece of 
+surface.</p>
+<p>Here are some examples or color codes and color schemes:</p>
+<p><img height="330" src="images/iupmglplot_colorcodes.png" width="454"><img height="400" src="images/iupmglplot_colorschemes.png" width="600"></p>
+<h4>PLANAR_MESH</h4>
+<p>Draws mesh lines for the surface. Mesh lines are plotted for each z slice of 
+the data. DS_LINESTYLE and DS_LINEWIDTH are used to configure the lines.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_mesh.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+	</tr>
+</table>
+<h4>PLANAR_FALL</h4>
+<p>Draws fall lines for the surface. DS_LINESTYLE and DS_LINEWIDTH are used to configure the lines. 
+If DIR=X, then lines are drawn along x-direction else lines are drawn along 
+y-direction, default=Y.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_fall.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+	</tr>
+</table>
+<h4>PLANAR_BELT</h4>
+<p>Draws belts for the surface. If DIR=X, then lines are drawn along x-direction 
+else lines are drawn along y-direction, default=Y.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_belt.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+	</tr>
+</table>
+<h4>PLANAR_SURFACE</h4>
+<p>Draws the surface. If DATAGRID=Yes then grid lines are drawn, default=No.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_surface.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_surface_colors.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes<br>COLORSCHEME=BbcyrR|</td>
+	</tr>
+</table>
+<h4>PLANAR_BOXES</h4>
+<p>Draws vertical boxes for the surface. If DATAGRID=Yes then box lines are 
+drawn, default=No.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_boxes.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes<br>AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>
+		AXS_ZORIGIN=0</td>
+	</tr>
+</table>
+<h4>PLANAR_TILE</h4>
+<p>Draws horizontal tiles for the surface, it can be seen as 3D generalization 
+of STEP. </p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_tile.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+	</tr>
+</table>
+<h4>PLANAR_DENSITY</h4>
+<p>Draws density plot for the surface at a specified z coordinate. PLANARVALUE 
+specifies the z coordinate, if not defined AXS_ZMIN is used.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_density.png" width="348"></td>
+		<td class="style1" valign="top">BOX=Yes<br>
+		TRANSPARENT=No<br>COLORBAR=Yes</td>
+	</tr>
+</table>
+<h4>PLANAR_CONTOUR</h4>
+<p>Draws contour lines for the surface at a z coordinate. CONTOURCOUNT defines 
+the number of contour lines, default=7. PLANARVALUE specifies a z coordinate, if 
+not defined contours are distributed in the COLORBARRANGE interval. If CONTOURFILLED=Yes 
+draws solid (or filled) contour lines for the surface, default=No. If CONTOURLABELS 
+is defined then contour labels will be drawn BELLOW or ABOVE the contours.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_contour.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes<br>CONTOURLABELS=BELLOW</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_contour_filled.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes<br>CONTOURFILLED=Yes</td>
+	</tr>
+<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_surface_contour.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes<br><br>(dual plot)<br>DS_MODE=PLANAR_SURFACE<br>
+		DS_MODE=PLANAR_CONTOUR</td>
+		<td class="style1">&nbsp;</td>
+		<td class="style1" valign="top">&nbsp;</td>
+	</tr>
+</table>
+<h4>PLANAR_AXIALCONTOUR</h4>
+<p>Draws a surface which is result of the contour plot rotation for the surface. 
+AXIALCOUNT defines the number of elements distributed in the COLORBARRANGE 
+interval, default=3.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1">
+<img height="248" src="images/iupmglplot_planar_axialcontour.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=Yes<br>LIGHT=Yes</td>
+	</tr>
+</table>
+<h4>PLANAR_GRADIENTLINES</h4>
+<p>Draws gradient lines for scalar field defined by the surface at a specified z 
+coordinate. PLANARVALUE specifies the z coordinate, if not defined AXS_ZMIN is 
+used. Number of lines is proportional to GRADLINESCOUNT, default=5 . If 
+GRADLINESCOUNT&lt;0 then lines start from borders only. Lines are plotted for each 
+z slice of the data. </p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1">
+<img height="248" src="images/iupmglplot_planar_gradientlines.png" width="348"></td>
+		<td class="style1" valign="top">BOX=Yes<br>
+		TRANSPARENT=Yes<br>LIGHT=Yes</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_planar_density_gradientlines.png" width="348"></td>
+		<td class="style1" valign="top">BOX=Yes<br>
+		TRANSPARENT=Yes<br>LIGHT=Yes<br><br>(dual plot)<br>
+		DS_MODE=PLANAR_GRADIENTLINES <br>DS_MODE=PLANAR_DENSITY </td>
+	</tr>
+</table>
+<h3>For Volumetric Datasets</h3>
+<p>For all volumetric modes colors will be used from the previous color scheme 
+or from COLORSCHEME if defined.</p>
+<h4>VOLUME_ISOSURFACE</h4>
+<p>Draws isosurface plot for the volume. If DATAGRID=Yes then wire plot is 
+produced, default=No. if ISOVALUE is defined only 1 isosurface is plot, else 
+ISOCOUNT (default=3) surfaces are plot distributed in the COLORBARRANGE 
+interval.</p>
+<p>Note, that there is possibility of incorrect plotting due to uncertainty of 
+cross-section defining if there are two or more isosurface intersections inside 
+one cell.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_volume_isosurface.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=Yes<br>LIGHT=Yes</td>
+	</tr>
+</table>
+<h4>VOLUME_DENSITY</h4>
+<p>Draws density plot for the volume. If DATAGRID=Yes then grid lines are drawn, 
+default=No. If PROJECT=Yes draws density plot in x, y, or z plain, default=No. 
+When PROJECT=Yes, PROJECTVALUEX, PROJECTVALUEY and PROJECTVALUEZ, are used to 
+select data at the given coordinate, if they are not defined AXS_?ORIGIN is used 
+accordingly. When PROJECT=No, SLICEX, SLICEY and SLICEZ, are used to define the 
+slice where the plot is done, default is -1 (central). SLICEDIR defines which 
+directions are used, default &quot;XYZ&quot;.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_volume_density.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=Yes<br>LIGHT=No<br>AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>AXS_ZORIGIN=0<br>AXS_X=Yes<br>
+		AXS_Y=Yes<br>AXS_Z=Yes</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_volume_densityproject.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes <br>
+		TRANSPARENT=No<br>LIGHT=No<br>PROJECT=Yes<br>PROJECTVALUEX=-1<br>PROJECTVALUEY=1<br>
+		PROJECTVALUEZ=-1</td>
+	</tr>
+</table>
+<h4>VOLUME_CONTOUR</h4>
+<p>Draws contour plot for the volume. If DATAGRID=Yes then grid lines are drawn, 
+default=No. If PROJECT=Yes draws contour plot in x, y, or z plain, default=No. 
+When PROJECT=Yes, PROJECTVALUEX, PROJECTVALUEY and PROJECTVALUEZ, are used to 
+select data at the given coordinate, if they are not defined AXS_?ORIGIN is used 
+accordingly. When PROJECT=No, SLICEX, SLICEY and SLICEZ, are used to define the 
+slice where the plot is done, default is -1 (central). SLICEDIR defines which 
+directions are used, default &quot;XYZ&quot;. If CONTOURFILLED=Yes draws solid (or filled) 
+contour lines for the surface, default=No. CONTOURCOUNT defines the number of 
+contour lines, default=7. Where lines are used, DS_LINESTYLE and DS_LINEWIDTH are used to configure the lines.</p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_volume_contour.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_volume_contourproject.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes <br>
+		TRANSPARENT=No<br>LIGHT=Yes<br>PROJECT=Yes<br>PROJECTVALUEX=-1<br>
+		PROJECTVALUEY=1<br>PROJECTVALUEZ=-1</td>
+	</tr>
+<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_volume_contourfilled.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=No<br>LIGHT=Yes</td>
+		<td class="style1"><img height="268" src="images/iupmglplot_volume_contourfilledproject.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes <br>
+		TRANSPARENT=No<br>LIGHT=Yes<br>PROJECT=Yes<br>PROJECTVALUEX=-1<br>
+		PROJECTVALUEY=1<br>PROJECTVALUEZ=-1<br>CONTOURFILLED=Yes</td>
+	</tr>
+</table>
+<h4>VOLUME_CLOUD</h4>
+<p>Draws cloud plot for the volume. This plot is a set of cubes with color and 
+transparency proportional to value of ALPHA. The resulting plot is like cloud – 
+low value is transparent but higher ones are not. If CLOUDCUBES=No the 
+semi-transparent points are used instead of cubes, default=Yes. </p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" >
+	<tr>
+		<td class="style1"><img height="248" src="images/iupmglplot_volume_cloud.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+		TRANSPARENT=Yes<br>LIGHT=No<br>COLORSCHEME=wyrRk<br>CLOUDCUBES=No</td>
+		<td class="style1"><img height="248" src="images/iupmglplot_volume_cloudcubes.png" width="348"></td>
+		<td class="style1" valign="top">ROTATE=40:0:60<br>BOX=Yes <br>
+		TRANSPARENT=Yes<br>LIGHT=No<br>COLORSCHEME=wyrRk</td>
+	</tr>
+</table>
+
+</body>
+
+</html>

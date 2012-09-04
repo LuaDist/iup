@@ -1,0 +1,16 @@
+EXPORTS
+  iuplua_open
+  iupkey_open
+  iuplua_dofile
+  iuplua_checkihandle
+  iuplua_checkihandle_array
+  iuplua_pushihandle 
+  iuplua_call_start
+  iuplua_call
+  iuplua_call_rs
+  iuplua_register
+  iuplua_regstring
+  iuplua_regnumber
+  iuplua_regstring_mask
+  iuplua_regihandle
+  iuplua_pushihandle_cb

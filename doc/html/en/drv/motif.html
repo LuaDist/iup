@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Motif</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>Motif System Driver</h2>
+<p>Driver for the X-Windows/Motif 2.x environment.</p>
+<h3>Environment Variables</h3>
+<p><b>DEBUG</b></p>
+<p class="info">This variables existence makes the driver 
+    operate in synchronous mode with the X server. This slows down all operations, but allows immediately detecting 
+    errors caused by X.</p>
+<h3><b>
+Default Values  Resource Files</b>
+</h3>
+<p>Some default values used by the driver, such 
+  as background color, foreground color and font, can be set by the user by means of a resource file called &quot;Iup&quot;. It must be in the users home or in a directory pointed to by the XAPPLRESDIR environment variable. Below you can see an example of this files contents:</p>
+<pre>*background: #ff0000
+*foreground: #a0ff00
+*fontList: -misc-fixed-bold-r-normal-*-13-*</pre>
+<p>The values used in the example above are the 
+  ones used by IUP if these resources are not defined.</p>
+<p>Also a resource file named &quot;.Xdefaults&quot; will also affect the visual appearance of all 
+applications that use Motif and Intrinsics.</p>
+<h3>Tips</h3>
+
+<h4>Dynamic Libraries in Linux</h4>
+
+<p>When using dynamic libraries in Linux, the &quot;libiup.so&quot; uses the GTK driver 
+for newer systems (Linux26g4). So 
+applications that dynamically load IUP will always use the &quot;libiup.so&quot;, for 
+example Lua using require. To use the IUP Motif dynamic library in Linux you must rename the 
+&quot;libiupmot.so&quot; to &quot;libiup.so&quot;, so the Motif driver will be loaded instead of the 
+GTK 
+driver.</p>
+<p>In older systems (&lt;=Linux26 with gcc 3) the &quot;libiup.so&quot; already contains the 
+Motif driver.</p>
+<h4>During linking in the Solaris 
+  environment: Can not find <b>libresolv.so.2</b></h4>
+<p>This error occurs if the system does not 
+  have an applied patch containing this library.</p>
+<p>This library is important for all 
+  installations of Solaris 2.5 and 2.5.1 (SunOS 5.5 and 5.5.1, respectively). It is a correction of the DNS system, 
+  involving security.</p>
+<p>The web address to get these patches is 
+  SunSolves <a href="http://sunsolve1.sun.com/sunsolve/pubpatches/patches.html">http://sunsolve1.sun.com/sunsolve/pubpatches/patches.html</a>.
+  Select the Solaris version you wish (2.5 or 
+  2.5.1 for Sparc) and download the patches 103667-09, 102980-17, 103279-03, 103708-02, or more recent for 2.5 (the number after 
+  the - is the patch version, and the more recent number is the patch), or 103663-12, 103594-14, 103680-02 and 
+  103686-02 for 2.5.1.
+  All of them have a README file explaining 
+  installation, and groups have to be installed together.</p>
+<h4>TrueColor canvas</h4>
+<p>Whenever a canvas is created, one tries to 
+  create it with a TrueColor resolution Visual. This is not always possible, since it is subject to many conditions, 
+  such as hardware (graphics board) and the X servers configuration.</p>
+<p>The <b>xdpyinfo</b> program informs which Visuals are available in the X server where the display is being 
+  made, so that you can see if your X allows creating a canvas with a TrueColor Visual. In some platforms, however, the 
+  X server may not make a TrueColor Visual available, even though the graphics board is able to display it. In this 
+  case, restart the server with parameters that force this. Below is a table with such parameters to some systems where 
+  the IUP library has been tested. If the command does not work, or if it is not possible, then the graphics library 
+  really does not support 24 bpp.</p>
+  <table align="center">
+    <tr>
+      <th>System</th>
+      <th>Execution Command</th>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>startx --bpp 24</td>
+    </tr>
+    <tr>
+      <td>AIX</td>
+      <td>(not necessary)</td>
+    </tr>
+    <tr>
+      <td>IRIX</td>
+      <td>(not necessary)</td>
+    </tr>
+    <tr>
+      <td>Solaris</td>
+      <td>(not necessary)</td>
+    </tr>
+  </table>
+<p>Since color requests are always successful 
+  in TrueColor/24bpp windows, we have minimized visualization problems for images that make use of complex color 
+  palettes (when there is a high color demand, not always all colors requested can be obtained). The IUP applications 
+  also coexist more peacefully with other applications and among themselves, since the colors used by TrueColor/24bpp 
+  windows do not use the colormap cells used by all applications.</p>
+<h4>XtAddCallback failed</h4>
+<p>When a warning about XtAddCallback appears during the application initialization, and it aborts, this usually means 
+  that you are using a Motif with a different version than the Motif used to build IUP. Reinstall Motif or rebuild IUP 
+  using your Motif.</p>
+<h4>Some Control Sizes are wrong (IUP 2.x only)</h4>
+<p>Sometimes the control initialization is incomplete and its size is miscalculated. To solve this call IupMap(dialog) 
+  and set the dialog size to NULL &quot;IupSetAttribute(dlg, IUP_SIZE, NULL);&quot; before calling IupShow. 
+This will fix the sizes.</p>
+
+<h4><font SIZE="3">Indigo Magic look in Sgi</font></h4>
+<font SIZE="3">
+<p>To turn on the Indigo Magic look for an application, simply set the 
+applications sgiMode resource to TRUE. Typically, you should add this line to 
+the &quot;/usr/lib/X11/app-defaults&quot; file for your application:</p>
+<p>appName*sgiMode: TRUE</p>
+<p>where appName is the name of your application.</p>
+</font>
+
+</body>
+
+</html>

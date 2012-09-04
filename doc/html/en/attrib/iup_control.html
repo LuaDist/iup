@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>CONTROL</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>CONTROL</h2>
+<p><b>Windows only.</b> Whether the dialog is embedded inside the parent 
+  window or has a window of its own.</p>
+<h3>Value</h3>
+<p>YES or NO. If the value is YES, the dialog will appear embedded inside its 
+  parent window (you must set a parent, either with PARENTDIALOG or 
+  NATIVEPARENT, or this setting will be ignored). If the value is NO, the dialog 
+  will have its own window.</p>
+<h3>Notes</h3>
+<p>This is useful for implementing ActiveX controls, with the help of the
+  <a target="_blank" href="http://www.tecgraf.puc-rio.br/~rcerq/luacom/">LuaCOM</a> 
+  library. ActiveX controls run embedded inside another window. LuaCOM will send 
+  a window creation event the the control, passing a handle to the parent window 
+  and the size of the control. You can use this to set the dialog's NATIVEPARENT 
+  and RASTERSIZE attributes. See the
+  <a target="_blank" href="http://www.tecgraf.puc-rio.br/~rcerq/luacom/">LuaCOM</a> 
+  documentation for more information.</p>
+<h3>Affects</h3>
+<p>IupDialog</p>
+<h3>See Also</h3>
+<p><b><a href="../dlg/iupdialog.html#Attributes">NATIVEPARENT</a></b>, <b>
+<a href="../dlg/iupdialog.html#Attributes">PARENTDIALOG</a></b>, <b>
+<a href="iup_rastersize.html">RASTERSIZE</a></b></p>
+
+</body>
+
+</html>

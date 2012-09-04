@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetText</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetText</h2>
+<p>Shows a modal dialog to edit a multiline 
+  text.</p>
+<h3>Creation and Show</h3>
+<dl>
+  <pre>int IupGetText(const char* <b>title</b>, char *<strong>text</strong>); [in C]
+iup.GetText(<b>title, text</b>: string) -&gt; (<strong>text</strong>: string) [in Lua]</pre>
+</dl>
+<p><strong>text</strong>: It contains the initial value of the text and the returned 
+  text. It must have room for the edited string.</p>
+<p><u>Returns:</u> a non zero value if 
+  successful. In Lua returns the text or nil if an error occurred.</p>
+<h3>Notes</h3>
+<p>The function does not allocate memory space to store the text entered by the 
+user. Therefore, the text parameter must be large enough to contain the user 
+input. The string is limited to 10240 characters.</p>
+<p>The dialog uses a global attribute called &quot;PARENTDIALOG&quot; as the parent dialog if it is defined. It also uses a 
+  global attribute called &quot;ICON&quot; as the dialog icon if it is defined.</p>
+<h3>Examples</h3>
+<p class="style1"><img src="images/gettext.png" width="567" height="303"></p>
+<h3>See Also</h3>
+<p><a href="iupmessage.html">IupMessage</a>, <a href="iupscanf.html">IupScanf</a>,
+  <a href="iuplistdialog.html">IupListDialog</a>, <a href="iupalarm.html">IupAlarm</a>,
+  <a href="../func/iupsetlanguage.html">IupSetLanguage</a>.</p>
+
+</body>
+
+</html>

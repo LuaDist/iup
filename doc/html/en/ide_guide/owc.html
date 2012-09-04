@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>OpenWatcom C++ Guide</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">OpenWatcom C++ IDE Project Options Guide</h2>
+<h3 align="center"><a target="_blank" href="http://www.openwatcom.org/">http://www.openwatcom.org/</a>&nbsp; </h3>
+<p>Open Watcom is an Integrated Development Environment (IDE) for Fortran and C/C++ languages 
+  using the Watcom compilers. </p>
+<p>&quot;It is a joint effort between SciTech Software Inc, Sybase and the Open Source development community to maintain 
+  and enhance the Watcom C/C++ and Fortran cross compilers and tools. An Open Source license from Sybase allows free 
+  commercial and non-commercial use of the Open Watcom tools.&quot;</p>
+<p>To use IUP with Open Watcom you will need to download the &quot;owc1&quot; binaries in the download page.</p>
+<p>After unpacking the file in your conputer, you must create a new Project for a &quot;Windowed Executable&quot; and configure 
+  your Project Options. In the Project Options there are 2 important places:</p>
+<ul>
+  <li>In the Windows Linking Switches dialog, select option 2. Import, Export and Library Switches. Then enter the 
+    Library directories and Library files. For example: </li>
+</ul>
+<pre>.\lib\owc1;..\..\iup\lib\owc1;..\..\cd\lib\owc1;..\..\im\lib\owc1</pre>
+<pre>comctl32.lib iup.lib iupcontrols.lib cd.lib iupcd.lib im.lib im_process.lib iupgl.lib opengl32.lib glu32.lib</pre>
+<p align="center"><a href="owc1.gif">
+<img border="2" src="owc1_small.gif" xthumbnail-orig-image="owc1.gif" width="200" height="143"></a></p>
+<ul>
+  <li>In the C Compiler Switches dialog, select 1. File Option Switches. Then enter the include path, for example:</li>
+</ul>
+<pre>..\include;..\..\iup\include;..\..\cd\include;..\..\im\include</pre>
+<p align="center"><a href="owc2.gif">
+<img border="2" src="owc2_small.gif" xthumbnail-orig-image="owc2.gif" width="200" height="144"></a></p>
+
+</body>
+
+</html>

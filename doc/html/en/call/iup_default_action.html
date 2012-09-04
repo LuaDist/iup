@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>DEFAULT_ACTION</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>DEFAULT_ACTION</h2>
+<p>Predefined IUP action, generated every time 
+  an action has no associated function (except for the
+  IDLE_ACTION).</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<strong>ih</strong>); [in C]
+[There is no Lua equivalent]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that activated the 
+  function.</p>
+<h3>Notes</h3>
+<p>Often a programmer defines an action with a 
+  name and, when associating it to a function, he/she mistypes the action name, or vice-versa. This kind of mistake is 
+  very common, and IUP is not able to automatically detect it. This predefined action, combined with function 
+  <b>IupGetActionName</b>, can help the programmer detect this problem. All you have to do is define a default action 
+  and verify which is the name of the action that activated it. For example:</p>
+<pre>IupSetFunction(&quot;myFunctionName&quot;, (Icallback)myFunction);
+IupSetAttribute(myButton, &quot;ACTION&quot;, &quot;myFunctionNam<u>r</u>&quot;);   /* notice the typo error here */</pre>
+<p>In this case the incorrect name &quot;myFunctionNam<u>r</u>&quot; 
+  (typo error here) will not be found, so if the
+  DEFAULT_ACTION is defined it will be called when &quot;ACTION&quot; 
+  in invoked for the button. In fact it will be called for all the actions that do not have an action associated.</p>
+<h3>Affects</h3>
+<p>All callbacks when <b>IupSetFunction</b> is used. If <b>IupSetCallback</b> is 
+used DEFAULT_ACTION is ignored.</p>
+<h3>See Also</h3>
+<p><a href="../func/iupsetfunction.html">IupSetFunction</a>,
+  <a href="../func/iupgetactionname.html">IupGetActionName</a>.</p>
+
+</body>
+
+</html>

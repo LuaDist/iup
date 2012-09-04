@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupShow</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupShow</h2>
+<p>Displays a dialog in the current position, 
+  or changes a control 
+  VISIBLE attribute. If the dialog needs to be mapped 
+  and the current position is not known then the dialog is centered. </p>
+<p>For a dialog to set the attribute 
+  VISIBLE=YES is the same as calling <strong>IupShow</strong>. For other 
+  controls, to call <strong>IupShow</strong> is the same as setting 
+  VISIBLE=YES.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupShow(Ihandle *<strong>ih</strong>); [in C]
+iup.Show(<strong>ih</strong>: ihandle) -&gt; (<strong>ret</strong>: number) [in Lua]
+or <strong>ih</strong>:show() -&gt; (<strong>ret</strong>: number) [in IupLua]</pre>
+<p><b>ih</b>: identifier of the interface element.</p>
+<p><span class="style1">Returns:</span> 
+  IUP_NOERROR if successful. If there was an error 
+  returns 
+  IUP_ERROR.</p>
+<h3>Notes</h3>
+<p>For dialogs it is equivalent to <strong>IupShowXY</strong> using IUP_CURRENT (or
+  IUP_CENTER if not mapped).</p>
+<p>Will call <strong>IupMap</strong> for the element.</p>
+<p>See the <a href="../dlg/iupdialog.html#PLACEMENT">PLACEMENT</a> attribute for other position and show 
+  options.</p>
+<p>This function can be executed more than once 
+  for the same dialog. This will make the dialog be placed above all other dialogs in the application, 
+  changing its Z-order, and update its position and/or size on screen. </p>
+<p>IMPORTANT: Calling <strong>IupShow</strong> for a visible 
+  dialog shown with <strong>IupPopup</strong> does nothing.</p>
+<h3>See Also</h3>
+<p><a href="iupshowxy.html">IupShowXY</a>, <a href="iuphide.html">IupHide</a>,
+  <a href="iuppopup.html">IupPopup</a>, <a href="iupmap.html">IupMap</a></p>
+
+</body>
+
+</html>

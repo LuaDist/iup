@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSaveImageAsText</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+.style2 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>IupSaveImageAsText<span class="style2"> (since 3.0)</span></h2>
+<p>Saves the <strong>IupImage</strong> as a text file to be reused in other 
+programs.</p>
+<p>It does NOT depends on the IM library.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupSaveImageAsText(Ihandle* <b>ih</b>, const char* <strong>file_name, </strong>const char* <strong>format, </strong>const char* <strong>name</strong>); [in C]
+iup.SaveImageAsText(<strong>ih</strong>: ihandle<strong>, file_name, format[, name]</strong>: string) -&gt; (<b>ret</b>: boolean) [in Lua]</pre>
+<p><strong>ih:</strong> handle of the <strong>IupImage</strong>.<br>
+  <strong>file_name</strong>: Name of the file to be loaded.<br>
+  <strong>format</strong>: text format. Can be: &quot;LED&quot;, &quot;LUA&quot; or &quot;C&quot;.<br>
+<strong>name</strong>: name of the image. Can be NULL.</p>
+<p><span class="style1">Returns:</span> zero if failed, non zero value if 
+sucess.</p>
+<h3>Notes</h3>
+<p>If name is NULL and the <strong>IupImage</strong> is associated with a name 
+then that name is used, if no name is associated then &quot;image&quot; will be used.</p>
+
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupimage.html">IupImage</a>, <a href="../iupim.html">IUP-IM 
+Functions</a></p>
+
+</body>
+
+</html>

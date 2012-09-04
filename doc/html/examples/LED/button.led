@@ -1,0 +1,4 @@
+#IupButton Example in LED 
+#Creates an inactive button that calls an action named “action_end”. 
+
+fim = button[ACTIVE=NO]("fim", action_end)

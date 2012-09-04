@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupOleControl</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-align: center;
+}
+.style2 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupOleControl <span class="style2">[Windows only]</span></h2>
+<p>The IupOleControl hosts an windows OLE control (also named ActiveX control), allowing it to be 
+  used inside IUP dialogs. There are many OLE controls available, like calendars, internet browsers, PDF readers etc.</p>
+<p>Notice that IupOleControl just takes care of the visualization of the control (size and 
+  positioning), and map some callbacks (navigate and new window) using a 
+listener interface to sink events. It does not deal with properties, methods and events. The application must deal with them using the COM interfaces offered by the control. Nevertheless, using IupLua together with 
+  <a target="_blank" href="http://luaforge.net/projects/luacom/">LuaCOM</a> makes it possible to use OLE 
+  controls very easily in Lua, accessing their methods, properties and events similarly to the other IUP elements.</p>
+<p>Notice that this control works only on Windows.</p>
+<h3>Initialization and usage</h3>
+<p>The <b>IupOleControlOpen</b> function must be called after a <b>IupOpen</b>, so that the control can be used. 
+  The iupole.h file must also be included in the source code. The program must be linked to the controls 
+  library (iupole).</p>
+<p>To make the control available in Lua use require&quot;iupluaole&quot; or manually 
+call the initialization function in C, 
+<b>iupolelua_open</b>, after calling <b>iuplua_open</b>.
+  When manually calling the function the iupluaole.h file must also be included in the source code, 
+and the program must be linked to the lua control 
+  library (iupluaole).</p>
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupOleControl(const char* <strong>ProgID</strong>); [in C]
+iup.olecontrol{<b>ProgID</b>: string} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+olecontrol(<b>ProgID</b>) [in LED]
+</pre>
+<b>
+<p>ProgID</b>: the programmatic 
+  identifier of the OLE control. This can be found in the documentation of the OLE control or 
+  by browsing the list of registered controls, using tools like OleView. </p>
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>DESIGNMODE</strong><b>:</b>
+  activates the design mode. Some controls behave differently when in design mode. See 
+<a target="_blank" href="http://support.microsoft.com/default.aspx?scid=kb;en-us;260744">this 
+  article</a> for more information about design mode. Can be YES or NO. Default value:
+  &quot;NO&quot;.</p>
+<p><strong>DESIGNMODE_DONT_NOTIFY</strong>: sets the design mode, but do not 
+notify the native control.</p>
+<p><strong>IUNKNOWN</strong> (read-only): Returns the IUnknown pointer for the 
+control. This pointer is necessary to access methods and properties of the 
+control in C/C++ code.</p>
+  <blockquote>
+  <hr>
+</blockquote>
+<p>The control's specific attributes shall be accessed using the COM mechanism (see section below 
+  for more information).</p>
+<p>Some IupCanvas attributes may also work, like:</p>
+<p class="info">
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_size.html">SIZE</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p>In C/C++, the OLE control's callbacks (events, in ActiveX terms) shall be set using the 
+  control's interface and the COM mechanism. When using IupLua, it's possible to call methods, 
+  access properties and receive events from the OLE control using the
+  <a target="_blank" href="http://luaforge.net/projects/luacom/">LuaCOM</a> library. When the LuaCOM library is loaded, 
+  call elem:CreateLuaCOM so a LuaCOM object is created and stored in the <strong>
+&quot;elem.com&quot;</strong> 
+  field of the object returned by iup.olecontrol. This LuaCOM object can be used 
+  to access properties, methods and events in a way very similar to VB. See the examples for more information.</p>
+<blockquote>
+  <hr>
+</blockquote>
+
+<p>Some <strong>IupCanvas</strong> callbacks may also work, like:</p>
+<p class="info"><a href="../call/iup_map_cb.html">MAP_CB</a>,  
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, 
+<a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>.</p>
+<h3>Additional Methods in Lua</h3>
+<pre><strong>elem</strong>:CreateLuaCOM()</pre>
+<p>If LuaCOM is loaded and the IUNKNOWN is valid then set:</p>
+<font SIZE="3">
+<blockquote>
+	<pre><strong>elem</strong>.com = luacom.CreateLuaCOM(luacom.ImportIUnknown(<strong>elem</strong>.iunknown))</pre>
+</blockquote>
+</font>
+<h3><a name="Notes">Notes</a></h3>
+<p>To learn more about OLE and ActiveX:</p>
+<p class="info"><a target="_blank" href="http://www.microsoft.com/com">http://www.microsoft.com/com</a><br>
+<a target="_blank" href="http://www.webopedia.com/TERM/A/ActiveX_control.html">http://www.webopedia.com/TERM/A/ActiveX_control.html</a><br>
+<a target="_blank" href="http://msdn.microsoft.com/workshop/components/activex/activex_node_entry.asp">http://msdn.microsoft.com/workshop/components/activex/activex_node_entry.asp</a><br>
+<a target="_blank" href="http://activex.microsoft.com/activex/activex/">http://activex.microsoft.com/activex/activex/</a>
+</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<p class="style1"><img src="images/iupole.png" width="602" height="408"></p>
+
+</body>
+
+</html>
+
+</body>
+
+</html>

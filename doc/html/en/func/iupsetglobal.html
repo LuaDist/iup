@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetGlobal</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupSetGlobal</h2>
+<p>Sets an attribute in the global 
+  environment. If the driver process the attribute then it will not be stored internally.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupSetGlobal(const char *<strong>name</strong>, const char *<strong>value</strong>); [in C]
+iup.SetGlobal(<strong>name</strong>: string, <strong>value</strong>: string) [in Lua] </pre>
+<p><strong>name</strong>: name of the attribute.<br>
+  <strong>value</strong>: value of the attribute. If it equals NULL (nil in IupLua), the attribute will be removed.</p>
+<h3>Notes</h3>
+<p>The value stored in the attribute is not 
+  duplicated. Therefore, you can store your private attributes, such as a structure of data to be used in a callback.</p>
+<p>When you want IUP to store the attribute's 
+  value by duplicating the string, use function <b>IupStoreGlobal</b>.</p>
+<p><strong>IupSetAttribute</strong> can also be used to set global attributes, just set the element to NULL.</p>
+<h3>See Also</h3>
+<p><a href="iupsetattribute.html">IupSetAttribute</a>, 
+<a href="iupgetglobal.html">IupGetGlobal</a>, <a href="iupstoreglobal.html">IupStoreGlobal</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupColorDlg</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	border-width: 0;
+}
+.style2 {
+	color: #FF0000;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupColorDlg<font size="4"> (since 3.0)</font></h2>
+<p>Creates the Color Dialog element. It is a predefined dialog for 
+  selecting a color. </p>
+<p>There are 3 versions of the dialog. One for Windows only, one for GTK only 
+and one for all systems, but it is based on the <strong>IupColorBrowser</strong> 
+control that depends on the CD library.</p>
+<p>The Windows and GTK dialogs can be shown only with the
+  <strong>IupPopup</strong> function. The <strong>IupColorBrowser</strong> based 
+dialog is a <strong>IupDialog</strong> that can be shown as any regular <strong>
+IupDialog</strong>.</p>
+<p><span class="style2"><strong>IMPORTANT: </strong></span>The <strong>
+IupColorBrowser</strong> based dialog is included in the 
+<a href="../iupcontrols.html">Controls Library</a>. When the Controls Library is 
+initialized the Windows and GTK dialogs are not available anymore, i.e. before 
+the Controls Library initialization only the Windows and GTK dialogs are 
+available, after only the <strong>IupColorBrowser</strong> based dialog is 
+available.</p>
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupColorDlg(void); [in C]
+iup.colordlg{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+colordlg() [in LED]</pre>
+<p><u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+<p><b>ALPHA</b> [ColorBrowser and GTK only]: if defined it will enable an alpha selection 
+additional 
+controls with its initial value. If the user pressed the Ok button contains the 
+returned value. Default: no defined, or 255 if SHOWALPHA=YES.</p>
+<p><b>COLORTABLE</b>: list of colors separated by &quot;;&quot;. In GTK 
+and in the ColorBrowser based accepts 20 values 
+and if not present the palette will not be visible. In Windows accepts 16 values 
+and will be always visible, even if the colors are not defined (in this case are 
+initialized with black). If a color is not specified then the default color is 
+used. You can skip colors using &quot;;;&quot;.</p>
+<p><a href="../attrib/iup_parentdialog.html">PARENTDIALOG</a>
+  (creation only): Name of a dialog to be used as parent. This dialog will 
+  be always in front of the parent dialog.</p>
+<p><strong>SHOWALPHA</strong> [ColorBrowser and GTK only]: if enabled will 
+display the alpha selection controls, regardless if ALPHA is defined for the 
+initial value or not. </p>
+<p><strong>SHOW</strong><b>COLORTABLE</b>: if enabled will display the color 
+table, regardless if <b>COLORTABLE</b> is defined or not. The default colors in 
+the color table are different in GTK and in the ColorBrowser based dialog. In 
+Windows the default colors are all black.</p>
+<p><strong>SHOWHEX</strong> [ColorBrowser only]: if enabled will display the 
+Hexadecimal notation of the color.</p>
+<p><strong>SHOWHELP</strong> [ColorBrowser only]: if enabled will display the 
+Help button. In GTK and Windows, the Help button is shown only if the HELP_CB 
+callback is defined.</p>
+<p><b>STATUS</b> (read-only): defined to &quot;1&quot; if the user pressed the Ok button, NULL if 
+pressed the Cancel button.</p>
+<p><a href="../attrib/iup_title.html">TITLE</a>:
+  Dialog title.</p>
+<p><strong>VALUE</strong>: The color value in RGB coordinates and 
+optionally alpha. It is 
+used as the initial value and contains the selected 
+value if the user pressed the Ok button. Format: &quot;R G B&quot; or &quot;R G B A&quot;. Each 
+component range from 0 to 255.</p>
+<p><strong>VALUEHSI</strong> [ColorBrowser only]: The color value in 
+HSI coordinates. It is used as the initial value and contains the selected 
+value if the user pressed the Ok button. Format: &quot;H S I&quot;. Each 
+component range from 0-359, 0-100 and 0-100 respectively.</p>
+<p><strong>VALUEHEX</strong> [ColorBrowser only]: The color value in 
+RGB Hexadecimal notation. It is used as the initial value and contains the selected 
+value if the user pressed the Ok button. Format: &quot;#RRGGBB&quot;. Each 
+component range from 0-255, but in hexadecimal notation.</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+<p><a href="../call/iup_help_cb.html">HELP_CB</a>: Action generated when the 
+Help button is pressed.</p>
+<h3><a name="Notes">Notes</a></h3>
+<p>The GTK and Windows dialogs are native pre-defined dialogs that are not altered by <b>IupSetLanguage</b>. To show the dialog, use function <b>IupPopup</b>. In Lua, use the <b>popup</b> function. The dialog is mapped only inside <b>IupPopup</b>, <b>IupMap</b> does nothing.</p>
+<h3><a name="Examples">Examples</a></h3>
+<pre>Ihandle* dlg = IupColorDlg();
+
+IupSetAttribute(dlg, "VALUE", "128 0 255");
+IupSetAttribute(dlg, "ALPHA", "142");
+IupSetAttribute(dlg, "SHOWHEX", "YES");
+IupSetAttribute(dlg, "SHOWCOLORTABLE", "YES");
+IupSetAttribute(dlg, "TITLE", "IupColorDlg Test");
+IupSetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+
+IupPopup(dlg, IUP_CURRENT, IUP_CURRENT);
+
+if (IupGetInt(dlg, "STATUS"))
+{
+  printf("OK\n");
+  printf("  COLOR(%s)\n", IupGetAttribute(dlg, "COLOR"));
+  printf("  COLORTABLE(%s)\n", IupGetAttribute(dlg, "COLORTABLE"));
+}
+else
+  printf("CANCEL\n");
+
+IupDestroy(dlg);  </pre>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+    <tr>
+      <th>Windows XP</th>
+    </tr>
+    <tr>
+      <td class="style1"><img border="0" src="images/colordlg_win.png"></td>
+    </tr>
+    <tr>
+      <th>GTK/GNOME</th>
+    </tr>
+    <tr>
+      <td class="style1"><img border="0" src="images/colordlg_gtk.png"></td>
+    </tr>
+    <tr>
+      <th>ColorBrowser Based</th>
+    </tr>
+    <tr>
+      <td class="style1"><img border="0" src="images/colordlg_cb.png"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3><a name="SeeAlso">See Also</a></h3>
+<p><a href="iupmessagedlg.html">IupMessageDlg</a>, 
+<a href="iupgetfiledlg.html">IupFileDlg</a>, 
+<a href="../func/iuppopup.html">IupPopup</a></p>
+
+</body>
+
+</html>

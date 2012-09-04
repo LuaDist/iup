@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetAttributes</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupSetAttributes</h2>
+<p>Sets several attributes of an interface element.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle *IupSetAttributes(Ihandle *<strong>ih</strong>, const char *<strong>str</strong>); [in C]
+iup.SetAttributes(<strong>ih</strong>: ihandle, <strong>str</strong>: string) -&gt; <strong>ih</strong>: ihandle [in Lua] </pre>
+<p><strong>ih</strong>: Identifier of the interface element.<br>
+<b>str</b>: string with the attributes in the format &quot;v1=a1, v2=a2,...&quot; where vi is the name of an attribute and ai is its value.</p>
+<p><span class="style1">Returns</span>: the same <b>ih</b>.</p>
+<h3>Notes</h3>
+<p>Internally will call <strong>IupStoreAttribute</strong>.</p>
+<h3>Examples</h3>
+<p>This function returns the same Ihandle it receives. This way, it is a lot 
+easier to create dialogs in C. See also <a href="iupsetcallbacks.html">
+IupSetCallbacks</a>.</p>
+<pre>dialog = IupSetAttributes(IupDialog(
+    IupSetAttributes(IupHBox(
+       canvas = IupSetAttributes(IupCanvas(NULL), &quot;BORDER=NO, RASTERSIZE=100x100&quot;),
+       NULL), &quot;MARGIN=10x10&quot;),
+    &quot;TITLE=Test&quot;);</pre>
+<p>Creates a list with country names and 
+  defines Japan as the selected option.</p>
+<pre>Ihandle *list = IupList (NULL);
+IupSetAttributes(list,&quot;VALUE=3,1=Brazil,2=USA,3=Japan,4=France&quot;);</pre>
+<h3>See Also</h3>
+<p><a href="iupgetattribute.html">IupGetAttribute</a>, 
+<a href="iupsetattribute.html">IupSetAttribute</a>, 
+<a href="iupgetattributes.html">IupGetAttributes</a>, 
+<a href="iupstoreattribute.html">IupStoreAttribute</a>, 
+<a href="iupsetatt.html">IupSetAtt</a></p>
+
+</body>
+
+</html>

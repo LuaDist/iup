@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>TIP</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>TIP<span class="style1"> (non inheritable)</span></h2>
+<p>Text to be shown when the mouse lies over 
+  the element.</p>
+<h3>Value</h3>
+<p>Text.</p>
+<h3>Additional Tip Attributes (since 3.0)</h3>
+<p>These attributes affect the TIP display.</p>
+<p><strong>TIPBALLOON</strong> [Windows Only]:
+  The tip window will have the appearance of a cartoon &quot;balloon&quot; with rounded 
+  corners and a stem pointing to the item. Default: NO.</p>
+<p><strong>TIPBALLOONTITLE</strong> [Windows Only]: When using the balloon format, the 
+  tip can also has a title in a separate area.</p>
+<p><strong>TIPBALLOONTITLEICON</strong> [Windows Only]: When using the balloon format, 
+  the tip can also has a pre-defined icon in the title area. Values can be:</p>
+<p class="info">&quot;0&quot; - No icon (default)<br>
+    &quot;1&quot; - Info icon <br>
+    &quot;2&quot; - Warning icon<br>
+    &quot;3&quot; - Error Icon</p>
+<p><strong>TIPBGCOLOR </strong>[Windows and Motif Only]: The tip 
+  background color. Default: &quot;255 255 225&quot; (Light Yellow)</p>
+<p><strong>TIPDELAY </strong>[Windows and Motif Only]:
+  Time the tip will remain visible. Default:
+  &quot;5000&quot;. In Windows the maximum value is 32767 milliseconds.</p>
+<p><strong>TIPFGCOLOR </strong>[Windows and Motif Only]: The tip 
+  text color. Default: &quot;0 0 0&quot; (Black)</p>
+<p><strong>TIPFONT</strong> [Windows and Motif Only]: The font for the tip text. 
+If not defined the font used for the text is the same as the FONT attribute for 
+the element. If the value is SYSTEM then, no font is selected and the default 
+system font for the tip will be used.</p>
+<p><b>TIPICON</b> [GTK only]: name of an image to be displayed in the TIP. See
+	<a href="../elem/iupimage.html">IupImage</a>. (GTK 2.12)</p>
+<p><b>TIPMARKUP</b> [GTK only]: allows the tip string to contains Pango markup 
+commands. Can be &quot;YES&quot; or &quot;NO&quot;. Default: &quot;NO&quot;. 
+Must be set before setting the TIP attribute. (GTK 2.12)</p>
+<p><strong>TIPRECT</strong> (non inheritable): Specifies a rectangle inside the element where the 
+tip will be activated. Format: &quot;%d %d %d %d&quot;=&quot;x1 y1 x2 y2&quot;. Default: all the 
+element area. (GTK 2.12)</p>
+<p><strong>TIPVISIBLE</strong>: Shows or hides the tip under 
+  the mouse cursor. Use values &quot;YES&quot; or &quot;NO&quot;. In GTK will 
+only trigger the tip state, the given value will be ignored. Returns the current 
+visible state. (GTK 
+2.12) (get since 3.5)</p>
+
+
+<h3>Additional Tip <a name="Callbacks">Callbacks</a> (since 3.5)</h3>
+
+
+<p><strong>TIPS_CB</strong>: Action before a tip is displayed.</p>
+
+  
+    
+<pre>int funcion(Ihandle*<strong> ih</strong>, int <strong>x</strong>, int <strong>y</strong>); [in C]<br><strong>elem</strong>:action(<strong>x</strong>, <strong>y</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+<strong>x, y</strong>: cursor position relative to the top-left corner of the element</p>
+
+<h3>Affects</h3>
+<p>All except menus.</p>
+
+</body>
+
+</html>

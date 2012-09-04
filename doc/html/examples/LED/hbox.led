@@ -1,0 +1,45 @@
+#IupHbox Example in LED 
+#Creates a dialog with buttons placed side by side, with the purpose of showing the organization possibilities of elements inside an hbox. The "ALIGNMENT" attribute is explored in all its possibilities to obtain the given effect. 
+
+Alinhah = DIALOG [TITLE="Alignment", SIZE=140]
+(
+	FRAME [FGCOLOR="255 0 0", TITLE="HBOX"]
+	(
+		VBOX
+		(
+			FRAME [TITLE="Alignment = ATOP"]
+			(
+				HBOX [ALIGNMENT=ATOP]
+				(
+					FILL(),
+					BUTTON [SIZE=30x30]("1", NULL),
+					BUTTON [SIZE=30x40]("2", NULL),
+					BUTTON [SIZE=30x50]("3", NULL),
+					FILL()
+				)
+			),
+			FRAME [TITLE="Alignment = ACENTER"]
+			(
+				HBOX [ALIGNMENT=ACENTER]
+				(
+					FILL(),
+					BUTTON [SIZE=30x30]("1", NULL),
+					BUTTON [SIZE=30x40]("2", NULL),
+					BUTTON [SIZE=30x50]("3", NULL),
+					FILL()
+				)
+			),
+			FRAME [TITLE="Alignment = ABOTTOM"]
+			(
+				HBOX [ALIGNMENT=ABOTTOM]
+				(
+					FILL(),
+					BUTTON [SIZE=30x30]("1", NULL),
+					BUTTON [SIZE=30x40]("2", NULL),
+					BUTTON [SIZE=30x50]("3", NULL),
+					FILL()
+				)
+			)
+		)
+	)
+)

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMessageDlg</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	border-width: 0;
+}
+.style3 {
+	background-color: #CEE7FF;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupMessageDlg <span class="style1">(since 3.0)</span></h2>
+<p>Creates the Message Dialog element. It is a predefined dialog for 
+  displaying a message. The dialog can be shown with the
+  IupPopup function only.</p>
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupMessageDlg(void); [in C]
+iup.messagedlg<span class="style3">{}</span> -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+messagedlg() [in LED]</pre>
+<p><u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+<p><strong>BUTTONDEFAULT</strong>: Number of the default button. Can be &quot;1&quot; or &quot;2&quot;. 
+  &quot;2&quot; is valid only for &quot;OKCANCEL&quot; and &quot;YESNO&quot; button configurations. 
+Default: &quot;1&quot;.</p>
+<p><strong>BUTTONRESPONSE</strong>: Number of the pressed button. Can be &quot;1&quot; or &quot;2&quot;.
+  Default: &quot;1&quot;.</p>
+<p><strong>BUTTONS</strong>: Buttons 
+  configuration. Can have values: 
+    &quot;OK&quot;, &quot;OKCANCEL&quot; 
+    or &quot;YESNO&quot;. Default: &quot;OK&quot;. Additionally the &quot;Help&quot; button is displayed if the
+    HELP_CB callback is defined.</p>
+<p><strong>DIALOGTYPE</strong>:
+  Type of dialog defines which icon will be 
+  displayed besides the message text. Can have values: 
+    &quot;MESSAGE&quot; (No Icon), &quot;ERROR&quot; 
+    (Stop-sign), &quot;WARNING&quot; 
+    (Exclamation-point), &quot;QUESTION&quot; 
+    (Question-mark)
+    &nbsp;or &quot;INFORMATION&quot; (Letter &quot;i&quot;). Default: &quot;MESSAGE&quot;.</p>
+<p><a href="../attrib/iup_parentdialog.html">PARENTDIALOG</a>
+  (creation only): Name of a dialog to be used as parent. This dialog will 
+  be always in front of the parent dialog. If not defined in Motif the dialog 
+could not be modal.</p>
+<p><a href="../attrib/iup_title.html">TITLE</a>:
+  Dialog title.</p>
+<p><strong>VALUE</strong>: Message text.</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+<p><a href="../call/iup_help_cb.html">HELP_CB</a>:
+  Action generated when the Help button is 
+  pressed.</p>
+<h3><a name="Notes">Notes</a></h3>
+<p>The <b>IupMessageDlg</b> is a native pre-defined dialog not altered by <b>IupSetLanguage</b>.</p>
+<p>To show the dialog, use function <b>IupPopup</b>. In Lua, use the <b>popup</b> function.</p>
+<p>The dialog is mapped only inside <b>IupPopup</b>, <b>IupMap</b> does nothing.</p>
+<p>In Windows the position (x,y) used in <b>IupPopup</b> is ignored and the 
+dialog is always centered on screen.</p>
+<p>The <b>IupMessage</b> function simply creates and popup a <b>IupMessageDlg</b>.</p>
+<p>In Windows each different dialog type is always associated with a different beep sound.</p>
+<p>In Windows, if PARENTDIALOG is specified then it will be modal relative only 
+to its parent.</p>
+<h3><a name="Examples">Examples</a></h3>
+<pre>Ihandle* dlg = IupMessageDlg();
+
+IupSetAttribute(dlg, &quot;DIALOGTYPE&quot;, &quot;WARNING&quot;);
+IupSetAttribute(dlg, &quot;TITLE&quot;, &quot;IupMessageDlg Test&quot;);
+IupSetAttribute(dlg, &quot;BUTTONS&quot;, &quot;OKCANCEL&quot;);
+IupSetAttribute(dlg, &quot;VALUE&quot;, &quot;Message Text\nSecond Line&quot;);
+IupSetCallback(dlg, &quot;HELP_CB&quot;, (Icallback)help_cb);
+
+IupPopup(dlg, IUP_CURRENT, IUP_CURRENT);
+
+printf(&quot;BUTTONRESPONSE(%s)\n&quot;, IupGetAttribute(dlg, &quot;BUTTONRESPONSE&quot;));
+
+IupDestroy(dlg);  </pre>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+    <tr>
+      <th>Windows XP</th>
+    </tr>
+    <tr>
+      <td class="style2"><img border="0" src="images/messagedlg_win.png" width="395" height="170"></td>
+    </tr>
+    <tr>
+      <th>Motif/Mwm</th>
+    </tr>
+    <tr>
+      <td class="style2"><img border="0" src="images/messagedlg_mot.png" width="242" height="144"></td>
+    </tr>
+    <tr>
+      <th>GTK/GNOME</th>
+    </tr>
+    <tr>
+      <td class="style2"><img border="0" src="images/messagedlg_gtk.png" width="301" height="161"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3><a name="SeeAlso">See Also</a></h3>
+<p><a href="iupmessage.html">IupMessage</a>, <a href="iupscanf.html">IupScanf</a>,
+  <a href="iuplistdialog.html">IupListDialog</a>, <a href="iupalarm.html">IupAlarm</a>, 
+<a href="iupgetfile.html">IupGetFile</a>, 
+<a href="../func/iuppopup.html">IupPopup</a></p>
+
+</body>
+
+</html>

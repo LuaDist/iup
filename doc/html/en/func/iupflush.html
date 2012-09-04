@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupFlush</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupFlush</h2>
+<p>Processes all pending messages in the 
+  message queue.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupFlush(void); [in C]
+iup.Flush() [in Lua]</pre>
+<h3>Notes</h3>
+<p>When you change an attribute of a certain 
+  element, the change may not take place immediately. For this update to occur faster than usual, 
+call <b>IupFlush</b> after the attribute is changed.</p>
+<p><i>Important</i>: A call to this function may cause other callbacks to be processed before it returns.</p>
+<p>In Motif,
+  if the X server sent an event which is not yet in the event queue, after a call to 
+<b>IupFlush</b> the queue might not be empty.</p>
+
+</body>
+
+</html>

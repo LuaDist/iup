@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupRefresh</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupRefresh</h2>
+<p>Updates the size and layout of controls after changing size attributes. Can be used for any element inside a 
+  dialog, the layout of the dialog will be updated. It can change the layout of all the controls inside the dialog because 
+  of the dynamic layout positioning. </p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupRefresh(Ihandle *<strong>ih</strong>); [in C]
+iup.Refresh(<strong>ih</strong>: ihandle) [in Lua]</pre>
+<p><b>ih</b>: identifier of the interface element.</p>
+<h3>Notes</h3>
+<p>Can be used for any control, but it will always affect the whole dialog. Can 
+be called even if the dialog is not mapped.</p>
+<p>The elements are immediately repositioned, if the dialog is visible then the 
+change will be immediately reflected on the display.</p>
+<p>This function will NOT change the size of 
+  the dialog, except when the SIZE or RASTERSIZE attributes of the dialog where changed before the call.</p>
+<p>If you also want to change the size of the dialog use:</p>
+<pre>IupSetAttribute(dialog, &quot;SIZE&quot;, ...);
+IupRefresh(dialog);</pre>
+<p>So the dialog will be resized for the new <b>User</b> size, if the new size is NULL the dialog will be resized to 
+  the <b>Natural</b> size that include all the elements.</p>
+<p>Changing the size of elements without changing the dialog size may position some controls outside the dialog area at 
+  the left or bottom borders (the elements will be cropped at the dialog borders 
+by the native system).</p>
+<p><strong>IupMap</strong> also updates the dialog layout even if the control is already mapped, 
+  so using it or using 
+  <strong>IupShow</strong>, 
+  <strong>IupShowXY</strong> or 
+  <strong>IupPopup</strong> (they all call 
+  <strong>IupMap</strong>) will also update the dialog layout. </p>
+<h3>See Also</h3>
+<p><a href="../attrib/iup_size.html">SIZE</a>, <a href="iupmap.html">IupMap</a>,
+<a href="iuprefreshchildren.html">IupRefreshChildren</a></p>
+
+</body>
+
+</html>

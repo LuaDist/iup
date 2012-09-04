@@ -1,0 +1,196 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Overview</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h3><a name="visao_geral">Overview</a></h3>
+<p>IUP is a multi-platform toolkit for building 
+  graphical user interfaces. It offers APIs in three basic languages: C,
+  <a TARGET="_top" href="http://www.lua.org">Lua</a> and
+  LED. </p>
+<p>Its library contains about 100 functions 
+  for creating and manipulating dialogs.<o:p> </o:p>
+<o:p></o:p>
+</p>
+<p>IUP's purpose is to allow a program to run in different systems without changes - the 
+  toolkit provides the application portability. Supported systems include: GTK+, Motif and Windows. </p>
+<p style="text-align: left">IUP uses an abstract layout model based on 
+  the boxes-and-glue paradigm from the T<sub>E</sub>X text editor. This model, combined with the dialog-specification 
+  language (<a href="sys_guide.html#led">LED</a>)
+  or with the Lua binding (<a href="sys_guide.html#iuplua">IupLua</a>)
+  makes the dialog creation task more flexible 
+  and independent from the graphics system's resolution.</p>
+<p>Currently available interface elements can 
+  be categorized as follows:</p>
+<ul>
+  <li><b>Primitives</b> (effective user interaction): <b>dialog, label, button, text, multi-line, list, toggle, canvas, frame, image</b>.</li>
+  <li><b>Composition</b> (ways to show the elements): <b>hbox, vbox,</b> <b>zbox, fill</b>.</li>
+  <li><b>Grouping</b> (definition of a common functionality for a group of elements):<b>
+  </b><b>radio</b>.</li>
+  <li><b>Menu</b> (related both to menu bars and to pop-up menus): <b>menu, submenu, item, separator</b>.</li>
+  <li>Additional (elements built outside the main library): <b>dial, gauge, matrix, tabs, valuator, OpenGL canvas, color 
+    chooser, color browser</b>.</li>
+  <li><b>Dialogs</b> (useful predefined dialogs): <b>file selection, message, alarm, data input, list selection</b>.</li>
+</ul>
+<p>Hence IUP has some advantages over other 
+  interface toolkits available:</p>
+<ul>
+  <li><b>Simplicity:</b> due to the small number of functions and to its attribute mechanism, the learning curve 
+    for a new user is often faster.</li>
+  <li><b>Portability:</b> the same functions are implemented in each one of the platforms, thus assuring the 
+    interface system's portability.</li>
+  <li><b>Customization:</b> the dialog specification language (LED)
+    and the Lua binding (IupLua)
+    are two mechanisms in which it is possible 
+    to customize an application for a specific user with a simple-syntax text file.</li>
+  <li><b>Flexibility</b>: its abstract layout mechanism provides flexibility to dialog creation.</li>
+  <li><b>Extensibility:</b> the programmer can create new interface elements as needed.</li>
+</ul>
+<p>IUP is free software, can be used for public and commercial applications.</p>
+<h3><a name="disponibilidade">Availability</a></h3>
+<p>The library is available for several <strong>compilers</strong>: </p>
+<ul>
+  <li>GCC and CC, in the UNIX environment </li>
+  <li>Visual C++, Borland C++, Watcom C++ and GCC (Cygwin and MingW), in the Windows environment</li>
+</ul>
+<p>The library is available for several <strong>operating systems</strong>:</p>
+<ul>
+  <li>UNIX (SunOS, IRIX, and AIX) using Motif 2.x</li>
+  <li>UNIX (FreeBSD and Linux) using GTK+ (since 3.0)</li>
+  <li>Microsoft Windows 2000/XP/2003/Vista/7 using the Win32 API</li>
+</ul>
+<h3><a name="suporte">Support</a></h3>
+<p>The official support mechanism is by e-mail, using <b><u>
+<a href="mailto:iup@tecgraf.puc-rio.br?subject=[IUP]">iup@tecgraf.puc-rio.br</a></u></b>. 
+  Before sending your message:</p>
+<ul>
+  <li>Check if the reported behavior is not described in the user guide. </li>
+  <li>Check if the reported behavior is not described in the specific control or driver characteristics. 
+  </li>
+  <li>Check the History to see if your version is updated. </li>
+  <li>Check the To Do list to see if your problem has already been reported.</li>
+</ul>
+<p>If all these points were checked, you can 
+  report your problem. Please specify in your message: <b>function, attribute, callback, platform</b> and 
+<b>compiler</b>.</p>
+  <p>We host the <b>IUP</b> support features at <strong>SourceForge</strong>:
+	<a href="http://sourceforge.net/projects/iup/">
+	http://sourceforge.net/projects/iup/</a>. It provides us  
+  Mailing List, CVS Repository and Downloads.</p>
+  
+    <p>The discussion list is available at:
+    <a href="http://lists.sourceforge.net/lists/listinfo/iup-users">
+	http://lists.sourceforge.net/lists/listinfo/iup-users</a>.<br>
+    Source code, pre-compiled binaries and documentation can be downloaded at: 
+<a href="http://sourceforge.net/project/showfiles.php?group_id=241310">http://sourceforge.net/project/showfiles.php?group_id=241310</a>.<br>
+    The CVS can be browsed at: <a href="http://iup.cvs.sourceforge.net/iup/">
+http://iup.cvs.sourceforge.net/iup/</a>.</p>
+  
+  <p>If you want us to develop a specific feature for the toolkit, Tecgraf is 
+  available for partnerships and cooperation.</p>
+<p>Lua documentation and resources can be found at <a href="http://www.lua.org/">http://www.lua.org/</a>.</p>
+<h3><a name="creditos">Credits</a></h3>
+<p>This work was developed at Tecgraf by means of the partnership with PETROBRAS/CENPES.</p>
+  <p>Library Authors:</p>
+<ul>
+	<li>Marcelo Gattass</li>
+	<li>Luiz Henrique de Figueiredo</li>
+	<li>Carlos Henrique Levy</li>
+	<li>Antonio Scuri</li>
+</ul>
+<p>We must also mention engineer Enio Emanuel Russo, from PETROBRAS, who effectively contributed to the system's 
+  specification and project.<o:p> </p>
+  <p>Thanks to the people that worked and contributed to the library:</p>
+<ul>
+	<li>André Carregal</li>
+	<li>André Clinio</li>
+	<li>André Costa</li>
+	<li>André Derraik</li>
+	<li>Carlos Augusto Mendes</li>
+	<li>Carlos José Pereira de Lucena</li>
+	<li>Claudio Coutinho de Biasi</li>
+	<li>Danny Reinhold</li>
+	<li>Diego Nehab</li>
+	<li>Diogo Martinez</li>
+	<li>Guilherme Fonseca Alvarenga</li>
+	<li>Henrique Dalcin Mendes Pinheiro</li>
+	<li>Heesob Park</li>
+	<li>Leonardo Constantino Oliveira</li>
+	<li>Luiz Cristóvão Gomes Coelho</li>
+	<li>Luiz Martins</li>
+	<li>Marian Trifon</li>
+	<li>Mark Stroetzel Glasberg</li>
+	<li>Mauricio Oliveira Carneiro</li>
+	<li>Milton Jonathan</li>
+	<li>Neil Armstrong Rezende</li>
+	<li>Nicolas Noble</li>
+	<li>Otfried Cheong</li>
+	<li>Rafael Rieder </li>
+	<li>Renato Borges</li>
+	<li>Renato Cerqueira</li>
+	<li>Roberto Beauclair</li>
+	<li>Steve Donovan</li>
+	<li>Tomas Guisasola Gorham</li>
+	<li>Vinicius Almendra</li>
+	<li>Warren Music </li>
+</ul>
+  <p>Thanks for the <a href="http://sourceforge.net/">SourceForge</a> for 
+	hosting the support features. Thanks for the <a href="http://luaforge.net/">
+	LuaForge</a> team for previously hosting the support features for many 
+	years. </p>
+<p>IUP is registered at the National Institute of Intellectual Property in 
+Brazil (INPI) under the number 07569-0, and so it is protected against illegal 
+use. See the <a href="copyright.html">Tecgraf Library License</a> for further 
+usage information and Copyright.</p>
+<h3><a name="sobre">Documentation</a></h3>
+<p>This toolkit is available at <a href="http://www.tecgraf.puc-rio.br/iup">http://www.tecgraf.puc-rio.br/iup</a>.&nbsp;
+  </p>
+<p>The full documentation can be downloaded from the <a href="download.html">Download Files</a>. The documentation is also available in Adobe Acrobat and Windows HTML Help formats.</p>
+<p>The HTML navigation uses the WebBook tool, available at
+  <a href="http://www.tecgraf.puc-rio.br/webbook" target="_blank">http://www.tecgraf.puc-rio.br/webbook</a>.</p>
+<p>There are also a few presentations:</p>
+<ul>
+	<li>Lua Workshop 2009 - IUP, CD and IM in Lua (<a href="http://www.lua.org/wshop09.html#Scuri">http://www.lua.org/wshop09.html#Scuri</a>) 
+	[<a href="../download/iupcdim_wlua2009.pdf">iupcdim_wlua2009.pdf</a>]</li>
+	<li>PUCRS 2010 - IUP, CD and IM [<a href="../download/iupcdim_facin2010.pdf">iupcdim_facin2010.pdf</a>]</li>
+</ul>
+<h3><a name="publicacoes">Publications</a></h3>
+<p>This product stimulated the following 
+  scientific publications:</p>
+<ul>
+  <li>Scuri, A. &quot;IUP - Portable User Interface&quot;. Software Developer's Journal. Dec/2005.  
+	[<a href="../download/iup_sdj2005.pdf">iup_sdj2005.pdf</a>]</li>
+  <li>Levy, C. H.; Figueiredo, L. H.; Gattass, M.; Lucena, C.; and Cowan, D. &quot;IUP/LED: A Portable User Interface 
+    Development Tool&quot;. <i>Software: Practice &amp; Experience</i>, 26 #7 (1996) 737-762. [<a href="../download/spe95.pdf">spe95.pdf</a>]</li>
+  <li>Oliveira Prates, R.; Figueiredo, L. H.; and Gattass, M. &quot;Especificação de Layout Abstrato por Manipulção 
+    Direta&quot;. Proceedings of VII SIBGRAPI (1994), 165-172. [<a href="../download/sib94.pdf">sib94.pdf</a> 
+	in Portuguese]</li>
+  <li>Oliveira Prates, R.; Gattass, M. ;and Figueiredo, L. H. &quot;Visual LED: uma ferramenta interativa para geração de 
+    interfaces gráficas&quot;. M.Sc. dissertation, Computer Science Department, PUC-Rio, 1994. [<a href="../download/prates94.pdf">prates94.pdf</a> 
+	in Portuguese]
+    </li>
+  <li>Levy, C. H. &quot;IUP/LED: Uma Ferramenta Portátil de Interface com Usuário&quot;.
+    M.Sc. dissertation, Computer Science 
+    Department, PUC-Rio, 1993.[<a href="../download/levy93.pdf">levy93.pdf</a> 
+	in Portuguese]</li>
+  <li>Figueiredo, L. H.;Gattass, M.; and Levy, C.H. &quot;Uma Estratégia de Portabilidade para Aplicações Gráficas 
+    Interativas&quot;.
+    Proceedings of VI SIBGRAPI (1993), 
+    203-211. [<a href="../download/sib93.pdf">sib93.pdf</a> in Portuguese]</li>
+</ul>
+
+<p>Interview at the <a href="http://twit.tv/show/floss-weekly">FLOSS</a> weekly 
+show about Free Libre Open Source Software, hosted by
+<a href="http://www.stonehenge.com/merlyn/">Randal Schwartz</a>:</p>
+<ul>
+	<li><a href="http://twit.tv/show/floss-weekly/190">
+	http://twit.tv/show/floss-weekly/190</a> </li>
+</ul>
+
+</body>
+
+</html>

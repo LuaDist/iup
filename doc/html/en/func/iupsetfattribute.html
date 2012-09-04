@@ -1,0 +1,40 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetfAttribute</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupSetfAttribute</h2>
+<p>Sets an interface 
+  element attribute.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupSetfAttribute(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>, const char *<strong>format</strong>, ...);  [in C]
+void IupSetfAttributeId(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>, int <strong>id</strong>, const char *<strong>format</strong>, ...);  [in C]
+void IupSetfAttributeId2(Ihandle* <strong>ih</strong>, const char* <strong>name</strong>, int <strong>lin</strong>, int <strong>col</strong>, const char* <strong>format</strong>, ...);  [in C]
+[There is no equivalent in Lua] </pre>
+<p><b>ih</b>: identifier of the interface element.<br>
+  <strong>name</strong>: name of the attribute.<br>
+<strong>id, lin, col</strong>: used when the attribute has additional ids.<br>
+<b>format</b>: format that describes the attribute. It follows the same standard as the 
+<b>sprintf</b> function in C<o:p> </o:p>
+  .<br>
+  ...: values of the attribute.</p>
+<h3>Notes</h3>
+<p>This function is very useful because we usually have integer values and want 
+to pass them to IUP attributes, but this is done by means of a string.</p>
+<p>Internally will call <strong>IupStoreAttribute</strong>.</p>
+<h3>See Also</h3>
+<p><a href="iupgetattribute.html">IupGetAttribute</a>, 
+<a href="iupsetattribute.html">IupSetAttribute</a>, 
+<a href="iupsetattributes.html">IupSetAttributes</a>, 
+<a href="iupgetattributes.html">IupGetAttributes</a>, 
+<a href="iupstoreattribute.html">IupStoreAttribute</a></p>
+
+</body>
+
+</html>

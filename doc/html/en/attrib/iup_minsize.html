@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>MAXSIZE</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style2 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>MINSIZE<span class="style2"> (non inheritable) (since 3.0)</span></h2>
+<p>Specifies the element minimum size in pixels during the layout process.</p>
+<p>See the <a href="../layout_guide.html">Layout Guide</a> for more details 
+  on sizes.</p>
+<h3>Value</h3>
+<p>&quot;<i>width</i>x<i>height</i>&quot;,
+  where <i>width</i> and <i>height</i> are integer values corresponding to the horizontal and vertical size, respectively, in pixels.</p>
+<p>You can also set only one of the 
+  parameters by removing the other one and maintaining the separator &quot;x&quot;, 
+but this is equivalent of setting the other value to 0. For example: &quot;x40&quot; (height only 
+= &quot;0x40&quot;) or &quot;40x&quot; (width only = &quot;40x0&quot;).</p>
+<h3>Affects</h3>
+<p>All, except menus.</p>
+<h3>Notes</h3>
+<p>The limits are applied during the layout computation. It will limit the 
+Natural size and the Current size. </p>
+<p>If the element can be expanded, then its empty space will NOT be occupied by 
+other controls although its size will be limited.</p>
+<p>In the <strong>IupDialog</strong> will also limit the interactive resize of 
+the dialog.</p>
+<p>See the <a href="../layout_guide.html">Layout Guide</a> for mode details 
+  on sizes.</p>
+<h3>See Also</h3>
+<p><a href="iup_rastersize.html">RASTERSIZE</a>, <a href="iup_maxsize.html">
+MAXSIZE</a></p>
+
+</body>
+
+</html>

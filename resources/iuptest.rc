@@ -1,0 +1,30 @@
+TECGRAF_ICON ICON "../etc/tecgraf.ico"
+TECGRAF_BITMAP BITMAP "tecgraf.bmp"
+CURSOR_PEN CURSOR "../etc/pen.cur"
+
+/* To avoid the inclusion of <winuser.h> */
+#define WS_CHILD            0x40000000L
+#define WS_VISIBLE          0x10000000L
+#define WS_CLIPSIBLINGS     0x04000000L
+#define DS_3DLOOK           0x0004L
+#define DS_CONTROL          0x0400L
+#define SS_OWNERDRAW        0x0000000DL
+#define WS_EX_STATICEDGE    0x00020000L
+
+#define IUP_PREVIEWCANVAS 3000
+
+iupPreviewDlg DIALOG DISCARDABLE  0, 0, 250, 95
+STYLE WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | DS_3DLOOK | DS_CONTROL
+FONT 8, "MS Shell Dlg"
+BEGIN
+  CONTROL  "", IUP_PREVIEWCANVAS, "STATIC", SS_OWNERDRAW, 70, 0, 120, 90, WS_EX_STATICEDGE
+END
+
+#ifndef IUP_DLL
+/* The following line will enable Windows XP Visual Styles */
+#ifdef TEC_64
+1 24 "../etc/iup64.manifest"
+#else
+1 24 "../etc/iup.manifest"
+#endif
+#endif

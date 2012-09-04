@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Win32</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>Win32 System Driver</h2>
+<p>This driver was designed for the modern 
+  Microsoft Windows in 32 bits or 64 bits (2000/XP/2003/Vista/7).</p>
+<h3>DLL</h3>
+<p>To use DLL, it is necessary to link the 
+  application with the IUP.lib and IUPSTUB.lib libraries (for technical reasons, these libraries cannot be unified). Note that 
+  IUP.lib is a library specially generated to work with 
+  iup.dll, and is usually distributed in the same directory as 
+  iup.dll. the IUP DLL depends on the MSVCRT.DLL, that it is already installed in Windows.</p>
+<p>For the program to work, IUP.dll must be inside a PATH directory. Usually the program does not need to be re-linked when 
+  the DLL is updated.</p>
+<h3>Tips</h3>
+<h4>Visual C++ 6</h4>
+<p>Since 3.0 Visual C++6 is not supported, although we still provide 
+pre-compiled binaries. To compile the IUP 3 code 
+with VC6 you will need to download a new
+<a href="http://windowssdk.msdn.microsoft.com/">Platform SDK</a>, because the 
+one included in the compiler is too old. But it cannot be a too new one also, 
+because the compiler will report errors in the newest headers.</p>
+<p>We recommend 
+you to upgrade your compiler.
+<a href="http://msdn.microsoft.com/vstudio/express/visualc/">Visual C++ Express 
+Edition</a> is a free compiler that has everything VC6 had and more.</p>
+<h4>COM Initialization</h4>
+<p><strong>IupOpen</strong> calls &quot;CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);&quot;, if you need another concurrency model call 
+  CoInitializeEx with other options before calling <strong>IupOpen</strong>. Be aware that some features in some controls require 
+  single-thread apartment, and they will stop working, this includes: <strong>IupFileDLg</strong> when selecting a folder, and 
+<strong>IupOleControl</strong>.</p>
+<h4>InitCommonCtrlEx Linker Error</h4>
+<p>On Windows a common error occurs: 
+  &quot;Cannot find function <b>InitCommonCtrlEx</b>()&quot;
+  This error occurs if you forgot to add the
+  comctl32.lib library to be linked with the program. This library is <b>not</b> usually in the 
+  libraries list for the Visual C++, you must add it.</p>
+<h4>Custom IupFileDlg </h4>
+<p>To use some cursors and the preview area of <b>IupFileDlg</b> you must include the 
+  &quot;iup.rc&quot; file into your makefile. Or include the contents of it into your resource file, you will need also to copy 
+  the cursor files.</p>
+<h4>Windows XP/Vista/7 Visual Styles</h4>
+<p>Windows Visual Styles can be enabled using a manifest file. Uncomment the manifest file section in &quot;iup.rc&quot; file or copy 
+  it to your own resource file (you will need also to copy the manifest file &quot;iup.manifest&quot;).</p>
+<p>When using Visual C++ 8/9/10 with &quot;iup.manifest&quot;, configure the linker properties 
+of your project to do NOT generate a manifest file or the Windows Visual 
+Styles from the RC file won't work.</p>
+<p>If your Windows is using the Windows Classic theme or any other theme, IUP 
+controls appearance will follow the system appearance only if you are using the 
+manifest. If not using the manifest, then it will always look like Windows Classic.</p>
+<h4><b>Black Canvas</b></h4>
+<p>The <strong>IupGLCanvas</strong> does not work when inside an <strong>IupFrame</strong>, the result is a black canvas with no drawing. 
+(Only in IUP 2.x)</p>
+
+<h4><b>Help in CHM format fail to open</b></h4>
+<p>When you download a CHM file from the Internet Windows blocks your access to 
+the file. You must unblock it manually. Right click the file in Explorer and 
+select&nbsp; &quot;Unblock&quot; at the bottom of the dialog.</p>
+
+</body>
+
+</html>

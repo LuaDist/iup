@@ -1,0 +1,4 @@
+#IupList Example in LED 
+#Creates a simple list with country names, with the second item selected. 
+
+lista = list[VALUE=2,1=Brazil,2=USA,3=Japan,4=France,5=Canada](acao_lista)

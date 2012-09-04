@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetChildPos</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetChildPos <span class="style1">(since 3.0)</span></h2>
+<p>Returns the position of a child of the given control. </p>
+<h3>
+Parameters/Return</h3>
+<div>
+  <pre>int IupGetChildPos(Ihandle*<strong> ih</strong>, Ihandle*<strong> child</strong>); [in C]
+iup.GetChildPos(<strong>ih, child</strong>: ihandle) -&gt; <strong> pos</strong>: number [in Lua]</pre>
+</div>
+<div>
+  <b>ih</b>: identifier of the interface element.</div>
+<p><span class="style2">Returns:</span> the position of the desire child or -1 
+if child not found.</p>
+<h3>Notes</h3>
+<p>This function will return the children of the control in the exact same order in which they were assigned.</p>
+<h3>See Also</h3>
+<p><a href="iupgetchild.html">IupGetChild</a>, 
+<a href="iupgetchildcount.html">IupGetChildCount</a>, 
+<a href="iupgetnextchild.html">IupGetNextChild</a>, 
+<a href="iupgetbrother.html">IupGetBrother</a>, <a href="iupgetparent.html">IupGetParent</a></p>
+
+</body>
+
+</html>

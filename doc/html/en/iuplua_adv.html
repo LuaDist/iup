@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupLua Advanced Guide</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">IupLua Advanced Guide</h2>
+<h3>Exchanging &quot;Ihandle*&quot; between C and Lua</h3>
+<p>Each binding to a version of Lua uses different features of the language in order to implement IUP handles (Ihandle) 
+  in Lua. Therefore, functions have been created to help exchange references between Lua and C.</p>
+<p>In C, to push an Ihandle in Lua's stack, use the function:</p>
+<pre>iuplua_pushihandle(lua_State *L, Ihandle *ih);</pre>
+<p>In C, to receive an Ihandle in a C function called from Lua, just use one of the following code:</p>
+<pre>Ihandle* ih = *(Ihandle**)lua_touserdata(L, pos);</pre>
+<p>or using parameter checking:</p>
+<pre>Ihandle* iuplua_checkihandle(lua_State *L, int pos);</pre>
+<p>In Lua, if the handle is a user data create with the above structure, but not mapped to a Lua object, use the 
+  function:</p>
+<pre>iup.RegisterHandle(handle, classname)</pre>
+<p>where &quot;classname&quot; is the string returned in
+<a href="func/iupgetclassname.html">IupGetClassName</a>.</p>
+<p>In Lua, to access a handle created in C as a Lua object, alternatively use the function:</p>
+<pre>handle = iup.GetFromC(name)</pre>
+<p class="MsoBodyText">where &quot;name&quot; is the name of the element previously defined with
+    IupSetHandle.</p>
+<h3>Error Handling</h3>
+<p>In C to improve the error report, use the following functions to 
+  execute Lua code:</p>
+<pre>int <strong>iuplua_dofile</strong>(lua_State *L, const char *filename);
+int <strong>iuplua_dostring</strong>(lua_State *L, const char *string, const char *chunk_name);</pre>
+<p>These functions mimics the implementation in the standalone interpreter for Lua 5, that displays the error message 
+  followed by the stack.</p>
+<p>If <strong>iuplua_dofile</strong> fail to open the given file, then it will 
+preppend the contents of the environment variable IUPLUA_DIR to the file name 
+and tries to open it again. (Since 3.2)</p>
+<p>If the these functions are used the errors will be reported through the &quot;iup._ERRORMESSAGE(msg)&quot; function. By 
+  default _ERRORMESSAGE is defined to show a dialog with the error message.</p>
+<p>When printing an Ihandle reference the returned string is &quot;IUP(<em>type</em>):
+<em>address</em>&quot;, for example &quot;IUP(dialog): 08C55240&quot;.</p>
+<h3>The Architecture of IupLua 5</h3>
+<p>There are two important names in IupLua5: &quot;iup handle&quot; and &quot;iup widget&quot;. 
+</p>
+<p>When you create an IUP element in Lua 5 it is created a table with a metatable called &quot;iup widget&quot;. This metatable 
+  has its &quot;__index&quot; method redefined so when an index is not defined it looks for it in the &quot;parent&quot; table. The table it 
+  self represents the class of the control. And all the classes inherit the implementation of the base class WIDGET. 
+  Each control class must implement the &quot;createElement&quot; method of the class. The WIDGET class also a member called 
+  &quot;handle&quot; that contains the Ihandle* in Lua. The constructor of the WIDGET class returns the handle. 
+</p>
+<p>The Ihandle* is represented in Lua as a table with a metatable called &quot;iup handle&quot;. This metable has its &quot;__index&quot;, 
+  &quot;__newindex&quot; and &quot;__eq&quot; methods redefined. The index methods are used to implement the set and get attribute facility. 
+  The handle knows its class because it is stored in its &quot;parent&quot; member.</p>
+<p>Since the controls creation is done by the &quot;iup.&lt;control&gt;&quot; function, the application does not use the WIDGET class 
+  directly. All the time the application only uses the handle.</p>
+<p>So for example the IupLabel:</p>
+<pre>iup.label <b>calls</b> iup.LABEL:constructor
+<b>since</b> iup.LABEL.parent = iup.WIDGET <b>and</b><span style="background-color: #CEE7FF"> </span>iup.LABEL:constructor <b>is not implemented</b>
+it<b> calls</b><span style="background-color: #CEE7FF"> </span>iup.WIDGET:constructor  
+<b>then</b> iup.WIDGET:constructor <b>calls</b> iup.LABEL:createElement    
+<b>and finally returns the created</b> handle</pre>
+<p>The complete class hierarchy for the standard controls can be represented as follows: 
+</p>
+<pre>WIDGET
+   BUTTON
+   ITEM
+   TOGGLE
+   CANVAS
+   BOX
+      HBOX
+      VBOX
+      ZBOX
+      MENU
+   DIALOG
+   FILL
+   FRAME
+   IMAGE
+   LABEL
+   LIST
+   RADIO
+   SEPARATOR
+   SUBMENU
+   TEXT
+   MULTILINE</pre>
+
+</body>
+
+</html>

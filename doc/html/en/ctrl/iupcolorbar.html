@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupColorbar</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupColorbar</h2>
+<p>Creates a color palette to enable a color 
+  selection from several samples. 
+  It can select one or two colors. The primary color is selected with the left mouse button, and the secondary color is 
+  selected with the right mouse button. You can double click a cell to change its color and you can double click the 
+  preview area to switch between primary and secondary colors.</p>
+<p>This is an additional control that depends on the CD library. It is included 
+in the 
+<a href="../iupcontrols.html">Controls Library</a>.</p>
+<p>It inherits from
+  <a href="../elem/iupcanvas.html">IupCanvas</a>. </p>
+<p>Originally implemented by André 
+  Clinio.</p>
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupColorbar(void); [in C]
+iup.colorbar{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+colorbar() [in LED] </pre>
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><b>BUFFERIZE</b> (<font SIZE="3">non inheritable</font>)<b>:</b> Disables the 
+automatic redrawing of the control, so many attributes can be 
+  changed without many redraws. Default: &quot;NO&quot;. When set to &quot;NO&quot; the 
+control is redrawn.</p>
+<p><b>CELL</b><em>n</em><b>:</b> Contains the color of the &quot;n&quot; cell. &quot;n&quot; can be from 0 to NUM_CELLS-1.</p>
+<p><b>NUM_CELLS</b> (<font SIZE="3">non inheritable</font>)<b>:</b> Contains the number of color cells. Default:
+  &quot;16&quot;. The maximum number of colors is 256. The default colors use the same set of
+  <strong>IupImage</strong>.</p>
+<p><b>COUNT</b> (read-only) (<font SIZE="3">non inheritable</font>)<b>:</b> same 
+as <b>NUM_CELLS</b> but it is read-only. (since 3.3)</p>
+<p><b>NUM_PARTS</b> (<font SIZE="3">non inheritable</font>)<b>:</b> Contains the number of lines or columns. Default:
+  &quot;1&quot;. </p>
+<p><b>ORIENTATION:</b> Controls the orientation. It can be 
+  &quot;VERTICAL&quot; or &quot;HORIZONTAL&quot;. Default: &quot;VERTICAL&quot;.</p>
+<p><b>PREVIEW_SIZE</b> (<font SIZE="3">non inheritable</font>)<b>:</b> Fixes the size of the preview area in pixels. The default size 
+  is dynamically calculated from the size of the control. The size is reset to the default when 
+  SHOW_PREVIEW=NO.</p>
+<p><b>SHOW_PREVIEW:</b> Controls the display of the preview area. Default:
+  &quot;YES&quot;. </p>
+<p><b>SHOW_SECONDARY:</b> Controls the existence of a secondary color selection. 
+  Default: &quot;NO&quot;. </p>
+<p> <a href="../attrib/iup_size.html">SIZE</a>: there is no initial size. You 
+must define SIZE or RASTERSIZE.</p>
+<p><b>PRIMARY_CELL</b> (<font SIZE="3">non inheritable</font>)<b>:</b> Contains the index of the primary color. Default
+  &quot;0&quot; (black). </p>
+<p><b>SECONDARY_CELL</b> (<font SIZE="3">non inheritable</font>)<b>:</b> Contains the index of the secondary color. Default
+  &quot;15&quot; (white). </p>
+<p><b>SQUARED</b>: Controls the aspect ratio of the color cells. Non square cells 
+  expand equally to occupy all of the control area. Default: &quot;YES&quot;. 
+</p>
+<p><b>SHADOWED:</b> Controls the 3D effect of the color cells. Default:
+  &quot;YES&quot;. </p>
+<p><b>TRANSPARENCY</b>: Contains a color that will be not rendered in the color 
+palette. The color cell will have a white and gray chess pattern. It can be used 
+to create a palette with less colors than the number of cells.</p>
+<blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>,
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_expand.html">EXPAND</a>, <a href="../attrib/iup_size.html">SIZE</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><strong>CELL_CB</strong><tt>:</tt> called when the user double clicks a color cell to change its value. 
+</p>
+<pre>char* function(Ihandle* <strong>ih</strong>, int <strong>cell</strong>); [in C]
+<strong>elem</strong>:cell_cb(<strong>cell</strong>: number) -&gt; (<strong>ret</strong>: string) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <b>cell:</b> index of the selected cell. If the user double click a preview cell, the respective index is 
+    returned.</p>
+<p class="info"><u>Returns</u>: a new color or NULL (nil in Lua) to ignore the change. 
+By default 
+    nothing is changed.</p>
+<p><strong>EXTENDED_CB</strong><tt>:</tt> called when the user right click a cell with the Shift key pressed. It 
+  is independent of the SHOW_SECONDARY attribute.</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <strong>cell</strong>);  [in C]
+<strong>elem</strong>:extended_cb(<strong>cell</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <b>cell:</b> index of the selected cell.</p>
+<p class="info"><u>Returns</u>: If IUP_IGNORE the cell is not redrawn. By default 
+the cell is always redrawn.</p>
+
+<p><strong>SELECT_CB</strong><tt>:</tt> called when a color is selected. The primary color is
+  selected with the left mouse button, and if existent the secondary is
+  selected with the right mouse button.</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <strong>cell</strong>, int <strong>type</strong>);  [in C]<strong>
+elem</strong>:select_cb(<strong>cell, type</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <b>cell</b>: index of the selected cell.<br>
+<b>type</b>: indicates if the user selected a primary or secondary color. In can be: 
+<tt>IUP_PRIMARY(-1)</tt> or <tt>IUP_SECONDARY(-2).</tt></p>
+<p class="info"><u>Returns</u>: If IUP_IGNORE the selection is not accepted. By 
+default 
+    the selection is always accepted.</p>
+<p><strong>SWITCH_CB</strong><tt>:</tt> called when the user double clicks the preview area outside the preview 
+  cells to switch the primary and secondary selections. It is only called if SHOW_SECONDARY=YES<b>.</b></p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <strong>prim_cell</strong>, int <strong>sec_cell</strong>);  [in C]<strong>
+elem</strong>:switch_cb(<b>prim_cell</b>, <b>sec_cell</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <b>prim_cell</b>: index of the actual primary cell.<br>
+<b>sec_cell</b>: index of the actual secondary cell. </p>
+<p class="info"><u>Returns</u>: If IUP_IGNORE the switch is not accepted. By 
+default 
+    the switch is always accepted.</p>
+  <blockquote>
+  <hr>
+</blockquote>
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>,  
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, 
+<a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+<h3><a name="Notes">Notes</a></h3>
+<p>When the control has the focus the keyboard can be used to change the colors 
+and activate the callbacks. Use the arrow keys to move from cell to cell,
+<strong>Home</strong> goes to the first cell, <strong>End</strong> goes to the 
+last cell. <strong>Space</strong> will activate the <strong>SELECT_CB</strong> 
+callback for the primary color, <strong>Ctrl</strong>+<strong>Space</strong> 
+will activate the <strong>SELECT_CB</strong> callback for the secondary color.
+<strong>Shift</strong>+<strong>Space</strong> will activate the <strong>EXTENTED_CB</strong> 
+callback. <strong>Shift</strong>+<strong>Enter</strong> will activate the <strong>
+CELL_CB</strong> callback.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p>Creates a Colorbar for selection of two colors.</p>
+<p align="center">
+<img src="images/iupcolorbar.gif" alt="iupcolorbar.gif" width="284" height="353"></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupcanvas.html">IupCanvas</a>,
+  <a href="../elem/iupimage.html">IupImage</a></p>
+
+</body>
+
+</html>

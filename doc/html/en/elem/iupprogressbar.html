@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupProgressBar</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupProgressBar<span class="style1"> (since 3.0)</span></h2>
+<p>Creates a progress bar control. Shows a percent value that can be updated to 
+simulate a progression.</p>
+<p>It is similar of <strong>IupGauge</strong>, but uses native controls 
+internally. Also does not have support for text inside the bar.</p>
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupProgressBar(void); [in C]
+iup.progressbar{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+progressbar() [in LED] </pre>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p>
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a> [Windows Classic and Motif 
+only]: controls the background color. Default: the global attribute DLGBGCOLOR.</p>
+<p><strong>DASHED</strong> (creation only in Windows) [Windows and GTK only]: Changes the style of the progress bar for a dashed pattern. 
+  Default is &quot;NO&quot;.</p>
+<p><a href="../attrib/iup_fgcolor.html">FGCOLOR</a> [Windows Classic and Motif 
+only]: Controls the bar color. Default: the global attribute DLGFGCOLOR.</p>
+<p><strong>MARQUEE</strong> (creation): displays an undefined state. Default: NO. 
+You can set the attribute after map but only to start or stop the animation.</p>
+<p><strong>MAX </strong>(<font size="3">non inheritable</font>):
+  Contains the maximum value. Default 
+  is &quot;1&quot;. The control display is not updated, must set VALUE attribute 
+to update.</p>
+
+
+<p><strong>MIN </strong>(<font size="3">non inheritable</font>):
+  Contains the minimum value. Default 
+  is &quot;0&quot;. The control display is not updated, must set VALUE attribute 
+to update.</p>
+<p><strong>ORIENTATION</strong> (creation only): can be &quot;VERTICAL&quot; or 
+&quot;HORIZONTAL&quot;. Default: &quot;HORIZONTAL&quot;. Horizontal goes from left to right, and 
+vertical from bottom to top.</p>
+<p><a href="../attrib/iup_rastersize.html">RASTERSIZE</a>: The 
+  initial size is defined as &quot;200x30&quot;. Set to NULL to allow the 
+use of smaller values in the layout computation.</p>
+<p><strong>VALUE </strong>(<font size="3">non inheritable</font>):
+  Contains a number between &quot;MIN&quot; and &quot;MAX&quot;, controlling the 
+current position.</p>
+<blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_expand.html">EXPAND</a>, 
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_size.html">SIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>: common callbacks are 
+supported.</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<table align="center">
+	<tr>
+		<td></td>
+		<th>DASHED=NO</th>
+		<th>DASHED=YES</th>
+		<th>MARQUEE=YES</th>
+	</tr>
+	<tr>
+		<th>Motif</th>
+		<td class="bg_mot"><img src="images/iupprogressbar_mot_continuous.png"></td>
+		<td class="bg_mot">(same as DASHED=NO)</td>
+		<td class="bg_mot"><img src="images/iupprogressbar_mot_marquee.png"></td>
+	</tr>
+	<tr>
+		<th>Windows Classic</th>
+		<td class="bg_win2k"><img src="images/iupprogressbar_win2k_continuous.png"></td>
+		<td class="bg_win2k"><img src="images/iupprogressbar_win2k_dash.png"></td>
+		<td class="bg_win2k">(same as DASHED)</td>
+	</tr>
+	<tr>
+		<th>Windows w/ Styles</th>
+		<td class="bg_winxp">(same as DASHED=YES)</td>
+		<td class="bg_winxp"><img src="images/iupprogressbar_winxp_dash.png"></td>
+		<td class="bg_winxp"><img src="images/iupprogressbar_winxp_marquee.png"></td>
+	</tr>
+	<tr>
+		<th>Windows Vista</th>
+		<td class="bg_vista"><img src="images/iupprogressbar_vista_continuous.png"></td>
+		<td class="bg_vista">(same as DASHED=NO)</td>
+		<td class="bg_vista"><img src="images/iupprogressbar_vista_marquee.png"></td>
+	</tr>
+	<tr>
+		<th>GTK</th>
+		<td class="bg_gtk"><img src="images/iupprogressbar_gtk_continuous.png"></td>
+		<td class="bg_gtk"><img src="images/iupprogressbar_gtk_dashed.png"></td>
+		<td class="bg_gtk"><img src="images/iupprogressbar_gtk_marquee.png"></td>
+	</tr>
+	</table>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../ctrl/iupgauge.html">IupGauge</a></p>
+
+</body>
+
+</html>

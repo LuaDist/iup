@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetLanguage</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupSetLanguage</h2>
+<p>Sets the language used by some 
+  pre-defined dialogs. This is an old function, it just sets the global attribute LANGUAGE.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupSetLanguage(const char *<b>lng</b>); [in C] <br>
+iup.SetLanguage(<strong>lng</strong>: string) [in Lua]</pre>
+<p><b>lng</b>: Language to be used. Can have one of the following values: </p>
+<ul>
+  <li>&quot;ENGLISH&quot; </li>
+  <li>&quot;PORTUGUESE&quot; </li>
+</ul>
+<p>default: &quot;ENGLISH&quot;. </p>
+<h3>Affects</h3>
+<p>All elements that have pre-defined texts.
+  </p>
+<h3>Examples</h3>
+<pre>#include &quot;iup.h&quot;
+
+void main(void)
+{
+  IupOpen();
+  IupSetLanguage(&quot;ENGLISH&quot;); 
+  IupMessage(&quot;IUP Language&quot;, IupGetLanguage());
+  IupClose();
+}</pre>
+<h3>See Also</h3>
+<p><a href="iupgetlanguage.html">IupGetLanguage</a>,
+<a href="../attrib/iup_globals.html#LANGUAGE">LANGUAGE</a></p>
+
+</body>
+
+</html>

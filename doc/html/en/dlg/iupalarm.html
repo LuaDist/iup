@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupAlarm</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupAlarm</h2>
+<p>Shows a modal dialog containing a message 
+  and up to three buttons. </p>
+<h3>Creation and Show</h3>
+<pre>int IupAlarm(const char *<strong>t</strong>, const char *<strong>m</strong>, const char *<strong>b1</strong>, const char *<strong>b2</strong>, const char *<strong>b3</strong>); [in C]
+iup.Alarm(<strong>t</strong>, <strong>m</strong>, <strong>b1[</strong>, <strong>b2</strong>, <strong>b3]</strong>: string) -&gt; (<strong>button</strong>: number) [in Lua]</pre>
+<p><strong>t</strong>:
+  Dialog&#8217;s title<br>
+<strong>m</strong>:
+  Message<br>
+<strong>b1</strong>:
+  Text of the first button<br>
+<strong>b2</strong>:
+  Text of the second button (optional)<br>
+<strong>b3</strong>:
+  Text of the third button 
+  (optional)</p>
+<p><span class="style1">Returns:</span> the number of the <strong>button</strong> selected by the user (1, 2 
+or 3) , or 0 if failed. It fails only if b1 is not defined.</p>
+<h3>Notes</h3>
+<p>This function shows a dialog centralized on 
+  the screen, with the message and the buttons. The &#8216;\n&#8217; character can be added to the message to indicate line change. 
+</p>
+<p>A button is not shown if its parameter is
+  NULL. This is valid only for <b>b2</b> and <b>b3</b>.</p>
+<p>Button 1 is set as the &quot;DEFAULTENTER&quot; and &quot;DEFAULTESC&quot;. If Button 2 exists it is set as the &quot;DEFAULTESC&quot;. If Button 
+  3 exists it is set as the &quot;DEFAULTESC&quot;.</p>
+<p>The dialog uses a global attribute called &quot;PARENTDIALOG&quot; as the parent dialog if it is defined. It also uses a 
+  global attribute called &quot;ICON&quot; as the dialog icon if it is defined.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p align="center"><img src="images/alarm.png"></p>
+<h3>See Also</h3>
+<p><a href="iupmessage.html">IupMessage</a>, <a href="iupscanf.html">IupScanf</a>,
+  <a href="iuplistdialog.html">IupListDialog</a>, <a href="iupgetfile.html">IupGetFile</a>.</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

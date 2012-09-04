@@ -1,0 +1,8 @@
+#IupFill Example in LED 
+#Uses the Fill element to horizontally centralize a button and to justify it to the left and right.
+
+caixae = FRAME [TITLE="Left"]   (HBOX(BUTTON ("Ok", acao_ok), FILL()))
+caixac = FRAME [TITLE="Middle"] (HBOX(FILL(), BUTTON ("Ok", acao_ok), FILL()))
+caixad = FRAME [TITLE="Right"]  (HBOX(FILL(), BUTTON ("Ok", acao_ok)))
+filld	= DIALOG [TITLE="IupFill",SIZE=120]
+(VBOX(caixae, caixac, caixad) )

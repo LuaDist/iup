@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupLua Advanced Guide</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">
+    Lua Binding</h2>
+    <h3>
+        <a name="iuplua">Overview</a></h3>
+   <p>
+    All the IUP functions are available in Lua, with a few exceptions. We call it <strong>IUPLua</strong>. To use them the
+  general application will do require"iuplua", and require"iupluaxxxx" to all other
+    secondary libraries that are needed. The functions and definitions will be available
+    under the table &quot;iup&quot; using the following name rules:</p>
+    <pre>iupXxx&nbsp; -&gt; iup.Xxx    (for functions)<br />IUP_XXX -&gt; iup.XXX    (for definitions)<br /></pre>
+    <p>
+        All the
+  metatables have the &quot;tostring&quot; metamethod implemented to help 
+		debugging.</p>
+    <p>
+        Also the functions which receive values by reference in C were  modified. Generally, the values of
+  parameters that would have their values modified are now returned by the function in the same order.</p>
+    <p>
+        Notice that, as opposed to C,
+  in which enumeration flags are<i> </i>combined with the bitwise operator OR, in Lua the flags are added arithmetically.</p>
+    <p>
+        In Lua all parameters are checked and a Lua error is emitted when the check fails.</p>
+    <p>
+        All the objects are NOT garbage collected by the Lua garbage collector, you must
+        manually call <strong>iup.Destroy</strong> or elem:<strong>destroy</strong>, if
+        you would like to destroy an element.</p>
+    <p>
+        In Iup additional features were created for the Lua Binding using the metamethods.
+        Attributes and callbacks can be set and get in a much more natural way:</p>
+    <pre>IupSetAttribute(label, "TITLE", "test")   &gt;&gt;   label.title = "test"             (names are in lower case)<br>title = IupGetAttribute(label, "TITLE")   &gt;&gt;   title = label.title<br><br>IupSetCallback(button, "ACTION", button_action_cb);   &gt;&gt;    function button:action() ... end<br /></pre>
+    <p>
+        Also the element 
+        constructors were changed so you can use tables to initialize their
+        parameters and attributes:</p>
+    <pre>IupButton("test")         &gt;&gt;    iup.button{title = "test", alignment="acenter"}<br />IupHbox(bt1, bt2, NULL)   &gt;&gt;    iup.hbox{bt1, bt2, margin="10x10"} </pre>
+    <p>
+        <strong>Lua</strong> was created after <strong>LED</strong>, so that's why <strong>LED</strong>
+        exists. Since we have many application
+        still using LED, its support will continue in IUP. Today <strong>IupLua</strong> completely replaces the LED functionality and adds much more.>
+    </p>
+    <p>
+        The distribution files include an executable called <b>iuplua51</b>, that you can
+        use to test your Lua code. It has support for all the additional controls, for IM,
+        CD and OpenGL calls. It is
+        <u1:p></u1:p>
+        available at the <a href="download.html">Download</a>.</p>
+    <h3>
+        <a name="iupluainit">IupLua Initialization</a></h3>
+    <p>
+        <strong>Lua</strong> 5.1 "require" can be used for all the <strong>IupLua</strong>
+        libraries. You can use <b>require</b>"<b>iuplua</b>" and so on, but the LUA_CPATH
+        must also contains at least the following:
+    </p>
+    <pre>"./lib?51.so;"    [in UNIX]
+
+".\\?51.dll;"     [in Windows]
+</pre>
+    <p>
+        The <a href="http://luabinaries.luaforge.net/">LuaBinaries</a> distribution already
+        includes these modifications on the default search path.</p>
+    <p>
+        The simplest form <b>require</b>"<b>iup</b>" and so on, can not be used because
+        there are IUP dynamic libraries with names that will conflict with the names used
+        by <b>require</b> during search.</p>
+    <p>
+        Additionally you can statically link the <strong>IupLua</strong> libraries, but
+        you must call the initialization functions manually. The <strong><font face="Courier New">
+            iuplua_open</font></strong> function is declared in the header file <strong><font
+                face="Courier New">iuplua</font><font face="Courier New" size="2">.</font><font face="Courier New">h</font></strong>,
+        see the example below:</p>
+    <div align="center">
+        <center>
+            <table id="AutoNumber1" border="1" bordercolor="#111111" cellpadding="10" cellspacing="0"
+                style="border-collapse: collapse">
+                <tr>
+                    <td>
+                        <pre style="text-align: left">#include &lt;lua.h&gt;
+#include &lt;lualib.h&gt;
+#include &lt;lauxlib.h&gt;
+<b><font color="#ff0000">#include &lt;iuplua.h&gt;</font></b></pre>
+                        <pre style="text-align: left">
+void main(void)
+{
+  lua_State *L = lua_open();
+
+  luaopen_string(L);
+  luaopen_math(L);
+  luaopen_io(L);  
+
+<b><font color="#ff0000">  iuplua_open(L);</font> </b>
+  lua_dofile("myprog.lua");
+  
+  lua_close(L);
+}</pre>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <p>
+        When using <strong>Lua</strong> the Iup initialization functions, <strong>IupOpen</strong>,
+        <strong>IupControlsOpen</strong> and others, are not necessary.
+        The initialization is automatically done inside the respective <strong>IupLua</strong> initialization
+        function.</p>
+<p>
+        To use IUP inside coroutines, define the global attribute 
+		&quot;IUPLUA_THREADED&quot;.</p>
+    <h3>
+        Embedding Lua files in the Application Executable</h3>
+    <p>
+        The Lua files are dynamically loaded and must be sent together with the application’s
+        executable. However, this often becomes an inconvenience. To deal with it, there
+        is the <b>LuaC</b> compiler that creates a C module from the Lua contents. For example:</p>
+    <pre>luac -o myfile.lo myfile.lua
+lua bin2c.lua myfile.lo &gt; myfile.loh</pre>
+    <p>
+        In C, you can use a define to interchanged the use of .LOH files:</p>
+    <pre>#ifdef _DEBUG
+  ret_val = iuplua_dofile("myfile.lua");
+#else
+#include "myfile.loh"
+#endif</pre>
+
+<p>This does not work when using LuaJIT. To be able to do that, use Lua files 
+directly as strings:</p>
+    <pre>lua bin2c.lua myfile.lua &gt; myfile.lh</pre>
+    <p>
+        In C, simply include the .LH files:</p>
+    <pre>#include "myfile.lh"</pre>
+
+<h3>More Information</h3>
+<p>Steve Donovan wrote a very nice &quot;<a href="basic/index.html">A Basic Guide to 
+using IupLua</a>&quot; that was included in
+<a href="http://luaforwindows.luaforge.net/">Lua for Windows</a>. It is now 
+available as part of the IUP documentation.</p>
+<p>The slides for <strong>&quot;Tecgraf Development Tools: IUP, CD and IM&quot;</strong> 
+presented at the Lua Workshop 2009 are also available for <a href="../download">
+Download</a> [<a href="../download/iupcdim_wlua2009_en.pdf">iupcdim_wlua2009_en.pdf</a>].</p>
+
+</body>
+
+</html>

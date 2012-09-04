@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>SCREENPOSITION</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>SCREENPOSITION/X/Y<span class="style1"> (read-only) (non inheritable) (since 
+3.4)</span></h2>
+<p>Returns the absolute horizontal and/or vertical position of the top left 
+corner of the client area relative to the top left corner 
+  of the screen in pixels. It is similar to POSITION but relative to the top 
+left corner of the screen.</p>
+<p><strong>IMPORTANT</strong>: For the dialog, it is the position of the top 
+left corner of the window, NOT the client area. It is the same position used in
+<a href="../func/iupshowxy.html">IupShowXY</a> and
+<a href="../func/iuppopup.html">IupPopup</a>. In GTK, if the dialog is hidden 
+the values can be outdated.</p>
+<h3>Value</h3>
+<p>&quot;x,y&quot;,
+  where <i>x</i> and <i>y</i> are integer values corresponding to the horizontal and vertical 
+position, respectively, in pixels. When X or Y are used a single value is 
+returned.</p>
+<h3>Affects</h3>
+<p>All controls that have visual representation.</p>
+
+<h3>See Also</h3>
+<p><a href="iup_position.html">POSITION</a></p>
+
+</body>
+
+</html>

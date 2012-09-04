@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupOpen</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupOpen</h2>
+<p>Initializes the IUP toolkit. Must be called 
+  before any other IUP function.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupOpen(int *<strong>argc</strong>, char ***<strong>argv</strong>); [in C]
+[There is no equivalent in Lua]</pre>
+<p><strong>argc</strong> and <strong>argv</strong>: are the same as the 
+application &quot;main&quot; function function. Some parameters processed by the driver 
+can be removed so the address is necessary. They can be NULL. (Since 2.7)</p>
+<p><span class="style1">Returns:</span> IUP_OPENED (already opened),
+  IUP_ERROR or IUP_NOERROR. Only in UNIX can fail to open, because X-Windows may be not initialized.</p>
+<h3>Notes</h3>
+<p>In Windows, <strong>CoInitializeEx(COINIT_APARTMENTTHREADED)</strong> and 
+  <strong>InitCommonControlsEx(ICC_WIN95_CLASSES)</strong> functions are called.</p>
+<p>In Motif, <strong>XtOpenApplication</strong> function is called.</p>
+<p>For a more detailed explanation on the 
+  system control, please refer to 
+<a href="../guide.html#sistema">Guide / System Control</a>.</p>
+<h4>Environment Variables</h4>
+<p>The toolkit's initialization depends also on 
+  platform-dependent environment variables, see each driver documentation.</p>
+<p><b>QUIET</b></p>
+<p class="info">When this variable is set to NO, IUP will 
+    generate a message in console indicating the driver&#8217;s version when initializing. Default: YES.</p>
+<p><b>VERSION</b></p>
+<p class="info">When this variable is set to YES, IUP 
+    generates a message dialog indicating the driver's version when initializing.&nbsp; Default: NO.</p>
+<h4>Lua Binding&nbsp;</h4>
+<p>This function should be called by the 
+  host program and before the IupLua initialization function <b>iuplua_open</b>. 
+If not the IupLua initialization function will call it. </p>
+<h3>See Also</h3>
+<p><a href="iuplua_open.html">iuplua_open</a>, <a href="iupclose.html">IupClose</a>, 
+<a href="../guide.html#sistema">Guide / System Control</a></p>
+
+</body>
+
+</html>

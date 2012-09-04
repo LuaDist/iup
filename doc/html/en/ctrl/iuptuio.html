@@ -1,0 +1,128 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupTuioClient</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupTuioClient<span class="style1"> (since 3.3)</span></h2>
+<p>Implements a <a href="http://www.tuio.org">TUIO</a> protocol client that 
+allows the use of multi-touch devices. It can use any TUIO server, but it was 
+tested with the <a href="http://ccv.nuigroup.com/">Community Core Vision</a> 
+(CCV) from the NUI Group. </p>
+<h3>Initialization and usage</h3>
+<p>The <b>IupTuioOpen</b> function must be called after a <b>IupOpen</b>, so that the control can be used. 
+  The iuptuio.h file must also be included in the source code. The program must be linked to the controls 
+  library (iuptuio). There is no external dependencies, the TUIO client library 
+is already included.</p>
+<p>To make the control available in Lua use require&quot;iupluatuio&quot; or manually 
+call the initialization function in C, 
+<b>iuptuiolua_open</b>, after calling <b>iuplua_open</b>.
+  When manually calling the function the iupluatuio.h file must also be included in the source code 
+and the program must be linked to the respective Lua control 
+  library (iupluatuio).</p>
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupTuioClient(int <strong>port</strong>); [in C]
+iup.tuioclient{<b>[port</b>: number]} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+tuioclient(port) [in LED]
+</pre>
+<b>
+<p>port</b>: the UDP port used to connect to the TUIO server. If 0 is specified 
+then the default value of 3333 will be used (in Lua it can be simply omitted).</p>
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>CONNECT</strong>: connects (YES) or disconnects (NO) to the TUIO 
+server. Returns the connected state. If LOCKED is used when connected the
+<strong>IupSetAttribute</strong> will not return until it is disconnected (not 
+recommended).</p>
+<p><strong>DEBUG</strong>: when set will enable a print a log of TUIO cursor 
+messages on standard output.</p>
+
+
+<p><strong>TARGETCANVAS</strong><b>:</b> name of a handle to an <strong>
+IupCanvas</strong> that will be used to receive the events.</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><strong>TOUCH_CB</strong>:
+  Action generated 
+  when a touch event occurred. Multiple touch events will trigger several calls.</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <strong>id</strong>, int <strong>x</strong>, int <strong>y</strong>, char* <strong>state</strong>); [in C]
+<strong>elem</strong>:touch_cb(<strong>id</strong>, <strong>x</strong>,<strong> y</strong>: number,<strong> state</strong>: string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifies the element that activated the event. 
+If TARGETCANVAS is not defined then it is the <strong>IupTuioClient</strong> 
+control.<br>
+<strong>id</strong>: identifies the touch point.
+<strong><br>
+x</strong>, <strong>y</strong>: position in pixels, relative to the 
+top-left corner of the canvas, or the screen if TARGETCANVAS is not defined.<br>
+<strong>state</strong>: the touch point state. Can be: DOWN, MOVE or UP. If the 
+point is a &quot;primary&quot; point then &quot;-PRIMARY&quot; is appended to the string.</p>
+<p class="info"><u>Returns</u>: IUP_CLOSE will be processed.</p>
+<p><strong>MULTITOUCH_CB</strong>: Action generated when multiple touch events 
+occurred.</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>count</strong>, int* <strong>pid</strong>, int* <strong>px</strong>, int* <strong>py</strong>, int* <strong>pstate</strong>) [in C]
+<strong>elem</strong>:multitouch_cb(<strong>count:</strong> number<strong>, pid, px, py, pstate: </strong>table) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. If TARGETCANVAS is not defined then it is the <strong>IupTuioClient</strong> 
+control.<br>
+<strong>count</strong>: Number of touch points in the array.<br>
+<strong>pid</strong>:
+    Array of touch point ids.<br>
+<strong>px</strong>:
+    Array of touch point x coordinates in pixels, relative to the top-left corner of 
+the canvas, or the screen if TARGETCANVAS is not defined.<br>
+<strong>py</strong>:
+    Array of touch point y coordinates in pixels, relative to the top-left corner of 
+the canvas, or the screen if TARGETCANVAS is not defined.<br>
+<strong>pstate</strong>: Array of touch point states. Can be &#39;D&#39; (DOWN), &#39;U&#39; 
+(UP) or &#39;M&#39; (MOVE).<br>
+</p>
+<p class="info"><u>Returns</u>: IUP_CLOSE will be processed.</p>
+<h3><a name="Notes">Notes</a></h3>
+<p>The cursor ID used in the callbacks is the session ID. In TUIO when a cursor is destroyed another 
+cursor can be created with the same ID, the difference between them is the 
+session ID that is always incremented every time a cursor is added or removed. 
+We consider the primary cursor the existing cursor with the smaller session ID.</p>
+<p>The native support for multi-touch in Windows 7 uses the same callbacks 
+described here without the need of a <strong>IupTuioClient</strong> control. So 
+the application will work without change. But the attribute TOUCH=YES must be 
+set on the <strong>IupCanvas</strong>, and coordinates will be always relative 
+to the top-left corner of the canvas.</p>
+<p>The <strong>IupTuioClient</strong> does not emulates a mouse for single touch 
+events. But as you can see from the example a mouse emulator can be easily 
+implemented.</p>
+<p>To learn more about TUIO:</p>
+<p class="info"><a target="_blank" href="http://www.microsoft.com/com">http://www.t</a><a href="http://www.tuio.org">uio.org</a></p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a> (see
+<a href="../../examples/C/canvas1.c">canvas1.c</a>)</p>
+
+</body>
+
+</html>
+
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSpin</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupSpin and IupSpinBox</h2>
+<p>This functions will create a control set with a vertical box containing two buttons, one with an up arrow and the 
+  other with a down arrow, to be used to increment and decrement values.</p>
+<p>Unlike the SPIN attribute of the <strong>IupText</strong> element, the
+<strong>IupSpin</strong> element can NOT automatically increment the value and 
+it is NOT inserted inside the <strong>IupText</strong> area.</p>
+<h3><a name="Creation">Creation</a></h3>
+<p><strong>IupSpin</strong> inherits from a <strong>IupVbox</strong>, and 
+contains two <strong>IupButton</strong>.</p>
+<div>
+  <pre>Ihandle* IupSpin(void); [in C]
+iup.spin{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+spin() [in LED]</pre>
+</div>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<p><strong>IupSpinbox</strong> is an horizontal container that already 
+contains a <strong>IupSpin</strong>.</p>
+<div>
+  <pre>Ihandle* IupSpinbox(Ihandle* <b>child</b>); [in C]
+iup.spinbox{<b>child: </b>ihandle} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+spinbox(<strong>child</strong>)  [in LED]</pre>
+</div>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.&nbsp;</p>
+  <p><strong>child</strong>: Identifier of an interface element which will 
+	receive the spinbox around.</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><strong>SPIN_CB</strong>: 
+  Called each time the user clicks in the 
+  buttons. It will increment 1 and decrement -1 by default. Holding the Shift 
+key will set a factor of 2, holding Ctrl a 
+  factor of 10, and both a factor of 100.</p>
+<div align="left">
+  <pre>int function(Ihandle *ih, int <strong>inc</strong>); [in C]
+<strong>elem</strong>:spin_cb(<strong>inc</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+</div>
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>The spinbox can be created with no elements and be dynamic filled using
+  <a href="../func/iupappend.html">IupAppend</a> or
+<a href="../func/iupinsert.html">IupInsert</a>.</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<pre>Ihandle* spinbox = IupSpinbox(IupText(NULL));</pre>
+<p class="style1"><img src="images/iupspin.png" width="124" height="48"></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="iuptext.html">
+IupText</a>, <a href="iupvbox.html">IupVbox</a>, <a href="iuphbox.html">IupHbox</a>,
+<a href="iupbutton.html">IupButton</a></p>
+
+</body>
+
+</html>

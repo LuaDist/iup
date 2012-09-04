@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupFileDlg</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	border-width: 0;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupFileDlg</h2>
+  
+  <p>
+  Creates the File Dialog element. It is a predefined dialog for selecting files or a directory. The dialog can be 
+  shown with the
+  IupPopup function only.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+  
+  <pre>Ihandle* IupFileDlg(void); [in C]
+iup.filedlg{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+filedlg() [in LED]</pre>
+
+  
+<p><u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+  
+  <p><strong>ALLOWNEW</strong>:
+  Indicates if non-existent file names are 
+  accepted. If equals &quot;NO&quot; and the user specifies a non-existing file, 
+  an alert dialog is shown. Default: if the dialog is of type &quot;OPEN&quot;, default is &quot;NO&quot;; if the dialog is of type &quot;SAVE&quot;, default is &quot;YES&quot;. 
+  Not used when DIALOGTYPE=DIR.</p>
+  
+  <p><strong>DIALOGTYPE</strong>:
+  Type of dialog (Open, Save or  Directory).
+    Can have values &quot;OPEN&quot;, &quot;SAVE&quot; or &quot;DIR&quot;. Default: &quot;OPEN&quot;. </p>
+    
+  <blockquote>
+  
+  <p>In Windows, when DIALOGTYPE=DIR the dialog shown is not the same dialog for 
+  OPEN and SAVE, this new dialog does not have the Help button neither filters. 
+	Also this new dialog needs CoInitializeEx with COINIT_APARTMENTTHREADED 
+	(done in <strong>IupOpen</strong>), if the COM library was initialized with 
+	COINIT_MULTITHREADED prior to <strong>IupOpen</strong> then the new dialog 
+	will have limited functionality. In 
+  Motif or GTK the dialog is the same, but it only allows the user to select a 
+  directory.&nbsp;</p>
+    
+  </blockquote>
+    
+  <p><strong>DIRECTORY</strong>: Initial directory. When consulted after the 
+	dialog is closed and the user pressed the OK button, it will contain the 
+	directory of the selected file.</p>
+  <blockquote>
+    
+  <p>In Motif or GTK, if not defined the dialog opens in the current directory. </p>
+    
+  <p>In Windows, if not defined and the application has used the dialog in the 
+	past, the path most recently used is selected as the initial directory. 
+	However, if an application is not run for a long time, its saved selected 
+	path is discarded. Also if not defined and the current directory contains 
+	any files of the specified filter types, the initial directory is the 
+	current directory. Otherwise, the initial directory is the &quot;My Documents&quot; 
+	directory of the current user. Otherwise, the initial directory is the 
+	Desktop folder.</p>
+  </blockquote>
+  <p><strong>EXTFILTER</strong> [Windows  and GTK Only]: Defines several file filters. It has 
+  priority over FILTERINFO and FILTER. Must be a text with the format &quot;FilterInfo1|Filter1|FilterInfo2|Filter2|...&quot;. 
+  The list ends with character '|'.
+  Example: &quot;Text files|*.txt;*.doc|Image files|*.gif;*.jpg;*.bmp|&quot;. In 
+  GTK there is no way how to overwrite the filters, so it is recommended to 
+  always add a less restrictive filter to the filter list, for example &quot;All 
+	Files|*.*&quot;.</p>
+  <p><strong>FILE</strong>:
+  Name of the file initially shown in the 
+  &quot;File Name&quot; field in the dialog. If contains a path, then it is used 
+  as the initial directory and <strong style="font-weight: 400">DIRECTORY</strong> is ignored.</p>
+  <p><strong>FILEEXIST</strong> (read-only):
+  Indicates if the file defined by the FILE attribute exists or not.
+  It is only valid if the user has pressed OK in the dialog. Not set when 
+  DIALOGTYPE=DIR or <strong style="font-weight: 400">MULTIPLEFILES=YES</strong>.</p>
+  <p><strong>FILTER</strong>:
+  String containing a list of file filters separated by ';' without spaces. Example: &quot;*.C;*.LED;test.*&quot;. 
+  In Motif only the first filter is used. </p>
+  <p><strong>FILTERINFO</strong> [Windows  and GTK Only]: Filter's description. If not defined the filter itself will be used as its 
+  description.</p>
+  
+  <p><strong>FILTERUSED</strong> [Windows  and GTK Only]: the index of the filter in 
+    EXTFILTER to use starting at 1. It returns the selection made by the user. 
+  Set only if EXTFILTER is defined.</p>
+    
+  <p><strong>MULTIPLEFILES</strong>: When &quot;YES&quot;, this 
+	attribute allows the user to select multiple 
+    files when DIALOGTYPE=OPEN.&nbsp;The value returned by VALUE is to be changed the following way: the directory and 
+    the files are passed separately, in this order. The character used for separating the directory and the files is '|'. 
+    The file list ends with character '|'. When the user selects just one file, the directory and the file are not separated by '|'. 
+For example:</p>
+    
+<pre>&quot;/tecgraf/iup/test|a.txt|b.txt|c.txt|&quot; or
+&quot;/tecgraf/iup/test/a.txt&quot; (only one file is selected)</pre>
+<p class="info">In Windows the maximum size allowed  for file name returned is 
+65Kb. </p>
+  
+  <p><strong>NOCHANGEDIR</strong>:&nbsp;
+  Indicates if the current working directory 
+  must be restored after the user navigation. Default: &quot;YES&quot;.</p>
+  <p><strong>NOOVERWRITEPROMPT</strong>: do not prompt to overwrite an existent file when 
+  in
+  &quot;SAVE&quot; dialog. Default is
+  &quot;NO&quot;, i.e. prompt before overwrite.&nbsp; (GTK 2.8)</p>
+  <p><strong><a href="../attrib/iup_parentdialog.html">PARENTDIALOG</a></strong>:
+  Makes the dialog be treated as a child of the specified 
+  dialog.</p>
+  
+  <p><b>SHOWHIDDEN</b>: Show hidden files. Default: NO. (since 3.0) (GTK 2.6)</p>
+    
+  <p><strong>SHOWPREVIEW</strong>:  A preview area is shown inside the File Dialog.
+    Can have values &quot;YES&quot; or &quot;NO&quot;. Default: &quot;NO&quot;. In Windows, you must link with the 
+    &quot;iup.rc&quot; resource file so the preview area can be enabled (not 
+    necessary if using &quot;iup.dll&quot;). Valid only if the FILE_CB callback 
+	is 
+  defined, use it to retrieve the file name and the necessary attributes to 
+	paint the preview area. (in Motif since 3.0)</p>
+    
+  <blockquote>
+  
+  <p>Read only attributes that are valid inside the FILE_CB callback 
+  when status=&quot;PAINT&quot;:<br>
+	<strong>&nbsp;&nbsp;&nbsp; PREVIEWDC</strong>: Returns the Device 
+    Context (HDC in Windows and GC in UNIX)<br>
+	<strong>&nbsp;&nbsp;&nbsp; PREVIEWWIDTH </strong>and <strong>PREVIEWHEIGHT</strong>: 
+	Returns the width and the height of the client rectangle for the preview area.<br>
+	<strong>&nbsp;&nbsp;&nbsp; </strong>Also the attributes WID, HWND, XWINDOW and XDISPLAY are valid and are 
+	relative to the preview area.</p>
+	<p>If the attribute PREVIEWGLCANVAS is defined then it is used as the name 
+	of an existent IupGLCanvas control to be mapped internally to the preview 
+	canvas. Notice that this is not a fully implemented IupGLCanvas that 
+	inherits from IupCanvas. This does the minimum necessary so you can use 
+	IupGLCanvas auxiliary functions for the preview canvas and call OpenGL 
+	functions. No IupCanvas attributes or callbacks are available. (since 3.0)</p>
+    
+  </blockquote>
+    
+  <p><strong>STATUS</strong> (read-only):
+  Indicates the status of the selection made:</p>
+    
+    <blockquote>
+		<p>&quot;1&quot;:
+    New file.<br>
+		&quot;0&quot;:
+    Normal, existing file or directory.<br>
+		&quot;-1&quot;:
+    Operation cancelled.</p>
+</blockquote>
+  
+  <p><strong><a href="../attrib/iup_title.html">TITLE</a></strong>:
+  Dialog's title.</p>
+  
+  <p><strong>VALUE</strong> (read-only):
+  Name of the selected file(s), or NULL if no file was selected. If FILE is not 
+  defined this is used as the initial value. In Windows there is a limit of 32Kb 
+  for this string. </p>
+  
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+  
+  <p><strong>FILE_CB</strong>:  Action generated when a file is selected. 
+  Not called when DIALOGTYPE=DIR. When MULTIPLEFILES=YES it is called only for 
+  one file. Can be used with SHOWPREVIEW=NO also. (Windows only in 2.x)</p>
+    
+    <pre>int function(Ihandle *<strong>ih</strong>, const char* <strong>file_name</strong>, const char* <strong>status</strong>); [in C]<br>elem:file_cb(<strong>file_name</strong>, <strong>status</strong>: string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>file_name</strong>: name of the file selected.<br>
+    <strong>status</strong>: describes the  action. Can be:</p>
+      
+      <blockquote>
+      
+      <ul>
+        <li>&quot;INIT&quot; - when the dialog has started. file_name is NULL.</li>
+        <li>&quot;FINISH&quot; - when the dialog is closed. file_name is NULL.</li>
+		  <li>&quot;SELECT&quot; - a file has been selected.</li>
+		<li>&quot;OTHER&quot; - an invalid file or a directory is selected. file_name is 
+		the one selected. (Since 3.0)</li>
+        <li>&quot;OK&quot; - the user pressed the OK button. If returns 
+        IUP_IGNORE the action is refused and the dialog is not closed.</li>
+        <li>&quot;PAINT&quot; - the preview area must be redrawn.<br>Used only when SHOWPREVIEW=YES. 
+        If an invalid file or a directory is selected, file_name is NULL.</li>
+		  <li>&quot;FILTER&quot; - when a filter is changed. (Windows Only) (since 3.6)<br>
+		  FILTERUSED attribute will be updated to reflect the change. FILE 
+		  attribute can be used to change the current filename.</li>
+</ul>
+    
+</blockquote>
+<p><a href="../call/iup_help_cb.html">HELP_CB</a>:
+  Action generated when the Help button is 
+  pressed.</p>
+    
+<h3><a name="Notes">Notes</a></h3>
+  
+  <p>The <b>IupFileDlg</b> is a native pre-defined dialog that is not altered by 
+  <a href="../func/iupsetlanguage.html">IupSetLanguage</a>.</p>
+  <p>
+  To show the dialog, use function <a href="../func/iuppopup.html">IupPopup</a>. In Lua, use the popup function.</p>
+<p>The dialog is mapped only inside <b>IupPopup</b>, <b>IupMap</b> does nothing.</p>
+<p>
+  The <a href="iupgetfile.html">
+  IupGetFile</a> function simply creates and popup a IupFileDlg.</p>
+<p>
+  In Windows, the FILE and the DIRECTORY attributes also accept strings containing 
+  &quot;/&quot; as path separators, but the VALUE attribute will always return strings 
+  using the &quot;\&quot; character.</p>
+<p>In Windows, the dialog will be modal relative only to its parent or to the 
+active dialog.&nbsp;</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<pre>Ihandle *dlg = IupFileDlg(); 
+
+IupSetAttribute(dlg, "DIALOGTYPE", &quot;OPEN&quot;);
+IupSetAttribute(dlg, "TITLE", "IupFileDlg Test");
+IupSetAttributes(dlg, "FILTER = \"*.bmp\", FILTERINFO = \"Bitmap Files\"");
+IupSetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+
+IupPopup(dlg, IUP_CURRENT, IUP_CURRENT); 
+
+if (IupGetInt(dlg, "STATUS"))
+{
+  printf("OK\n");
+  printf("  VALUE(%s)\n", IupGetAttribute(dlg, "VALUE")); 
+}
+else
+  printf("CANCEL\n");
+
+IupDestroy(dlg); </pre>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+    <tr>
+      <th>Windows XP</th>
+    </tr>
+    <tr>
+      <td align="center" class="style1"><img border="0" src="images/filedlg_win.png"></td>
+    </tr>
+    <tr>
+      <th>Motif/Mwm</th>
+    </tr>
+    <tr>
+      <td align="center" class="style1"><img border="0" src="images/filedlg_mot.png"></td>
+    </tr>
+    <tr>
+      <th>GTK/GNOME</th>
+    </tr>
+    <tr>
+      <td align="center" class="style1">
+      <img border="0" src="images/filedlg_gtk.png"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+  
+<p><a href="../../examples/">Browse for Example Files</a></p>
+  
+<h3><a name="SeeAlso">See Also</a></h3>
+  
+  <p><a href="iupmessage.html">IupMessage</a>, <a href="iupscanf.html">IupScanf</a>,
+  <a href="iuplistdialog.html">IupListDialog</a>, <a href="iupalarm.html">IupAlarm</a>, <a href="iupgetfile.html">
+  IupGetFile</a>, <a href="../func/iuppopup.html">IupPopup</a></p>
+
+
+</body>
+
+</html>

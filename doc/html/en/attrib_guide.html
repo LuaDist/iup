@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+  <title>Attributes Guide</title>
+  <link rel="stylesheet" type="text/css" href="../style.css">
+
+  <style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+  </style>
+</head>
+
+
+<body>
+
+
+<h2 style="text-align: center;" align="center">Attributes Guide</h2>
+
+<h3><a name="Using">Using</a></h3>
+
+<p>Attributes are a way to send and obtain information to and from elements. 
+They are used by the application to communicate with the user interface system, 
+on the other hand callbacks are used by the application to receive notifications 
+from the system that the user or the system itself has interacted with the user 
+interface of the application.</p>
+<p>There are two functions to change them:</p>
+
+<ul type="disc">
+
+  <li><strong>IupSetAttribute</strong> stores only a pointer to the string and does not duplicate it. 
+  </li>
+
+  <li><strong>IupStoreAtribute</strong> duplicates the string, allowing you to use it for other purposes.</li>
+
+</ul>
+
+<p>With <strong>IupSetAttribute</strong> you can also store application pointers that can be 
+strings or not. This can be very useful, for instance, used inside 
+<b>callbacks</b>. For example, by storing a C pointer of an application defined structure, the application can retrieve 
+  this pointer inside the callback through function 
+  <strong>IupGetAttribute</strong>. Therefore, even if the callbacks are global functions, 
+  the same callback can be used for several objects, even of different types.<u1:p>
+</u1:p>
+</p>
+
+<p>When an attribute is updated (<b>Set</b>) it is  stored internally at the hash 
+table of the control only if the control class 
+allows it.
+  If the value is NULL, the attribute will also be removed from the hash table 
+and the default value will be used if there is one defined.  Finally the attribute is 
+updated for the children of the control if they do not 
+  have the attribute defined in their own hash table. Here is a pseudo-code:</p>
+
+
+<pre>IupSetAttribute(ih, name, value)<br>{<br>  if ih.SetClassAttribute(name, value)==store then<br>    ih.SetHashTableAttribute(name, value)<br>  endif<br><br>  if (ih.IsInheritable(name))<br>    -- NotifyChildren<br>    for each child of ih do<br>       if not child.GetHashTableAttribute(name) then<br>        child.SetClassAttribute(name, value)<br>        child.NotifyChildren(name, value)<br>       endif<br>    endfor<br>  endif<br>}</pre>
+
+<p>When an attribute is retrieved (<b>Get</b>) it will first be checked at the 
+control class. If not defined then it checks in the hash table. If not defined 
+it checks its parent hash table and so forth, until it reaches the dialog. And 
+finally if still not defined then a 
+  default value is returned (the default value can also be NULL).</p>
+
+<pre>value = IupGetAttribute(ih, name)<br>{<br>  value = ih.GetClassAttribute(name)<br><br>  if not value then<br>    value = ih.GetHashTableAttribute(name)  <br>  endif<br><br>  if not value and ih.isInheritable(name) then<br>    parent = ih.parent<br>    while (parent and not value)<br>      value = parent.GetHashTableAttribute(name)<br>      parent = parent.parent<br>    endwhile<br>  endif<br><br>  if not value then<br>    value = ih.GetDefaultAttribute(name)  <br>  endif<br>}</pre>
+
+<p>Notice that the parent recursion is done only at the parent hash table, the 
+parent control class is not consulted.</p>
+
+<p>The control class can update or retrieve a value 
+even if the control is not mapped. When the control is not mapped and its 
+implementation can not process the attribute, then the attribute is simply 
+stored in the hash table. After the element is mapped its attributes are 
+re-processed to be updated in the native system and they can be removed from the 
+hash table at that time.</p>
+
+<p>All this flexibility turns the attribute system very complex with several 
+nuances. If the attribute is checked before the control is mapped and just 
+after, its value can be completely different. Depending on how the attribute is 
+stored its inheritance can be completely ignored.</p>
+
+<p>Attribute <span class="style1">names</span> are always upper case, lower case names will not work. But attribute 
+<span class="style1">values</span> like "YES", "NO", 
+  "TOP", are case insensitive, so "Yes", "no", "top", and other variations will work. 
+</p>
+<p>Boolean attributes accept the values "1", "YES", "ON" or "TRUE" for <b>true</b>, 
+and NULL (not defined), "0", "NO", "OFF" or "FALSE" for <b>false</b>, even if in 
+the documentation is only one of these combinations.</p>
+
+<p>There are attributes common to all the elements. In some cases, common attributes behave 
+  differently in different elements, but in such cases, there are comments in 
+the documentation of the element explaining the different behavior.</p>
+
+<p>In LED there is no  
+  quotation marks for attributes, names or values. In Lua attribute names can be 
+lower case.</p>
+
+<h3><a name="Inheritance">Inheritance</a></h3>
+
+<p>Elements included in other elements can inherit their attributes. There is an 
+<b>inheritance</b> mechanism inside a given child tree. </p>
+
+<p>This means, for example, that if you set the 
+  "MARGIN" attribute of a Vbox 
+  containing several other elements, including other Vboxes, all the elements depending on the attribute
+  "MARGIN" will be affected, <span class="style1">except</span> for those who the
+  "MARGIN" attribute is already defined.</p>
+
+<p>Please note that not all attributes are inherited. <font size="3">As general 
+rules the following attributes are <strong>NON</strong> inheritable always:</font></p>
+<ul>
+	<li><font size="3">Essential attributes like VALUE, TITLE, SIZE, RASTERSIZE, 
+	X and Y</font></li>
+	<li><font size="3">Id numbered attributes (like &quot;1&quot; or &quot;MARK1:1&quot;)</font></li>
+	<li>H<font size="3">andle names (like &quot;CURSOR&quot;, "IMAGE" and 
+"MENU")</font></li>
+	<li>Pointers that are not strings<font size="3"> </font>(like WID)</li>
+	<li><font size="3">Read-only or 
+write-only attributes</font></li>
+	<li><font size="3">Internal attributes that starts with &quot;_IUP&quot;</font></li>
+</ul>
+
+<p><font size="3">Inheritable </font>attributes <font size="3">are stored in the hash table so the 
+IupGet/SetAttribute logic can work, even if the control class store it 
+internally. But w</font>hen you change an attribute to NULL, then its value is 
+removed from the hash table and the default value if any is passed to the native 
+system.</p>
+
+<p>When consulted the attribute is first checked at the control class. If not defined then it checks in the hash
+table. If not defined in its hash table, the attribute will be
+inherited from its parent's hash table and so forth, until it reaches
+the root child (usually the dialog). But if still then the attribute is
+not defined a default value for the element is returned (the default
+value can also be NULL).</p>
+
+<p>When changed the attribute change is propagated to all children except for those who the
+  attribute is already defined in the hash table.</p>
+<p>But some attributes can be marked as <strong>non inheritable</strong> at the 
+control class. (since 3.0)</p>
+<p><strong>Non inheritable</strong> attributes at the element are not propagated 
+to its children. If an attribute is not marked as <strong>non inheritable</strong> 
+at the element it is propagated as expected, but if marked as <strong>non 
+inheritable</strong> at a child, that child will ignore the propagated value.</p>
+
+<p>Since Vbox, Hbox, and other containers have only a few registered 
+attributes, by default an unknown attribute is treated as inheritable, that's 
+why it will be automatically propagated.</p>
+<p>An 
+example: the IMAGE attribute of a Label is <strong>non inheritable</strong>, so when checked at 
+the Label it will return NULL if not defined, and the Label parent tree will not be 
+consulted. If you change the IMAGE attribute at a Vbox that contains several 
+Labels, the child Labels will not be affected.</p>
+
+<h3><a name="avail">Availability</a></h3>
+
+<p>Although attributes can be changed and retrieved at any time there are 
+exceptions and some rules that must be followed according to the documentation 
+of the attribute:</p>
+<ul>
+	<li><strong>read only</strong>: the attribute can not be changed. Ignored 
+	when set.</li>
+	<li><strong>write only</strong>: the attribute can not be retrieved. 
+	Normally used for action attributes. Returns NULL, or eventually some value set before 
+	the element was mapped.</li>
+	<li><strong>creation only</strong>: it will be used only when the element is 
+	mapped on the native system. So set it before the element is mapped. Ignored 
+	when set after the element is mapped.</li>
+</ul>
+
+<h3><a name="IupLua">IupLua</a></h3>
+
+<p>Each interface element is created as a Lua table, and its attributes are fields in this table<b>.
+  </b>Some of these attributes are directly transferred to IUP, so that any changes made to them immediately reflect on 
+  the screen. However, not all attributes are transferred to IUP. </p>
+
+<p>Control attributes, such as handle, 
+  which stores the handle of the IUP element, and parent, which 
+  stores the object immediately above in the class hierarchy, are not 
+transferred. Attributes that receive strings or 
+  numbers as values are immediately transferred to IUP. Other values (such as functions or objects) are stored in IupLua 
+  and might receive special treatment.<u1:p> </u1:p>
+</p>
+
+<u1:p></u1:p>
+<p>For instance, a button can be created as follows (defining a title and the background color): 
+</p>
+
+<pre>myButton = iup.button{title = "Ok", bgcolor = "0 255 0"}</pre>
+
+<p>Font color can be subsequently changed by modifying the value of attribute
+  fgcolor: </p>
+
+<pre>myButton.fgcolor = "255 0 0"</pre>
+
+<p>Note that the attribute names in C and in IupLua are the same, but in IupLua they can be written 
+  in lower case. </p>
+
+<p>In the creation of an element some parameters are required attributes (such as
+  title in buttons). Their types are checked when the element 
+  is created. The required parameters are exactly the parameters that are necessary for the element to be created in C.</p>
+
+<p>Some interface elements can contain one or more elements, as is the case of dialogs, lists and boxes. In such 
+  cases, the object&rsquo;s element list is put together as a vector, that is, the elements are placed one after the other, 
+  separated by commas. They can be accessed by indexing the object containing them, as can be seen in this example: 
+</p>
+
+<pre>mybox = iup.hbox{bt1, bt2, bt3}<br>mybox[1].fgcolor = "255 0 0"         -- changes bt1 foreground color<br>mybox[2].fgcolor = caixa[1].fgcolor  -- changes bt2 foreground color</pre>
+
+<p>While the attributes receiving numbers or strings are directly transferred to IUP, attributes 
+  receiving other interface objects are not directly transferred, because IUP only accepts strings as a value. The 
+  method that transfers attributes to IUP verifies if the attribute value is a handle, that is, if it is an interface 
+  element. If the element already has a name, this name is passed to IUP. If not, a new name is created, associated to 
+  the element and passed to IUP as the value of the attribute being defined.<u1:p>
+</u1:p>
+</p>
+
+<u1:p></u1:p>
+<p>This policy is very useful for associating two interface elements, because you can abstract the fact that IUP uses 
+  a string to make associations and imagine the interface element itself is being used. 
+</p>
+<p>For attributes that contains two values combined the use of Lua can help 
+splitting those values, for example:</p>
+<pre>w,h = string.match(ih.rastersize,&quot;(%d*):(%d*)&quot;)</pre>
+
+
+</body>
+</html>

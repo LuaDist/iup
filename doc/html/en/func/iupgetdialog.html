@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetDialog</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetDialog</h2>
+<p>Returns the handle of the 
+  dialog that contains that interface element. Works also for children of a menu 
+that is associated with a dialog.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle* IupGetDialog(Ihandle *<strong>ih</strong>); [in C]
+iup.GetDialog(<strong>ih</strong>: ihandle) -&gt; (<strong>ih</strong>: ihandle) [in Lua]</pre>
+<p><b>ih</b>: Identifier of an interface element.</p>
+
+<p><span class="style1">Returns:</span> the handle of the dialog or NULL if not found.</p>
+
+</body>
+
+</html>

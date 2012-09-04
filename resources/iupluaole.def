@@ -1,0 +1,4 @@
+EXPORTS
+  iupolelua_open
+  luaopen_iupluaole
+  

@@ -1,0 +1,5 @@
+EXPORTS
+IupLoadImage
+IupSaveImage
+IupGetNativeHandleImage
+IupGetImageNativeHandle

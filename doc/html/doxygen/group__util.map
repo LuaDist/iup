@@ -1,0 +1,9 @@
+<map id="structs" name="structs">
+<area shape="rect" id="node1" href="$group__mask.html" title="Text Mask" alt="" coords="233,5,327,37"/>
+<area shape="rect" id="node2" href="$group__strmessage.html" title="Language Dependent String Messages" alt="" coords="128,61,432,93"/>
+<area shape="rect" id="node3" href="$group__iarray.html" title="Simple Array" alt="" coords="221,117,339,149"/>
+<area shape="rect" id="node4" href="$group__str.html" title="String Utilities" alt="" coords="220,173,340,205"/>
+<area shape="rect" id="node6" href="$group__assert.html" title="Assert Utilities" alt="" coords="219,229,341,261"/>
+<area shape="rect" id="node7" href="$group__draw.html" title="Simple Draw API" alt="" coords="207,285,353,317"/>
+<area shape="rect" id="node8" href="$group__table.html" title="Hash Table" alt="" coords="229,341,331,373"/>
+</map>

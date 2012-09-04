@@ -1,0 +1,42 @@
+#IupVal Example in LED 
+#Creates two Valuator controls, exemplifying the two possible types - vertical and horizontal. 
+
+lbl_h = label[SIZE=70x](""VALUE"=")
+lbl_v = label[SIZE=70x](""VALUE"=")
+
+val_v = VAL
+[
+  MOUSEMOVE_CB=mousemove
+] ("VERTICAL")
+
+val_h = VAL
+[
+  BUTTON_PRESS_CB=button_press
+] ("HORIZONTAL")
+
+
+dlg = DIALOG[TITLE="Teste do Valuator"]
+(
+  HBOX
+  (
+    FILL(),
+    FRAME
+    (
+      VBOX
+      (
+        val_v,
+        lbl_v
+      )
+    ),
+    FILL(),
+    FRAME
+    (
+      VBOX
+      ( 
+        val_h,
+        lbl_h
+      )
+    ),
+    FILL()
+  )
+)

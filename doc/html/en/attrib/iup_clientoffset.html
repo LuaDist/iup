@@ -1,0 +1,46 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>CLIENTOFFSET</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>CLIENTOFFSET<span class="style1"> (read-only) (non inheritable) (since 3.3)</span></h2>
+<p>Returns the container 
+  offset to the <strong>Client</strong> area, see the
+<a href="../layout_guide.html">Layout Guide</a>. Useful for <strong>IupFrame</strong>, <strong>IupTabs</strong> and 
+<strong>IupDialog</strong> that have decorations. Can also be consulted in other 
+containers, it will return &quot;0x0&quot;. For 
+controls that have a native representation is only available when the control is 
+mapped.</p>
+<p>In GTK and Motif, for the <strong>IupDialog</strong>, the dy value is 
+negative when there is a menu. This occours because in those systems the menu is 
+placed inside the Client Area and all children must be placed below the menu.</p>
+<p>In Windows, for the <strong>IupFrame</strong>, the value is always &quot;0x0&quot; 
+because it actually does not have a <strong>Client</strong> area, so the child 
+is manually positioned in the expected <strong>Client</strong> area.</p>
+<p>This attribute can be used in conjunction with the POSITION attribute of a 
+child so the coordinates of a child relative to the native parent top-left 
+corner can be obtained.</p>
+<h3>Value</h3>
+<p>&quot;<em>dx</em>x<em>dy</em>&quot;,
+  where <em>dx</em> and <em>dy</em> are integer values corresponding to the horizontal and vertical 
+offsets, respectively, in pixels.</p>
+<h3>Affects</h3>
+<p>All elements that are containers, except menus.</p>
+<h3>See Also</h3>
+<p><a href="iup_size.html">SIZE</a>, <a href="iup_rastersize.html">RASTERSIZE</a>,
+<a href="iup_clientsize.html">CLIENTSIZE</a>, <a href="iup_position.html">
+POSITION</a></p>
+
+</body>
+
+</html>

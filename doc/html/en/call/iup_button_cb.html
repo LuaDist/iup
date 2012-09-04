@@ -1,0 +1,83 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>BUTTON_CB</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>BUTTON_CB</h2>
+<p>Action generated when a mouse button is 
+  pressed or released.</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle* <strong>ih</strong>, int <strong>button</strong>, int <strong>pressed</strong>, int <strong>x</strong>, int <strong>y</strong>, char* <strong>status</strong>); [in C]
+<strong>elem</strong>:button_cb(<strong>but</strong>, <strong>pressed</strong>, <strong>x</strong>,<strong> y</strong>: number,<strong> status</strong>: string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifies the element that activated the 
+  event.<br>
+<strong>button</strong>: identifies the activated mouse button:</p>
+<blockquote>
+<p>IUP_BUTTON1 -
+    left mouse button (button 1);<br>
+    IUP_BUTTON2 - middle mouse button (button 2);<br>
+    IUP_BUTTON3 - right mouse button (button 3).</p>
+</blockquote>
+<p><strong>pressed</strong>:
+  boolean that indicates the state of the button:</p>
+<blockquote>
+<p>0 - mouse button was released;<br>
+    1 - mouse button was pressed.</p>
+</blockquote>
+<p><strong>x</strong>, <strong>y</strong>:
+  position in the canvas where the event has 
+  occurred, in pixels.<br>
+<strong>status</strong>:
+  status of the mouse buttons and some 
+  keyboard keys at the moment the event is generated. The following macros must be used for verification: 
+</p>
+<blockquote>
+<p>iup_isshift(<strong style="font-weight: 400">status</strong>)
+    <br>
+    iup_iscontrol(<strong style="font-weight: 400">status</strong>) <br>
+    iup_isbutton1(<strong style="font-weight: 400">status</strong>) <br>
+    iup_isbutton2(<strong style="font-weight: 400">status</strong>) <br>
+    iup_isbutton3(<strong style="font-weight: 400">status</strong>)<br>
+iup_isbutton4(status)<br>
+iup_isbutton5(status)<br>
+    iup_isdouble(<strong style="font-weight: 400">status</strong>) <br>
+iup_isalt(status)<br>
+iup_issys(status)</p>
+<p>They return 
+  1 if the respective key or button is pressed, 
+  and 
+  0 otherwise. These macros are also available in Lua, returning a boolean.</p>
+</blockquote>
+<p><u>Returns</u>: IUP_CLOSE will be processed. On some controls if IUP_IGNORE is 
+returned the action is ignored (this is system dependent).</p>
+<h3>Notes</h3>
+<p>This callback can be used to customize a button behavior. For a standard button 
+behavior use the 
+ACTION 
+  callback of the <b>IupButton</b>.</p>
+<p>A double click is preceded by two single clicks, one for pressed=1 and one 
+for pressed=0, and followed by a press=0, all three without the double click 
+flag set. In GTK, it is preceded by an additional two single clicks sequence. 
+For example, for one double click all the following calls are made:</p>
+<pre>BUTTON_CB(but=1 (1), x=154, y=83 [  1       ])
+BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])
+    BUTTON_CB(but=1 (1), x=154, y=83 [  1       ])     (in GTK only)
+    BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])     (in GTK only)
+BUTTON_CB(but=1 (1), x=154, y=83 [  1  D    ])
+BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])</pre>
+<h3>Affects</h3>
+<p><a href="../elem/iupcanvas.html">IupCanvas</a>,
+  <a href="../elem/iupbutton.html">IupButton</a>,
+  <a href="../elem/iuptext.html">IupText</a>, <a href="../elem/iuplist.html">
+IupList</a>,
+  <a href="../ctrl/iupglcanvas.html">IupGLCanvas</a></p>
+
+</body>
+
+</html>

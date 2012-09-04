@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupPopup</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupPopup</h2>
+<p>Shows a dialog or menu and restricts user 
+  interaction only to the specified element. It is equivalent of creating a 
+Modal dialog is some toolkits.</p>
+<p>If another dialog is shown after <b>IupPopup</b> using <b>IupShow</b>, then its interaction will not be inhibited. Every 
+<b>IupPopup</b> 
+  call creates a new popup level that inhibits all previous dialogs interactions, but does not disable new ones. 
+  IMPORTANT: The popup levels must be closed in the reverse order they were created or unpredictable results will occur.</p>
+<p>For a dialog this function will only return the control 
+  to the application after a callback returns IUP_CLOSE, <b>IupExitLoop</b> is 
+called, 
+  or when the popup dialog is hidden, for example using <b>IupHide</b>. 
+  For a menu it returns automatically after a menu item is selected. IMPORTANT:
+  If a menu item callback returns IUP_CLOSE, 
+  it will ends the current popup level dialog. </p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupPopup(Ihandle *<strong>ih</strong>, int <strong>x</strong>, int <strong>y</strong>); [in C]
+iup.Popup(<strong>ih</strong>: ihandle[, <strong>x</strong>, <strong>y</strong>: number]) -&gt; (<strong>ret</strong>: number) [in Lua]
+or <strong>ih</strong>:popup(<strong>[x</strong>, <strong>y</strong>: number]) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><b>ih</b>: Identifier of a dialog or a menu.<br>
+<b>x</b>: horizontal position of the top left corner of the window or menu, relative to the origin of the 
+main screen.
+    The following definitions can also be used:</p>
+<ul>
+  <li>IUP_LEFT:
+    Positions the element on the left corner of 
+    the screen</li>
+  <li>IUP_CENTER:
+    Centers the element on the screen</li>
+  <li>IUP_RIGHT:
+    Positions the element on the right corner of 
+    the screen</li>
+  <li>IUP_MOUSEPOS:
+    Positions the element on the mouse cursor</li>
+  <li>IUP_CENTERPARENT: Horizontally centralizes the dialog relative to its 
+  parent. Not valid for menus. (Since 3.0)</li>
+  <li>IUP_CURRENT: use the current position 
+    of the dialog. This is the default value 
+  in Lua if the parameter is not defined. Not valid for menus. (Since 3.0)</li>
+</ul>
+<p><b>y</b>: vertical position of the top left corner of the window or menu, relative to the origin of the
+    main screen. The following definitions can also be used:</p>
+<ul>
+  <li>IUP_TOP:
+    Positions the element on the top of the 
+    screen</li>
+  <li>IUP_CENTER:
+    Vertically centers the element on the screen</li>
+  <li>IUP_BOTTOM:
+    Positions the element on the base of the 
+    screen</li>
+  <li>IUP_MOUSEPOS:
+    Positions the element on the mouse cursor</li>
+  <li>IUP_CENTERPARENT: Vertically centralizes the dialog relative to its parent. 
+	Not valid for menus. 
+	(Since 3.0)</li>
+  <li>IUP_CURRENT: use the current position 
+    of the dialog. This is 
+  the default value in Lua if the parameter is not defined. Not valid for 
+	menus. (Since 3.0)</li>
+</ul>
+<p><span class="style1">Returns:</span> IUP_NOERROR if 
+  successful. Returns
+  IUP_INVALID if not a dialog or menu.&nbsp; If there was an error returns
+  IUP_ERROR..</p>
+<h3>Notes</h3>
+<p>Will call <b>IupMap</b> for the element.</p>
+<p><strong>x</strong> and <strong>y</strong> positions are the same as returned 
+by the <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a> attribute.</p>
+<p>See the <a href="../dlg/iupdialog.html#PLACEMENT">PLACEMENT</a> attribute for other position and show 
+  options.</p>
+<p>When IUP_CENTERPARENT is used but PARENTDIALOG is not defined then it is 
+replaced by IUP_CENTER.</p>
+<p>When IUP_CURRENT is used at the first time the dialog is shown then it will 
+be replaced by IUP_CENTERPARENT.</p>
+<p>The main screen size does not include additional monitors.</p>
+<p><b>IupPopup</b> works just like <b>IupShow</b> and <b>IupShowXY</b>, but it inhibits interaction with other dialogs and interrupts the processing until 
+  IUP_CLOSE is returned in a callback or the dialog is hidden. Althougth it 
+  interrupts the processing, it does not destroy the dialog when it ends. To destroy the dialog, 
+  <b>IupDestroy</b> must be called.</p>
+<p>IMPORTANT: Calling <b>IupPopup</b> for an already visible dialog will only update its position 
+  and/or size on screen, will NOT change its modal state and will NOT interrupt processing.</p>
+<p>In GTK and Motif the inactive dialogs will still be able to move, resize and change their Z-order. Although their 
+  contents will be inactive, keyboard will be disabled, and they can not be closed from the close box.</p>
+<h3>See Also</h3>
+<p><a href="iupshowxy.html">IupShowXY</a>, <a href="iupshow.html">IupShow</a>,
+  <a href="iuphide.html">IupHide</a>, <a href="iupmap.html">IupMap</a></p>
+
+</body>
+
+</html>

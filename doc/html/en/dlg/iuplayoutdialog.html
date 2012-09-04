@@ -1,0 +1,153 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupLayoutDialog</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	border-width: 0;
+}
+.style3 {
+	background-color: #CEE7FF;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupLayoutDialog <span class="style1">(since 3.3)</span></h2>
+<p>Creates a Layout Dialog. It is a predefined dialog to visually edit the 
+layout of another dialog in run time. It is a standard <strong>IupDialog</strong> 
+constructed with other IUP elements. The dialog can be shown with any of 
+the show functions <strong>IupShow</strong>, <strong>IupShowXY</strong> or
+<strong>IupPopup</strong>.</p>
+<p>Any existent dialog can be selected. It does not need to be mapped on the 
+native system nor visible. It could have been created in C, LED or Lua.</p>
+<p>The layout dialog is composed by two areas: one showing the given dialog 
+children hierarchy tree, and one displaying its layout.</p>
+<p>This is a dialog intended for developers, so they can see and inspect their 
+dialogs in other ways.</p>
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupLayoutDialog(Ihandle*<strong> dialog</strong>); [in C]
+iup.LayoutDialog(<strong>dialog</strong>: ihandle<span class="style3">)</span> -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+[NOT available in LED]</pre>
+<div>
+  <strong>dialog</strong>: identifier of the dialog to display the layout. Can 
+	be NULL.</div>
+<p><u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+<p><strong>DESTROYWHENCLOSED</strong>: The dialog will be automatically 
+destroyed when closed. Default: Yes.</p>
+<p>Check the <a href="iupdialog.html#Attributes">IupDialog</a> attributes.</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+<p>Check the <a href="iupdialog.html#Callbacks">IupDialog</a> callbacks.</p>
+<h3><a name="Notes">Notes</a></h3>
+<h4>Menu</h4>
+<pre><strong>Dialog</strong>
+	<strong>New</strong>  - creates a new empty dialog, it will be destroyed when the layout is destroyed.
+	<strong>Load</strong> - loads an existent dialog from the application.
+	<strong>Load Visible</strong> - lists only visible dialogs from the application to be loaded.
+	<strong>Reload</strong> - reloads the current dialog into the Layout Dialog.
+	<strong>Export</strong> - exports the current dialog to a text file in the specified language.
+		<strong>C</strong>
+		<strong>LED</strong>
+		<strong>Lua</strong>
+	<strong>Refresh</strong> - recalculates the dialog layout of the current dialog (IupRefresh).
+	<strong>Redraw</strong> - send a redraw to the current dialog (IupRedraw).
+	<strong>Show</strong> - shows the current dialog (IupShow) 
+	<strong>Hide</strong> - hides the current dialog (IupHide) 
+	<strong>Close</strong> - hides the Layout Dialog, optionally self destroy according to <strong>DESTROYWHENCLOSED</strong>.
+<strong>Layout</strong>
+	<strong>Hierarchy</strong> - shows or hides the layout hierarchy tree at left.
+	<strong>Update</strong> - redraw the layout.
+	<strong>Auto Update</strong> - periodically redraw the layout.
+	<strong>Show Hidden</strong> - show hidden elements in the layout.
+	<strong>Opacity</strong> - controls the Layout Dialog opacity so you can composite it on top of the selected dialog.</pre>
+<p>Use <strong>Reload</strong> when the dialog has been changed and the layout 
+was modified by the application. Use <strong>Update</strong> when attributes of 
+the dialog were changed by the application and the layout needs to be redrawn.</p>
+<p>The <strong>Export</strong> items will export only the dialog and its 
+children. Associated elements such as menus and images will not be exported. The 
+selected file will be overwritten if existent.</p>
+<h4>Hierarchy Tree</h4>
+<p>Each element inside the dialog is mapped to a node in the tree, and elements 
+that are containers are branches in the tree. The node title shows the element 
+class name, its TITLE attribute when available and its name when available. The 
+selected node is synced with the selected element in the layout display in both 
+ways. Using the right click over a node shows a context menu.</p>
+<p>You can drag and drop items in the tree. But there are some restrictions 
+according to each container possibilities. Some containers have internal 
+children that are displayed but can not be changed.</p>
+<h4>Layout Display</h4>
+<p>The layout of an element is drawn with its Current size using its FONT, 
+TITLE, BGCOLOR and FGCOLOR if any. But inheritance is not used intentionally to 
+emphasize the element attributes. Only the first line (limited to 50 characters 
+in the tree) is used from the element TITLE. Images are also used, but position 
+of text and images are not the same as in the native control. This decoration is 
+there simply to help locating the elements in the layout.</p>
+<p>Containers that are not native elements are shown with dashed lines, other 
+elements are shown with solid lines. When a red line is displayed along with a 
+border of an element it means that element is maximizing its parent size, i.e. 
+its <strong>Current</strong> size is equal to its <strong>Natural</strong> size 
+and both are equal to the parent <strong>Client</strong> size. Usually this is 
+the element determining the natural size of the container at least in the 
+direction marked with red.</p>
+<p>You can NOT drag and drop elements in the layout. Using the right click over 
+an element shows a context menu, the same as in a tree node. When an element in 
+the layout is double clicked and the actual element is visible, then the actual 
+element will blink twice.</p>
+<h4>Context Menu</h4>
+<pre><strong>Properties</strong> - shows the properties dialog for the selected element.
+<strong>Map</strong> - maps the selected element to the native system.
+<strong>Unmap</strong> - unmaps the selected element from the native system. Its attribute are saved before unmapping.
+<strong>Copy</strong> - copy the selected element to an i<span class="style3">nternal clipboard</span>. Its attributes are also copied.
+<strong>Paste Child</strong> - paste the copied element as the first child of the selected container. 
+<strong>Paste Brother</strong> - paste the copied element as brother of the selected element.
+<strong>Add Child</strong> - adds a new element as the first child of the selected container. The new element is not mapped.
+<strong>Add Brother</strong> - adds a new element as brother of the selected element. The new element is not mapped.
+<strong>Remove</strong> - removes the selected element. </pre>
+<h4>Properties</h4>
+<p>The properties dialog allows the inspection and change of the elements 
+attributes. It contains 3 Tab sections: one for the registered attributes of the 
+element, one for custom attributes set at the hash table, and one for the 
+callbacks. The callbacks are just for inspection, and custom attribute should be 
+handled carefully because they may be not strings. Registered attributes values 
+are shown in red when they were changed by the application. It uses the <a href="iupelementpropdialog.html">IupElementPropertiesDialog</a>.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p>This will create an empty layout with a new dialog.</p>
+<pre>IupShow(IupLayoutDialog(NULL));   [in C]
+
+iup.Show(iup.LayoutDialog(nil))    [in Lua]</pre>
+<p>The following dialog layout is displayed next.</p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+    <tr>
+      <td class="style2"><img border="0" src="images/layoutdlg1.png"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3><a name="SeeAlso">See Also</a></h3>
+<p><a href="iupdialog.html">IupDialog</a>, <a href="../func/iupshow.html">
+IupShow</a>, <a href="../func/iupshowxy.html">IupShowXY</a>,
+<a href="../func/iuppopup.html">IupPopup</a></p>
+
+</body>
+
+</html>

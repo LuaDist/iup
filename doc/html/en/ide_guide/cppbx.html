@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>C++ BuilderX Guide</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">C++ BuilderX IDE Project Options 
+Guide</h2>
+<h3 align="center">
+<a target="_blank" href="http://www.borland.com/products/downloads/download_cbuilderx.html">http://www.borland.com/products/downloads/download_cbuilderx.html</a> </h3>
+<p>Borland C++ Builder X is an Integrated Development 
+  Environment (IDE) for Java and C/C++ languages. It can use several sets of 
+  compilers, including the Borland command line compilers version 5.6.</p>
+<p>It also has many features, with the Borland name behind it. Its download is 
+  free. To use IUP with C++BuilderX you will need to download the &quot;bc56&quot; 
+  binaries in the download page.</p>
+<p>After unpacking the file in your conputer, you must create a new Project 
+  for a &quot;New GUI Application&quot; and configure your Project Options. In the Project 
+  Build Options Explorer dialog there are 3 important places:</p>
+<ul>
+  <li>In the Tools list, click on ILINK32. Then below select the Path and 
+    Defines tab - there you are going to add the path of the libraries you use, 
+    for example: </li>
+</ul>
+<pre>.\lib\bc56;..\..\iup\lib\bc56;..\..\cd\lib\bc56;..\..\im\lib\bc56</pre>
+<p align="center"><a href="cppbx1.gif">
+<img border="2" src="cppbx1_small.gif" xthumbnail-orig-image="cppbx1.gif" width="200" height="171"></a></p>
+<ul>
+  <li>In the same ILINK32 options, in the tab Options, select Other Options 
+    and Parameters, then Library files - there you are going to list the 
+    libraries, for example:</li>
+</ul>
+<pre>cw32.lib import32.lib vfw32.lib comctl32.lib iup.lib iupcontrols.lib cd.lib iupcd.lib im.lib im_capture.lib im_avi.lib im_process.lib iupgl.lib opengl32.lib glu32.lib</pre>
+<div align="center">
+  <p><a href="cppbx2.gif"><img border="2" src="cppbx2_small.gif" xthumbnail-orig-image="cppbx2.gif" width="200" height="239"></a></p>
+</div>
+<ul>
+  <li>In the Tools list, click on IBCC32. Then below select the Path and 
+    Defines tab - there you are going to list the include path, for example:</li>
+</ul>
+<pre>..\include;..\..\iup\include;..\..\cd\include;..\..\im\include</pre>
+<p align="center"><a href="cppbx3.gif">
+<img border="2" src="cppbx3_small.gif" xthumbnail-orig-image="cppbx3.gif" width="200" height="172"></a></p>
+
+</body>
+
+</html>

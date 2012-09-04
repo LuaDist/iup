@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupTree Callbacks</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h3>IupTree Callbacks</h3>
+<p><strong>SELECTION_CB</strong>: Action generated when a node is selected 
+  or deselected. This action occurs when the user clicks with the mouse or uses the keyboard with the appropriate 
+  combination of keys. It may be called more than once for the same node with 
+the same status.</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>id, int </strong>status) [in C]
+<strong>elem</strong>:selection_cb(<strong>id, status:</strong> number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>id</strong>:
+    Node identifier.<br>
+    <strong>status</strong>: 1=node selected, 0=node unselected. </p>
+<p><strong>MULTISELECTION_CB</strong>:
+  Action generated 
+  after a continuous range of nodes is selected in one single operation. If 
+not defined the SELECTION_CB with status=1 will be called for all nodes in the 
+range. The range is always completely included, independent if some nodes were already 
+marked. That single operation also guaranties that all other nodes outside the 
+range are already not selected. Called only if MARKMODE=MULTIPLE.</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int* <strong>ids, int </strong>n) [in C]
+<strong>elem</strong>:multiselection_cb(<strong>ids: </strong>table<strong>, n:</strong> number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>ids</strong>:
+    Array of node identifiers. This array is kept for backward compatibility, 
+the range is simply defined by ids[0] to ids[n-1], where <code>ids[i+1]=ids[i]+1</code>.<br>
+<b>n</b>: Number of nodes in the array.</p>
+<p><strong>MULTIUNSELECTION_CB</strong>:
+  Action generated 
+  before multiple nodes are unselected in one single operation. If 
+not defined the SELECTION_CB with status=0 will be called for all nodes in the 
+range. The range is not necessarily continuous. Called only if MARKMODE=MULTIPLE. 
+(Since 3.1)</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int* <strong>ids, int </strong>n) [in C]
+<strong>elem</strong>:multiunselection_cb(<strong>ids: </strong>table<strong>, n:</strong> number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>ids</strong>:
+    Array of node identifiers.<br>
+<b>n</b>: Number of nodes in the array.</p>
+<hr>
+<p><strong>BRANCHOPEN_CB</strong>:
+  Action generated when a branch is expanded. 
+  This action occurs when the user clicks the &quot;+&quot; sign on the left of the branch, or when double clicks the branch, or hits Enter on a collapsed branch.</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>id</strong>) [in C] 
+<strong>elem</strong>:branchopen_cb(<strong>id:</strong> number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>id</strong>:
+    node identifier. </p>
+<p class="info"><span class="style1">Returns:</span> IUP_IGNORE for the branch not to be opened, or IUP_DEFAULT for the branch to be opened.</p>
+<p><strong>BRANCHCLOSE_CB</strong>:
+  Action generated when a branch is collapsed. 
+  This action occurs when the user clicks the &quot;-&quot; 
+  sign on the left of the branch, or when double 
+  clicks 
+  the branch, or hits Enter on an expanded branch.
+  </p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>id</strong>); [in C]
+<strong>elem</strong>:branchclose_cb(<strong>id:</strong> number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>id</strong>:
+    node identifier. </p>
+<p class="info"><span class="style1">Returns:</span> IUP_IGNORE for the branch not to be closed, or IUP_DEFAULT for the branch to be closed.</p>
+<p><strong>EXECUTELEAF_CB</strong>:
+  Action generated when a leaf is to be 
+  executed. This action occurs when the user double clicks a 
+  leaf, or hits Enter on a leaf.
+  </p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>id</strong>); [in C] 
+<strong>elem</strong>:executeleaf_cb(<strong>id:</strong> number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>id</strong>:
+    node identifier.&nbsp;
+    <br>
+</p>
+<hr>
+<p><strong>SHOWRENAME_CB</strong>:
+  Action generated when a node is about to be renamed. 
+  It occurs when the user clicks twice the node or press 
+<b>F2</b>. Called only if SHOWRENAME=YES.</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>id</strong>); [in C]<strong>
+elem</strong>:showrename_cb(<strong>id:</strong> number:<strong> </strong>string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>id</strong>:
+    node identifier.&nbsp;
+    </p>
+<p class="info"><span class="style1">Returns:</span> if IUP_IGNORE is returned, 
+the rename is canceled (in GTK the rename continuous but the edit box is 
+read-only).<br>
+</p>
+<p><strong>RENAME_CB</strong>:
+  Action generated after a node was renamed in 
+  place. It occurs when the user press <b>Enter</b> after editing the name, or when the text box looses it focus. 
+Called only if SHOWRENAME=YES.</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>id</strong>, char *<strong>title</strong>); [in C]<strong>
+elem</strong>:rename_cb(<strong>id:</strong> number, <strong>title</strong>:<strong> </strong>string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>id</strong>:
+    node identifier. <br>
+<strong>title</strong>: new node title. </p>
+<p class="info"><span class="style1">Returns:</span> The new title is accepted only if the callback returns IUP_DEFAULT. If the callback does not exists the new 
+title 
+    is always accepted. If the user pressed <b>Enter</b> and the callback returns IUP_IGNORE the editing continues. If 
+    the text box looses its focus the editing stops always.<br>
+</p>
+<hr>
+<p><strong>DRAGDROP_CB</strong>:
+  Action generated when 
+  an internal drag &amp; drop is executed. Only active if <strong>SHOWDRAGDROP=YES.</strong></p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <b>drag_id</b>, int <b>drop_id</b>, int <b>isshift</b>, int <b>iscontrol</b>); [in C] 
+<strong>elem</strong>:dragdrop_cb(<b>drag_id</b>, <b>drop_id</b>, <b>isshift</b>, <b>iscontrol</b><strong>:</strong> number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>drag_id</strong>:
+    Identifier of the clicked node where the 
+    drag start. <br>
+<strong>drop_id</strong>:
+    Identifier of the clicked node where the 
+    drop were executed.<br>
+<strong>isshift</strong>: Boolean flag indicating the shift key state. <br>
+<strong>iscontrol</strong>: Boolean flag indicating the control key state.</p>
+<p class="info"><span class="style1">Returns:</span> if returns IUP_CONTINUE, or 
+if the callback is not defined and <strong>SHOWDRAGDROP=YES</strong>, then the node 
+is moved to the new position. If Ctrl is pressed then the node is copied instead 
+of moved. If the drop node is a branch and it is expanded, 
+then the drag node is inserted as the first child of the node. If the branch is 
+not expanded or the node is a leaf, then the drag node is inserted as the next brother 
+of the drop node.<br>
+</p>
+<p><strong>NODEREMOVED_CB</strong>:
+  Action generated when a node is going to be removed. It is only a 
+notification, the action can not be aborted. No node dependent attribute can be 
+consulted during the callback. Not called when the tree is unmapped. It is 
+useful to remove memory allocated for the 
+userdata. (since 3.0)</p>
+<pre>int function(Ihandle *<strong>ih</strong>, void* <strong>userdata</strong>); [in C] 
+<strong>elem</strong>:noderemoved_cb(<strong>userid</strong>: userdata/table) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>userdata/userid</strong>: USERDATA attribute in C, or userid object in 
+Lua.</p>
+
+  
+  
+<p><strong>RIGHTCLICK_CB</strong>: Action generated when the right mouse button 
+is pressed over a node.</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>id</strong>); [in C] 
+<strong>elem</strong>:rightclick_cb(<strong>id:</strong> number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event. <br>
+<strong>id</strong>:
+    node identifier. </p>
+
+  
+  
+<hr>
+
+
+  
+<p><strong>TOGGLEVALUE_CB</strong>: Action generated when the toggle&#39;s state was 
+changed. The callback also receives the new toggle&#39;s state. (since 3.6)</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>state</strong>); [in C]<strong>
+elem</strong>:togglevalue_cb(<strong>id:</strong> number:<strong> </strong>string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+    <strong>state</strong>:
+    1 if the toggle's state was shifted to ON; 0 if it was shifted to OFF. If 
+SHOW3STATE=YES, &minus;1 if it was shifted to NOTDEF.</p>
+<hr>
+
+
+  
+<p><a href="../call/iup_button_cb.html">BUTTON_CB</a>:
+  Action generated when any mouse button is 
+  pressed or released inside the element. Use 
+<a href="../func/iupconvertxytopos.html">IupConvertXYToPos</a> to convert 
+	(x,y) coordinates in the node identifier. (since 3.0)</p>
+
+  
+  
+  
+<p><a href="../call/iup_motion_cb.html">MOTION_CB</a>:
+  Action generated when the mouse is moved over the element. Use 
+<a href="../func/iupconvertxytopos.html">IupConvertXYToPos</a> 
+	to convert (x,y) coordinates in item the node identifier. (since 3.0)</p>
+
+  
+    
+<p><a href="../call/iup_dropfiles_cb.html">DROPFILES_CB</a> [Windows and GTK Only]: Action generated when one or 
+  more files are dropped in the element. (since 3.0)</p>
+
+  
+
+  
+<hr>
+
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>,  
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, 
+<a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+
+<p>In Motif the tree always resets the focus to the first node when receive the 
+focus. The KILLFOCUS_CB callback is called only when the focus is at the first 
+node. Also in Motif some LEAVEWINDOW_CB events are delayed to when the user 
+enter again, firing a leave and enter events at enter time.</p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> callbacks are 
+supported, but
+SHOWDRAGDROP must be set no No.&nbsp;</p>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMultiLine</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupMultiLine <span class="style1">(same as IupText with 
+MULTILINE=YES since IUP 3.0)</span></h2>
+
+  <p>
+  Creates an editable field with one or more 
+  lines.</p>
+<p>
+  Since IUP 3.0, <strong>IupText</strong> has support for multiple lines when 
+	the MULTILINE attribute is set to YES. Now when a <strong>IupMultiline</strong> 
+	element is created in fact a <strong>IupText</strong> element with 
+	MULTILINE=YES is created.</p>
+<p>
+  See <a href="iuptext.html">IupText</a></p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupMultiLine(const char *<strong>action</strong>); [in C]
+iup.multiline{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+multiline(<strong>action</strong>) [in LED]</pre>
+  <p><b>
+  action</b>: name of the action generated when the user types something. It can be NULL.</p>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+</body>
+
+</html>

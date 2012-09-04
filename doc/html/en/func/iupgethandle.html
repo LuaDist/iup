@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetHandle</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetHandle</h2>
+<p>Returns the identifier of an interface element
+  that has an associated name 
+  using <strong>IupSetHandle</strong> or using LED.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle *IupGetHandle(const char *<strong>name</strong>); [in C]
+iup.GetHandle(<strong>name</strong>: string) -&gt; <strong>ih</strong>: ihandle [in Lua]</pre>
+<p><b>name</b>: name of an interface element.</p>
+<p><span class="style1">Returns</span>: the element handle or NULL if not found.</p>
+<h3>Notes</h3>
+<p>This function is used for integrating IUP 
+  and LED. To manipulate an interface element defined in LED, first capture its identifier using function 
+<b>IupGetHandle</b>, passing the name of the interface element as parameter, then use this identifier on the calls 
+  to IUP functions &#8211; for example, a call to the function that verifies the 
+value of an attribute using 
+<b>IupGetAttribute</b>.</p>
+<h3>See Also</h3>
+<p><a href="iupsethandle.html">IupSetHandle</a>.</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

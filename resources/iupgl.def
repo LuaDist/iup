@@ -1,0 +1,9 @@
+EXPORTS
+IupGLCanvasOpen
+IupGLCanvas
+IupGLMakeCurrent
+IupGLSwapBuffers
+IupGLPalette
+IupGLIsCurrent
+IupGLUseFont
+IupGLWait

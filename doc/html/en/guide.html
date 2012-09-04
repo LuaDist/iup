@@ -1,0 +1,459 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Guide</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../style.css">
+<style type="text/css">
+.style1 {
+	color: #0000FF;
+}
+.style2 {
+	color: #008000;
+}
+.style3 {
+	color: #FF0000;
+}
+.style4 {
+	text-decoration: underline;
+}
+.style6 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+<h1 align="center" style="text-align:center">Guide</h1>
+<h3><a name="start">Getting Started</a></h3>
+<p>IUP has four impor<u1:p>tant concepts that are implemented in a very 
+different way from other toolkits. 
+</u1:p></p>
+<p>
+<u1:p>First is the control creation timeline. When a control is created it is 
+not immediately mapped to the native system. So some attributes will not work 
+until the control is mapped. The mapping is done when the dialog is shown or 
+manually calling <b>IupMap</b> for the dialog. You can not map a control without 
+inserting it into a dialog.</u1:p></p>
+<p>Second is the attribute system. IUP has only a few functions because it uses 
+string attributes to access the properties of each control. So get used to <b>
+IupSetAttribute</b> and <b>IupGetAttribute</b>, because you are going to use 
+them a lot.</p>
+<p>Third is the abstract layout positioning. IUP controls are never positioned 
+in a specific (x,y) coordinate inside the dialog. The positioning is always 
+calculated dynamically from the abstract layout hierarchy. So get used to the 
+<b>IupFill</b>, <b>IupHbox</b> and <b>IupVbox</b> controls that allows you to 
+position the controls in the dialog.</p>
+<p>Fourth is the callback system. Because of the LED resource files IUP has an 
+indirect form to associate a callback to a control. You associate a C function 
+with a name using <b>IupSetFunction</b>, and then associate the callback 
+attribute with that name using <b>IupSetAttribute</b>. But applications now 
+should use the 
+<b>IupSetCallback</b> 
+  function to directly associate a callback for a control.&nbsp; </p>
+<p>LED is the original IUP resource file which has been deprecated in favor of 
+Lua files. But keep in mind that you 
+<u>can</u> use IUP without using LED or Lua, using only the C API.</p>
+<h3><a name="apl">Building Applications</a></h3>
+<p>To compile programs in C, simply include file <b>iup.h</b>. If the 
+application only uses functions from IUP and other cross-platform libraries that 
+have the same API in all platforms, then the application 
+immediately becomes platform independent. The implementation of the IUP functions is different in each platform 
+and the linker is in charge of solving the IUP functions using the library specified 
+in the project/makefile. For further information on how to link your 
+application, please refer to the specific driver documentation.<u1:p>
+</u1:p>
+</p>
+<p>IUP can also work together with other interface toolkits. The main problem is 
+the 
+<strong>IupMainLoop</strong> function. If you are going to use only Popup 
+dialogs, then it is very simple. But to use non modal dialogs without the 
+<strong>IupMainLoop</strong> you must call <strong>IupLoopStep</strong> from 
+inside your own message loop. Also it is not possible to use Iup controls with 
+dialogs from other toolkits and vice-versa.</p>
+<p>The generation of applications is highly dependent on each system, but at 
+least the 
+<b>iup</b> 
+  library must be linked.</p>
+<p>To use the additional controls you will need the 
+<b>iupcontrols</b> and <strong>iupcd</strong> libraries and the CD library 
+<b>cd</b>.</p>
+<p>Other controls are available in secondary libraries, they also may have other 
+external dependencies, check the documentation of the control.</p>
+<p>If you are using IUP libraries in Windows DLLs or in Posix SOs dynamic 
+libraries, then it is not necessary to worry about secondary dependencies, only 
+specify the libraries you directly use. If you link to the static libraries then 
+you must include all the secondary dependencies.</p>
+<p>To use the Lua Binding, you need to link the program with the <b>iuplua</b> 
+library and with the <b>lua </b>library. The other secondary libraries also have 
+their Lua binding libraries that must be linked to use the control in Lua.</p>
+<p>The download files list includes the <a href="download_tips.html">
+Tecgraf/PUC-Rio Library Download Tips</a> 
+  document, with a description of all the available binaries.</p>
+<h4>Windows</h4>
+<p>In Windows, if you statically link the application with IUP you must link also with the libraries 
+  <b>ole32.lib</b>
+  and <b>comctl32.lib</b> (provided with the compilers). The <b>iup.rc</b> 
+resource file (or a custom version) should be included in the application's project/makefile so that 
+some icons and cursors can be used when not using the DLLs and to enable Windows 
+Visual Styles. <b>iup.rc</b> is located in &quot;/etc&quot; folder of the distribution.</p>
+<p>There is also guides for using some IDEs: <a href="ide_guide/cppbx.html">C++ 
+Builder X</a>,&nbsp;
+  <a href="ide_guide/dev-cpp.html">Dev-C++</a>,&nbsp; <a href="ide_guide/owc.html">
+OpenWatcom C++</a>,
+  <a href="ide_guide/msvc.html">Visual C++ 7 (Visual Studio 2003)</a>,
+  <a href="ide_guide/msvc8.html">Visual C++ 8 (Visual Studio 2005)</a>,
+<a href="ide_guide/codeblocks.html">Code Blocks</a> and <a href="ide_guide/eclipse.html">
+Eclipse for C++</a>.</p>
+<p>In Windows, when using Gcc to link an application the libraries order are as 
+important as in UNIX. Always put the less dependent library at the end, for 
+example:</p>
+<pre>-liup -lgdi32 -lcomdlg32 -lcomctl32 -lole32</pre>
+<h4>Motif</h4>
+<p>In Motif, IUP uses the Motif (Xm), the Xtoolkit (Xt) and the Xlib (X11) 
+libraries. To statically link an application with IUP, use the following options in the 
+linker call (in the same order): </p>
+<pre>-liup -lXm -lXmu -lXt -lX11 -lm</pre>
+<p>Though these are the minimum requirements, depending on the platform other 
+libraries might be needed. Typically, they are X extensions (Xext), needed in 
+SunOS, and Xpm (needed in Linux only). They must be listed after Xt and before 
+X11. For instance: </p>
+<pre>-liup -lXm -lXpm -lXmu -lXt -lXext -lX11 -lm</pre>
+<p>Usually these libraries are placed in default directories, but you may 
+require additional options: </p>
+  <table align="center">
+    <tr>
+      <td width="145">Linux</td>
+      <td width="434">-L/usr/X11R6/lib -I/usr/X11R6/include</td>
+    </tr>
+    <tr>
+      <td width="145">IRIX</td>
+      <td width="434">-L/usr/lib32 (X11)<br>
+		-L/usr/Motif-2.1/lib32 -I/usr/Motif-2.1/include (Motif)</td>
+    </tr>
+    <tr>
+      <td width="145">SunOS</td>
+      <td width="434">-L/usr/openwin/lib -I/usr/openwin/share/include (X11)<br>
+		-L/usr/dt/lib -I/usr/dt/share/include (Motif)</td>
+    </tr>
+    </table>
+<h4>GTK+ (since 3.0)</h4>
+<p>In UNIX it will need the X-Windows libraries just like the Motif driver. And 
+in UNIX or in Windows it will need the &quot;iupgtk&quot; library and the following GTK+ 
+libraries:</p>
+<pre><b>gtk-win32-2.0 gdk-win32-2.0</b> gdk_pixbuf-2.0 pango-1.0 <b>pangowin32-1.0</b> gobject-2.0 gmodule-2.0 glib-2.0
+   or
+<b>gtk-x11-2.0 gdk-x11-2.0</b> gdk_pixbuf-2.0 pango-1.0 <b>pangox-1.0</b> gobject-2.0 gmodule-2.0 glib-2.0</pre>
+<p>In UNIX the following INCLUDES paths are necessary:</p>
+<pre>/usr/include/atk-1.0 /usr/include/gtk-2.0 /usr/include/cairo /usr/include/pango-1.0 /usr/include/glib-2.0 
+and eventually:   /usr/lib/glib-2.0/include /usr/lib/gtk-2.0/include
+             or   /usr/lib64/glib-2.0/include /usr/lib64/gtk-2.0/include</pre>
+<h4>Multithread</h4>
+<p>User interface is usually not thread safe and IUP is not thread safe. The 
+general recommendation when you want more than one thread is to build the 
+application and the user interface in the main thread, and create secondary 
+threads that communicates with the main thread to update the interface. The 
+secondary threads should not directly update the interface.</p>
+<h4>Dynamic Loading</h4>
+<p>Although we have dynamic libraries we do not recommend the dynamic loading of 
+the main IUP library in Motif. This is because it depends on Motif and X11, you 
+will have to load these libraries first. So it is easier to build a base 
+application that already includes X11, Motif and the main IUP library than 
+trying to load them all. In Windows this is not a problem.</p>
+<p>The IUP secondary libraries can be easily dynamic loaded regardless of the 
+system.</p>
+<h3><a name="buildlib">Building The Library</a></h3>
+<p>In the Downloads you will be able to find pre-compiled binaries for many 
+platforms, all those binaries were built using Tecmake. Tecmake is a command 
+line multi compiler build tool based on GNU make, available at
+  <a target="_blank" href="http://www.tecgraf.puc-rio.br/tecmake">
+http://www.tecgraf.puc-rio.br/tecmake</a>. Tecmake is used by all the Tecgraf 
+libraries and many applications.</p>
+<p>You do not need to install Tecmake, scripts for Posix and Windows systems are already included in the source code package. Just type &quot;make&quot; 
+in the command line on the main folder and all libraries and executables will be 
+build.</p>
+<p>In Linux, check the &quot;<a href="building.html">Building Lua, IM, CD and IUP in 
+Linux</a>&quot; guide.</p>
+<p>In Windows, check the &quot;<a href="buildwin.html">Building Lua, IM, CD and IUP in 
+Window</a>&quot; guide.</p>
+<p>If you decide to install Tecmake, the Tecmake configuration 
+files (*.mak) are available at the &quot;src*&quot; folders, and are very easy to understand. 
+In the<b> </b>main folder, and in each source folder, there are files 
+named 
+<i>make_uname.bat</i> that build the libraries using <b>Tecmake</b>. To build 
+for Windows using Visual C 9.0 (2008) for example, just execute <i>&quot;make_uname 
+vc9&quot;</i> in the iup main folder, or for the DLLs type <i>
+&quot;make_uname dll9&quot;</i>. The Visual Studio workspaces with the respective projects 
+available in the source package is for debugging purposes only.</p>
+<p><b>IUP</b> runs on many different systems and interact with many different 
+libraries such as
+  <a href="http://www.opengroup.org/openmotif/" target="_blank">Motif</a>, 
+<a href="http://www.opengl.org">OpenGL</a>,
+  <a href="http://www.tecgraf.puc-rio.br/cd" target="_blank">Canvas Draw (CD)</a> 
+and
+  <a href="http://www.lua.org" target="_blank">Lua</a>. You have to install some 
+these libraries to build the secondary IUP libraries. Make sure you have all the 
+dependencies for the library you want installed, see the documentation below.</p>
+<p>If you are going to build all the libraries, the makefiles and projects 
+expect the following directory tree:</p>
+<pre>/mylibs/
+        iup/
+        cd/
+        im/
+        lua5.1/</pre>
+<p>To control that location set the TECTOOLS_HOME environment variable to the 
+folder were the CD, IM and Lua libraries are installed.</p>
+<p>IUP_ASSERT can be defined to enable some runtime checks for the main API.</p>
+<h4>Libraries Dependencies</h4>
+<pre><em>iupwin*</em> -&gt; <strong><span class="style1">gdi32</span></strong> <strong><span class="style1">user32</span></strong> <strong><span class="style1">comdlg32</span></strong> <strong><span class="style1">comctl32</span></strong> <strong><span class="style1">ole32</span></strong> (system - Windows)
+<em>iupmot*</em> -&gt; [<strong><span class="style1">Xpm</span></strong> <strong><span class="style1">Xmu</span></strong> <strong><span class="style1">Xext</span></strong>] <strong><span class="style1">Xt</span></strong> <strong><span class="style1">X11</span></strong> (system - UNIX)
+<em>iupgtk*</em> -&gt; <strong><span class="style1">gtk-win32-2.0 gdk-win32-2.0 pangowin32-1.0</span></strong>(system - Windows)
+        -&gt; <strong><span class="style1">gtk-x11-2.0 gdk-x11-2.0 pangox-1.0</span></strong> (system - UNIX)
+        -&gt; <strong><span class="style1">gdk_pixbuf-2.0 pango-1.0 gobject-2.0</span></strong> <strong><span class="style1">gmodule-2.0 glib-2.0</span></strong> (system - Windows/UNIX)
+iupgl -&gt; iup
+      -&gt; <strong><span class="style1">opengl32</span></strong> <strong><span class="style1">glu32</span></strong> <strong><span class="style1">glaux</span></strong> (system - Windows)
+      -&gt; <strong><span class="style1">GLU</span></strong> <strong><span class="style1">GL </span></strong>(system - UNIX)
+iupcd -&gt; iup
+      -&gt; <strong><span class="style3">cd</span></strong>
+iupcontrols -&gt; iupcd
+iup_pplot -&gt; iupcd
+          -&gt; <strong><span class="style2">PPlot</span></strong> (included)
+iupim -&gt; iup
+      -&gt; <strong><span class="style3">im</span></strong>
+iupimglib -&gt; iup
+iuplua51 -&gt; iup
+         -&gt; <strong><span class="style3">lua5.1</span></strong>
+iupluacd51 -&gt; iuplua51
+           -&gt; <strong><span class="style3">cdlua51</span></strong>
+           -&gt; iupcd
+iupluacontrols51 -&gt; iuplua51
+                 -&gt; iupcontrols
+iupluagl51 -&gt; iuplua51
+           -&gt; iupgl
+iupluaim51 -&gt; iuplua51
+           -&gt; <strong><span class="style3">imlua51</span></strong>
+           -&gt; iupim
+iupluaole51 -&gt; iuplua51
+           -&gt; iupole
+iuplua_pplot51 -&gt; iuplua51
+               -&gt; iup_pplot
+iupole -&gt; iup
+iupweb -&gt; iupole (Windows)
+       -&gt; webkit-1.0 (Linux)
+
+(*) In Windows, &quot;<strong>iupwin</strong>&quot; is called &quot;<strong>iup</strong>&quot;. 
+    In Linux and BSD &quot;<strong>iupgtk</strong>&quot; is called &quot;<strong>iup</strong>&quot;. 
+    In IRIX, AIX and SunOS &quot;<strong>iupmot</strong>&quot; is called &quot;<strong>iup</strong>&quot;.</pre>
+
+<p>As a general rule (excluding system dependencies): IUP depends on CD and IM, 
+and IUPLua depends on Lua, CDLua and IMLua. Notice that not all IUP libraries 
+depend on CD and IM.</p>
+<p>Instead of building all the libraries, try building only the libraries you 
+are going to use. The Makefile on the root folder will build all the libraries, 
+but in each source folder there are secondary Makefiles. We use the following 
+source code structure:</p>
+<pre>iup/
+    src/         - The core library. Motif, GTK and Windows code
+    srccd/       - CD_IUP canvas driver for the CD library
+    srcconsole/  - Lua interpreter executable with pre-loaded IUP, CD and IM libraries
+    srcgl/       - IupGLCanvas
+    srcim/       - IUP/IM utilities
+    srcimglib/   - Image Libraries with Icons, Logos and Bitmaps
+    srcledc/     - ledc executable
+    srclua3      - Lua3 binding, used internally at Tecgraf by some applications
+    srclua5/     - Lua 5 binding
+    srcole/      - IupOleControl
+    srcpplot/    - IupPPlot
+    srctuio/     - IupTuioClient
+    srcweb/      - IupWebBrowser
+    srcview/     - IupView executable</pre>
+<p>The Lua bindings for IUP, CD and IM (Makefiles and Pre-compiled binaries) 
+depend on the <a href="http://luabinaries.luaforge.net/">LuaBinaries</a> 
+distribution. So if you are going to build from source, then use the <strong>LuaBinaries</strong> 
+source package also, not the <strong>Lua.org</strong> original source package. 
+If you like to use another location for the Lua files define LUA_SUFFIX, LUA_INC, 
+LUA_LIB and LUA_BIN before using Tecmake.</p>
+<p>In Ubuntu you will need to install the following packages and their 
+dependencies (they are not installed by default):</p>
+<pre>libgtk2.0-dev (for the GTK driver)
+    libmotif-dev and x11proto-print-dev (for the Motif driver, if used)
+libgl1-mesa-dev (for the IupGLCanvas)
+libglu1-mesa-dev (for the IupGLCanvas)
+libwebkitgtk-dev (for the IupWebBrowser)
+</pre>
+<h3><a name="cpp">Using IUP in C++</a></h3>
+<p>IUP is a low level API, but at the same time a very simple and intuitive API. 
+That's why it is implemented in C, to keep the API simple. But most of the 
+actual IUP applications today use C++. To use C callbacks in C++ classes, you 
+can declare the callbacks as static members or friend functions, and store the 
+pointer &quot;this&quot; at the &quot;Ihandle*&quot; pointer as an user attribute. For example, you 
+can create your dialog by inheriting from the following dialog.</p>
+<pre>class iupDialog
+{
+private:
+  Ihandle *hDlg;
+  int test;
+
+  static int ResizeCB (Ihandle* self, int w, int h); 
+  friend int ShowCB(Ihandle *self, int mode); 
+
+public:
+  iupDialog(Ihandle* child)
+  { 
+    hDlg = IupDialog(child); 
+    IupSetAttribute(hDlg, &quot;iupDialog&quot;, (char*)this); 
+    IupSetCallback(hDlg, &quot;RESIZE_CB&quot;, (Icallback)ResizeCB);
+    IupSetCallback(hDlg, &quot;SHOW_CB&quot;, (Icallback)ShowCB);
+  }
+
+  void ShowXY(int x, int y) { IupShowXY(hDlg, x, y); }
+
+protected:
+
+  // implement this to use your own callbacks
+  virtual void Show(int mode) {};
+  virtual void Resize (int w, int h){}; 
+};
+
+int iupDialog::ResizeCB(Ihandle *self, int w, int h)
+{
+  iupDialog *d = (iupDialog*)IupGetAttribute(self, &quot;iupDialog&quot;);
+  d-&gt;test = 1; // private members can be accessed in private static members
+  d-&gt;Resize(w, h);
+  return IUP_DEFAULT;
+}
+
+int ShowCB(Ihandle *self, int mode)
+{
+  iupDialog *d = (iupDialog*)IupGetAttribute(self, &quot;iupDialog&quot;);
+  d-&gt;test = 1; // private members can be accessed in private friend functions
+  d-&gt;Show(mode);
+  return IUP_DEFAULT;
+}</pre>
+<p>This is just one possibility on how to write a wrapper class around IUP 
+functions. Some users contributed with C++ wrappers, see next on <strong>
+Contributions</strong>.</p>
+<h3><a name="contrib">Contributions</a></h3>
+<p>All the contributions use the same license terms of the IUP license.</p>
+<h4 class="style6">
+C++ Wrappers
+</h4>
+<h4><a href="../download/rss_gui.html">RSSGui</a> by Danny Reinhold. (<a href="../download/RSS_GUI_0_5.zip">RSS_GUI_0_5.zip</a>)</h4>
+<blockquote>
+<p>Described by his words:<br>
+<em>- It works fine with the C++ STL and doesn't define a set of own string, 
+list, vector etc. classes like many other toolkits do (for example wxWidgets).<br>
+    - It has a really simple event handling mechanism that is much simpler than 
+the system that is used in MFC or in wxWidgets and that doesn't require a 
+preprocessor like Qt. (It could be done type safe using templates as in a signal 
+and slot library but the current way is really, really simple to understand and 
+to write.)<br>
+    - It has a Widget type for creating wizards.<br>
+    - It is not complete, some things are missing. It was tested only on the 
+Windows platform.</em></p>
+</blockquote>
+<h4><span class="style4"><a name="IupTreeUtil">IupTreeUtil</a></span> by Sergio Maffra and Frederico 
+Abraham. (<a href="../download/IupTreeUtil3.zip">IupTreeUtil3.zip</a> 
+or <a href="../download/IupTreeUtil3.tar.gz">IupTreeUtil3.tar.gz</a>)</h4>
+<blockquote>
+<p>&nbsp;It is an utility wrapper for the <strong>IupTree</strong> control. It 
+has several limitations, including to add leaves only after all branches inside a branch. It uses the STL.</p>
+
+</blockquote>
+
+<h4>
+<a href="http://pulkomandy.tk/_/_Development/_IUP%20portable%20user%20interface">
+IUP with C++ 11</a> and variadic templates (<a href="http://pulkomandy.ath.cx/projects/thomson/browser/Thomson/elec/CrO2/software/iupplusplus.h">IUP++</a>) 
+by PulkoMandy</h4>
+<blockquote>
+<p>The IUP++ class registers itself as an IUP callback (with any arguments) and 
+forwards the call to a C++ object and method.&nbsp;</p>
+
+</blockquote>
+
+<h4 class="style6">
+Tools
+</h4>
+<h4><a href="http://www.cheshireeng.com/free/index.html">IupAsync</a> by Ross 
+Berteig</h4>
+
+<blockquote>
+<p>Described by his words:<br>
+<em>IUP is not designed to be accessed from multiple threads, but occasionally 
+there is a need (especially in a multi-threaded application) for the UI to 
+update a display or dispatch an action in response to messages from other 
+threads or from an OS component. To address this need, we designed an IUP 
+control that translates calls from any application thread into a callback 
+function guaranteed to be running in IUP's thread. <br>
+The IupAsync control is presently an alpha release proving the concept for the 
+Windows platform only. It is intended that it be ported to the other platforms 
+supported by IUP (GTK and Motif for Linux and OSX).</em></p>
+</blockquote>
+
+<h4 class="style6">
+Drivers
+</h4>
+
+<h4><a href="http://github.com/phasis68/iup_mac">IUP 3 MacOSX Driver</a> by Heesob Park</h4>
+<blockquote>
+	<p>A native driver for MacOSX using Cocoa. On going work. Help needed!</p>
+</blockquote>
+
+<h4 class="style6">
+Language Bindings
+</h4>
+
+<h4><a href="basic/index.html">A Basic Guide to using IupLua</a> by Steve 
+Donovan</h4>
+<blockquote>
+	<p>A very nice introductory tutorial for IupLua.</p>
+</blockquote>
+
+<h4><a href="http://rubyforge.org/projects/ruby-iup/">Ruby-IUP</a> by Heesob 
+Park</h4>
+<blockquote>
+	<p>ruby-iup is an extension module for <a href="http://www.ruby-lang.org/">Ruby</a> 
+	that provides an interface to the IUP GUI toolkit. The source is hosted on 
+	github.com at <a href="http://github.com/phasis68/ruby-iup">
+	http://github.com/phasis68/ruby-iup</a>.</p>
+</blockquote>
+
+<h4><a href="http://jeremy.cowgar.com/euiup">EuIup</a> by Jeremy 
+Cowgar</h4>
+<blockquote>
+	<p>Iup wrapped for <a href="http://openeuphoria.org/">Euphoria</a>.</p>
+</blockquote>
+
+<h4><a href="http://www.freebasic.net/">FreeBasic Binding</a> by AGS</h4>
+<blockquote>
+	<p><span class="postbody">The first release of FreeBASIC bindings for IUP 
+	3</span>. See the Forum post
+	<a class="maintitle" href="http://www.freebasic.net/forum/viewtopic.php?t=14230&amp;start=0&amp;postdays=0&amp;postorder=asc&amp;highlight=">
+	Portable GUI toolkit (IUP) version 3.0 (RC2)</a></p>
+</blockquote>
+
+<h4><a href="http://search.cpan.org/dist/IUP/">Perl Binding</a> by Kmx</h4>
+<blockquote>
+<p>Perl binding for IUP and related libraries.</p>
+</blockquote>
+
+<h4><a href="http://github.com/jcowgar/go-iup">Go-iup</a> by Jeremy Cowgar</h4>
+<blockquote>
+<p>Iup wrapped for <a href="http://www.golang.org">Go</a>.</p>
+</blockquote>
+
+<h4><a href="http://www.scriptbasic.org">ScriptBasic</a> Binding by John Spikowski</h4>
+<blockquote>
+<p>ScriptBasic binding for IUP. See the Forum posts about the Extension Module at <a href="http://www.scriptbasic.org/forum/index.php/board,48.0.html">IUP</a>.</p>
+</blockquote>
+
+
+  
+
+   
+
+
+</body>
+
+</html>

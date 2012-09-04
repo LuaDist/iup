@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>FLOATING</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>FLOATING<span class="style1"> (non inheritable) (since 3.0)</span></h2>
+<p>If 
+	an element has FLOATING=YES then its size and position will be ignored by the 
+	layout processing in <strong>IupVbox</strong>, <strong>IupHbox</strong> and
+<strong>IupZbox</strong>. But the element size and position will still be 
+updated in the native system allowing the usage of <strong>SIZE</strong>/<strong>RASTERSIZE</strong> 
+	and <strong>POSITION</strong> to manually position and size the element.</p>
+<p>This is useful when you do not want that an invisible element to be computed 
+in the box size.</p>
+<p>If the value IGNORE is used then it will behave as YES, but also it will not 
+update the the size and position in the native system. (since 3.3)</p>
+<h3>Value</h3>
+<p>&quot;YES&quot;, &quot;IGNORE&quot; (since 3.3) or &quot;NO&quot;.</p>
+<p>Default:
+  &quot;NO&quot;.</p>
+<h3>Affects</h3>
+<p>All elements, except menus.</p>
+
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupzbox.html">IupZbox</a>, <a href="../elem/iupvbox.html">IupVBox</a>, 
+<a href="../elem/iuphbox.html">IupHBox</a></p>
+
+
+</body>
+
+</html>

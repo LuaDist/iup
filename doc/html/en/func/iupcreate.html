@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupCreate</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupCreate</h2>
+<p>Creates an interface element given its class name and parameters. This function is 
+called from all constructors like IupDialog(...), IupLabel(...), and so on.</p>
+<p>After <b>creation</b> the element still needs to be <b>attached</b> to a
+container and <b>mapped</b> to the native system so it can be visible.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle* IupCreate(const char *<b>classname</b>); [in C]
+Ihandle* IupCreatev(const char *<b>classname</b>, void **<b>params</b>)
+Ihandle *IupCreatep(const char *<b>classname</b>, void* <b>params0</b>, ...)
+[Not available in Lua]</pre>
+<p><b>classname</b>: class name of the element to be created<br>
+<b>params</b>: list of parameters limited by a NULL.</p>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3>See Also</h3>
+<p><a href="iupappend.html">IupAppend</a>, <a href="iupdetach.html">IupDetach</a>, 
+<a href="iupmap.html">IupMap</a>, <a href="iupunmap.html">IupUnmap</a>, <a href="iupdestroy.html">IupDestroy</a>,
+<a href="iupgetclassname.html">IupGetClassName</a></p>
+
+</body>
+
+</html>

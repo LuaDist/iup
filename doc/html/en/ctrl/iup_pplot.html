@@ -1,0 +1,444 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupPPlot</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupPPlot</h2>
+<p>Creates a PPlot plot. It inherits from 
+<a href="../elem/iupcanvas.html">IupCanvas</a>. </p>
+<p>PPlot is a library for creating plots that is system independent. It is 
+maintained by Pier Philipsen (pierphil@xs4all.nl) and available at SourceForge
+<a href="http://pplot.sourceforge.net/">http://pplot.sourceforge.net/</a> with a 
+very flexible BSD License). IupPPlot library includes the PPlot source code so no external 
+references are needed. Also the standard PPlot distribution source code was 
+changed to improve features and visual appearance.</p>
+<p>IupPPlot first implementation was written by Marian Trifon 
+(mtrif@katamail.com), then completed and documented by the IUP team.</p>
+<h3>Initialization and Usage</h3>
+<p>The <b>IupPPlotOpen</b> function must be called after a <b>IupOpen</b>, so that the control can be used. 
+  The &quot;iup_pplot.h&quot; file must also be included in the source code. The program must be linked to the controls 
+  library (iup_pplot), and with the CD library.</p>
+<p>To make the control available in Lua use require&quot;iuplua_pplot&quot; or manually 
+call the initialization function in C, 
+<b>iuppplotlua_open</b>, after calling <b>iuplua_open</b>.
+  &nbsp;When manually calling the function the iuplua_pplot.h file must also be included in the source code 
+and the program must be linked to the 
+Lua control 
+  library (iuplua_pplot).</p>
+<h3>Guide</h3>
+<p>Each plot can contain 2 <b>axis</b> (X and Y), a <b>title</b>, a <b>
+legend</b> <b>box</b>, a <b>grid</b>, a <b>dataset</b> <b>area</b> and as many
+<b>datasets</b> you want. </p>
+<p>Each data set is added using the <b>IupPPlotAdd </b>function. All other plot 
+parameters are configured by attributes.</p>
+<p>If no attribute is set, the default values were selected to best display 
+the plot.</p>
+<p>When setting attributes the plot is NOT redrawn until the REDRAW attribute is 
+set or a redraw event occurs.</p>
+<p>The <b>dataset area</b> is delimited by a margin. Data is only plotted inside 
+the dataset area. Axis and main title are 
+positioned independent of this margin. It is very important to set the margins when 
+using axis automatic scaling or the axis maybe hidden.</p>
+<p>The <b>legend box</b> is a list of the dataset names, each one drawn with the 
+same color of the correspondent dataset. The box is located in one of the four 
+corners of the dataset area.</p>
+<p>The <b>grid</b> is automatically spaced accordingly the current axis 
+displayed values.</p>
+<p>The <b>title</b> is always centered in the top of the plot.</p>
+<p>The <b>axis</b> are always positioned at the origin, except when CrossOrigin 
+is disabled, then it is positioned at the left-bottom. If values are only positive then the 
+origin will be placed in left 
+bottom position. If values are negative and positive then origin will be placed 
+inside the plot. The ticks in the axis are also automatically distributed.</p>
+<p>PPlot implementation demands that the MARGIN* attributes must be set so the 
+plot is not cropped.</p>
+<h3>Interaction</h3>
+<h4>Zoom</h4>
+<p>Zoom in can be done selecting a region using the left mouse button. Zoom out 
+is done with a single click of the left mouse button. If the <b>Ctrl+X</b> key 
+combination is pressed the zoom selection is restricted to the X axis, the Y 
+axis will be left unchanged. If the <b>Ctrl+Y</b> key combination is pressed the 
+zoom selection is restricted to the Y axis, the X axis will be left unchanged. 
+If the <b>Ctrl+R</b> key combination is pressed the zoom selection is restored 
+to a free rectangle.</p>
+<p>Each zoom in operation is stacked, so each zoom out operation goes back the 
+the previous zoom selection.</p>
+<p>Zoom operates on <b>AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN</b> even if <b>
+AUTOMIN/MAX</b> is enabled. The axis may be hidden depending on the selected 
+rectangle.</p>
+<h4>CrossHair Cursor</h4>
+<p>If you press the <b>Ctrl+Shift</b> key combination, while holding the left 
+mouse button down, a cross hair cursor will be displayed for each dataset in the 
+plot. The X coordinate will control the cursor, the Y coordinate will reflect 
+each dataset correspondent value.</p>
+<h4>Selection and Editing</h4>
+<p>Selection and editing of a dataset can be enabled using the <b>DS_EDIT</b> 
+attribute.</p>
+<p>To select all the samples in the dataset press the <b>Shift</b> key while 
+clicking with the left mouse button near a sample in the dataset. To deselect 
+all samples press the <b>Shift</b> key while clicking with the left mouse button 
+in the background.</p>
+<p>To select or deselect individual samples press the <b>Ctrl</b> key while 
+clicking with the left mouse button near the sample in the dataset.</p>
+<p>After selecting samples use the <b>Del</b> key to remove the selected 
+samples. Also use the arrow keys to move the Y coordinate of the selected 
+samples. Press the <b>Ctrl</b> key to increase the step size when moving the Y 
+coordinate.</p>
+<h3><a name="Creation">Creation</a></h3>
+<div>
+  <pre>Ihandle* IupPPlot(void); [in C]
+iup.pplot{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+pplot() [in LED]</pre>
+</div>
+<p>This function returns the identifier of the 
+  created plot, or NULL if an error occurs.</p>
+<h3>Auxiliary Functions</h3>
+<pre>void <b>IupPPlotBegin</b>(Ihandle* <b>ih</b>, int <b>strXdata</b>); [in C]
+<b>iup.PPlotBegin</b>(<b>ih</b>: ihandle, <b>strXdata</b>: number) [in Lua]</pre>
+<p>Prepares a dataset to receive samples. If strXdata is 1 then the X axis value 
+is a string.</p>
+<hr>
+<pre>void <b>IupPPlotAdd</b>(Ihandle* <b>ih</b>, float <b>x</b>, float <b>y</b>); [in C]
+<b>iup.PPlotAdd</b>(<b>ih</b>: ihandle, <b>x</b>, <b>y</b>: number) [in Lua]</pre>
+<p>Adds a sample to the dataset. Can only be called if <b>IupPPlotBegin</b> was 
+called with strXdata=0.</p>
+<hr>
+<pre>void <b>IupPPlotAddStr</b>(Ihandle* <b>ih</b>, const char* <b>x</b>, float <b>y</b>); [in C]
+<b>iup.PPlotAddStr</b>(<b>ih</b>: ihandle, <b>x</b>: string, <b>y</b>: number) [in Lua]</pre>
+<p>Same as <b>IupPPlotAdd</b>, but allows to use a string as the X 
+axis value. Can only be called if <b>IupPPlotBegin</b> was called with 
+strXdata=1.</p>
+<hr>
+<pre>int <b>IupPPlotEnd</b>(Ihandle* <b>ih</b>); [in C]
+<b>iup.PPlotEnd</b>(<b>ih</b>: ihandle) -&gt; (<b>index</b>: number) [in Lua]</pre>
+<p>Adds a 2D dataset to the plot and returns the dataset <strong>index</strong>. 
+The data set can be empty. Redraw is NOT 
+done until the REDRAW attribute is set. Also it will change the current dataset 
+index to the return value. You can only set attributes of a dataset AFTER you 
+added the dataset.&nbsp; Can only be called if <b>IupPPlotBegin</b> was called. 
+Whenever you create a dataset all its &quot;DS_*&quot; attributes will be set to the 
+default values. Notice that DS_MODE must be set before other &quot;DS_*&quot; attributes.</p>
+<hr>
+<pre>void <b>IupPPlotInsert</b>(Ihandle *<b>ih</b>, int <b>index</b>, int <b>sample_index</b>, float <b>x</b>, float <b>y</b>); [in C]
+void <b>IupPPlotInsertStr</b>(Ihandle *<b>ih</b>, int <b>index</b>, int <b>sample_index</b>, const char* <b>x</b>, float <b>y</b>);
+<b>iup.IupPPlotInsert</b>(<b>ih</b>: ihandle, <b>index, sample_index, x, y</b>: number) [in Lua]
+<b>iup.IupPPlotInsertStr</b>(<b>ih</b>: ihandle, <b>index, sample_index, x, y</b>: number)</pre>
+<p>Inserts a sample in a dataset at the given <strong>sample_index</strong>. Can 
+be used only after the dataset is added to the 
+plot.</p>
+<hr>
+<pre>void <b>IupPPlotInsertPoints</b>(Ihandle *<b>ih</b>, int <b>index</b>, int <b>sample_index</b>, float* <b>x</b>, float* <b>y</b>, int <strong>count</strong>); [in C]
+void <b>IupPPlotInsertStrPoints</b>(Ihandle *<b>ih</b>, int <b>index</b>, int <b>sample_index</b>, const char** <b>x</b>, float* <b>y</b>, int <strong>count</strong>);
+<b>iup.IupPPlotInsertPoints</b>(<b>ih</b>: ihandle, <b>index, sample_index, x, y</b>: table of number) [in Lua]
+<b>iup.IupPPlotInsertStrPoints</b>(<b>ih</b>: ihandle, <b>index, sample_index, x, y</b>: table of number)</pre>
+<p>Inserts an array of samples in a dataset at the given <strong>sample_index</strong>. 
+Can be used only after the dataset is added to the 
+plot. (Since 3.4)</p>
+<hr>
+<pre>void <b>IupPPlotAddPoints</b>(Ihandle *<b>ih</b>, int <b>index</b>, float* <b>x</b>, float* <b>y</b>, int <strong>count</strong>); [in C]
+void <b>IupPPlotAddStrPoints</b>(Ihandle *<b>ih</b>, int <b>index</b>, const char** <b>x</b>, float* <b>y</b>, int <strong>count</strong>);
+<b>iup.IupPPlotAddPoints</b>(<b>ih</b>: ihandle, <b>index, x, y</b>: table of number) [in Lua]
+<b>iup.IupPPlotAddStrPoints</b>(<b>ih</b>: ihandle, <b>index, x, y</b>: table of number)</pre>
+<p>Adds an array of samples in a dataset at the end. Can be used only after the dataset is added to the 
+plot. (Since 3.4)</p>
+<hr>
+<pre>void <b>IupPPlotTransform</b>(Ihandle* <b>ih</b>, float <b>x</b>, float <b>y</b>, int *<b>ix</b>, int *<b>iy</b>); [in C]
+<b>iup.PPlotTransform</b>(<b>ih</b>: ihandle, <b>x, y</b>: number) -&gt; (<b>ix</b>, <b>iy</b>: number) [in Lua]</pre>
+<p>Converts coordinates in plot units to pixels. It should be used in PREDRAW_CB 
+and POSTDRAW_CB callbacks only. Output variables can be NULL if not used. It can 
+be used inside other callbacks, but make sure that the drawing after a resize is 
+done.</p>
+<hr>
+<pre>void <b>IupPPlotPaintTo</b>(Ihandle* <b>ih</b>, cdCanvas* <b>cnv</b>); [in C]
+<b>iup.PPlotPaintTo</b>(<b>ih</b>: ihandle, <b>cnv</b>: cdCanvas) [in Lua]</pre>
+<p>Plots to the given CD canvas instead of the display canvas.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><b>REDRAW</b> (write-only) (non inheritable): redraw the plot and update the display. Value is 
+ignored. All other attributes will <span class="style1"><strong>NOT</strong></span> update the display, so you can set many 
+attributes without visual output.</p>
+<font SIZE="3">
+<p><b>USE_IMAGERGB </b>(non inheritable): defines if the double buffer will use standard driver 
+image (NO - faster) or an RGB image (YES - slower). Default: NO. The IMAGERGB 
+driver has anti-aliasing which can improve the line drawing.</p>
+<p><b>USE_GDI</b>+ [Windows Only] (non inheritable): defines if the double buffer will use GDI+ 
+(YES) for drawing or standard GDI (NO). Default: NO. The GDI+ driver has 
+anti-aliasing which can improve the line drawing.</p>
+</font>
+<p><strong><a href="../attrib/iup_font.html">FONT</a></strong>:
+  the default font used in all text elements of the plot: title, legend and labels.</p>
+<p><b><a href="../attrib/iup_bgcolor.html">BGCOLOR</a></b>:  the background color. The default value is white &quot;255 255 
+255&quot;.</p>
+<p><b>MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM </b>(non inheritable): margin of the 
+dataset area. PPlot implementation demands that margins must be set so the plot 
+is not cropped. Default: &quot;15&quot;, &quot;15&quot;, &quot;30&quot;, &quot;15&quot;.</p>
+<h4>Title Configuration (non inheritable)</h4>
+<p><b><a href="../attrib/iup_fgcolor.html">FGCOLOR</a></b>:  the title color. The default value is black &quot;0 0 0&quot;.</p>
+<p><b>TITLE </b>(non inheritable): the  title. Located always at the top center area.</p>
+<p><b>TITLEFONTSIZE, TITLEFONTSTYLE </b>(non inheritable): the title font size and style. The default 
+values depends on the FONT attribute and the returned value is NULL. Set to 
+NULL, to use the FONT attribute values. Style can be &quot;PLAIN&quot;, &quot;BOLD&quot;, &quot;ITALIC&quot; 
+or &quot;BOLDITALIC&quot;.</p>
+<h4>Legend Configuration (non inheritable)</h4>
+<p><b>LEGENDSHOW</b>: shows or hides the legend box. Can be YES or NO. Default: 
+NO.</p>
+<p><b>LEGENDPOS</b>: legend box position. Can be: &quot;TOPLEFT&quot;, &quot;TOPRIGHT&quot;, 
+&quot;BOTTOMLEFT&quot;, or &quot;BOTTOMRIGHT. Default: &quot;TOPRIGHT&quot;.</p>
+<p><b>LEGENDFONTSIZE, LEGENDFONTSTYLE</b>: the legend box text font size and style.</p>
+<h4>Grid Configuration (non inheritable)</h4>
+<p><b>GRID</b>: shows or hides the grid in both or a 
+specific axis. Can be: YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.</p>
+<p><b>GRIDLINESTYLE</b>: line style of the grid. Can be: &quot;CONTINUOUS&quot;, 
+&quot;DASHED&quot;, &quot;DOTTED&quot;, &quot;DASH_DOT&quot;, &quot;DASH_DOT_DOT&quot;. Default is &quot;CONTINUOUS&quot;.</p>
+<p><b>GRIDCOLOR</b>: grid color. Default: &quot;200 200 200&quot;.</p>
+<h4>Dataset List Management (non inheritable)</h4>
+<p><b>REMOVE</b> (write-only): removes a dataset given its index.</p>
+<p><b>CLEAR</b> (write-only): removes all datasets. Value is ignored.</p>
+<p><b>COUNT</b> [read-only]: <font SIZE="3">total number of datasets.</font></p>
+<p><b>CURRENT</b>: <font SIZE="3">current  dataset index. Default is 
+-1. When a dataset is added it becomes the current dataset. The index starts at 
+0. All &quot;DS_*&quot; attributes are dependent on this value.</font></p>
+<h4>Dataset Configuration (non inheritable)</h4>
+<p><b>DS_LEGEND</b>: legend text of the current dataset. Default is dynamically 
+generated: &quot;plot 0&quot;, &quot;plot 1&quot;, &quot;plot 2&quot;, ...</p>
+<p><b>DS_COLOR</b>: color of the current dataset and it legend text. Default&nbsp; 
+is dynamically generated for the 6 first datasets, others are default to black 
+&quot;0 0 0&quot;. The first 6 are: 0=&quot;255 0 0&quot;, 1=&quot;0 0 255&quot;, 2=&quot;0 255 0&quot;, 3=&quot;0 255 255&quot;, 
+4=&quot;255 0 255&quot;, 5=&quot;255 255 0&quot;.</p>
+<p><strong>DS_COUNT</strong>: returns the number of samples of the current 
+dataset. (since 3.6)</p>
+<p><b>DS_MODE</b>: drawing mode of the current dataset. Can be: &quot;LINE&quot;, &quot;BAR&quot;, 
+&quot;MARK&quot; or &quot;MARKLINE&quot;. Default: &quot;LINE&quot;. This must 
+be set before other &quot;DS_*&quot; attributes.</p>
+<p><b>DS_LINESTYLE</b>: line style of the current dataset. Can be: &quot;CONTINUOUS&quot;, 
+&quot;DASHED&quot;, &quot;DOTTED&quot;, &quot;DASH_DOT&quot;, &quot;DASH_DOT_DOT&quot;. Default is &quot;CONTINUOUS&quot;.</p>
+<p><b>DS_LINEWIDTH</b>: line width of the current dataset. Default: 1.</p>
+<p><b>DS_MARKSTYLE</b>: mark style of the current dataset. Can be: &quot;PLUS&quot;, 
+&quot;STAR&quot;, &quot;CIRCLE&quot;, &quot;X&quot;, &quot;BOX&quot;, &quot;DIAMOND&quot;, &quot;HOLLOW_CIRCLE&quot;, &quot;HOLLOW_BOX&quot;, 
+&quot;HOLLOW_DIAMOND&quot;. Default is &quot;X&quot;.</p>
+<p><b>DS_MARKSIZE</b>: mark size of the current dataset. Default: 7.</p>
+<p><b>DS_SHOWVALUES</b>: enable or disable the display of the values near each 
+sample. Can be YES or NO. Default: NO.</p>
+<p><b>DS_REMOVE</b> (write-only): removes a sample from the current dataset given its index.</p>
+<p><b>DS_EDIT</b>: enable or disable the current dataset interactive selection and editing. Can be 
+YES or NO. Default: NO.</p>
+<h4>Axis Configuration (non inheritable) </h4>
+<p><b>AXS_XCOLOR, AXS_YCOLOR</b>: axis, ticks and label color. Default: &quot;0 0 0&quot;.</p>
+<p><b>AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN</b>: minimum and maximum displayed 
+values of the respective axis. Automatically calculated values when AUTOMIN or 
+AUTOMAX are enabled.</p>
+<p><b>AXS_XAUTOMIN, AXS_XAUTOMAX, AXS_YAUTOMIN, AXS_YAUTOMAX</b>:  configures the automatic scaling of the minimum and maximum display values. 
+Can be YES or NO. Default: YES.</p>
+<p><b>AXS_XLABEL, AXS_YLABEL</b>: text label of the&nbsp; respective axis.</p>
+<p><b>AXS_XLABELCENTERED</b>, <b>AXS_YLABELCENTERED</b>: text label position at 
+center (YES) or at top/right (NO). Default: YES.</p>
+<p><b>AXS_XREVERSE, AXS_YREVERSE</b>: reverse the axis direction. Can be YES or 
+NO. Default: NO. Default is Y oriented bottom to top, and X oriented from left 
+to right.</p>
+<p><b>AXS_XCROSSORIGIN, AXS_YCROSSORIGIN</b>: allow the axis to cross the 
+origin and to be placed inside the dataset area. Can be YES or NO. Default: YES.</p>
+<p><b>AXS_XSCALE, AXS_YSCALE</b>: configures the scale of the respective axis. 
+Can be: LIN (liner), LOG10 (base 10), LOG2 (base 2) and LOGN (base e). Default: 
+LIN.</p>
+<p><b>AXS_XFONTSIZE, AXS_YFONTSIZE, AXS_XFONTSTYLE, AXS_YFONTSTYLE</b>: axis 
+label text font size and style. See TITLEFONTSIZE and TITLEFONTSTYLE.</p>
+<h4>Axis Ticks Configuration (non inheritable)</h4>
+<p><b>AXS_XTICK, AXS_YTICK</b>: enable or disable the axis tick display. Can be 
+YES or NO. Default: YES.</p>
+<p><b>AXS_XTICKFORMAT, AXS_YTICKFORMAT</b>: axis tick number C format string. 
+Default: &quot;%.0f&quot;.</p>
+<p><b>AXS_XTICKFONTSIZE, AXS_YTICKFONTSIZE, AXS_XTICKFONTSTYLE, 
+AXS_YTICKFONTSTYLE</b>: axis tick number font size and style.&nbsp; See TITLEFONTSIZE 
+and TITLEFONTSTYLE.</p>
+<p><b>AXS_XAUTOTICK</b>, <b>AXS_YAUTOTICK: </b>configures the automatic tick 
+spacing. Can be YES or NO. Default: YES.</p>
+<p><b>AXS_XTICKMAJORSPAN</b>, <b>AXS_YTICKMAJORSPAN</b>: The spacing between 
+major ticks. Default is 1 when AUTOTICK is disabled.</p>
+<p><b>AXS_XTICKDIVISION</b>, <b>AXS_YTICKDIVISION</b>: number of minor ticks 
+intervals between 
+each major tick. Default is 5 when AUTOTICK is disabled.</p>
+<p><b>AXS_XAUTOTICKSIZE, AXS_YAUTOTICKSIZE</b>: configures <font SIZE="3">the 
+automatic tick size.</font> Can be YES or NO. Default: YES.</p>
+<p><b>AXS_XTICKSIZE, AXS_YTICKSIZE</b>: <font SIZE="3">size of minor ticks in pixels.
+</font>Default is 5 when AUTOTICKSIZE is disabled.</p>
+<p><b>AXS_XTICKMAJORSIZE, AXS_YTICKMAJORSIZE</b>: <font SIZE="3">size of major 
+ticks in pixels. </font>Default is 8 when AUTOTICKSIZE is disabled.</p>
+<blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_size.html">SIZE</a>,
+    <a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><b>DELETE_CB</b>:
+  Action generated when the Del key is pressed to removed a sample from a 
+dataset.
+    If multiple points are selected it is called once for each selected point.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>, int <b>index</b>, int <b>sample_index</b>, float <strong>x</strong>, float <strong>y</strong>); [in C]
+<strong>elem</strong>:delete_cb(<b>index, sample_index, x, y</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info"><strong>index</strong>: index of the dataset<br>
+    <b>sample_index</b>: index of the sample in the dataset<strong><br>
+    x</strong>: X coordinate value of the sample<br>
+    <strong>y</strong>: Y coordinate value of the sample</p>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If IUP_IGNORE then the sample is not deleted.</p>
+  
+<p><b>DELETEBEGIN_CB, DELETEEND_CB</b>: Actions generated when a delete operation 
+will begin or end. But they are called only if DELETE_CB is also defined.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>); [in C]
+<strong>elem</strong>:deletebegin_cb() -&gt; (<strong>ret</strong>: number) [in Lua]
+<strong>elem</strong>:deleteend_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If DELETEBEGIN_CB returns IUP_IGNORE the delete operation for 
+    all the selected samples are aborted.</p>
+  
+<p><b>SELECT_CB</b>:
+  Action generated when  a sample is selected.
+    If multiple points are selected it is called once for each new selected point. 
+It is called only if the selection state of the sample is about to be changed.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>, int <b>index</b>, int <b>sample_index</b>, float <strong>x</strong>, float <strong>y, </strong>int <strong>select</strong>); [in C]
+<strong>elem</strong>:select_cb(<b>index, sample_index, x, y, select</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info"><strong>index</strong>: index of the dataset<br>
+    <b>sample_index</b>: index of the sample in the dataset<strong><br>
+    x</strong>: X coordinate value of the sample<br>
+    <strong>y</strong>: Y coordinate value of the sample<br>
+    <b>select</b>: boolean value that a non zero value indicates if the point is 
+    to be selected.</p>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If IUP_IGNORE then the sample is not selected.</p>
+  
+<p><b>SELECTBEGIN_CB, SELECTEND_CB</b>: Actions generated when a selection 
+operation will begin or end. But they are called only if SELECT_CB is also 
+defined.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>); [in C]
+<strong>elem</strong>:selectbegin_cb() -&gt; (<strong>ret</strong>: number) [in Lua]
+<strong>elem</strong>:selectend_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If SELECTBEGIN_CB returns IUP_IGNORE the selection operation is 
+    aborted.</p>
+  
+<p><b>EDIT_CB</b>:
+  Action generated when  a sample is selected.
+    If multiple points are selected it is called once for each new selected point. 
+It is called only if the selection state of the sample is about to be changed.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>, int <b>index</b>, int <b>sample_index</b>, float <strong>x</strong>, float <strong>y, </strong>float <strong>*new_x</strong>, float <strong>*new_y</strong>); [in C]
+<strong>elem</strong>:edit_cb(<b>index, sample_index, x, y, </b><strong>new_x, new_y</strong>: number) -&gt; (<strong>new_x, new_y, ret</strong>: number) [in Lua]</pre>
+    <p class="info"><strong>index</strong>: index of the dataset<br>
+    <b>sample_index</b>: index of the sample in the dataset<strong><br>
+    x</strong>: X coordinate value of the sample<br>
+    <strong>y</strong>: Y coordinate value of the sample<br>
+    <strong>new_x</strong>: the new X coordinate value of the sample<br>
+    <strong>new_y</strong>: the new Y coordinate value of the sample</p>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If IUP_IGNORE then the sample is not edited. The 
+    application can changed the new value before it is edited.</p>
+  
+<p><b>EDITBEGIN_CB, EDITEND_CB</b>: Actions generated when an editing 
+operation will begin or end. But they are called only if EDIT_CB is also 
+defined.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>); [in C]
+<strong>elem</strong>:editbegin_cb() -&gt; (<strong>ret</strong>: number) [in Lua]
+<strong>elem</strong>:editend_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info">
+    <span class="style2">Returns:</span>
+    If EDITBEGIN_CB returns IUP_IGNORE the editing operation is 
+    aborted.</p>
+  
+<p><b>PREDRAW_CB, POSTDRAW_CB</b>: Actions generated before and after the redraw 
+operation. Predraw can be used to draw a different background and Postdraw can 
+be used to draw additional information in the plot. Predraw has no restrictions, 
+but Postdraw is clipped to the dataset area. To position elements in plot units, 
+use the <b>IupPPlotTransform</b> function.</p>
+  
+    <pre>int function(Ihandle *<strong>ih</strong>, cdCanvas* <strong>cnv</strong>); [in C]
+<strong>elem</strong>:predraw_cb(<b>cnv</b>: cdCanvas) -&gt; (<strong>ret</strong>: number) [in Lua]
+<strong>elem</strong>:postdraw_cb(<b>cnv</b>: cdCanvas) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <p class="info"><strong>cnv</strong>: the CD canvas where the draw operation 
+    occurs.</p>
+  <blockquote>
+  <hr>
+</blockquote>
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>,  
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, 
+<a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+  
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="6" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td><img border="0" src="images/iup_pplot0.gif"></td>
+      <td><img border="0" src="images/iup_pplot1.gif"></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/iup_pplot2.gif"></td>
+      <td><img border="0" src="images/iup_pplot3.gif"></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/iup_pplot4.gif"></td>
+      <td><img border="0" src="images/iup_pplot5.gif"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupcanvas.html">IupCanvas</a>, <a href="iup_mglplot.html">
+IupMglPlot</a></p>
+
+</body>
+
+</html>

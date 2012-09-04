@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>SHRINK</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>SHRINK</h2>
+<p>If this attribute is defined, the elements 
+  inside the dialog will try to adjust their sizes even when the dialog's size is smaller than its natural size.</p>
+<p>See the <a href="../layout_guide.html">Layout Guide</a> for more details 
+  on sizes.</p>
+<h3>Value</h3>
+<p>&quot;YES&quot; or &quot;NO&quot;.</p>
+<p>Default: &quot;NO&quot;.</p>
+<h3>Notes</h3>
+<p>When the user changes the size of the 
+  dialog, the elements are automatically re-distributed inside the dialog. Some elements even have their size changed if 
+  the EXPAND attribute is active. When this size is smaller than a minimum limit in which all 
+  elements still fit the dialog, the elements' distribution is no longer modified. Actually, the virtual size of the 
+  dialog remains larger than its actual size on the screen, and some elements to the right 
+and bottom are hidden by the borders of the dialog.</p>
+<p>The SHRINK attribute offers an alternative to this behavior. It makes the elements continue to 
+  rearrange, even if they must overlap. </p>
+<p>The results of this new rearrangement may 
+  vary according to the elements' distribution on the dialog.</p>
+<p>See the <a href="../layout_guide.html">Layout Guide</a> for more details 
+  on sizes.</p>
+<h3>Affects</h3>
+<p><a href="../dlg/iupdialog.html">IupDialog</a></p>
+
+</body>
+
+</html>

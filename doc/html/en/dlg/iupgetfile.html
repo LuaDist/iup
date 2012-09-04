@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetFile</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetFile</h2>
+<p>Shows a modal dialog of the native interface 
+  system to select a filename. Uses the <strong>IupFileDlg</strong> element.</p>
+<h3>Creation and Show</h3>
+<dl>
+  <pre>int IupGetFile(char *<strong>filename</strong>); [in C]
+iup.GetFile(<strong>filename</strong>: string) -&gt; (<strong>filename</strong>: string, <strong>status</strong>: number) [in Lua]</pre>
+</dl>
+<p><strong>filename</strong>:
+  This parameter is used as an input value to 
+  define the default filter and directory. Example: &quot;../docs/*.txt&quot;. As an output value, it is used to contain the filename entered by the user.</p>
+<p><span class="style1">Returns:</span> a <strong>status</strong> code, whose values 
+  can be:</p>
+<blockquote>
+	<p>&quot;1&quot;:
+    New file.<br>
+	&quot;0&quot;:
+    Normal, existing file.<br>
+	&quot;-1&quot;:
+    Operation cancelled.</p>
+</blockquote>
+<h3>Notes</h3>
+<p>The function does not allocate memory space to store the complete filename entered by the 
+  user. Therefore, the filename parameter must be large enough to contain the directory and file names. 
+The string is limited to 4096 characters.</p>
+<p>The function will reuse the directory from one call to another, so in the 
+next call will open in the directory of the last selected file.</p>
+<p>The dialog uses a global attribute called &quot;PARENTDIALOG&quot; as the parent dialog if it is defined. It also uses a 
+  global attribute called &quot;ICON&quot; as the dialog icon if it is defined.</p>
+<h3>Examples</h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<h3>See Also</h3>
+<p> <a href="iupfiledlg.html">IupFileDlg</a>, <a href="iupmessage.html">IupMessage</a>, <a href="iupscanf.html">IupScanf</a>,
+  <a href="iuplistdialog.html">IupListDialog</a>, <a href="iupalarm.html">IupAlarm</a>,
+  <a href="../func/iupsetlanguage.html">IupSetLanguage</a>.</p>
+
+</body>
+
+</html>

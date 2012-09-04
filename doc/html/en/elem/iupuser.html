@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupUser</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupUser</h2>
+
+  <p>
+  Creates a user element in IUP, which is not associated to any interface element. It is used to map an 
+  external element to a IUP element. Its use is usually done by CPI elements, 
+  but you can use it to create an Ihandle* to store private attributes.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupUser(void); [in C]
+iup.user{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+user() [in LED]</pre>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><b>CLEARATTRIBUTES</b> (write-only, <font SIZE="3">non inheritable</font>): 
+it will clear all attributes stored internally and remove all references. (since 
+3.0)</p>
+
+
+</body>
+
+</html>

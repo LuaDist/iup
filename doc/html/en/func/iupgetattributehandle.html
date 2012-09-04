@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetAttributeHandle</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetAttributeHandle</h2>
+<p>Instead of using IupGetAttribute and IupGetHandle, this function directly returns the associated handle.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle* IupGetAttributeHandle(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>); [in C]
+[There is no equivalent in Lua] </pre>
+<p><strong>ih</strong>: identifier of the interface element.<br>
+  <strong>name</strong>: name of the attribute.</p>
+<p><span class="style1">Returns:</span> the element with the associated name. The function will not check for 
+inheritance since all the attributes that associate handles are not inheritable.</p>
+<h3>See Also</h3>
+<p><a href="iupsetattributehandle.html">IupSetAttributeHandle</a>,
+  <a href="iupsetattribute.html">IupSetAttribute</a>, 
+<a href="iupsetattributes.html">IupSetAttributes</a>,
+  <a href="iupstoreattribute.html">IupStoreAttribute</a>, 
+<a href="iupsethandle.html">IupSetHandle</a></p>
+
+</body>
+
+</html>

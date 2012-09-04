@@ -1,0 +1,113 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupNormalizer</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupNormalizer <span class="style1">(since 3.0)</span></h2>
+
+<p>Normalizes all controls from a list so their natural size to be the biggest natural size among 
+them. All natural width will be set to the biggest width, and all natural height 
+will be set to the biggest height according to is value. </p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupNormalizer(Ihandle *<strong>ih_first</strong>, ...); [in C]
+Ihandle* IupNormalizerv(Ihandle **<strong>ih_list</strong>); [in C]
+iup.normalizer{<strong>ih_first</strong>, ...: ihandle} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+normalizer(<strong>ih_first</strong>, ...) [in LED]</pre>
+  <p><strong>ih_first</strong>, ... :
+  List of the identifiers that will be normalized. NULL must be used to define the end of the list in C. It can be empty.</p>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>NORMALIZE</strong> (<font SIZE="3">non inheritable</font>): normalization direction. Can be HORIZONTAL, VERTICAL 
+or BOTH. These are the same values of the NORMALIZESIZE attribute. Default: 
+HORIZONTAL. </p>
+<p><b>ADDCONTROL</b> (<font SIZE="3">non inheritable</font>): Adds a control to 
+the normalizer. The value passed must be the name of an element. Use <a href="../func/iupsethandle.html">IupSetHandle</a> 
+or <a href="../func/iupsetattributehandle.html">IupSetAttributeHandle</a> to 
+associate an element to a name. In Lua you can also use the element reference 
+directly.</p>
+<p><b>ADDCONTROL_HANDLE</b> (<font SIZE="3">non inheritable</font>): Adds a 
+control to the normalizer. The value passed must be a 
+handle of an element.</p>
+
+<h3>Attributes (at Children)</h3>
+
+<p><strong>NORMALIZERGROUP</strong> (<font SIZE="3">non inheritable</font>)
+	<strong>(at children only)</strong>: name of a normalizer 
+element to 
+automatically add the control. If an element with that name does not exists 
+then one is created. In Lua you can also use the element reference directly.</p>
+<h3>Notes</h3>
+<p>It is NOT necessary to add the normalizer to a dialog hierarchy. Every time 
+the NORMALIZE attribute is set a normalization occurs. If the normalizer is added to a dialog hierarchy, then 
+whenever the <strong>Natural</strong> size is calculated a normalization occurs, 
+so add it to the hierarchy before the elements you want to normalize or its normalization will be 
+not used.</p>
+<p>The elements do NOT need to be children of the same parent, do NOT need to be 
+mapped, and do NOT need to be in a complete hierarchy of a dialog.</p>
+<p>The elements are NOT children of the normalizer. To 
+remove or add other elements, the normalizer must be destroyed and created a new 
+one.</p>
+<p>Notice that the NORMALIZERGROUP attribute can simplify a lot the process of 
+creating a normalizer, so you do not need to list several elements from 
+different parts of the dialog. </p>
+<p>Has the same effect of the NORMALIZESIZE attribute of the <strong>IupVbox</strong> 
+and <strong>IupHbox</strong> controls, but it can be used for elements with 
+different parents, it changes the <strong>User</strong> size of the elements.</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p>Here <strong>IupNormalizer</strong> is used to normalize the horizontal size 
+of several labels that are in different containers. Since it needs to be done 
+once only the <strong>IupNormalizer</strong> is destroyed just after it is 
+initialized.</p>
+
+<pre>IupDestroy(IupSetAttributes(IupNormalizer(IupGetChild(hsi_vb, 0),  /* Hue Label */
+                                          IupGetChild(hsi_vb, 1),  /* Saturation Label */
+                                          IupGetChild(hsi_vb, 2),  /* Intensity Label */
+                                          IupGetChild(clr_vb, 0),  /* Opacity Label */
+                                          IupGetChild(clr_vb, 1),  /* Hexa Label */
+                                          NULL), "NORMALIZE=HORIZONTAL"));
+</pre>
+<p>The following case use the internal normalizer in an Hbox:</p>
+<pre>button_box = IupHbox(
+    IupFill(),
+    button_ok,
+    button_cancel,
+    button_help,
+    NULL);
+IupSetAttribute(button_box, "NORMALIZESIZE", "HORIZONTAL");
+</pre>
+<h3>See Also</h3>
+<p><a href="../elem/iuphbox.html">IupHbox</a>, <a href="../elem/iupvbox.html">
+IupVbox</a></p>
+
+
+</body>
+
+</html>
