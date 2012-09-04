@@ -5,7 +5,7 @@
 # Please note that the package source code is licensed under its own license.
 
 PROJECT(iup C CXX)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 INCLUDE(cmake/dist.cmake)
 include ( lua )
 
@@ -396,7 +396,7 @@ include ( lua )
 # ledc
 	INCLUDE_DIRECTORIES (srcledc)
 	FILE(GLOB SRC_LEDC "srcledc/*.c")
-	ADD_EXECUTABLE (ledc ${EXE_TYPE} ${SRC_LEDC})
+	ADD_EXECUTABLE (ledc ${EXE_TYPE} ${SRC_LEDC} resources/iuplua5.rc)
 
 	install_executable(ledc)
 
@@ -506,7 +506,7 @@ if(LUA_FOUND)
 		LINK  iuplua ${CD_LIBRARY_LUA} iupcd  ${CD_LIBRARY})
 
 # iuplua executable
-	ADD_EXECUTABLE(iuplua_exe ${EXE_TYPE} srcconsole/iup_lua51.c)
+	ADD_EXECUTABLE(iuplua_exe ${EXE_TYPE} srcconsole/iup_lua51.c resources/iuplua5.rc )
 	SET_TARGET_PROPERTIES(iuplua_exe PROPERTIES OUTPUT_NAME "iuplua")
 	TARGET_LINK_LIBRARIES(iuplua_exe  iuplua )
 #~ 	INSTALL (TARGETS iuplua_exe DESTINATION ${INSTALL_BIN})
@@ -557,7 +557,7 @@ endif() # end of LUA_FOUND
 	ENDIF()
 
 	ADD_DEPENDENCIES(iuptest iup_pplot)
-	INSTALL(TARGETS iuptest DESTINATION ${INSTALL_EXAMPLE} COMPONENT Example)
+	INSTALL(TARGETS iuptest DESTINATION ${INSTALL_BIN} COMPONENT Example)
 
 
 ###########################################################################
