@@ -63,7 +63,7 @@ include ( lua )
 		INCLUDE_DIRECTORIES(${X11_INCLUDE_DIR})
 		FIND_LIBRARY(X11_Xp_LIB NAMES Xp)
 
-#~ 		MESSAGE(">>>> iup ${X11_LIBRARIES} | ${X11_Xpm_LIB} | ${X11_Xt_LIB} | ${X11_Xext_LIB} | ${X11_Xp_LIB}")
+		MESSAGE(">>>> iup ${X11_LIBRARIES} | ${X11_Xpm_LIB} | ${X11_Xt_LIB} | ${X11_Xext_LIB} | ${X11_Xp_LIB}")
 
 		# Find Motif
 		FIND_PACKAGE(Motif)	# only on UNIX
@@ -130,6 +130,13 @@ include ( lua )
 			IF(APPLE)
 				ADD_DEFINITIONS(-DGTK_MAC)
 				SET(SRC_IUP ${SRC_IUP} ${SRC_IUP_GTK_MAC})
+        
+        FIND_LIBRARY(CG_LIB CoreGraphics)
+        FIND_LIBRARY(CF_LIB CoreFoundation)
+        FIND_LIBRARY(CS_LIB CoreServices)
+        FIND_LIBRARY(CA_LIB Carbon)
+        
+        SET(APPLE_LIBRARIES ${CG_LIB} ${CF_LIB} ${CS_LIB} ${CA_LIB})
 			ELSE()
 				SET(SRC_IUP ${SRC_IUP} src/gtk/unix/iupgtk_help.c src/mot/unix/iupunix_info.c)
 			ENDIF()
@@ -157,7 +164,7 @@ include ( lua )
 		TARGET_LINK_LIBRARIES(iup ole32 comdlg32 comctl32 gdi32 )
 	ELSEIF(UNIX OR APPLE)
 		IF(GTK2_FOUND)
-			TARGET_LINK_LIBRARIES(iup ${GTK2_LIBRARIES} )
+			TARGET_LINK_LIBRARIES(iup ${GTK2_LIBRARIES} ${APPLE_LIBRARIES})
 		ELSEIF(X11_FOUND AND MOTIF_FOUND)
 			#	TODO: Motif + X11
 			#	link with "-liup -lXm -lXpm -lXmu -lXt -lXext -lX11 -lm"
@@ -180,9 +187,49 @@ include ( lua )
 
 		ADD_LIBRARY(iupgl SHARED ${SRC_IUP_GL} resources/iupgl.def)
 
-		TARGET_LINK_LIBRARIES( iupgl iup ${OPENGL_LIBRARIES})
+		TARGET_LINK_LIBRARIES( iupgl iup ${OPENGL_LIBRARIES} ${X11_LIBRARIES} )
 
 		install_library(iupgl)
+    
+    # iup_mglplot lib
+    find_package(Fontconfig REQUIRED)
+    
+    include_directories (
+    	srcmglplot/freetype
+    	srcmglplot/ftgl
+    	srcmglplot/mgl
+    	srcmglplot
+      ${FONTCONFIG_INCLUDE_DIR}
+    	)
+
+    file ( GLOB FTFont "srcmglplot/ftgl/FTFont/*.cpp" )
+    file ( GLOB FTGlyph "srcmglplot/ftgl/FTGlyph/*.cpp" )
+    file ( GLOB FTGL "srcmglplot/ftgl/*.cpp" )
+    file ( GLOB MGL "srcmglplot/mgl/*.cpp" )
+    file ( GLOB MGLPLOT "srcmglplot/*.cpp")
+
+    	if(MINGW)
+    #~ 			SET_SOURCE_FILES_PROPERTIES(${MGL} PROPERTIES COMPILE_DEFINITIONS "FTGL_LIBRARY_STATIC;NO_PNG;NO_GSL;swprintf=_snwprintf")
+    #~ 			ADD_DEFINITIONS(-Dswprintf=_snwprintf)
+    	endif()
+
+    set ( MGLPLOT_SRC ${FTFont} ${FTGlyph} ${FTGL} ${MGLPLOT} ${MGL})
+    #~ 	set ( MGLPLOT_SRC ${FTFont} ${FTGlyph} ${FTGL} ${MGLPLOT})
+
+    if ( APPLE )
+    	set_source_files_properties ( ${MGLPLOT_SRC} PROPERTIES COMPILE_DEFINITIONS "USE_MACOS_OPENGL;FTGL_LIBRARY_STATIC;NO_PNG;NO_GSL" )
+    #		set_target_properties ( ftgl PROPERTIES COMPILE_FLAGS "-framework OpenGL" )
+    else ( )
+    	set_source_files_properties ( ${MGLPLOT_SRC} PROPERTIES COMPILE_DEFINITIONS "FTGL_LIBRARY_STATIC;NO_PNG;NO_GSL" )
+    endif ( )
+
+    #~ 	set ( MGLPLOT_SRC ${MGLPLOT_SRC} ${MGL}  )
+
+    ADD_LIBRARY(iup_mglplot SHARED ${MGLPLOT_SRC} resources/iup_mglplot.def)
+    TARGET_LINK_LIBRARIES (iup_mglplot iup iupgl ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARIES})
+
+    install_library(iup_mglplot)
+    
 	ENDIF()
 
 # iupcontrols  lib
@@ -212,44 +259,6 @@ include ( lua )
 	TARGET_LINK_LIBRARIES (iup_pplot iup  iupcd ${CD_LIBRARY})
 
 	install_library(iup_pplot)
-
-# iup_mglplot lib
-
-	include_directories (
-		srcmglplot/freetype
-		srcmglplot/ftgl
-		srcmglplot/mgl
-		srcmglplot
-		)
-
-	file ( GLOB FTFont "srcmglplot/ftgl/FTFont/*.cpp" )
-	file ( GLOB FTGlyph "srcmglplot/ftgl/FTGlyph/*.cpp" )
-	file ( GLOB FTGL "srcmglplot/ftgl/*.cpp" )
-	file ( GLOB MGL "srcmglplot/mgl/*.cpp" )
-	file ( GLOB MGLPLOT "srcmglplot/*.cpp")
-
-		if(MINGW)
-#~ 			SET_SOURCE_FILES_PROPERTIES(${MGL} PROPERTIES COMPILE_DEFINITIONS "FTGL_LIBRARY_STATIC;NO_PNG;NO_GSL;swprintf=_snwprintf")
-#~ 			ADD_DEFINITIONS(-Dswprintf=_snwprintf)
-		endif()
-
-	set ( MGLPLOT_SRC ${FTFont} ${FTGlyph} ${FTGL} ${MGLPLOT} ${MGL})
-#~ 	set ( MGLPLOT_SRC ${FTFont} ${FTGlyph} ${FTGL} ${MGLPLOT})
-
-	if ( APPLE )
-		set_source_files_properties ( ${MGLPLOT_SRC} PROPERTIES COMPILE_DEFINITIONS "USE_MACOS_OPENGL;FTGL_LIBRARY_STATIC;NO_PNG;NO_GSL" )
-#		set_target_properties ( ftgl PROPERTIES COMPILE_FLAGS "-framework OpenGL" )
-	else ( )
-		set_source_files_properties ( ${MGLPLOT_SRC} PROPERTIES COMPILE_DEFINITIONS "FTGL_LIBRARY_STATIC;NO_PNG;NO_GSL" )
-	endif ( )
-
-#~ 	set ( MGLPLOT_SRC ${MGLPLOT_SRC} ${MGL}  )
-
-	ADD_LIBRARY(iup_mglplot SHARED ${MGLPLOT_SRC} resources/iup_mglplot.def)
-	TARGET_LINK_LIBRARIES (iup_mglplot iup  iupgl ${FREETYPE_LIBRARIES})
-
-	install_library(iup_mglplot)
-
 
 # iupimglib lib
 	FILE(GLOB IUPIMGLIB_SRC "srcimglib/*.c")
@@ -465,11 +474,13 @@ if(LUA_FOUND)
 		LINK  iuplua  ${CD_LIBRARY_LUA} ${LUA_LIBRARY} iup_pplot)
 
 # iupluamglplot
-	install_lua_module ( iuplua_mglplot
-		srclua5/modules/pplot/iuplua_mglplot.c
-		srclua5/modules/il/il_mglplot.c
-		resources/iuplua_mglplot.def
-		LINK    iup_mglplot  iuplua )
+  IF(TARGET iup_mglplot)
+    install_lua_module ( iuplua_mglplot
+  		srclua5/modules/pplot/iuplua_mglplot.c
+  		srclua5/modules/il/il_mglplot.c
+  		resources/iuplua_mglplot.def
+    LINK    iup_mglplot  iuplua )
+  ENDIF()
 
 # iupluaimglib
 	install_lua_module ( iupluaimglib
@@ -506,9 +517,12 @@ if(LUA_FOUND)
 		LINK  iuplua ${CD_LIBRARY_LUA} iupcd  ${CD_LIBRARY})
 
 # iuplua executable
+  FIND_PACKAGE(Readline REQUIRED)
+  INCLUDE_DIRECTORIES(${READLINE_INCLUDE_DIRS})
+
 	ADD_EXECUTABLE(iuplua_exe ${EXE_TYPE} srcconsole/iup_lua51.c resources/iuplua5.rc )
 	SET_TARGET_PROPERTIES(iuplua_exe PROPERTIES OUTPUT_NAME "iuplua")
-	TARGET_LINK_LIBRARIES(iuplua_exe  iuplua )
+	TARGET_LINK_LIBRARIES(iuplua_exe  iuplua ${READLINE_LIBRARIES} )
 #~ 	INSTALL (TARGETS iuplua_exe DESTINATION ${INSTALL_BIN})
 	install_executable(iuplua_exe)
 
