@@ -19,7 +19,7 @@
 FIND_PATH(ZLIB_INCLUDE_DIR NAMES zlib.h)
 
 # Look for the library.
-FIND_LIBRARY(ZLIB_LIBRARY NAMES z)
+FIND_LIBRARY(ZLIB_LIBRARY NAMES zlib z)
 
 # Handle the QUIETLY and REQUIRED arguments and set ZLIB_FOUND to TRUE if all listed variables are TRUE.
 INCLUDE(FindPackageHandleStandardArgs)
