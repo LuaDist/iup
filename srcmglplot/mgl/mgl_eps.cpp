@@ -305,7 +305,7 @@ void mglGraphPS::WriteEPS(const char *fname,const char *descr)
 	time(&now);
 
 	bool gz = fname[strlen(fname)-1]=='z';
-	void *fp = gz ? gzopen(fname,"wt") : fopen(fname,"wt");
+	void *fp = gz ? (void *)gzopen(fname,"wt") : fopen(fname,"wt");
 	if(!fp)		{	SetWarn(mglWarnOpen,fname);	return;	}
 	mgl_printf(fp, gz, "%%!PS-Adobe-3.0 EPSF-3.0\n%%%%BoundingBox: 0 0 %d %d\n",Width,Height);
 	mgl_printf(fp, gz, "%%%%Creator: MathGL library\n%%%%Title: %s\n",descr ? descr : fname);
@@ -453,7 +453,7 @@ void mglGraphPS::WriteEPS(const char *fname,const char *descr)
 	}
 	for(i=0;i<pNum;i++)		if(P[i].type==-1)	P[i].type = 1;
 	mgl_printf(fp, gz, "\nshowpage\n%%%%EOF\n");
-	if(gz)	gzclose(fp);	else	fclose((FILE *)fp);
+	if(gz)	gzclose((gzFile)fp);	else	fclose((FILE *)fp);
 }
 //-----------------------------------------------------------------------------
 void mglGraphPS::WriteSVG(const char *fname,const char *descr)
@@ -464,7 +464,7 @@ void mglGraphPS::WriteSVG(const char *fname,const char *descr)
 	time(&now);
 
 	bool gz = fname[strlen(fname)-1]=='z';
-	void *fp = gz ? gzopen(fname,"wt") : fopen(fname,"wt");
+	void *fp = gz ? (void *)gzopen(fname,"wt") : fopen(fname,"wt");
 	if(!fp)		{	SetWarn(mglWarnOpen,fname);	return;	}
 	mgl_printf(fp, gz, "<?xml version=\"1.0\" standalone=\"no\"?>\n");
 	mgl_printf(fp, gz, "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20000303 Stylable//EN\" \"http://www.w3.org/TR/2000/03/WD-SVG-20000303/DTD/svg-20000303-stylable.dtd\">\n");
@@ -620,7 +620,7 @@ void mglGraphPS::WriteSVG(const char *fname,const char *descr)
 
 	for(i=0;i<pNum;i++)		if(P[i].type==-1)	P[i].type = 1;
 	mgl_printf(fp, gz, "</g></svg>");
-	if(gz)	gzclose(fp);	else	fclose((FILE *)fp);
+	if(gz)	gzclose((gzFile)fp);	else	fclose((FILE *)fp);
 }
 //-----------------------------------------------------------------------------
 void mglGraphPS::Finish()

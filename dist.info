@@ -13,6 +13,7 @@ depends = {
 	"cd >= 5.5",
 	"im >= 3.8",
 	"lua ~> 5.1",
+  "zlib >= 1.2",
 	Linux = {
 --		"libgtk2 >= 2.0",
 	},

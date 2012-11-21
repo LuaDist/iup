@@ -192,6 +192,7 @@ include ( lua )
 		install_library(iupgl)
     
     # iup_mglplot lib
+    find_package(Zlib REQUIRED)
     find_package(Fontconfig REQUIRED)
     
     include_directories (
@@ -200,6 +201,7 @@ include ( lua )
     	srcmglplot/mgl
     	srcmglplot
       ${FONTCONFIG_INCLUDE_DIR}
+      ${ZLIB_INCLUDE_DIR}
     	)
 
     file ( GLOB FTFont "srcmglplot/ftgl/FTFont/*.cpp" )
@@ -226,7 +228,7 @@ include ( lua )
     #~ 	set ( MGLPLOT_SRC ${MGLPLOT_SRC} ${MGL}  )
 
     ADD_LIBRARY(iup_mglplot SHARED ${MGLPLOT_SRC} resources/iup_mglplot.def)
-    TARGET_LINK_LIBRARIES (iup_mglplot iup iupgl ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARIES})
+    TARGET_LINK_LIBRARIES (iup_mglplot iup iupgl ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARIES} ${ZLIB_LIBRARIES})
 
     install_library(iup_mglplot)
     
