@@ -519,7 +519,7 @@ if(LUA_FOUND)
 		LINK  iuplua ${CD_LIBRARY_LUA} iupcd  ${CD_LIBRARY})
 
 # iuplua executable
-  FIND_PACKAGE(Readline REQUIRED)
+  FIND_PACKAGE(Readline)
   INCLUDE_DIRECTORIES(${READLINE_INCLUDE_DIRS})
 
 	ADD_EXECUTABLE(iuplua_exe ${EXE_TYPE} srcconsole/iup_lua51.c resources/iuplua5.rc )
