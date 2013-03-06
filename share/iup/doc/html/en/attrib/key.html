@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Keyboard Codes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h3><strong>Keyboard Codes</strong></h3>
+<p>The table below shows the IUP codification of every key in the keyboard. Each 
+key is represented by an integer value, defined in the &quot;iupkey.h&quot; file header, 
+which should be included in the application to use the key definitions. These 
+keys are used in K_ANY and KEYPRESS_CB callbacks to inform the key that was 
+pressed in the keyboard.</p>
+<p>IUP uses the US default codification this means that if you installed a 
+keyboard specific for your country the key codes will be different from the real 
+keys for a small group of keys. Except for the Brazilian ABNT keyboard which 
+works in Windows and Linux. This does not affect the <strong>IupText</strong> and 
+<strong>IupMultiline</strong> 
+text input.</p>
+<p>Notice that somes key combinations are not available because they are 
+restricted by the system.</p>
+<p>The <strong>iup_isprint(key)</strong> macro informs if a key can be directly 
+used as a printable character. The
+<strong>iup_isXkey(key)</strong> macro informs if a given key is an extended 
+code. The <strong>iup_isShiftXkey(key)</strong> macro informs if a given key is 
+an extended code using the Shift modifier, the <strong>iup_isCtrlXkey(key)</strong> 
+macro for the Ctrl modifier, the <strong>iup_isAltXkey(key)</strong> macro for 
+the Alt modifier, and the <strong>iup_isSysXkey(key)</strong> macro for the Sys 
+modifier. These macros are also available in Lua as a function with the same 
+name (iup.isprint(key), iup.isXkey(key), and so on) and returning a boolean.</p>
+<p>In the table below there are the most common definitions. Change the 
+definition to K_s*, K_c*, K_m* and K_y* when the respective modifier is pressed 
+(Shift, Control, Alt and Sys). Sys in Windows is the Windows key and in Mac is 
+the Apple key. Check the &quot;iupkey.h&quot; file header for all the definitions. To 
+detect the combination of two or more modifiers use global attribute 
+&quot;MODKEYSTATE&quot;.</p>
+<p>Note: GTK in Windows does not generates the Win modifier key, the K_Print and 
+the K_Pause keys (up to GTK version 2.8.18).</p>
+  <table align="center">
+    <tr>
+      <th>Key</th>
+      <th>Code /<br>
+        Callback</th>
+    </tr>
+    <tr>
+      <td align="right">Space</td>
+      <td>K_SP</td>
+    </tr>
+    <tr>
+      <td align="right">!</td>
+      <td>K_exclam</td>
+    </tr>
+    <tr>
+      <td align="right">&quot;</td>
+      <td>K_quotedbl</td>
+    </tr>
+    <tr>
+      <td align="right">#</td>
+      <td>K_numbersign</td>
+    </tr>
+    <tr>
+      <td align="right">$</td>
+      <td>K_dollar</td>
+    </tr>
+    <tr>
+      <td align="right">%</td>
+      <td>K_percent</td>
+    </tr>
+    <tr>
+      <td align="right">&amp;</td>
+      <td>K_ampersand</td>
+    </tr>
+    <tr>
+      <td align="right">'</td>
+      <td>K_apostrophe</td>
+    </tr>
+    <tr>
+      <td align="right">(</td>
+      <td>K_parentleft</td>
+    </tr>
+    <tr>
+      <td align="right">)</td>
+      <td>K_parentright</td>
+    </tr>
+    <tr>
+      <td align="right">*</td>
+      <td>K_asterisk</td>
+    </tr>
+    <tr>
+      <td align="right">+</td>
+      <td>K_plus</td>
+    </tr>
+    <tr>
+      <td align="right">,</td>
+      <td>K_comma</td>
+    </tr>
+    <tr>
+      <td align="right">-</td>
+      <td>K_minus</td>
+    </tr>
+    <tr>
+      <td align="right">.</td>
+      <td>K_period</td>
+    </tr>
+    <tr>
+      <td align="right">/</td>
+      <td>K_slash</td>
+    </tr>
+    <tr>
+      <td align="right">0</td>
+      <td>K_0</td>
+    </tr>
+    <tr>
+      <td align="right">1</td>
+      <td>K_1</td>
+    </tr>
+    <tr>
+      <td align="right">2</td>
+      <td>K_2</td>
+    </tr>
+    <tr>
+      <td align="right">3</td>
+      <td>K_3</td>
+    </tr>
+    <tr>
+      <td align="right">4</td>
+      <td>K_4</td>
+    </tr>
+    <tr>
+      <td align="right">5</td>
+      <td>K_5</td>
+    </tr>
+    <tr>
+      <td align="right">6</td>
+      <td>K_6</td>
+    </tr>
+    <tr>
+      <td align="right">7</td>
+      <td>K_7</td>
+    </tr>
+    <tr>
+      <td align="right">8</td>
+      <td>K_8</td>
+    </tr>
+    <tr>
+      <td align="right">9</td>
+      <td>K_9</td>
+    </tr>
+    <tr>
+      <td align="right">:</td>
+      <td>K_colon</td>
+    </tr>
+    <tr>
+      <td align="right">;</td>
+      <td>K_semicolon</td>
+    </tr>
+    <tr>
+      <td align="right">&lt;</td>
+      <td>K_less</td>
+    </tr>
+    <tr>
+      <td align="right">=</td>
+      <td>K_equal</td>
+    </tr>
+    <tr>
+      <td align="right">&gt;</td>
+      <td>K_greater</td>
+    </tr>
+    <tr>
+      <td align="right">?</td>
+      <td>K_question</td>
+    </tr>
+    <tr>
+      <td align="right">@</td>
+      <td>K_at</td>
+    </tr>
+    <tr>
+      <td align="right">A</td>
+      <td>K_A</td>
+    </tr>
+    <tr>
+      <td align="right">B</td>
+      <td>K_B</td>
+    </tr>
+    <tr>
+      <td align="right">C</td>
+      <td>K_C</td>
+    </tr>
+    <tr>
+      <td align="right">D</td>
+      <td>K_D</td>
+    </tr>
+    <tr>
+      <td align="right">E</td>
+      <td>K_E</td>
+    </tr>
+    <tr>
+      <td align="right">F</td>
+      <td>K_F</td>
+    </tr>
+    <tr>
+      <td align="right">G</td>
+      <td>K_G</td>
+    </tr>
+    <tr>
+      <td align="right">H</td>
+      <td>K_H</td>
+    </tr>
+    <tr>
+      <td align="right">I</td>
+      <td>K_I</td>
+    </tr>
+    <tr>
+      <td align="right">J</td>
+      <td>K_J</td>
+    </tr>
+    <tr>
+      <td align="right">K</td>
+      <td>K_K</td>
+    </tr>
+    <tr>
+      <td align="right">L</td>
+      <td>K_L</td>
+    </tr>
+    <tr>
+      <td align="right">M</td>
+      <td>K_M</td>
+    </tr>
+    <tr>
+      <td align="right">N</td>
+      <td>K_N</td>
+    </tr>
+    <tr>
+      <td align="right">O</td>
+      <td>K_O</td>
+    </tr>
+    <tr>
+      <td align="right">P</td>
+      <td>K_P</td>
+    </tr>
+    <tr>
+      <td align="right">Q</td>
+      <td>K_Q</td>
+    </tr>
+    <tr>
+      <td align="right">R</td>
+      <td>K_R</td>
+    </tr>
+    <tr>
+      <td align="right">S</td>
+      <td>K_S</td>
+    </tr>
+    <tr>
+      <td align="right">T</td>
+      <td>K_T</td>
+    </tr>
+    <tr>
+      <td align="right">U</td>
+      <td>K_U</td>
+    </tr>
+    <tr>
+      <td align="right">V</td>
+      <td>K_V</td>
+    </tr>
+    <tr>
+      <td align="right">W</td>
+      <td>K_W</td>
+    </tr>
+    <tr>
+      <td align="right">X</td>
+      <td>K_X</td>
+    </tr>
+    <tr>
+      <td align="right">Y</td>
+      <td>K_Y</td>
+    </tr>
+    <tr>
+      <td align="right">Z</td>
+      <td>K_Z</td>
+    </tr>
+    <tr>
+      <td align="right">[</td>
+      <td>K_bracketleft</td>
+    </tr>
+    <tr>
+      <td align="right">\</td>
+      <td>K_backslash</td>
+    </tr>
+    <tr>
+      <td align="right">]</td>
+      <td>K_bracketright</td>
+    </tr>
+    <tr>
+      <td align="right">^</td>
+      <td>K_circum</td>
+    </tr>
+    <tr>
+      <td align="right">_</td>
+      <td>K_underscore</td>
+    </tr>
+    <tr>
+      <td align="right">`</td>
+      <td>K_grave</td>
+    </tr>
+    <tr>
+      <td align="right">a</td>
+      <td>K_a</td>
+    </tr>
+    <tr>
+      <td align="right">b</td>
+      <td>K_b</td>
+    </tr>
+    <tr>
+      <td align="right">c</td>
+      <td>K_c</td>
+    </tr>
+    <tr>
+      <td align="right">d</td>
+      <td>K_d</td>
+    </tr>
+    <tr>
+      <td align="right">e</td>
+      <td>K_e</td>
+    </tr>
+    <tr>
+      <td align="right">f</td>
+      <td>K_f</td>
+    </tr>
+    <tr>
+      <td align="right">g</td>
+      <td>K_g</td>
+    </tr>
+    <tr>
+      <td align="right">h</td>
+      <td>K_h</td>
+    </tr>
+    <tr>
+      <td align="right">i</td>
+      <td>K_i</td>
+    </tr>
+    <tr>
+      <td align="right">j</td>
+      <td>K_j</td>
+    </tr>
+    <tr>
+      <td align="right">k</td>
+      <td>K_k</td>
+    </tr>
+    <tr>
+      <td align="right">l</td>
+      <td>K_l</td>
+    </tr>
+    <tr>
+      <td align="right">m</td>
+      <td>K_m</td>
+    </tr>
+    <tr>
+      <td align="right">n</td>
+      <td>K_n</td>
+    </tr>
+    <tr>
+      <td align="right">o</td>
+      <td>K_o</td>
+    </tr>
+    <tr>
+      <td align="right">p</td>
+      <td>K_p</td>
+    </tr>
+    <tr>
+      <td align="right">q</td>
+      <td>K_q</td>
+    </tr>
+    <tr>
+      <td align="right">r</td>
+      <td>K_r</td>
+    </tr>
+    <tr>
+      <td align="right">s</td>
+      <td>K_s</td>
+    </tr>
+    <tr>
+      <td align="right">t</td>
+      <td>K_t</td>
+    </tr>
+    <tr>
+      <td align="right">u</td>
+      <td>K_u</td>
+    </tr>
+    <tr>
+      <td align="right">v</td>
+      <td>K_v</td>
+    </tr>
+    <tr>
+      <td align="right">w</td>
+      <td>K_w</td>
+    </tr>
+    <tr>
+      <td align="right">x</td>
+      <td>K_x</td>
+    </tr>
+    <tr>
+      <td align="right">y</td>
+      <td>K_y</td>
+    </tr>
+    <tr>
+      <td align="right">z</td>
+      <td>K_z</td>
+    </tr>
+    <tr>
+      <td align="right">{</td>
+      <td>K_braceleft</td>
+    </tr>
+    <tr>
+      <td align="right">|</td>
+      <td>K_bar</td>
+    </tr>
+    <tr>
+      <td align="right">}</td>
+      <td>K_braceright</td>
+    </tr>
+    <tr>
+      <td align="right">~</td>
+      <td>K_tilde</td>
+    </tr>
+    <tr>
+      <td align="right">Esc</td>
+      <td>K_ESC</td>
+    </tr>
+    <tr>
+      <td align="right">Enter</td>
+      <td>K_CR</td>
+    </tr>
+    <tr>
+      <td align="right">BackSpace</td>
+      <td>K_BS</td>
+    </tr>
+    <tr>
+      <td align="right">Insert</td>
+      <td>K_INS</td>
+    </tr>
+    <tr>
+      <td align="right">Del</td>
+      <td>K_DEL</td>
+    </tr>
+    <tr>
+      <td align="right">Tab</td>
+      <td>K_TAB</td>
+    </tr>
+    <tr>
+      <td align="right">Home</td>
+      <td>K_HOME</td>
+    </tr>
+    <tr>
+      <td align="right">Up Arrow</td>
+      <td>K_UP</td>
+    </tr>
+    <tr>
+      <td align="right">PgUp</td>
+      <td>K_PGUP</td>
+    </tr>
+    <tr>
+      <td align="right">Left Arrow</td>
+      <td>K_LEFT</td>
+    </tr>
+    <tr>
+      <td align="right">Middle</td>
+      <td>K_MIDDLE</td>
+    </tr>
+    <tr>
+      <td align="right">Right Arrow</td>
+      <td>K_RIGHT</td>
+    </tr>
+    <tr>
+      <td align="right">End</td>
+      <td>K_END</td>
+    </tr>
+    <tr>
+      <td align="right">Down Arrow</td>
+      <td>K_DOWN</td>
+    </tr>
+    <tr>
+      <td align="right">PgDn</td>
+      <td>K_PGDN</td>
+    </tr>
+    <tr>
+      <td align="right">Pause</td>
+      <td>K_PAUSE</td>
+    </tr>
+    <tr>
+      <td align="right">Print Screen</td>
+      <td>K_Print</td>
+    </tr>
+    <tr>
+      <td align="right">Context Menu</td>
+      <td>K_Menu</td>
+    </tr>
+    <tr>
+      <td align="right">´</td>
+      <td>K_acute</td>
+    </tr>
+    <tr>
+      <td align="right">ç</td>
+      <td>K_ccedilla</td>
+    </tr>
+    <tr>
+      <td align="right">F1</td>
+      <td>K_F1</td>
+    </tr>
+    <tr>
+      <td align="right">F2</td>
+      <td>K_F2</td>
+    </tr>
+    <tr>
+      <td align="right">F3</td>
+      <td>K_F3</td>
+    </tr>
+    <tr>
+      <td align="right">F4</td>
+      <td>K_F4</td>
+    </tr>
+    <tr>
+      <td align="right">F5</td>
+      <td>K_F5</td>
+    </tr>
+    <tr>
+      <td align="right">F6</td>
+      <td>K_F6</td>
+    </tr>
+    <tr>
+      <td align="right">F7</td>
+      <td>K_F7</td>
+    </tr>
+    <tr>
+      <td align="right">F8</td>
+      <td>K_F8</td>
+    </tr>
+    <tr>
+      <td align="right">F9</td>
+      <td>K_F9</td>
+    </tr>
+    <tr>
+      <td align="right">F10</td>
+      <td>K_F10</td>
+    </tr>
+    <tr>
+      <td align="right">F11</td>
+      <td>K_F11</td>
+    </tr>
+    <tr>
+      <td align="right">F12</td>
+      <td>K_F12</td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

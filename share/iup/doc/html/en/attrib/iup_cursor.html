@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>CURSOR</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	background-color: #FFFFFF;
+}
+.style2 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>CURSOR<span class="style2">&nbsp;(non inheritable) </span> </h2>
+<p>Defines the element's cursor.</p>
+<h3>Value</h3>
+<p>Name of a cursor. </p>
+<p>It will check first for the following predefined names:</p>
+  <table align="center">
+    <tr>
+      <th width="35" height="27" class="style1">
+      <img border="0" src="images/win_logo.png"></th>
+      <th width="35" height="27" class="style1">
+      <img border="0" src="images/x-win_logo.gif"></th>
+      <th>Name</th>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">&nbsp;</td>
+      <td width="35" height="27" align="center">&nbsp;</td>
+      <td>&quot;NONE&quot; or &quot;NULL&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_arrow.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_arrow.gif" width="24" height="24"></td>
+      <td>&quot;ARROW&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_busy.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_busy.gif" width="24" height="24"></td>
+      <td>&quot;BUSY&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_cross.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_cross.gif" width="24" height="24"></td>
+      <td>&quot;CROSS&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_hand.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_hand.gif" width="24" height="24"></td>
+      <td>&quot;HAND&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_help.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_help.gif" width="24" height="24"></td>
+      <td>&quot;HELP&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_move.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_move.gif" width="24" height="24"></td>
+      <td>&quot;MOVE&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_pen.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_pen.gif" width="24" height="24"></td>
+      <td>&quot;PEN&quot; (*)</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_ns.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_n.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_N&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_ns.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_s.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_S&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_ns.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_ns.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_NS&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_we.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_w.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_W&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_we.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_e.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_E&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_we.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_we.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_WE&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_nesw.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_ne.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_NE&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_nesw.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_sw.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_SW&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_nwse.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_nw.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_NW&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_resize_nwse.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_resize_se.gif" width="24" height="24"></td>
+      <td>&quot;RESIZE_SE&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_text.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_text.gif" width="24" height="24"></td>
+      <td>&quot;TEXT&quot;</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_appstarting.gif" width="24" height="29"></td>
+      <td width="35" height="27" align="center">----</td>
+      <td>&quot;APPSTARTING&quot; (Windows Only)</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_no.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">----</td>
+      <td>&quot;NO&quot; (Windows Only)</td>
+    </tr>
+    <tr>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/wcursor_uparrow.gif" width="24" height="24"></td>
+      <td width="35" height="27" align="center">
+      <img border="0" src="images/xcursor_uparrow.gif" width="24" height="24"></td>
+      <td>&quot;UPARROW&quot;</td>
+    </tr>
+  </table>
+
+<p>Default:
+  &quot;ARROW&quot;</p>
+<p>(*) To use these cursors on Windows, the <b>iup.rc</b> file, provided with IUP, must be linked with the application 
+  (except when using the IUP DLL). </p>
+<p>The GTK cursors have the same appearance of the X-Windows cursors. Althought 
+GTK cursors can have more than 2 colors depending on the X-Server.</p>
+<p>If it is not a pre-defined name, then will check for other system cursors. In Windows the value will be used to 
+  load a cursor form the application resources. In Motif the value will be used as a X-Windows cursor number, see 
+  definitions in the X11 header &quot;cursorfont.h&quot;. In GTK the value will be used as a 
+cursor name, see the GDK 
+  documentation on Cursors. </p>
+<p>If no system cursors were found then the value will be used to try to find an IUP image with the same name. Use 
+  <b>IupSetHandle</b> to define a name for an <b>IupImage</b>. But the image will need an extra attribute and some specific 
+  characteristics, see notes below.</p>
+<h3>Notes</h3>
+<p>For an image to represent a cursor, it should 
+  has the attribute &quot;<b>HOTSPOT&quot;</b> to define the cursor hotspot 
+(place where the mouse click is actually effective). The default value is &quot;0:0&quot;.</p>
+<p>Usually only color indices 0, 1 and 2 can be used in a cursor, where 0 will 
+be transparent (must be &quot;BGCOLOR&quot;). The RGB colors corresponding to indices 1 and 2 are defined just 
+as in regular images. In Windows and GTK the cursor can have more than 2 colors. 
+Cursor sizes are usually less than or equal to 32x32.</p>
+<p>The cursor will only change when the interface system regains control or when IupFlush is called.</p>
+<p>The Windows SDK recommends that cursors and icons should be implemented as resources rather than created at run 
+  time.</p>
+<p>When the cursor image is no longer 
+  necessary, it must be destroyed through function 
+  <a href="../func/iupdestroy.html">IupDestroy</a>.
+  Attention: the cursor cannot be in use when 
+  it is destroyed. </p>
+<h3>Affects</h3>
+<p><a href="../dlg/iupdialog.html">IupDialog</a>,
+  <a href="../elem/iupcanvas.html">IupCanvas</a></p>
+<h3>See Also</h3>
+<p><a href="../elem/iupimage.html">IupImage</a></p>
+
+</body>
+
+</html>

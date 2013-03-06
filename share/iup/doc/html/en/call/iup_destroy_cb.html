@@ -1,0 +1,27 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>DESTROY_CB</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>DESTROY_CB</h2>
+<p>Called right before an element is destroyed.</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<b>ih</b>); [in C]
+<strong>elem</strong>:destroy_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that activated the event.</p>
+<h3>Notes</h3>
+<p>For language binding implementations use the callback name &quot;LDESTROY_CB&quot; to 
+release memory allocated by the binding for the element. This callback will be 
+called before &quot;DESTROY_CB&quot;.</p>
+<h3>Affects</h3>
+<p>All.</p>
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetInt</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetInt</h2>
+<p>Returns the value of an interface element attribute 
+  as an integer.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupGetInt(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>);   [in C] - first integer found on string
+int IupGetInt2(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>);  [in C] - second integer found on string
+int IupGetIntInt(Ihandle *<strong>ih</strong>, const char *<strong>name, int *i1, int *i2</strong>);  [in C] - first and second integers found on string
+int IupGetIntId(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>, int <strong>id</strong>);             [in C]
+int IupGetIntId2(Ihandle* <strong>ih</strong>, const char* <strong>name</strong>, int <strong>lin</strong>, int <strong>col</strong>);  [in C]
+[There is no equivalent in Lua]</pre>
+<p><b>ih</b>: Identifier of the interface element.<br>
+<b>name</b>: name of the attribute.<br>
+<strong>id, lin, col</strong>: used when the attribute has additional ids.</p>
+<p><span class="style1">Returns:</span> the attribute value or 0 if not found. &quot;IntInt&quot; returns the number of integers found.</p>
+<h3>Notes</h3>
+<p>In the first form, if the attribute value is
+  &quot;YES&quot;/&quot;NO&quot; or 
+  &quot;ON&quot;/&quot;OFF&quot;, the function returns 1 /
+  0, respectively.</p>
+<h3>See Also</h3>
+<p><a href="iupgetattribute.html">IupGetAttribute</a>, 
+<a href="iupgetfloat.html">IupGetFloat</a>.</p>
+
+</body>
+
+</html>

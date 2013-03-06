@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Eclipse for C++ Guide</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<h2 align="center" style="text-align:center">Eclipse for  C++ Project Properties 
+Guide</h2>
+<h3 align="center">
+<a href="http://www.eclipse.org/">http://www.eclipse.org/</a> </h3>
+<p>This guide was built using Eclipse 3.3 IDE for C/C++ Developers in Windows 
+(but similar configuration can be applied for Linux).</p>
+<p>To create a new project go to the menu &quot;File / New / C or C++ Project&quot;:</p>
+<p align="center"><a href="eclipse1.png">
+<img border="2" src="eclipse1_small.png" xthumbnail-orig-image="eclipse1.png" width="200" height="203"></a></p>
+<p>You can use the MingW3 or Cygwin compiler. Just use the respective IUP 
+binaries package: &quot;mingw3&quot; or &quot;gcc3&quot;.</p>
+<p>Then add your files to the projet folder if they are not already there.</p>
+<p>After creating the project you must configure it to find the IUP includes and 
+libraries.</p>
+<p>Go the menu &quot;Project / Properties&quot;, then to configure the include files 
+  location select &quot;GCC C Compiler / Directories&quot; in the left tree, then 
+add the list of folders in &quot;Include Paths&quot;.</p>
+<p align="center"><a href="eclipse2.png">
+<img border="2" src="eclipse2_small.png" xthumbnail-orig-image="eclipse2.png" width="200" height="173"></a></p>
+<p>Be aware that you will have to repeat the configuration for the C++ compiler.</p>
+<p>To configure the library files location select &quot;MinGW C++ Linker / 
+Libraries&quot; in the 
+  left tree, then add the list of folders in &quot;Library Search Path&quot; and 
+add the add the list of folders in &quot;Libraries&quot;.</p>
+<p align="center"><a href="eclipse3.png">
+<img border="2" src="eclipse3_small.png" xthumbnail-orig-image="eclipse3.png" width="200" height="173"></a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetClassDefaultAttribute</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style3 {
+	background-color: #CEE7FF;
+}
+</style>
+</head>
+<body>
+
+<h2>IupSetClassDefaultAttribute <span class="style1">(Since 3.0)</span></h2>
+<p>Changes the default value of an attribute for a class. It can be any 
+attribute, i.e. registered attributes or user custom attributes.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupSetClassDefaultAttribute(const char* <strong>classname, </strong>const char *<strong>name</strong>, const char *<strong>value</strong>); [in C]
+iup.SetClassDefaultAttribute(<strong>classname, name, value</strong>: <span class="style3">string</span>) [in Lua]</pre>
+<p>
+  <b>classname</b>: name of the class
+<b><br>
+name</b>: name of the attribute<br>
+<b>value</b>: new default value.</p>
+<h3>Notes</h3>
+<p>If the value is DEFAULTFONT, DLGBGCOLOR, DLGFGCOLOR, TXTBGCOLOR, TXTFGCOLOR or 
+MENUBGCOLOR then the actual default value will be the global attribute of the 
+same name consulted at the time the attribute is consulted.</p>
+<p>Attributes that are not strings and attributes that have variable names, like 
+those which has a complementary number, can NOT have a default value. Some 
+attributes can NOT have a default value by definition.</p>
+<p>If the new default value is (char*)-1, then the default value is set to be 
+the system default if any is defined.</p>
+<h3>See Also</h3>
+<p>
+<a href="iupgetclassname.html">IupGetClassName</a>,
+<a href="iupgetclasstype.html">IupGetClassType</a>,
+<a href="iupgetallattributes.html">IupGetAllAttributes</a></p>
+
+</body>
+
+</html>

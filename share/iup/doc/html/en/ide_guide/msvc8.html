@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Visual C++ 8 Guide</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<h2 align="center" style="text-align:center">Visual C++ 8 IDE Project Properties 
+Guide</h2>
+<h3 align="center">
+<a href="http://msdn2.microsoft.com/en-us/vstudio/default.aspx">
+http://msdn2.microsoft.com/en-us/vstudio/default.aspx</a> <br>
+<a href="http://msdn.microsoft.com/vstudio/express/downloads/">
+http://msdn.microsoft.com/vstudio/express/downloads/</a> (free version)</h3>
+<p>This guide was built using Microsoft Visual Studio  2005, which 
+  includes Visual C++ 8. Also works for Visual Studio Express Edition.</p>
+<p>To create a new project go to the menu &quot;File / New / Project&quot;:</p>
+<p align="center"><a href="msvc2005a.png">
+<img border="2" src="msvc2005a_small.png" xthumbnail-orig-image="msvc2005a.png" width="200" height="133"></a></p>
+<p>Select &quot;Win32 Project&quot; on the Templates. Before finishing the Wizard, 
+  select &quot;Application Settings&quot;. Mark &quot;Windows application&quot; 
+and &quot;Empty project&quot;.</p>
+<p align="center"><a href="msvc2005b.png">
+<img border="2" src="msvc2005b_small.png" xthumbnail-orig-image="msvc2005b.png" width="200" height="144"></a></p>
+<p>You can also create a &quot;Console application&quot;, and whenever you execute your 
+  application a text console will also be displayed. This is a very useful 
+  situation so you can the use standard C printf functions to display textual 
+  information for debugging purposes.</p>
+<p>Then add your files in the menu &quot;Project / Add New Item&quot; or &quot;Project / Add 
+  Existing Item&quot;.</p>
+<p>After creating the project you must configure it to find the IUP includes 
+  and libraries. In Visual Studio there are two places where you can do this.</p>
+<p>One is in the menu &quot;Tools / Options&quot;, then select &quot;Project and 
+Solutions / Visual C++ 
+  Directories&quot;. Select &quot;Include Files&quot; or &quot;Library Files&quot; in &quot;Show directories 
+  for:&quot;. In this dialog you will configure parameters that will affect all the 
+  projects you open.</p>
+<p align="center"><a href="msvc2005c.png">
+<img border="2" src="msvc2005c_small.png" xthumbnail-orig-image="msvc2005c.png" width="200" height="115"></a></p>
+<p>Or you can configure the parameters only for the project you created. In 
+  this case go the menu &quot;Project / Properties&quot;. To configure the include files 
+  location select &quot;Configuration Properties / C/C++ / General&quot; in the left tree, then write the list of 
+  folders separated by &quot;;&quot; in &quot;Additional Include Directories&quot;.</p>
+<p align="center"><a href="msvc2005d.png">
+<img border="2" src="msvc2005d_small.png" xthumbnail-orig-image="msvc2005d.png" width="200" height="135"></a></p>
+<p>To configure the library files location select &quot;Configuration Properties 
+/ Linker / General&quot; in the 
+  left tree, then write the list of folders separated by &quot;;&quot; in &quot;Additional 
+  Library Directories&quot;.</p>
+<p align="center"><a href="msvc2005e.png">
+<img border="2" src="msvc2005e_small.png" xthumbnail-orig-image="msvc2005e.png" width="200" height="135"></a></p>
+<p>Now you must add the libraries you use. In this same dialog, select &quot;Configuration 
+Properties / Linker 
+  / Input&quot; in the left tree, then write the list of files separated by spaces &quot; 
+  &quot; in &quot;Additional Dependencies&quot;.</p>
+<p align="center"><a href="msvc2005f.png">
+<img border="2" src="msvc2005f_small.png" width="200" height="135"></a></p>
+<p>The default configuration use the C run time library with debug 
+  information and in a DLL. The standard IUP binary distribution has two 
+packages for Visual Studio 2005 (or Visual C++ 8). Both do not have debug 
+information, but this could be ignored even if a warning appears in the Output 
+log. To change your project properties go to &quot;Configuration Properties / C/C++ 
+  / Code Generation&quot; in the left tree, then change &quot;Run Time Library&quot; to 
+match the IUP binary package you are using.</p>
+<p align="center"><a href="msvc2005g.png">
+<img border="2" src="msvc2005g_small.png" xthumbnail-orig-image="msvc2005g.png" width="200" height="135"></a></p>
+<p>The &quot;vc8&quot; package includes static libraries without debug information. So to 
+match this package configuration you should select &quot;Multi-threaded (/MT)&quot;.</p>
+<p>The &quot;dll8&quot; package includes dynamic libraries without debug information. So 
+to match this package configuration you should select &quot;Multi-threaded DLL 
+(/MD)&quot;.</p>
+
+<p>When using the &quot;iup.manifest&quot; from &quot;iup.rc&quot;, configure the linker properties 
+of your project to do NOT generate a manifest file or the Windows Visual 
+Styles won't work.</p>
+<p align="center"><a href="msvc2005h.png">
+<img border="2" src="msvc2005h_small.png" xthumbnail-orig-image="msvc2005h.png" width="200" height="135"></a></p>
+
+</body>
+
+</html>

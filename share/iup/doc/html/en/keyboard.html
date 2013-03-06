@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Keyboard</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">
+Keyboard</h2>
+<p>The application can control the focus using the functions <strong>IupGetFocus</strong> 
+and 
+<strong>IupSetFocus</strong>. When the 
+  focus is changed the application is notified trough the callbacks 
+GETFOCUS_CB and 
+KILLFOCUS_CB.</p>
+<p>Keyboard navigation in the dialog uses the &quot;Tab&quot; and &quot;Shilf+Tab&quot; keys to 
+change the keyboard focus from one control to another. The exception is when the 
+focus is at an <strong>IupMultiline</strong> control, to change focus the 
+combination &quot;Ctrl+Tab&quot; must be used, because &quot;Tab&quot; is a valid input for the 
+text. All IUP interactive controls have Tab stops, but the navigation order is 
+related to the order the controls are placed in the dialog and can not be 
+changed. The order is the same implemented by the functions
+  <strong>IupNextField</strong> and 
+<strong>IupPreviousField</strong>. To remove the Tab stop from a control use the 
+CANFOCUS attribute.</p>
+<p>Arrows can also be used for navigation between buttons and toggles. This is 
+necessary because when 
+an <strong>IupToggle</strong> is inside an <strong>IupRadio</strong> the &quot;Tab&quot; keys will 
+navigate only to the selected toggle.</p>
+<p>In Windows, the focus feedback only appears after the user presses a key 
+(except for the <strong>IupText</strong> where the feedback is the caret). 
+Before pressing a key if you click in a control the focus feedback will be NOT 
+be shown although it will be in focus. <strong>IupMatrix</strong> and other 
+additional controls will always show their focus feedback. In GTK and Motif the 
+focus feedback is always shown for the control that has the focus.</p>
+<p>Two keys are also important in keyboard navigation: 
+  &quot;Enter&quot; and &quot;Esc&quot;. But they are only effective if the application register the 
+  attributes DEFAULTENTER and DEFAULTESC of the
+  <a href="dlg/iupdialog.html">IupDialog</a>. These attributes configure buttons 
+to be activated when the respective key is pressed. Again &quot;Enter&quot; is a valid key 
+for the Multiline so the combination &quot;Ctrl+Enter&quot; must be used instead. If the 
+focus is at a button then the Enter key will activate that button independent from the DEFAULTENTER attribute.</p>
+<p>Usualy the application will process keyboard input in the 
+  <strong>IupCanvas</strong> using the <a href="elem/iupcanvas.html#Callbacks">KEYPRESS_CB</a> 
+  callback. But there is also the <a href="call/iup_k_any.html">K_ANY</a> 
+  callback that can be used for all the controls, but it does not have control 
+  of the press state, it is called only when the key is pressed. Both callbacks use the key codification explained in
+  <a href="attrib/key.html">Keyboard Codes</a>. These codes are also used in the
+  ACTION callbacks of <strong>IupText</strong> 
+  and <strong>IupMultiline</strong>, and in 
+  shortcuts using the KEY attribute of <strong>IupItem</strong> and 
+<strong>IupSubmenu</strong>. Finally all the keyboard 
+  codes can be used as callback names to implement application hot keys.</p>
+
+</body>
+
+</html>

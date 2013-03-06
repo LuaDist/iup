@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Layout Guide</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+.style2 {
+	border-width: 0;
+}
+</style>
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">Layout Guide</h2>
+<h3><a name="native">Native Sizes (Window and Client)</a></h3>
+<p>Because of the dynamic nature of the abstract layout IUP elements have implicit many types of size. But the native 
+  elements have only two types of size: <b>Window</b> and <b>Client</b>. The <b>Window</b> size reflects the bounding 
+  rectangle of the element. The <b>Client</b> size reflects the inner size of the window that excludes the decorations 
+  and margins. For many elements these two sizes are equal, but for many containers they are quite different. See some 
+  examples below.</p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="0" cellspacing="1" width="100%">
+    <tr>
+      <td width="33%" class="style2">
+      <p align="center">
+      <img border="0" src="images/nativesize1.gif" width="297" height="199"></td>
+      <td width="33%" class="style2">
+      <p align="center">
+      <img border="0" src="images/nativesize2.gif" width="210" height="146"></td>
+      <td width="34%" class="style2">
+      <p align="center">
+      <img border="0" src="images/nativesize3.gif" width="268" height="204"></td>
+    </tr>
+  </table>
+  </center></div>
+<p>The IUP sizes (<strong>User</strong>, <strong>Natural</strong> and <strong>
+Current</strong>) described below are all related to the <strong>Window</strong> 
+size. </p>
+<p>The native <b>Client</b> size is used only internally to reposition the elements in the abstract layout, but it is 
+  available using the CLIENTSIZE attribute.</p>
+<h3><a name="iup">IUP Sizes</a></h3>
+<h4>Natural Size</h4>
+<p>IUP does not require that the application specifies the size of any element. The sizes are automatically calculated 
+  so the contents of each element is fully displayed. This size is called <b>Natural</b> size. The 
+<b>Natural</b> size 
+  is calculated just before the element is mapped to the native system and every 
+time <strong>IupMap</strong> is called, even if the element is already mapped.</p>
+<p>The <b>Natural</b> size of a container is the size that allows all the elements inside the 
+container to be fully 
+  displayed.
+<span class="style1">Important</span>: even if the element is invisible its size 
+will be included in the size of its containers, except when FLOATING=Yes.</p>
+<p>So consider the following code and its result. Each button size is large enough to display their respective text. 
+  If the dialog size is increased or reduced by the size handlers in the dialog borders the buttons do not move or 
+  change their sizes.</p>
+<p>But notice that some controls do not have contents that can provide a <strong>
+Natural</strong> size. In this case they usually have SIZE or RASTERSIZE 
+pre-set.</p>
+<p>To obtain the last computed <strong>Natural</strong> size of the control in pixels, use the read-only 
+attribute <strong>NATURALSIZE</strong>.</p>
+  <table border="0" cellpadding="0" cellspacing="6" width="50%" id="AutoNumber2">
+    <tr>
+      <td width="50%" class="style2">
+      <pre>dlg = iup.dialog
+{
+  iup.vbox
+  {
+    iup.button{title=&quot;Button Very Long Text&quot;},
+    iup.button{title=&quot;short&quot;},
+    iup.button{title=&quot;Mid Button&quot;}
+  }
+  ;title=&quot;IupDialog&quot;, font=&quot;Helvetica, Bold 14&quot; 
+}
+dlg:show()</pre>
+      </td>
+      <td width="50%" class="style2">
+      <img border="0" src="images/naturalsize.gif" width="251" height="179"></td>
+    </tr>
+  </table>
+<h4>Current Size and User Size (SIZE or RASTERSIZE)</h4>
+<p>When the application defines the <a href="attrib/iup_size.html">SIZE</a> or 
+<a href="attrib/iup_rastersize.html">RASTERSIZE</a> attributes, it changes 
+the <b>User</b> size in IUP. The initial 
+internal value is &quot;0x0&quot;. When set to NULL the <b>User</b> size is 
+internally  set to &quot;0x0&quot;.</p>
+<p>By default the layout computation uses the <strong>Natural</strong> size of 
+the elements to compose the layout of the dialog, but if the <strong>User</strong> 
+size is defined then it is used <span class="style1">instead</span> of the <strong>Natural</strong> size, 
+except for containers (not including the dialog) where the <strong>User</strong> 
+size will be used only if <span class="style1">bigger</span> than the <strong>Natural</strong> size. For the 
+dialog, when the <strong>User</strong> size is not defined, the <strong>Natural</strong> 
+size is used only if <span class="style1">bigger</span> than the <strong>Current</strong> size, so in this 
+case the dialog will automatically increase its size to fit all its contents, 
+but if the <strong>Natural</strong> size is smaller then the dialog size will 
+remains the same, i.e. the dialog will not automatically shrink its size.</p>
+<p>The returned value for SIZE or RASTERSIZE is the <b>Current</b> size in IUP. 
+It returns the native 
+<b>Window</b> size of the element after the element is mapped to the native system. Before mapping, the returned value is the
+<b>User</b> size defined by SIZE or RASTERSIZE 
+  attributes if any, otherwise they are NULL.</p>
+<p>Defining the SIZE attribute of the buttons in the example we can make all have the same size. (In the following 
+  example the dialog size was changed after it was displayed on screen)</p>
+<table border="0" cellpadding="0" cellspacing="6" width="50%" id="AutoNumber2">
+	<tr>
+		<td width="50%" class="style2">
+		<pre>dlg = iup.dialog
+{
+  iup.vbox
+  {
+    iup.button{title=&quot;Button Very Long Text&quot;, <b>size=&quot;50x&quot;</b>},
+    iup.button{title=&quot;short&quot;, <b>size=&quot;50x&quot;</b>},
+    iup.button{title=&quot;Mid Button&quot;, <b>size=&quot;50x&quot;</b>}
+  }
+  ;title=&quot;IupDialog&quot;, font=&quot;Helvetica, Bold 14&quot; 
+}
+dlg:show()</pre>
+		</td>
+		<td width="50%" class="style2">
+		<img border="0" src="images/usersize.gif" width="279" height="214"></td>
+	</tr>
+</table>
+<p>So when EXPAND=NO (see below) for elements that are not containers if&nbsp; 
+<b>User</b> size is defined then the <b>Natural</b> size is ignored.</p>
+<p>If you want to adjust sizes in the dialog do it after the layout size and 
+positioning are done, i.e. after the dialog is mapped or after <b>IupRefresh</b> is 
+called.</p>
+<h4>EXPAND</h4>
+<p>Another way to increase the size of elements is to use the EXPAND attribute. When there is room in the container to 
+  expand an element, the container layout will expand the elements that have the EXPAND attribute set to YES, HORIZONTAL 
+  or VERTICAL accordingly, even if they have the <b>User</b> size defined.</p>
+<p>The default is EXPAND=NO, but for containers is EXPAND=YES.</p>
+<p>Using EXPAND in the example, we obtain the following result:</p>
+<table border="0" cellpadding="0" cellspacing="6" width="50%" id="AutoNumber2">
+	<tr>
+		<td width="50%" class="style2">
+		<pre>dlg = iup.dialog
+{
+  iup.vbox
+  {
+    iup.button{title=&quot;Button Very Long Text&quot;},
+    iup.button{title=&quot;short&quot;, <b>expand=&quot;HORIZONTAL&quot;</b>},
+    iup.button{title=&quot;Mid Button&quot;, <b>expand=&quot;HORIZONTAL&quot;</b>}
+  }
+  ;title=&quot;IupDialog&quot;, font=&quot;Helvetica, Bold 14&quot; 
+}
+dlg:show()</pre>
+		</td>
+		<td width="50%" class="style2">
+		<img border="0" src="images/expand.gif" width="251" height="179"></td>
+	</tr>
+</table>
+
+<p>So for elements that are NOT containers, when EXPAND is enabled the <b>
+Natural</b> size and the <b>User</b> size are ignored.</p>
+<p>For containers the default behavior is to always expand or if expand is 
+disabled they are limited to the <b>Natural</b> size. As a consequence (if the
+<b>User</b> size is not defined in all the elements) the dialog contents can 
+only expand and its minimum size is the <b>Natural</b> size, even if EXPAND is 
+enabled for its elements. In fact the actual dialog size can be smaller, but its 
+contents will stop to follow the resize and they will be clipped at right and 
+bottom.</p>
+<p align="center">
+<img border="0" src="images/no_shrink.gif" width="153" height="189"></p>
+<p>
+If the expansion is in the same direction of the box, for instance 
+expand=&quot;VERTICAL&quot; in the Vbox of the previous example, then the expandable 
+elements will receive equal spaces to expand according to the remaining empty 
+space in the box. This is why elements in diferent boxes does not align 
+perfectly when EXPAND is set.</p>
+<h4>SHRINK</h4>
+<p>To reduce the size of the dialog and its containers to a size smaller than the
+<b>Natural</b> size the SHRINK attribute of the dialog can be used. If set to 
+YES all the containers of the dialog will be able to reduce its size. But be 
+aware that elements may overlap and the layout result could be visually bad if 
+the dialog size is smaller than its <strong>Natural</strong> size.</p>
+
+<p>Notice that in the example the dialog inicial size will be 0x0 because it is 
+not defined. The picture shown was captured after manually resizing the dialog. So when using 
+SHRINK usually you will also need to set the dialog initial size.</p>
+
+<table border="0" cellpadding="0" cellspacing="6" width="50%">
+	<tr>
+		<td width="50%" class="style2">
+		<pre>dlg = iup.dialog
+{
+  iup.vbox
+  {
+    iup.button{title=&quot;Button Very Long Text&quot;},
+    iup.button{title=&quot;short&quot;, expand=&quot;HORIZONTAL&quot;},
+    iup.button{title=&quot;Mid Button&quot;, expand=&quot;HORIZONTAL&quot;}
+  }
+  ;title=&quot;IupDialog&quot;, <b>shrink=&quot;yes&quot;,</b> font=&quot;Helvetica, Bold 14&quot; 
+}
+dlg:show()</pre>
+		</td>
+		<td width="50%" class="style2">
+		<img border="0" src="images/shrink.gif" width="153" height="189"></td>
+	</tr>
+</table>
+
+<h3>Layout <a name="Hierarchy">Hierarchy</a></h3>
+<p>The layout of the elements of a dialog in IUP has a natural hierarchy because of the way they are composed 
+  together.  </p>
+<p>To create a node simply call one of the pre-defined constructors like <b>
+IupLabel</b>, <b>IupButton</b>, <b>IupCanvas</b>, and so on. To create a branch 
+just call the constructors of containers like <b>IupDialog</b>, <b>IupFrame</b>,
+<b>IupVBox</b>, and so on. Internally they all call
+<a href="func/iupcreate.html">IupCreate</a> to create branches or nodes. To 
+destroy a node or branch call <a href="func/iupdestroy.html">IupDestroy</a>.</p>
+<p>Some of the constructors already append children to its branch, but you can 
+add other children using <a href="func/iupappend.html">IupAppend</a> or
+<a href="func/iupinsert.html">IupInsert</a>. To 
+remove from the tree call <a href="func/iupdetach.html">IupDetach</a>.</p>
+<p>For the element to be visible <a href="func/iupmap.html">IupMap</a> must be 
+called so it can be associated with a native control. <b>IupShow</b>, <b>
+IupShowXY</b> or <b>IupPopup</b> will automatically call <b>IupMap</b> before 
+showing a dialog. To remove this association call <a href="func/iupumap.html">
+IupUnmap</a>.</p>
+<p>But there is a call order to be able to call theses functions that depends on 
+the state of the element. As you can see from these functions there are 3 
+states: <b>created</b>, <b>appended</b> and <b>mapped</b>. From <b>created</b> 
+to <b>mapped</b> it is performed one step at a time. Even when the constructor 
+receives the children as a parameter <b>IupAppend</b> is called internally. When 
+you <b>detach</b> an element it will be automatically <b>unmapped</b> if 
+necessary. When you <b>destroy</b> an element it will be automatically <b>
+detached</b> if necessary. So explicity or implicity there will be a call to:</p>
+<pre>IupCreate  -&gt; IupAppend -&gt; IupMap
+IupDestroy &lt;- IupDetach &lt;- IupUnmap</pre>
+<p>A more simple and fast way to move an element from one position in the 
+hierarchy to another is using <a href="func/iupreparent.html">IupReparent</a>.</p>
+<p>The dialog is the root of the hierarchy tree. To retrieve the dialog of any 
+element you can simply call
+  <a href="func/iupgetdialog.html">IupGetDialog</a>, but there are other ways to navigate in the hierarchy tree.</p>
+<p>To get all the children of a container call <a href="func/iupgetchild.html">
+IupGetChild</a> or 
+<a href="func/iupgetnextchild.html">IupGetNextChild</a>. To get just the next control with the same parent use 
+<a href="func/iupgetbrother.html">IupGetBrother</a>. To get the parent of a 
+control call <a href="func/iupgetparent.html">IupGetParent</a>.</p>
+<p>In Lua, if the element was created in Lua, you can access any child of the 
+element using the notation &quot;elem[n][n]....&quot;, where n is the index of the child. 
+For example:</p>
+<pre>
+dlg = iup.dialog
+{
+  iup.hbox
+  {
+    iup.button{title="Ok&quot;}, 
+    iup.button{title="Cancel&quot;},
+  }
+}
+cancel_button = dlg[1][2]
+</pre>
+<h3>Layout <a name="Display">Display</a></h3>
+<p>The layout size and positioning is automatically updated by <b>IupMap</b>.
+  <b>IupMap</b> also updates the dialog layout 
+  even if it is already mapped, so using it or using <b>IupShow</b>, 
+  <b>IupShowXY</b> or 
+  <b>IupPopup</b> (they all call 
+  <b>IupMap</b>) will also update the dialog layout. The layout size and 
+positioning can be manually updated using 
+  <a href="func/iuprefresh.html">IupRefresh</a>, even if the dialog is not 
+mapped.</p>
+<p>After changing containers attributes or element sizes that affect the layout the elements are NOT immediately repositioned. Call
+  <b>IupRefresh</b> for an element inside the dialog to update the dialog layout. To force a redraw of an element 
+without layout update call
+<a href="func/iupupdate.html">IupUpdate</a>.</p>
+<p>The Layout update is done in two phases. First the layout is computed, this 
+can be done without the dialog being mapped. Second is the native elements 
+update from the computed values.</p>
+<p>The Layout computation is done in 3 steps: <strong>Natural</strong> size 
+computation, update the <strong>Current</strong> size and update the position. </p>
+<ul>
+	<li>The <strong>Natural</strong> size computation is done from the inner elements up 
+to the dialog (first for the children then the element). <strong>User</strong> 
+	size (set by RASTERSIZE or SIZE) is used as the <strong>Natural</strong> 
+	size if defined, if not usually the contents of the element are used to 
+	calculate the <strong>Natural</strong> size.</li>
+	<li>Then the <strong>Current</strong> size is computed starting at the dialog down to 
+the inner elements on the layout hierarchy (first the element then the 
+	children). Children <strong>Current</strong> size is computed according to 
+	layout distribution and containers decoration. At the children if EXPAND is 
+	set, then the size specified by the parent is used, else the natural size is 
+	used. </li>
+	<li>Finally the position is computed starting at the dialog down to the 
+	inner elements on the layout hierarchy, after all sizes are computed.</li>
+</ul>
+
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupHbox</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupHbox</h2>
+
+  <p>
+  Creates a void container for composing elements horizontally. It is a box that arranges the elements it contains 
+	from left to right.</p>
+
+  <p>
+  It does not have a native representation.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupHbox(Ihandle *<strong>child</strong>, ...); [in C]
+Ihandle* IupHboxv(Ihandle **<strong>children</strong>); [in C]
+iup.hbox{<strong>child</strong>, ...: ihandle} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+hbox(<strong>child</strong>, ...) [in LED]</pre>
+  <p><strong>child</strong>,... :
+  List of identifiers that will be placed in 
+  the box. NULL must be used to define the end of the list 
+  in C. It can be empty.</p>
+  <p><u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><b>ALIGNMENT</b> (<font SIZE="3">non inheritable</font>):
+  Aligns the elements vertically. Possible 
+  values: &quot;ATOP&quot;, &quot;ACENTER&quot;, &quot;ABOTTOM&quot;. Default: &quot;ATOP&quot;.</p>
+
+  <p><a href="../attrib/iup_expand.html">EXPAND</a> (<font SIZE="3">non inheritable*</font>):
+  The default value is &quot;YES&quot;. See the documentation of the attribute 
+	for EXPAND inheritance.</p>
+<p><strong>EXPANDCHILDREN</strong> (<font SIZE="3">non inheritable</font>): 
+forces all children to expand vertically. Default: &quot;NO&quot;. This has the 
+same effect as setting EXPAND=VERTICAL on each child, but their horizontal expansion will be 
+preserved. (since 3.0)</p>
+<p><b>GAP, CGAP</b>: Defines an horizontal space in pixels between the 
+	children, <strong>CGAP</strong> is in the same units of the <strong>SIZE</strong> 
+	attribute for the width. Default: &quot;0&quot;. (CGAP since 3.0)</p>
+<p><b>NGAP, NCGAP</b> (<font SIZE="3">non inheritable</font>): Same as <strong>
+GAP</strong> but are non inheritable. (since 3.0)</p>
+<p><strong>HOMOGENEOUS</strong> (<font SIZE="3">non inheritable</font>): forces 
+all children to get equal horizontal space. The natural size width will be based on the largest child. Default: &quot;NO&quot;. 
+Notice that this does not changes the children size, only the available space for 
+each one of them to expand. (since 3.0)</p>
+  <p><b>MARGIN, CMARGIN</b>:
+  Defines a margin in pixels, <b>CMARGIN </b>is in the same units of the <strong>
+	SIZE</strong> attribute. Its value 
+  has the format &quot;<i>width</i>x<i>height</i>&quot;,
+  where <i>
+  width</i> 
+  and <i>height</i> 
+  are integer values corresponding to the horizontal and vertical margins, respectively. Default:
+  &quot;0x0&quot; (no margin). (CMARGIN since 3.0)</p>
+<p><b>NMARGIN, NCMARGIN</b> (<font SIZE="3">non inheritable</font>): Same as
+<strong>MARGIN</strong> but are non inheritable. (since 3.0)</p>
+<p><strong>NORMALIZESIZE</strong> (<font SIZE="3">non inheritable</font>): 
+normalizes all children natural size to be the biggest natural size among them. 
+All natural width will be set to the biggest width, and all natural height will 
+be set to the biggest height according to is value. Can be NO, HORIZONTAL, 
+VERTICAL or BOTH. Default: &quot;NO&quot;. (since 3.0)</p>
+
+
+<p><a href="../attrib/iup_size.html">SIZE</a> /
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a> (<font SIZE="3">non 
+inheritable</font>): Defines the width of the box. When consulted behaves as the 
+standard SIZE/RASTERSIZE attributes. The standard format &quot;wxh&quot; can also be used, 
+but height will be ignored (since 3.3).</p>
+
+  <p><b>WID</b> (read-only): returns -1 if mapped.</p>
+
+  <blockquote>
+    <hr>
+</blockquote>
+
+  <p>
+<a href="../attrib/iup_font.html">FONT</a>,
+    <a href="../attrib/iup_clientsize.html">CLIENTSIZE</a>, 
+	<a href="../attrib/iup_clientoffset.html">CLIENTOFFSET</a>, 
+	<a href="../attrib/iup_position.html">POSITION</a>, 
+<a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>: 
+also accepted.</p>
+
+<h3>Attributes (at Children)</h3>
+
+<p><strong>EXPANDWEIGHT</strong> (<font SIZE="3">non inheritable</font>) <strong>(at children only)</strong>: 
+If a child defines the expand weight, then it is used to multiply the free space 
+used for expansion. (since 3.1) </p>
+
+  <p><a href="../attrib/iup_floating.html">FLOATING</a> (<font SIZE="3">non inheritable</font>) <strong>(at children only)</strong>: 
+	If a child has FLOATING=YES then its size and position will be ignored by 
+	the layout processing. Default: &quot;NO&quot;. (since 
+	3.0)</p>
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>The box can be created with no elements and be dynamic filled using
+  <a href="../func/iupappend.html">IupAppend</a> or
+<a href="../func/iupinsert.html">IupInsert</a>.</p>
+<p>The box will NOT expand its children, it will allow its children to expand 
+according to the space left in the box parent. So for the expansion to occur, 
+the children must be expandable with EXPAND!=NO, and there must be room in the 
+box parent.</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p align="center"><img src="images/iuphbox_align.png"></p>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="6" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td valign="top"><br><img src="images/iuphbox.png"></td>
+      <td valign="top">HOMOGENEOUS=YES<br>
+<img src="images/iuphbox_homogeneous.png"></td>
+      <td valign="top">EXPANDCHILDREN=YES<br>
+<img src="images/iuphbox_expandchildren.png"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="iupzbox.html">IupZbox</a>, <a href="iupvbox.html">IupVBox</a></p>
+
+
+</body>
+
+</html>

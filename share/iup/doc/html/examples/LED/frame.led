@@ -1,0 +1,5 @@
+#IupFrame Example in LED 
+#Draws a frame around a horizontally centralized button.
+
+
+caixa_moldura = frame(hbox(fill(), button ("Ok", acao_ok), fill()))

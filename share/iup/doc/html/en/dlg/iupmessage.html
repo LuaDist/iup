@@ -1,0 +1,37 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMessage</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupMessage</h2>
+<p>Shows a modal dialog containing a message. It simply creates and popup a <b>IupMessageDlg</b>.</p>
+<h3>Creation and Show</h3>
+<pre>void IupMessage(const char *<strong>title</strong>, const char *<strong>message</strong>); [in C]
+iup.Message(<strong>title</strong>: string, <strong>message</strong>: string) [in Lua]</pre>
+<p><strong>title</strong>: dialog title<br>
+<strong>message</strong>: text message contents</p>
+<h3>Notes</h3>
+<p>The <b>IupMessage</b> function shows a dialog centralized on the screen, showing the message and the &#8220;OK&#8221; 
+  button. The &#8216;\n&#8217; character can be added to the message to indicate line change. 
+</p>
+<p>In C there is an utility function to help build the message string, it accepts the same format as the C 
+<b>sprintf</b>:</p>
+<pre>void <b>IupMessagef</b>(const char *<strong>title</strong>, const char *<strong>format, ...</strong>); [in C]</pre>
+<p>The dialog uses a global attribute called &quot;PARENTDIALOG&quot; as the parent dialog if it is defined. It also uses a 
+  global attribute called &quot;ICON&quot; as the dialog icon if it is defined (used only in Motif, in Windows MessageBox does not 
+  have an icon in the title bar).</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<h3>See Also</h3>
+<p><a href="iupgetfile.html">IupGetFile</a>, <a href="iupscanf.html">IupScanf</a>,
+  <a href="iuplistdialog.html">IupListDialog</a>, <a href="iupalarm.html">IupAlarm</a>,
+<a href="iupmessagedlg.html">IupMessageDlg</a></p>
+
+</body>
+
+</html>

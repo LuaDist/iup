@@ -1,0 +1,265 @@
+#You must compile iuptabsled.c to use this code
+exemplo6 = Hbox
+[
+  TABTITLE="Exemplo 6",
+]
+(
+ Fill(),
+ Vbox
+ (
+  Fill(),
+  Label("Criação de um Tabs em C"),
+  Fill(),
+  Button("Clique Aqui", tabs_em_c),
+  Fill()
+ ),
+ Fill()
+)
+
+#
+# Example of Tabs with several elements
+#
+
+exemplo5 = Hbox
+[
+  TABTITLE="Exemplo 5",
+  MARGIN=4x4,
+  GAP=2
+]
+(
+ Fill(),
+ Vbox[GAP=2]
+ (
+  Fill(),
+  Label("Tabs com muitos elementos"),
+  Fill(),
+  Tabs[TABTYPE=TOP]
+  (
+   Label[TABTITLE="A"]("NONONONONONO"),
+   Label[TABTITLE="B"]("NONONONONONO"),
+   Label[TABTITLE="C"]("NONONONONONO"),
+   Label[TABTITLE="D"]("NONONONONONO"),
+   Label[TABTITLE="E"]("NONONONONONO"),
+   Label[TABTITLE="F"]("NONONONONONO"),
+   Label[TABTITLE="G"]("NONONONONONO"),
+   Label[TABTITLE="H"]("NONONONONONO"),
+   Label[TABTITLE="I"]("NONONONONONO"),
+   Label[TABTITLE="J"]("NONONONONONO"),
+   Label[TABTITLE="K"]("NONONONONONO"),
+   Label[TABTITLE="L"]("NONONONONONO"),
+   Label[TABTITLE="M"]("NONONONONONO"),
+   Label[TABTITLE="N"]("NONONONONONO"),
+   Label[TABTITLE="O"]("NONONONONONO"),
+   Label[TABTITLE="P"]("NONONONONONO"),
+   Label[TABTITLE="Q"]("NONONONONONO"),
+   Label[TABTITLE="R"]("NONONONONONO"),
+   Label[TABTITLE="S"]("NONONONONONO"),
+   Label[TABTITLE="T"]("NONONONONONO"),
+   Label[TABTITLE="U"]("NONONONONONO"),
+   Label[TABTITLE="V"]("NONONONONONO"),
+   Label[TABTITLE="W"]("NONONONONONO"),
+   Label[TABTITLE="X"]("NONONONONONO"),
+   Label[TABTITLE="Y"]("NONONONONONO"),
+   Label[TABTITLE="Z"]("NONONONONONO")
+  ),
+  Fill()
+ ),
+ Fill()
+)
+
+#
+# Another example of the ICTL_TABCHANGE_CB callback,
+#  now using IUP_IGNORE
+#
+
+exemplo4 = Hbox
+[
+  TABTITLE="Exemplo 4",
+  MARGIN=4x4,
+  GAP=2
+]
+(
+ Fill(),
+ Vbox[GAP=2]
+ (
+  Fill(),
+  Label("Callback ICTL_TABCHANGE_CB, utilizando IUP_IGNORE"),
+  Fill(),
+  Tabs[TABCHANGE_CB = "tabchange_ignore_cb",TABTYPE=RIGHT]
+  (
+   Vbox[TABTITLE="Tab 1",MARGIN=4x4]
+   (
+     Fill(),
+     Label("Tente mudar de tab sem preencher o texto"),
+     Fill(),
+     texto_a_preencher = Text[SIZE=60](null),
+     Fill()
+   ),
+   Label[TABTITLE="Tab 2"]("OK")
+  ),
+  Fill()
+ ),
+ Fill()
+)
+
+#
+# Example of the ICTL_TABCHANGE_CB callback
+#
+
+exemplo3 = Hbox
+[
+  TABTITLE="Exemplo 3",
+  MARGIN=4x4,
+  GAP=2
+]
+(
+ Fill(),
+ Vbox[GAP=2]
+ (
+  Fill(),
+  Label("Callback ICTL_TABCHANGE_CB"),
+  Fill(),
+  Frame[TITLE="Mais Tabs"]
+  (
+   Tabs[TABCHANGE_CB = "tabchange_cb",TABTYPE=BOTTOM]
+   (
+    Frame[TABTITLE="E depois aqui"](Canvas(null)),
+    Button[TABTITLE="Clique aqui",EXPAND=YES]("Exemplo",null)
+   )
+  ),
+  Fill(),
+  Frame[TITLE="Resultados"]
+  (
+   Hbox
+   (
+    Vbox
+    (
+     Label("Tab anterior"),
+     tab_anterior = Text[SIZE=60](null)
+    ),
+    Fill(),
+    Vbox
+    (
+     Label("Tab atual"),
+     tab_atual = Text[SIZE=60](null)
+    )
+   )
+  )
+ ),
+ Fill()
+)
+
+#
+# Example of nested Tabs
+#
+
+exemplo2 = Hbox
+[
+  TABTITLE="Exemplo 2",
+  MARGIN=4x4,
+  GAP=2
+]
+(
+ Fill(),
+ Vbox[MARGIN=2x2]
+ (
+  Fill(),
+  Label("Tabs Aninhados"),
+  Fill(),
+  Frame[TITLE="Mais Tabs"]
+  (
+   Tabs
+   (
+     Frame[TABTITLE="Tab 1"](Canvas(null)),
+     Button[TABTITLE="Tab 2",EXPAND=YES]("Exemplo",null)
+   )
+  ),
+  Fill()
+ ),
+ Fill()
+)
+
+
+#
+#  Example of a regular tab
+#
+
+exemplo1 = Vbox
+[
+  TABTITLE="Exemplo 1"
+]
+(
+ Fill(),
+ Label("Tab típico"),
+ Fill(),
+ Frame[TITLE="Frame"]
+ (
+  Hbox
+  (
+   Fill(),
+   Vbox
+   (
+    Label("Label"),
+    Text[VALUE="Text",NC=20](null)
+   ),
+   Fill(),
+   Vbox
+   (
+    List[1="Item 1",2="Item 2",3="Item 3"](null)
+   ),
+   Fill()
+  )
+ ),
+ Fill(),
+ Hbox
+ (
+  Fill(),
+  Button("Button",null),
+  Fill(),
+  Button("Outro Button",null),
+  Fill()
+ ),
+ Fill()
+)
+
+#
+# Main Tabs
+#
+#   Note: It is not necessary to specify a name for the tabs elements.
+#        Here this was done only to make the code clearer
+#
+
+main_tabs = Tabs[TABTYPE=LEFT]
+(
+ exemplo1,
+ exemplo2,
+ exemplo3,
+ exemplo4,
+ exemplo5,
+ exemplo6
+)
+
+#
+#  Main dialog
+#
+
+dlg_led = DIALOG
+[
+  TITLE="Teste de IupTabs",
+  MARGIN=2x2
+]
+(
+  Vbox
+  (
+   Fill(),
+   main_tabs,
+   Fill(),
+   Hbox
+   (
+    Fill(),
+    Button("Sair", exit_cb),
+    Fill()
+   ),
+   Fill()
+  )
+)

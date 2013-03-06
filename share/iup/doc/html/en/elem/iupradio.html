@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupRadio</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupRadio</h2>
+
+  <p>
+  Creates a void container 
+  for grouping mutual exclusive toggles. Only one of its descendent toggles will be active at a 
+  time. The toggles can be at any composition.</p>
+<p>
+  It does not have a native representation. </p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupRadio(Ihandle *<strong>child</strong>); [in C]
+iup.radio{<strong>child</strong>: ihandle} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+radio(<strong>child</strong>) [in LED]</pre>
+  <p><strong>child</strong>: Identifier of an interface element. Usually it is a vbox or an hbox containing the toggles associated to the
+  radio.&nbsp; It can be NULL.</p>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><a href="../attrib/iup_expand.html">EXPAND</a> (<font SIZE="3">non inheritable</font>):
+  The default value is &quot;YES&quot;.</p>
+
+
+<p><b>VALUE</b> (<font SIZE="3">non inheritable</font>):
+  name identifier of the active toggle. The 
+  name is set by means of <a href="../func/iupsethandle.html">
+  IupSetHandle</a>. In Lua you can also use 
+the element reference directly. When consulted if the toggles are not mapped 
+into the native system the return value may be NULL or invalid.</p>
+<p><b>VALUE_HANDLE</b> (<font SIZE="3">non inheritable</font>): Changes the 
+active toggle. The value passed must be the 
+handle of a child contained in the radio. When consulted if the toggles are not 
+mapped into the native system the return value may be NULL or invalid. (since 3.0)</p>
+
+
+<p><b>WID</b> (read-only): returns -1 if mapped.</p>
+
+  <blockquote>
+    <hr>
+</blockquote>
+
+  <p>
+<a href="../attrib/iup_font.html">FONT</a>,
+    <a href="../attrib/iup_clientsize.html">CLIENTSIZE</a>, 
+	<a href="../attrib/iup_clientoffset.html">CLIENTOFFSET</a>, 
+	<a href="../attrib/iup_position.html">POSITION</a>, 
+<a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.</p>
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>The radio can be created with no elements and be dynamic filled using
+  <a href="../func/iupappend.html">IupAppend</a> or
+<a href="../func/iupinsert.html">IupInsert</a>.&nbsp;</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+</body>
+
+</html>

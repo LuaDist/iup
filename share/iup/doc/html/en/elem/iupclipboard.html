@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupClipboard</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupClipboard<span class="style1"> (since 3.0)</span></h2>
+
+  <p>
+  Creates an element that allows access to the clipboard. Each clipboard should 
+	be destroyed using
+  <a href="../func/iupdestroy.html">IupDestroy</a>, but you can use only one for 
+	entire application because it does not store any data inside. Or you can 
+	simply create and destroy everytime you need to copy or paste.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupClipboard(void); [in C]
+iup.clipboard{} -&gt; (<strong>elem</strong>: ihandle) [in Lua] 
+clipboard() [in LED]</pre>
+  <p>
+  <u>Returns:</u> the identifier of the created element, or NULL if an error 
+	occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>EMFAVAILABLE</strong> (read-only) [Windows Only]: informs if there is a 
+Windows Enhanced Metafile available at the clipboard. (Since 3.2)</p>
+
+
+  <p><strong>IMAGE</strong> (write-only): name of an image to copy (set) or 
+	paste (get), to or from the clipboard. If set to NULL clears the clipboard 
+  data. (GTK 2.6)</p>
+<p><strong>IMAGEAVAILABLE</strong> (read-only): informs if there is an image 
+available at the clipboard. (GTK 2.6)</p>
+
+
+  <p><strong>NATIVEIMAGE</strong>: native handle of an image to copy or paste, 
+	to or from the clipboard. In Win32 is a <strong>HANDLE</strong> of a DIB. In 
+	GTK is a <strong>GdkPixbuf*</strong>. In Motif is a <strong>Pixmap</strong>. 
+	If set to NULL clears the clipboard data. The returned handle in a paste must be released after used 
+	(GlobalFree(handle), g_object_unref(pixbuf) or XFreePixmap(display, 
+	pixmap)). After copy, do NOT release the given handle. See <a href="../iupim.html">
+	IUP-IM Functions</a> 
+	for utility functions on image native handles. (GTK 2.6)</p>
+<p><strong>SAVEEMF</strong> (write-only) [Windows Only]: saves the EMF from the 
+clipboard to the given filename. (Since 3.2)</p>
+<p><strong>SAVEWMF</strong> (write-only) [Windows Only]: saves the WMF from the 
+clipboard to the given filename. (Since 3.2)</p>
+
+
+<p><strong>TEXT</strong>: copy or paste text to or from the clipboard. If set to 
+NULL clears the clipboard data.</p>
+
+
+  <p><strong>TEXTAVAILABLE</strong> (read-only): informs if there is a text 
+	available at the clipboard.</p>
+<p><strong>WMFAVAILABLE</strong> (read-only) [Windows Only]: informs if there is a 
+Windows Metafile available at the clipboard. (Since 3.2)</p>
+
+
+<h3><a name="Examples">Examples</a></h3>
+<pre>Ihandle* clipboard = IupClipboard();
+IupStoreAttribute(clipboard, &quot;TEXT&quot;, IupGetAttribute(text, &quot;VALUE&quot;));
+IupDestroy(clipboard);</pre>
+<pre>Ihandle* clipboard = IupClipboard();
+IupStoreAttribute(text, &quot;VALUE&quot;, IupGetAttribute(clipboard, &quot;TEXT&quot;));
+IupDestroy(clipboard);</pre>
+
+</body>
+
+</html>

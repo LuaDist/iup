@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupImage</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupImage, IupImageRGB, IupImageRGBA</h2>
+
+  <p>
+  Creates an image to be shown on a label, button, toggle, or as a cursor.</p>
+<p>
+  (<b>IupImageRGB</b> and <b>IupImageRGBA,</b> since 3.0)</p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupImage(int <strong>width</strong>, int <strong>height</strong>, const unsigned char *<strong>pixels</strong>); [in C]
+Ihandle* IupImageRGB(int <strong>width</strong>, int <strong>height</strong>, const unsigned char *<strong>pixels</strong>); [in C]
+Ihandle* IupImageRGBA(int <strong>width</strong>, int <strong>height</strong>, const unsigned char *<strong>pixels</strong>); [in C]
+
+iup.image{<b>line0</b>: table, <b>line1</b>: table, ...; colors = <b>colors</b>: table} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+iup.image{width = <strong>width</strong>: number, height = <strong>height</strong>: number, pixels = <strong>pixels</strong>: table, colors = <b>colors</b>: table} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+iup.imagergb {width = <strong>width</strong>: number, height = <strong>height</strong>: number, pixels = <strong>pixels</strong>: table} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+iup.imagergba{width = <strong>width</strong>: number, height = <strong>height</strong>: number, pixels = <strong>pixels</strong>: table} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+
+image(<strong>width</strong>, <strong>height</strong>, <strong>pixel0</strong>, <strong>pixel1</strong>, ...) [in LED]
+imagergb(<strong>width</strong>, <strong>height</strong>, <strong>pixel0</strong>, <strong>pixel1</strong>, ...) [in LED]
+imagergba(<strong>width</strong>, <strong>height</strong>, <strong>pixel0</strong>, <strong>pixel1</strong>, ...) [in LED]</pre>
+  <p><strong>width</strong>: Image width in pixels.<br>
+  <strong>height</strong>: Image height in pixels.<br>
+  <strong>pixels</strong>: Vector containing the value of each pixel. <b>
+	IupImage</b> uses 1 value per pixel, <b>IupImageRGB</b> uses 3 values and&nbsp; <b>
+	IupImageRGBA</b> uses 4 values per pixel. Each value is always 8 bit. Origin 
+	is at the top-left corner and data is oriented top to bottom, and left to 
+	right. The pixels array is duplicated internally so you can discard it after 
+	the call.<br>
+  <strong>pixel0</strong>, <strong>pixel1</strong>, <strong>pixel2</strong>, 
+	...: Value of the pixels. But for <b>IupImageRGB</b> and <b>IupImageRGBA</b> 
+	in fact will be one value for each color channel (pixel_r_0, pixel_g_0, 
+	pixel_b_0, pixel_r_1, pixel_g_1, pixel_b_1, pixel_r_2, pixel_g_2, pixel_b_2, 
+	...).<br>
+  <b>line0</b>, <b>line1</b>: unnamed tables, one for each line containing 
+	pixels values. See Notes below.<br>
+  <b>colors</b>: table named colors containing the colors indices. See Notes 
+	below.</p>
+  <p>
+  <u>Returns:</u> the identifier of the created element, or NULL if an error 
+	occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>&quot;0&quot;</strong>
+  Color in index 0. <br>
+  <strong>&quot;1&quot;</strong>
+  Color in index 1.<br>
+  <strong>&quot;2&quot;</strong>
+  Color in index 2.<br>
+  <b>...</b> <br>
+  <strong>&quot;i&quot;</strong>
+  Color in index i. </p>
+  
+    <blockquote>
+  
+    <p>
+    The indices can range from 0 to 255. The total number of colors is limited 
+	to 256 colors. Notice that in Lua the first index in the array is &quot;1&quot;, the 
+	index &quot;0&quot; is ignored in IupLua. Be careful when setting colors, since they 
+	are attributes they follow the same storage rules for standard attributes.</p>
+    <p>
+    The values are integer numbers from 0 to 255, one for each color in the RGB 
+	triple (For ex: &quot;64 190 255&quot;). If the value of a given index is &quot;BGCOLOR&quot;, 
+	the color used will be the background color of the element on which the 
+	image will be inserted. The &quot;BGCOLOR&quot; value must be defined within an index 
+	less than 16.</p>
+  
+    <p>
+    Used only for images created with <b>IupImage</b>.</p>
+  
+  </blockquote>
+  
+  <p><b>BGCOLOR</b>: The color used for transparency. If not defined uses the 
+	BGCOLOR of the control that contains the image.</p>
+
+  <p><b>BPP </b>(read-only): returns the number of bits per pixel in the image. 
+	Images created with <b>IupImage</b> returns 8, with <b>IupImageRGB</b> 
+	returns 24 and with <b>IupImageRGBA</b> returns 32. (since 3.0)</p>
+
+  <p><b>CHANNELS </b>(read-only): returns the number of channels in the image. 
+	Images created with <b>IupImage</b> returns 1, with <b>IupImageRGB</b> 
+	returns 3 and with <b>IupImageRGBA</b> returns 4. (since 3.0)</p>
+
+
+  <p><b>HEIGHT </b>(read-only): Image height in pixels.</p>
+  
+  <p><b>HOTSPOT</b>: Hotspot is the position inside a cursor image indicating 
+	the mouse-click spot. Its value is given by the x and y coordinates inside a 
+	cursor image. Its value has the format &quot;x:y&quot;, where x and y are integers 
+	defining the coordinates in pixels. Default: &quot;0:0&quot;.</p>
+
+
+  <p><b>RASTERSIZE </b>(read-only): returns the image size in pixels. (since 
+	3.0)</p>
+
+  <p><b>WID </b>(read-only): returns the internal pixels data pointer. (since 
+	3.0)</p>
+
+  <p><b>WIDTH </b>(read-only): Image width in pixels.</p>
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>Application icons are usually 32x32. Toolbar bitmaps are 24x24 or smaller. 
+Menu bitmaps and small icons are 16x16 or smaller.</p>
+
+<p>Images created with the <b>IupImage</b>* constructors can be reused in 
+different elements.</p>
+  <p>
+  The images should be destroyed when they are no longer necessary, by means of 
+	the 
+  <b>IupDestroy</b> function. To destroy an image, it cannot be in use, i.e the 
+	controls where it is used should be destroyed first. Images that were 
+	associated with controls by names are automatically destroyed in IupClose.</p>
+<p>
+  Please observe the rules for creating cursor images: <a href="../attrib/iup_cursor.html">
+  CURSOR</a>.</p>
+  <h4>
+  Usage</h4>
+
+  <p>Images are used in elements such as buttons and labels by attributes that 
+	points to names registered with <a href="../func/iupsethandle.html">
+	IupSetHandle</a>. You can also use <strong>IupSetAttributeHandle</strong> to 
+	shortcut the set of an image as an attribute. For example:</p>
+<pre>Ihandle* image = IupImage(width, height, pixels);
+
+IupSetHandle(&quot;MY_IMAGE_NAME&quot;, image);
+IupSetAttribute(label, &quot;IMAGE&quot;, &quot;MY_IMAGE_NAME&quot;);
+or
+IupSetAttributeHandle(label, &quot;IMAGE&quot;, image); // an automatic name will be created internally</pre>
+<p>In Windows, names of resources in RC files linked with the application are 
+also accepted. In GTK, names of GTK Stock Items are also accepted. In Motif, 
+names of bitmaps installed on the system are also accepted. For example:</p>
+<pre>IupSetAttribute(label, &quot;IMAGE&quot;, &quot;TECGRAF_BITMAP&quot;);  // available in the &quot;etc/iup.rc&quot; file
+or
+IupSetAttribute(label, &quot;IMAGE&quot;, &quot;gtk-open&quot;);  // available in the GTK Stock Items</pre>
+<p>In all drivers, a path to a file name can also be used as the attribute value 
+(since 3.0). But the available file formats supported are system dependent. The 
+Windows driver supports BMP, ICO and CUR. The GTK driver supports the formats 
+supported by the GDK-PixBuf library, such as BMP, GIF, JPEG, PCX, PNG, TIFF and 
+many others. The Motif driver supports the X-Windows bitmap. For example:</p>
+<pre>IupSetAttribute(label, &quot;IMAGE&quot;, &quot;../etc/tecgraf.bmp&quot;);</pre>
+<p>A more format independent approach can be reached using the
+<a href="../iupim.html">IUP-IM Functions</a>.</p>
+<h4>Colors</h4>
+  <p>
+  In Motif, the alpha channel in RGBA images is always composed with the control 
+	BGCOLOR by IUP prior to setting the image at the control. In Windows and in 
+	GTK, the alpha channel is composed internally by the system. But in Windows 
+	for some controls the alpha must be composed a priori also, it includes: <strong>
+	IupItem</strong> and <strong>IupSubmenu</strong> always; and <strong>
+	IupToggle</strong> when NOT using Visual Styles. This implies that if the 
+	control background is not uniform then probably there will be a visible 
+	difference where it should be transparent.</p>
+  <p>For <b>IupImage</b>, if a color is not set, then it is used a default color 
+	for the 16 first colors. The default color table is the same for Windows, 
+	GTK and Motif:</p>
+  
+    <pre> 0 =   0,  0,  0 (black)
+ 1 = 128,  0,  0 (dark red)
+ 2 =   0,128,  0 (dark green) 
+ 3 = 128,128,  0 (dark yellow)
+ 4 =   0,  0,128 (dark blue)
+ 5 = 128,  0,128 (dark magenta) 
+ 6 =   0,128,128 (dark cian) 
+ 7 = 192,192,192 (gray)
+ 8 = 128,128,128 (dark gray)
+ 9 = 255,  0,  0 (red)     
+10 =   0,255,  0 (green)
+11 = 255,255,  0 (yellow)
+12 =   0,  0,255 (blue)
+13 = 255,  0,255 (magenta)
+14 =   0,255,255 (cian)  
+15 = 255,255,255 (white)
+</pre>
+  
+  <p>For images with more than 16 colors, and up to 256 colors, all the color 
+	indices must be defined up to the maximum number of colors. For example, if 
+	the biggest image index is 100, then all the colors from i=16 up to i=100 
+	must be defined even if some indices are not used.</p>
+  
+  <h4>Samples</h4>
+  <p>You can obtain several images from the <a href="../iupimglib.html">
+	IupImageLib</a>, a library of pre-defined images. To view the images you can 
+	use the <b>IupView</b> in the applications included in the distribution,
+  <u1:p>available at the <a href="../download.html">Download</a>.</u1:p> <b>
+	IupView</b> 
+	is also capable of converting several image formats into an IupImage, and 
+	save IUP images as LED, Lua or ICO.</p>
+  <p>
+  The
+  <a target="_top" href="http://www.tecgraf.puc-rio.br/edpatt">EdPatt</a> and 
+	the
+  <a href="http://www.tecgraf.puc-rio.br/~scuri/imlab">IMLAB</a> applications 
+	can load and save images in simplified LED format. They allow operations 
+	such as importing GIF images and exporting them as IUP images. <b>EdPatt</b> 
+	allows you to manually edit the images, and also have support for images in 
+	IupLua.</p>
+  <h4>
+  IupLua Old Constructor</h4>
+
+  <p>In Lua, the 8bpp image can also be created using an unnamed table, using a 
+	series of tables for each line. Width and height will be guessed from the 
+	tables sizes. For example:</p>
+
+<pre>img = iup.image{
+  { 1,2,3,3,3,3,3,3,3,2,1 }, 
+  { 2,1,2,3,3,3,3,3,2,1,2 }, 
+  { 3,2,1,2,3,3,3,2,1,2,3 }, 
+  { 3,3,2,1,2,3,2,1,2,3,3 }, 
+  { 3,3,3,2,1,2,1,2,3,3,3 }, 
+  { 3,3,3,3,2,1,2,3,3,3,3 }, 
+  { 3,3,3,2,1,2,1,2,3,3,3 }, 
+  { 3,3,2,1,2,3,2,1,2,3,3 }, 
+  { 3,2,1,2,3,3,3,2,1,2,3 }, 
+  { 2,1,2,3,3,3,3,3,2,1,2 }, 
+  { 1,2,3,3,3,3,3,3,3,2,1 };
+  colors = { 
+    &quot;0 1 0&quot;,      -- index 1
+    &quot;255 0 0&quot;,    -- index 2 
+    &quot;255 255 0&quot;   -- index 3 
+  }
+}</pre>
+<p>Using this constructor the image data can NOT has 0 indices. Notice that the 
+indexing of the unamed tables is different than the <strong>colors</strong> 
+table. The first value in the <strong>colors</strong> 
+table is relative to the color index 1, but the first value of the unamed tables 
+is relative to the pixel 0.</p>
+<p>After the image is created in Lua, the unnamed tables are not accessible 
+anymore, since &quot;img[1]&quot; will return the attribute &quot;1&quot; value which is the color 
+&quot;0 1 0&quot;. To access the original table values you must use &quot;raawget&quot; function, 
+for example:</p>
+<pre>lin0 = rawget(img, 1)  -- line index 0
+lin1 = rawget(img, 2)  -- line index 1
+lin2 = rawget(img, 3)  -- line index 2
+...
+pixel0 = lin0[1]       -- column index 0
+pixel1 = lin0[2]       -- column index 1
+pixel3 = lin0[3]       -- column index 3
+...</pre>
+  <h4>
+  IupLua New Constructors</h4>
+
+<p>The new constructors since IUP 3 are different and must contains explicit 
+values for <strong>width</strong>, <strong>height</strong> and <strong>pixels</strong>. 
+Also the indexing of the <strong>colors</strong> table is the same of the
+<strong>pixels</strong> table, the first value is the color index 0. For 
+example:</p>
+
+<pre>img = iup.image{
+  width = 11,
+  height = 11,
+  pixels = {
+   1,2,0,0,0,0,0,0,0,2,1, 
+   2,1,2,0,0,0,0,0,2,1,2, 
+   0,2,1,2,0,0,0,2,1,2,0, 
+   0,0,2,1,2,0,2,1,2,0,0, 
+   0,0,0,2,1,2,1,2,0,0,0, 
+   0,0,0,0,2,1,2,0,0,0,0, 
+   0,0,0,2,1,2,1,2,0,0,0, 
+   0,0,2,1,2,0,2,1,2,0,0, 
+   0,2,1,2,0,0,0,2,1,2,0, 
+   2,1,2,0,0,0,0,0,2,1,2, 
+   1,2,0,0,0,0,0,0,0,2,1},
+  colors = { 
+    &quot;255 255 0&quot;   -- index 0 
+    &quot;0 1 0&quot;,      -- index 1
+    &quot;255 0 0&quot;,    -- index 2 
+  }
+}</pre>
+<p>Although in Lua they are still referenced as index 1, so img.<strong>colors</strong>[1] 
+returns the color of the index 0 in the image.</p>
+<p>Here is the same image but using 24bpp:</p>
+<pre>img = iup.imagergb{
+  width = 11,
+  height = 11,
+  pixels = {
+    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0,
+  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,
+  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,
+  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,
+  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,
+  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,
+  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,
+  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,
+  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,
+  255,  0,0,    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0,  255,  0,0,
+    0,255,0,  255,  0,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,255,0,  255,  0,0,    0,255,0}
+}</pre>
+<p>Then at the <strong>pixels</strong> table we have:</p>
+<pre>r0 = img.pixels[1]   g0 = img.pixels[2]   b0 = img.pixels[3]
+r1 = img.pixels[4]   g1 = img.pixels[5]   b1 = img.pixels[6]
+r3 = img.pixels[7]   g3 = img.pixels[8]   b3 = img.pixels[9]
+...</pre>
+<p>If the image was created in C then there is no way to access its pixels 
+values in Lua, except as an userdata using the WID attribute.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="iuplabel.html">IupLabel</a>, <a href="iupbutton.html">IupButton</a>,
+  <a href="iuptoggle.html">IupToggle</a>, 
+  <a href="../func/iupdestroy.html">IupDestroy</a>.</p>
+
+
+</body>
+
+</html>

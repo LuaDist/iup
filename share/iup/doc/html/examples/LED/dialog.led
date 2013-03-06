@@ -1,0 +1,5 @@
+#IupDialog Example in LED
+#Creates a dialog the size of the screen with title “Test”, containing a message and a button.
+
+caixa = vbox(label("Press the button"), button("Button", action_end))
+dialogo = dialog[SIZE = FULLxFULL TITLE = "Test"](caixa)

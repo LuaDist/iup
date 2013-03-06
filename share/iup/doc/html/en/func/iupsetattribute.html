@@ -1,0 +1,90 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+
+  <title>IupSetAttribute</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css">
+
+  <style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+  </style>
+</head>
+
+
+<body>
+
+
+<h2>IupSetAttribute</h2>
+
+<p>Sets an interface 
+  element attribute. See also the <a href="../attrib_guide.html">Attributes Guide</a> 
+section.</p>
+
+<h3>
+Parameters/Return</h3>
+
+<pre>void IupSetAttribute(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>, const char *<strong>value</strong>); [in C]<br>iup.SetAttribute(<strong>ih</strong>: ihandle, <strong>name</strong>: string, <strong>value</strong>: string) [in Lua] 
+void IupSetAttributeId(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>, int <strong>id</strong>, const char *<strong>value</strong>); [in C]<br>iup.SetAttributeId(<strong>ih</strong>: ihandle, <strong>name</strong>: string, <strong>id</strong>: number, <strong>value</strong>: string) [in Lua] </pre>
+
+<p><b>ih</b>: Identifier of the interface element. If
+  NULL will set in the global environment.<br>
+
+<b>name</b>: name of the attribute.<br>
+<strong>id</strong>: used when the attribute has an additional id.<br>
+
+<b>value</b>: value of the attribute. If NULL (nil in Lua), the default value 
+will be used.</p>
+
+<h3>Notes</h3>
+<p>See the <a href="../attrib_guide.html">Attributes Guide</a> for more details.
+</p>
+
+<h4>User Data</h4>
+
+<p>The value stored in the attribute is not duplicated. Therefore, you
+can store your private attributes, such as a structure with data to be
+used in a callback. When you want IUP to store an attribute by
+duplicating a string passed as a value, use function <a href="iupstoreattribute.html">IupStoreAttribute</a>.</p>
+
+<pre>struct myData* mydata = malloc(sizeof(struct myData));<br>IupSetAttribute(dlg, "MYDATA", (char*)mydata)     // correct  (unknown attributes will be stored as pointers)</pre>
+
+<h3>Examples</h3>
+
+<p>A very common mistake when using <strong>IupSetAttribute</strong> is to use local string arrays to set attributes. For ex:</p>
+
+<pre>{<br>  char value[30];<br>  sprintf(value, "%d", i);<br>  IupSetAttribute(dlg, "BADEXAMPLE", value)   // <span class="style1"><strong>WRONG</strong></span>  (value pointer will be internally stored, <br>}                                             //         but its memory will be released at the end of this scope)<br>                                              // Use <strong>IupStoreAttribute</strong> in this case</pre>
+
+<pre>{<br>  char *value = malloc(30);<br>  sprintf(value, "%d", i);<br>  IupSetAttribute(dlg, "EXAMPLE", value)     // correct  (but to avoid memory leaks you should free the pointer<br>}                                                         after the dialog has been destroyed)</pre>
+
+<pre>IupSetAttribute(dlg, "VISIBLE", "YES")       // correct (static values still exists after this scope)</pre>
+
+<pre>char attrib[30];<br>sprintf(attrib, "ITEM%d", i);<br>IupSetAttribute(dlg, attrib, "Test")         // correct (attribute names are always internally duplicated)</pre>
+
+<p>Defines a radio&rsquo;s initial value.</p>
+
+<pre>Ihandle *portrait = IupToggle("Portrait" , NULL);<br>Ihandle *landscape = IupToggle("landscape" , NULL);<br>Ihandle *box = IupVbox(portrait, IupFill(),landscape, NULL);<br>Ihandle *mode = IupRadio(box);<br>IupSetHandle("landscape", landscape); /* associates a name to initialize the radio */<br><strong>IupSetAttribute</strong>(mode, "VALUE", "landscape"); /* defines the radio&rsquo;s initial value */</pre>
+
+<p>Other usages:</p>
+
+<pre>  1. IupSetAttribute(text, "VALUE", "Hello!");</pre>
+
+<pre>  2. IupSetAttribute(indicator, "VALUE", "ON");</pre>
+
+<pre>  3. struct<br>     {<br>       int x;<br>       int y;<br>     } myData;<br><br>     IupSetAttribute(text, "myData", (char*)&amp;myData);  // correct, BUT myData should be a global variable. </pre>
+
+<h3>See Also</h3>
+
+<p><a href="iupgetattribute.html">IupGetAttribute</a>, 
+<a href="iupsetattributes.html">IupSetAttributes</a>, 
+<a href="iupgetattributes.html">IupGetAttributes</a>, 
+<a href="iupstoreattribute.html">IupStoreAttribute</a></p>
+
+
+</body>
+</html>

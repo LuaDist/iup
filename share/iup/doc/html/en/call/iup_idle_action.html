@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IDLE_ACTION</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IDLE_ACTION</h2>
+<p>Predefined IUP action, generated when there 
+  are no events or messages to be processed. Often used to perform background operations.</p>
+<h3>Callback</h3>
+<pre>int function(void); [in C]</pre>
+<p><u>Returns</u>: if IUP_CLOSE is returned the current loop will be closed and 
+the callback will be removed. If IUP_IGNORE is returned the callback is removed 
+and normal processing continues.</p>
+<h3>Notes</h3>
+<p>The Idle callback will be called whenever there are no messages left to be 
+processed. But this occurs more frequent than expected, for example if you move 
+the mouse over the application the idle callback will be called many times 
+because the mouse move message is processed so fast that the Idle will be called 
+before another mouse move message is schedule to processing.</p>
+<p>So this callback changes the message loop to a more CPU consuming one. It is 
+important that you set it to NULL when not using 
+it. Or the application will be consuming CPU even if the callback is doing 
+nothing.</p>
+<p>It can only be set using <b>IupSetFunction</b>.</p>
+<h4>Lua Binding&nbsp;</h4>
+<p>To modify this action use the 
+  function <b>iup</b>.<b>SetIdle</b><b>(</b>myfunction<b>)</b> 
+  in Lua. 
+  Using 
+  nil 
+  as a parameter to remove the association. </p>
+<h4>Long Time Operations</h4>
+<p>If you create a loop or an operation that takes a long time to complete inside a callback 
+of your 
+application then the user interface message loop processing is interrupted until 
+the callback returns, so the user can not click on any control of the 
+application. But there are ways to handle that:</p>
+<ul>
+	<li>call <strong>IupLoopStep</strong> or <strong>IupFlush</strong> inside 
+	the application callback when it is performing long time operations. This 
+	will allow the user to click on a cancel button for instance, because the 
+	user interface message loop will be processed.</li>
+	<li>split the operation in several parts that are processed by the <strong>
+	Idle</strong> function when no messages are left to be processed for the 
+	user interface message loop. This will make a heavy use of the CPU, even if 
+	the callback is doing nothing.</li>
+	<li>split the operation in several parts but use a <strong>Timer</strong> to 
+	process each part.</li>
+</ul>
+<p>If you just want to do something simple as a background redraw of an <strong>
+IupCanvas</strong>, then a better idea is to handle the &quot;idle&quot; state yourself. 
+For example, register a timer for a small time like 500ms, and reset the timer 
+in all the mouse and keyboard callbacks of the <strong>IupCanvas</strong>. If 
+the timer is trigged then you are in idle state. If the <strong>IupCanvas</strong> 
+loses its focus then stop the timer.</p>
+<h3>Examples</h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<h3>See Also</h3>
+<p><a href="../func/iupsetfunction.html">IupSetFunction</a>,
+  <a href="../elem/iuptimer.html">IupTimer</a>.</p>
+
+</body>
+
+</html>

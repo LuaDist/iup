@@ -1,0 +1,11 @@
+#IupSubmenu Example in LED 
+#Creates a submenu in LED. 
+
+open_item = item( "Open", open_act)
+save_item = item( "Save", save_act)
+exit_item = item( "Exit", exit_act)
+arq_menu  = menu(open_item, save_item, separator(), exit_item)
+
+arq_submenu = submenu("File", arq_menu)
+info_item   = item( "Info", info_act)
+main_menu   = menu(arq_submenu, info_item)

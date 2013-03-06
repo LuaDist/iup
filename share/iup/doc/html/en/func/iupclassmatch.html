@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupClassMatch</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupClassMatch<span class="style1"> (since 3.4)</span></h2>
+<p>Checks if the give class name matches the class name of the given interface 
+  element.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupClassMatch(Ihandle* <strong>ih</strong>, const char* <strong>classname</strong>); [in C]
+iup.ClassMatch(<strong>ih</strong>: ihandle, <strong>classname</strong>: string) -&gt; (<strong>ret</strong>: boolean) [in Lua]</pre>
+<p><b>ih</b>: Identifier of the interface element.<br>
+<strong>classname</strong>: name of the class to match.</p>
+<p><span class="style2">Returns</span>: true (1) if the given name matches the 
+class name or one of its parent class names, false (0) or else.</p>
+
+<h3>See Also</h3>
+<p>
+<a href="iupgetclassname.html">IupGetClassName</a>
+</p>
+
+</body>
+
+</html>

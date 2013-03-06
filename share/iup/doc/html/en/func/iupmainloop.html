@@ -1,0 +1,54 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMainLoop</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-align: left;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupMainLoop</h2>
+<p>Executes the user interaction until a 
+  callback returns IUP_CLOSE, <b>IupExitLoop</b> is called, or hiding the last 
+visible dialog.</p>
+<h3>
+Parameters/Return</h3>
+<div>
+  <pre>int IupMainLoop(void); [in C]
+iup.MainLoop() -&gt; <strong>ret</strong>: number [in Lua]</pre>
+</div>
+<p><span class="style2">Returns:</span> IUP_NOERROR always.</p>
+<h3>Notes</h3>
+<p>When this function is called, it will 
+  interrupt the program execution 
+  until a callback returns IUP_CLOSE, <b>IupExitLoop</b> is called, or there are no visible dialogs. </p>
+<p class="style1">If you cascade many calls to <strong>IupMainLoop</strong> 
+there must be a &quot;return IUP_CLOSE&quot; or <b>IupExitLoop</b> call for each cascade 
+level, hiddinh all dialogs will close only one level. Call
+<a href="iupmainlooplevel.html">IupMainLoopLevel</a> to obtain the current 
+level.</p>
+<p>If <b>IupMainLoop</b> is called without any visible dialogs and no active 
+timers, the application will hang and will not be possible to close the main 
+loop. The process will have to be interrupted by the system.</p>
+<p>When the last visible dialog is hidden the <b>IupExitLoop</b> function is 
+automatically called, causing the <b>IupMainLoop</b> to return. To avoid that set LOCKLOOP=YES before hiding the last dialog.</p>
+<h3>See Also</h3>
+<p><a href="iupopen.html">IupOpen</a>, <a href="iupclose.html">IupClose</a>,
+  <a href="iuploopstep.html">IupLoopStep</a>, 
+  <a href="iupexitloop.html">IupExitLoop</a>, 
+<a href="../guide.html#sistema">Guide/System Control</a>, 
+<a href="../call/iup_idle_action.html">IDLE_ACTION</a>,
+  <a href="../attrib/iup_globals.html#lockloop">LOCKLOOP</a>.</p>
+
+</body>
+
+</html>

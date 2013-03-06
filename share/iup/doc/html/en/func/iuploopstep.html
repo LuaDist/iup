@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupLoopStep</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupLoopStep</h2>
+<p>Runs one iteration of the message loop.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupLoopStep(void); [in C]
+int IupLoopStepWait(void); [in C]
+
+iup.LoopStep() -&gt; <strong>ret</strong>: number [in Lua]
+iup.LoopStepWait() -&gt; <strong>ret</strong>: number [in Lua]</pre>
+<p><span class="style1">Returns:</span> IUP_CLOSE or IUP_DEFAULT.</p>
+<h3>Notes</h3>
+<p>This function is useful for allowing a 
+  second message loop to be managed by the application itself. This means that messages can be intercepted and callbacks 
+  can be processed inside an application loop.</p>
+<p><strong>IupLoopStep</strong> returns immediately after processing any 
+messages or if there are no messages to process. <strong>IupLoopStepWait</strong> 
+put the system in idle until a message is processed (since 3.0).</p>
+<p>If IUP_CLOSE is returned the <strong>IupMainLoop</strong> will not end 
+because the return code was already processed. If you want to end <strong>
+IupMainLoop</strong> when IUP_CLOSE is returned by <strong>IupLoopStep</strong> 
+then call <strong>IupExitLoop</strong> after <strong>IupLoopStep</strong> 
+returns.</p>
+<p>An example of how to use this function is a 
+  counter that can be stopped by the user. For such, the user has to interact with the system, which is possible by 
+  calling the function periodically.</p>
+<p>This way, this function replaces old 
+  mechanisms implemented using the Idle callback.</p>
+<p>Note that this function does not replace
+  <b>IupMainLoop</b>.</p>
+<h3>See Also</h3>
+<p><a href="iupopen.html">IupOpen</a>, <a href="iupclose.html">IupClose</a>,
+  <a href="iupmainloop.html">IupMainLoop</a>, 
+  <a href="iupexitloop.html">IupExitLoop</a>, 
+<a href="../call/iup_idle_action.html">IDLE_ACTION</a>, 
+<a href="../guide.html#sistema">Guide / System Control</a></p>
+
+</body>
+
+</html>

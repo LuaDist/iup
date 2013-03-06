@@ -1,0 +1,483 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupDialog</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupDialog</h2>
+<p>Creates a dialog element. It manages user interaction with the interface 
+elements. For any interface element to be shown, it must be encapsulated in a 
+dialog.</p>
+  
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupDialog(Ihandle *<strong>child</strong>); <em>[in C]</em>
+iup.dialog{<strong>child</strong>: ihandle} -&gt; (<strong>elem</strong>: ihandle) <em>[in Lua]</em>
+dialog(<strong>child</strong>) <em>[in LED]</em></pre>
+
+<p><strong>child</strong>: Identifier of an interface element. The dialog has 
+only one child.</p>
+<p><u>Returns:</u> the identifier of the created element, or NULL if an error 
+occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+<h4>Common</h4>
+<p><b>BACKGROUND </b>(<font SIZE="3">non inheritable</font>): Dialog background 
+color or image. Can be a non inheritable alternative to BGCOLOR or can be the 
+name of an image to be tiled on the background. <u1:p></u1:p>
+<u1:p>See also the </u1:p>
+screenshots
+<u1:p>of </u1:p>
+the
+		<a href="../../examples/C/sample.c">sample.c</a> results<u1:p> with 
+<a href="../sample_results.html">normal background</a>,</u1:p><u1:p> changing 
+the dialog <a href="../sample_results_background.html">
+BACKGROUND</a>, the dialog <a href="../sample_results_bgcolor.html">BGCOLOR</a> 
+and the <a href="../sample_results_bgcolor_indiv.html">children BGCOLOR</a>. </u1:p>
+(since 3.0)</p>
+<p><strong>BORDER</strong> (<font SIZE="3">non inheritable</font>) (creation 
+only): Shows a resize border around the dialog. Default: &quot;YES&quot;. BORDER=NO is 
+useful only when RESIZE=NO, MAXBOX=NO, MINBOX=NO, MENUBOX=NO and TITLE=NULL, if 
+any of these are defined there will be always some border.</p>
+<p><a href="../attrib/iup_cursor.html">CURSOR</a> (<font SIZE="3">non 
+inheritable</font>): Defines a cursor for the dialog.</p>
+
+<p><strong>DROPFILESTARGET</strong> [Windows and GTK Only] (<font SIZE="3">non inheritable</font>): 
+Enable or disable the drop of files. Default: NO, but if DROPFILES_CB is 
+defined when the element is mapped then it will be automatically enabled.</p>
+
+  <p><a href="../attrib/iup_expand.html">EXPAND</a> (<font SIZE="3">non 
+	inheritable</font>): The default value is &quot;YES&quot;.</p>
+<p><a href="../attrib/iup_size.html">SIZE</a> (<font SIZE="3">non inheritable</font>): 
+Dialog’s size. Additionally the following values can also be defined for width 
+and/or height: </p>
+<ul>
+	<li>&quot;FULL&quot;: Defines the dialog’s width (or height) equal to the screen's 
+	width (or height)</li>
+	<li>&quot;HALF&quot;: Defines the dialog’s width (or height) equal to half the 
+	screen's width (or height)</li>
+	<li>&quot;THIRD&quot;: Defines the dialog’s width (or height) equal to 1/3 the 
+	screen's width (or height)</li>
+	<li>&quot;QUARTER&quot;: Defines the dialog’s width (or height) equal to 1/4 of the 
+	screen's width (or height)</li>
+	<li>&quot;EIGHTH&quot;: Defines the dialog’s width (or height) equal to 1/8 of the 
+	screen's width (or height)</li>
+</ul>
+<p class="info">The dialog <strong>Natural</strong> size is only considered when 
+the <strong>User</strong> size is not defined or when it is bigger than the
+<strong>Current</strong> size. This behavior is different from a control that 
+goes inside the dialog. Because of that, when SIZE or RASTERSIZE are set (changing the 
+<strong>User</strong> size), the 
+<strong>Current</strong> size is internally reset to 0x0, so the the <strong>Natural</strong> size 
+can be considered when re-computing the <strong>Current</strong> size of the dialog.</p>
+<p class="info">Values set at SIZE or RASTERSIZE attributes of a dialog are always 
+accepted, regardless of the minimum size required by its children. For a dialog 
+to have the minimum necessary size to fit all elements contained in it, simply 
+define SIZE or RASTERSIZE to NULL. Also if you set SIZE or RASTERSIZE to be used 
+as the initial size of the dialog, its contents will be limited to this size as 
+the minimum size, if you do not want that, then after showing the dialog reset 
+this size to NULL so the dialog can be resized to smaller values. But notice 
+that its contents will still be limited by the <strong>Natural</strong> size, to 
+also remove that limitation set SHRINK=YES.</p>
+<p class="info">For more information see <a href="../layout_guide.html">Layout 
+Guide</a>.</p>
+<p><a href="../attrib/iup_title.html">TITLE</a> (<font SIZE="3">non inheritable</font>): 
+Dialog’s title. Default: NULL. If you want to remove the title bar you must also 
+set MENUBOX=NO, MAXBOX=NO and MINBOX=NO, before map. But in Motif and GTK it 
+will hide it only if RESIZE=NO also.</p>
+<p><a href="../attrib/iup_visible.html">VISIBLE</a>: Simply call <b>IupShow</b> 
+or 
+<b>IupHide</b> 
+    for the dialog.</p>
+<blockquote>
+  <hr>
+</blockquote>
+<p><a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>,
+<a href="../attrib/iup_font.html">FONT</a>,
+    <a href="../attrib/iup_expand.html">EXPAND</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">
+TIP</a>,
+    <a href="../attrib/iup_clientsize.html">CLIENTSIZE</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>: also accepted. Note that 
+ACTIVE, BGCOLOR and FONT will also affect all the controls inside the dialog. </p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes and callbacks 
+are supported.&nbsp;</p>
+
+
+<h4>Exclusive</h4>
+<p><strong>DEFAULTENTER</strong>:&nbsp; Name of the button activated when the 
+user press Enter when focus is in another control of the dialog. Use <a href="../func/iupsethandle.html">
+IupSetHandle</a> or
+	<a href="../func/iupsetattributehandle.html">IupSetAttributeHandle</a> to 
+associate a button to a name. </p>
+<p><strong>DEFAULTESC</strong>: Name of the button activated when the user press 
+Esc when focus is in another control of the dialog. Use <a href="../func/iupsethandle.html">
+IupSetHandle</a> or
+	<a href="../func/iupsetattributehandle.html">IupSetAttributeHandle</a> to 
+associate a button to a name.</p>
+<p><strong>DIALOGFRAME</strong>: Set the common decorations for modal dialogs. 
+This means RESIZE=NO, MINBOX=NO and MAXBOX=NO. In Windows, if the PARENTDIALOG 
+is defined then the MENUBOX is also removed, but the Close button remains.</p>
+<p><a href="../attrib/iup_icon.html">ICON</a>: Dialog’s icon.</p>
+<p><strong>FULLSCREEN: </strong>Makes the dialog occupy the whole screen over 
+any system bars in the main monitor. All dialog details, such as title bar, 
+borders, maximize button, etc, are removed. Possible values: YES, NO. In Motif 
+you may have to click in the dialog to set its focus.<br>
+      In Motif if set to YES when the dialog is hidden, then it can not be 
+changed after it is visible.</p>
+
+<p><strong>HWND</strong> [Windows Only] (<font size="3">non inheritable, 
+read-only</font>): Returns the Windows Window handle. Available in the Windows 
+driver or in the GTK driver in Windows.</p>
+
+<p><strong>MAXBOX</strong> (creation only): Requires a maximize button from the 
+window manager. If RESIZE=NO then MAXBOX will be set to NO. Default: YES. In 
+Motif the decorations are controlled by the Window Manager and may not be 
+possible to be changed from IUP. In Windows MAXBOX is hidden only if MINBOX is 
+hidden as well, or else it will be just disabled.</p>
+<p><strong>MAXSIZE</strong>: Maximum size for the dialog in raster units 
+(pixels). The windowing system will not be able to change the size beyond this 
+limit. Default: 65535x65535. (since 3.0)</p>
+<p><strong>MENU</strong>: Name of a menu. Associates a menu to the dialog as a 
+menu bar. The previous menu, if any, is unmapped. Use <a href="../func/iupsethandle.html">
+IupSetHandle</a> or
+	<a href="../func/iupsetattributehandle.html">IupSetAttributeHandle</a> to 
+associate a menu to a name. See also <a href="../elem/iupmenu.html">IupMenu</a>.</p>
+<p><strong>MENUBOX</strong> (creation only): Requires a system menu box from the 
+window manager. If hidden will also remove the Close button. Default: YES. In 
+Motif the decorations are controlled by the Window Manager and may not be 
+possible to be changed from IUP. In Windows if hidden will hide also MAXBOX and 
+MINBOX.</p>
+<p><strong>MINBOX</strong> (creation only): Requires a minimize button from the 
+window manager. Default: YES. In Motif the decorations are controlled by the 
+Window Manager and may not be possible to be changed from IUP. In Windows MINBOX 
+is hidden only if MAXBOX is hidden as well, or else it will be just disabled.</p>
+<p><strong>MINSIZE</strong>: Minimum size for the dialog in raster units 
+(pixels). The windowing system will not be able to change the size beyond this 
+limit. Default: 1x1. Some systems define a very minimum size greater than this, 
+for instance in Windows the horizontal minimum size includes the window 
+decoration buttons. (since 3.0)</p>
+<p><strong>MODAL</strong> (read-only): Returns the popup state. It is &quot;YES&quot; if 
+the dialog was shown using <strong>IupPopup</strong>. It is &quot;NO&quot; if 
+<strong>IupShow</strong> was used or it is not 
+visible. (since 3.0)</p>
+<p><strong>NATIVEPARENT</strong> (creation only): Native handle of a dialog to 
+be used as parent. Used only if PARENTDIALOG is not defined.</p>
+<p><a href="../attrib/iup_parentdialog.html">PARENTDIALOG</a> (creation only): 
+Name of a dialog to be used as parent. </p>
+<p><a name="PLACEMENT"><strong>PLACEMENT</strong></a>: Changes how the dialog 
+will be shown. Values: &quot;FULL&quot;, &quot;MAXIMIZED&quot;, &quot;MINIMIZED&quot; and &quot;NORMAL&quot;. Default: 
+NORMAL. After <strong>IupShow</strong>/<strong>IupPopup</strong> the attribute 
+is set back to &quot;NORMAL&quot;. FULL is similar to FULLSCREEN but only the dialog 
+client area covers the screen area, menu and decorations will be there but out 
+of the screen. In UNIX there is a chance that the placement won't work 
+correctly, that depends on the Window Manager.</p>
+<p><strong>RESIZE</strong> (creation only): Allows interactively changing the 
+dialog’s size. Default: YES. If RESIZE=NO then MAXBOX will be set to NO. In Motif the decorations are controlled by the 
+Window Manager and may not be possible to be changed from IUP.</p>
+<p><strong>SAVEUNDER</strong> [Windows and Motif Only] (creation only): When 
+this attribute is true (YES), the dialog stores the original image of the 
+desktop region it occupies (if the system has enough memory to store the image). 
+In this case, when the dialog is closed or moved, a redrawing event is not 
+generated for the windows that were shadowed by it. Its default value is YES. To 
+save memory disable it for your main dialog. Not available in GTK.</p>
+<p><a href="../attrib/iup_shrink.html">SHRINK</a>: Allows changing the elements’ 
+distribution when the dialog is smaller than the minimum size. Default: NO.</p>
+<p><strong>STARTFOCUS</strong>: Name of the element that must receive the focus 
+right after the dialog is shown using <strong>IupShow</strong> or <strong>
+IupPopup</strong>. If not defined then the first control than can receive the 
+focus is selected (same effect of calling
+<a href="../func/iupnextfield.html">IupNextField</a> for the dialog). Updated 
+after SHOW_CB is called and only if the focus was not changed during the 
+callback.</p>
+<p><strong>XWINDOW</strong> [UNIX Only] (<font size="3">non inheritable, 
+read-only</font>): Returns the X-Windows Window (Drawable). Available in the 
+Motif driver or in the GTK driver in UNIX.</p>
+
+<h4>Exclusive [Windows and GTK Only]</h4>
+<p><strong>ACTIVEWINDOW</strong> [Windows and GTK Only] (read-only): informs if 
+the dialog is the active window (the window with focus). Can be Yes or No. 
+(since 3.4)</p>
+<p><strong>OPACITY</strong> [Windows and GTK Only]: sets the dialog transparency 
+alpha value. Valid values range from 0 (completely transparent) to 255 (opaque). 
+In Windows set to NULL to remove the LAYERED style bit. (GTK 2.12)</p>
+
+<p><strong>TOPMOST</strong> [Windows and GTK Only]:&nbsp; puts the dialog always 
+in front of all other dialogs in all applications. Default: NO.</p>
+
+<h4>Exclusive Taskbar and Tray/Status Area [Windows and GTK Only]</h4>
+<p><strong>HIDETASKBAR</strong> [Windows and GTK Only] (write-only): Action 
+attribute that when set to &quot;YES&quot;, hides the dialog, but does not decrement the 
+visible dialog count, does not call SHOW_CB and does not mark the dialog as 
+hidden inside IUP. It is usually used to hide the dialog and keep the tray icon 
+working without closing the main loop. It has the same effect as setting 
+LOCKLOOP=Yes and normally hiding the dialog. IMPORTANT:
+<font SIZE="3">when you hide using HIDETASKBAR, you must show using HIDETASKBAR 
+also. </font>Possible values: YES, NO. </p>
+
+<p><b>TRAY</b> [Windows and GTK Only]: When set to &quot;YES&quot;, displays an icon on 
+the system tray. (GTK 2.10)</p>
+<p><b>TRAYIMAGE</b> [Windows and GTK Only]: Name of a IUP image to be used as 
+the tray icon. (GTK 2.10)</p>
+<p><b>TRAYTIP</b> [Windows and GTK Only]: Tray icon's tooltip text. (GTK 2.10)</p>
+<p><b>TRAYTIPMARKUP</b> [GTK Only]: allows the tip string to contains Pango markup 
+commands. Can be &quot;YES&quot; or &quot;NO&quot;. Default: &quot;NO&quot;. 
+Must be set before setting the TRAYTIP attribute. (GTK 2.16) (since 3.6)</p>
+<p><strong><b>TRAY</b>TIPBALLOON</strong> [Windows Only]:
+  The tip window will have the appearance of a cartoon &quot;balloon&quot; with rounded 
+  corners and a stem pointing to the item. Default: NO. Must be set before 
+setting the TRAYTIP attribute. (since 3.6)</p>
+<p><strong><b>TRAY</b>TIPBALLOONDELAY </strong>[Windows Only]: Time the tip will 
+remain visible. Default is system dependent. The minimum and maximum values are 
+10000 and 30000 milliseconds. Must be set before setting the TRAYTIP attribute. 
+(since 3.6)</p>
+<p><strong><b>TRAY</b>TIPBALLOONTITLE</strong> [Windows Only]: When using the balloon format, the 
+  tip can also has a title in a separate area. Must be set before setting the 
+TRAYTIP attribute. (since 3.6)</p>
+<p><strong><b>TRAY</b>TIPBALLOONTITLEICON</strong> [Windows Only]: When using the balloon format, 
+  the tip can also has a pre-defined icon in the title area. Must be set before 
+setting the TRAYTIP attribute. (since 3.6) </p>
+<p class="info">Values can be:<br>&quot;0&quot; - No icon (default)<br>
+    &quot;1&quot; - Info icon <br>
+    &quot;2&quot; - Warning icon<br>
+    &quot;3&quot; - Error Icon</p>
+      
+<h4>Exclusive [GTK Only]</h4>
+<p><strong>DIALOGHINT</strong> (creation-only): if enabled sets the window type 
+hint to a dialog hint.</p>
+      
+<h4>Exclusive [Windows Only]</h4>
+<p><strong>BRINGFRONT</strong> [Windows Only] (write-only): makes the dialog the 
+foreground window. Use &quot;YES&quot; to activate it. Useful for multithreaded 
+applications.</p>
+<p><strong>COMPOSITED</strong> [Windows Only] (creation only): controls if the 
+window will have an automatic double buffer for all children. Default is &quot;NO&quot;. 
+In Windows Vista it is NOT working as expected.</p>
+<p><a href="../attrib/iup_control.html">CONTROL</a> [Windows Only] (creation 
+only): Embeds the dialog inside another window.</p>
+<p><strong>HELPBUTTON</strong> [Windows Only] (creation only): Inserts a help 
+button in the same place of the maximize button. It can only be used for dialogs 
+without the minimize and maximize buttons, and with the menu box. For the next 
+interaction of the user with a control in the dialog, the callback&nbsp; 
+	<a href="../call/iup_help_cb.html">HELP_CB</a> will be called instead of the 
+control defined ACTION callback. Possible values: YES, NO. Default: NO.</p>
+<p><strong>TOOLBOX</strong> [Windows Only] (creation only): makes the dialog 
+look like a toolbar. It is only valid if the PARENTDIALOG or NATIVEPARENT 
+attribute is also defined. Default: NO.</p>
+      
+<h4>Exclusive MDI [Windows Only]</h4>
+<p><strong><em>--- For the MDI Frame ---</em></strong></p>
+  <p><strong>MDIFRAME</strong> (creation only) [Windows Only] (<font SIZE="3">non 
+	inheritable</font>): Configure this dialog as a MDI frame. Can be YES or NO. 
+	Default: NO.</p>
+  <p><strong>MDIACTIVE</strong> [Windows Only] (read-only): Returns the name of 
+	the current active MDI child. Use IupGetAttributeHandle to directly retrieve 
+	the child handle.</p>
+<p><strong>MDIACTIVATE</strong> [Windows Only] (write-only): Name of a MDI child 
+window to be activated. If value is &quot;NEXT&quot; will activate the next window after 
+the current active window. If value is &quot;PREVIOUS&quot; will activate the previous 
+one. </p>
+<p><strong>MDIARRANGE</strong> [Windows Only] (write-only): Action to arrange 
+MDI child windows. Possible values: TILEHORIZONTAL, TILEVERTICAL, CASCADE and 
+ICON (arrange the minimized icons).</p>
+<p><strong>MDICLOSEALL</strong> [Windows Only] (write-only): Action to close and 
+destroy all MDI child windows. The CLOSE_CB callback will be called for each 
+child. </p>
+<p class="info">IMPORTANT: When a MDI child window is closed it is automatically 
+destroyed. The application can override this returning IUP_IGNORE in CLOSE_CB.</p>
+      
+<p><strong>MDINEXT</strong> [Windows Only] (read-only): Returns the name of the 
+next available MDI child. Use IupGetAttributeHandle to directly retrieve the 
+child handle. Must use MDIACTIVE to retrieve the first child. If the application 
+is going to destroy the child retrieve the next child before destroying the 
+current.</p>
+<p><strong><em>--- For the MDI Client&nbsp; </em></strong>(a IupCanvas)<strong><em> 
+---</em></strong></p>
+  <p><strong>MDICLIENT</strong> (creation only) [Windows Only] (<font SIZE="3">non 
+	inheritable</font>): Configure the canvas as a MDI client. Can be YES or NO. 
+	No callbacks will be called. This canvas will be used internally only by the 
+	MDI Frame and its MDI Children. The MDI frame must have one and only one MDI 
+	client. Default: NO.</p>
+      
+<p><strong>MDIMENU</strong> (creation only) [Windows Only]: Name of a IupMenu to 
+be used as the Window list of a MDI frame. The system will automatically add the 
+list of MDI child windows there.</p>
+<p><strong><em>--- For the MDI Children ---</em></strong></p>
+<p><strong>MDICHILD</strong> (creation only) [Windows Only]: Configure this 
+dialog to be a MDI child. Can be YES or NO. The PARENTDIALOG attribute must also 
+be defined. Each MDI child is automatically named if it does not have one. 
+Default: NO.</p>
+      
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><a href="../call/iup_close_cb.html">CLOSE_CB</a>: Called right before the 
+dialog is closed.</p>
+
+<p><strong>COPYDATA_CB</strong>
+  [Windows Only]: Called at the first instance, when a second instance is 
+running. Must set the global attribute SINGLEINSTANCE to be called. (since 3.2)</p>
+<pre>int function(Ihandle *<strong>ih</strong>, char* <strong>cmdLine</strong>, int <strong>size</strong>); <em>[in C]</em><br><b>elem</b>:copydata_cb(<strong>cmdLine</strong>: string, <strong>size</strong>: number) -&gt; (<strong>ret</strong>: number) <em>[in Lua]</em></pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event.<br>
+<strong>cmdLine</strong>: command line of the second instance. <br>
+<strong>size</strong>: size of the command line string including the null 
+character. </p>
+
+<p><a href="../call/iup_dropfiles_cb.html">DROPFILES_CB</a> [Windows and GTK 
+Only]: Action generated when one or more files are dropped in the dialog.</p>
+<p><strong>MDIACTIVATE_CB</strong>
+  [Windows Only]: Called when a MDI child window is activated. Only the MDI 
+child receive this message. It is not called when the child is shown for the 
+first time.</p>
+<pre>int function(Ihandle *<strong>ih</strong>); [in C]<br><strong>elem</strong>:mdiactivate_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+<blockquote>
+
+<p><strong>ih</strong>: identifier of the element that activated the event.</p>
+</blockquote>
+
+<p><strong>MOVE_CB</strong>
+  [Windows and GTK Only]: Called after the dialog was moved on screen. The 
+coordinates are the same as the <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a> attribute. (since 3.0)</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>x</strong>, int <strong>y</strong>); <em>[in C]</em><br><b>elem</b>:trayclick_cb(<strong>x</strong>, <strong>y</strong>: number) -&gt; (<strong>ret</strong>: number) <em>[in Lua]</em></pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event.<br>
+<strong>x</strong>, <strong>y</strong>: coordinates of the new position. </p>
+
+<p><a href="../call/iup_resize_cb.html">RESIZE_CB</a>: Action generated when the 
+dialog size is changed. If returns IUP_IGNORE the dialog layout is NOT 
+recalculated. (since 3.0)</p>
+<p><a href="../call/iup_show_cb.html">SHOW_CB</a>: Called right after the dialog 
+is showed, hidden, maximized, minimized or restored from minimized/maximized.</p>
+<p><strong>TRAYCLICK_CB</strong>
+  [Windows and GTK Only]: Called right after the mouse button is pressed or 
+released over the tray icon. (GTK 2.10)</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>but</strong>, int <strong>pressed</strong>, int <strong>dclick</strong>); <em>[in C]</em><br><b>elem</b>:trayclick_cb(<strong>but</strong>, <strong>pressed</strong>, <strong>dclick</strong>: number) -&gt; (<strong>ret</strong>: number) <em>[in Lua]</em></pre>
+<p class="info"><strong>ih</strong>: identifier of the element that activated 
+the event.<br>
+<strong>but</strong>: identifies the activated mouse button. Can be: 1, 2 or 3. 
+Note that this is different from the BUTTON_CB canvas callback definition. GTK 
+does not get button=2 messages.<br>
+<strong>pressed</strong>: indicates the state of the button. Always 1 in GTK.<br>
+<strong>dclick</strong>: indicates a double click. In GTK double click is 
+simulated.</p>
+<p class="info"><u>Returns</u>: IUP_CLOSE will be processed.</p>
+<blockquote>
+  <hr>
+</blockquote>
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, <a href="../call/iup_getfocus_cb.html">
+GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes and callbacks 
+are supported.&nbsp;</p>
+
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>Do not associate an <strong>IupDialog</strong> with the native &quot;dialog&quot; 
+nomenclature in Windows, GTK or Motif. 
+<strong>IupDialog</strong> use native standard windows in all drivers.</p>
+<p>Except for the menu, all other elements must be inside a dialog to interact 
+with the user. Therefore, an interface element will only be visible if its 
+dialog is also visible.</p>
+<p>The order of callback calling is system dependent. For instance, the 
+RESIZE_CB and the SHOW_CB are called in a different order in Win32 and in 
+X-Windows when the dialog is shown for the first time.</p>
+<h4>Windows MDI</h4>
+<p>The MDI support is composed of 3 components: the MDI frame window 
+(IupDialog), the MDI client window (IupCanvas) and the MDI children (IupDialog). 
+Although the MDI client is a IupCanvas it is not used directly by the 
+application, but it must be created and included in the dialog that will be the 
+MDI frame, other controls can also be available in the same dialog, like buttons 
+and other canvases composing toolbars and status area. The following picture 
+illustrates the e components:</p>
+<p style="text-align: center"><img src="images/mdi.gif" width="504" height="435"></p>
+
+<h3><a name="Examples">Examples</a></h3>
+
+<p>Very simple dialog with a label and a button. The application is closed when 
+the button is pressed.</p>
+
+<pre>#include &lt;iup.h&gt;
+
+int quit_cb(void)
+{
+  return IUP_CLOSE;
+}
+
+int main(int argc, char* argv[])
+{
+  Ihandle *dialog, *quit_bt, *vbox;
+
+  IupOpen(&amp;argc, &amp;argv);
+
+  /* Creating the button */ 
+  quit_bt = IupButton(&quot;Quit&quot;, 0);
+  IupSetCallback(quit_bt, &quot;ACTION&quot;, (Icallback)quit_cb);
+
+  /* the container with a label and the button */
+  vbox = IupVbox(
+           IupSetAttributes(IupLabel(&quot;Very Long Text Label&quot;), &quot;EXPAND=YES, ALIGNMENT=ACENTER&quot;), 
+           quit_bt, 
+           0);
+  IupSetAttribute(vbox, &quot;MARGIN&quot;, &quot;10x10&quot;);
+  IupSetAttribute(vbox, &quot;GAP&quot;, &quot;5&quot;);
+
+  /* Creating the dialog */ 
+  dialog = IupDialog(vbox);
+  IupSetAttribute(dialog, &quot;TITLE&quot;, &quot;Dialog Title&quot;);
+  IupSetAttributeHandle(dialog, &quot;DEFAULTESC&quot;, quit_bt);
+
+  IupShow(dialog);
+
+  IupMainLoop();
+  
+  IupDestroy(dialog);
+  IupClose();
+
+  return 0;
+}
+</pre>
+
+<p style="text-align: center">
+<img alt="" src="images/iupdialog.gif" width="289" height="129"></p>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../dlg/iupfiledlg.html">IupFileDlg</a>, 
+<a href="../dlg/iupmessagedlg.html">IupMessageDlg</a>, 
+<a href="../func/iupdestroy.html">IupDestroy</a>, 
+<a href="../func/iupshowxy.html">IupShowXY</a>, <a href="../func/iupshow.html">
+IupShow</a>,
+  <a href="../func/iuppopup.html">IupPopup</a></p>
+
+</body>
+
+</html>

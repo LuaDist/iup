@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Events and Callbacks Guide</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">Events and Callbacks Guide</h2>
+<h3><a name="Using">Using</a></h3>
+<p>Callbacks are used by the application to receive notifications from the 
+system that the user or the system itself has interacted with the user interface 
+of the application. On the other hand attributes are used by the application to 
+communicate with the user interface system.</p>
+<p>Even though callbacks have different purposes from attributes, they are also associated to an 
+  element by means of an name. </p>
+<p>The OLD method to associate a function to a callback, the application must employ the
+  <b>IupSetAttribute</b> 
+  function, linking the action to a name (passed as a string). From this point on, this name will refer to a callback. 
+  By means of function <b>IupSetFunction</b>, the user connects this name to the callback.<u1:p>
+</u1:p>
+  For example: </p>
+<pre>int myButton_action(Ihandle* self);
+...
+IupSetAttribute(myButton, &quot;ACTION&quot;, &quot;my_button_action&quot;);
+IupSetFunction(&quot;my_button_action&quot;, (Icallback)myButton_action);</pre>
+<p>In LED, callback are only assigned by their names. It will be still necessary to associate the name with the 
+  corresponding function in C using <b>IupSetFunction</b>. For example:</p>
+<pre># In LED, is equivalent to the IupSetAttribute command in the previous example.
+bt = button(&quot;Title&quot;, my_button_action)  </pre>
+<p>In the NEW method, the application does not needs a global name, it directly sets the callback 
+  using the attribute name using <b>IupSetCallback</b>. For example:</p>
+<pre>int myButton_action(Ihandle* self);
+...
+IupSetCallback(myButton, &quot;ACTION&quot;, (Icallback)myButton_action);</pre>
+<p>The new method is more efficient and more secure, because there is no risk of a name conflict. If 
+  the application uses LED, just ignore the name in the LED, and replace <b>IupSetFunction</b> by 
+<b>IupSetCallback</b>.</p>
+<p>Although enabled in old versions, callbacks do NOT have
+  <b>inheritance</b> like attributes.</p>
+<p>All callbacks receive at least the element which activated the action as a parameter (self).<u1:p>
+</u1:p>
+<u1:p></u1:p>
+</p>
+<p>The callbacks implemented in C by the application must return one of the following values:</p>
+<ul type="disc">
+  <li>IUP_DEFAULT: Proceeds normally with 
+    user interaction. In case other return values do not apply, the callback should return this value.</li>
+  <li>IUP_CLOSE: Call <b>IupExitLoop</b> after return. Depending on the state of the application it will close all windows 
+  and exit the application. Applies only to some actions.</li>
+  <li>IUP_IGNORE: Makes the native system ignore that callback action. Applies 
+  only to some actions. </li>
+  <li>IUP_CONTINUE: Makes the element to 
+    ignore the callback and pass the treatment of the execution to the parent element. 
+  Applies only to some actions. 
+  </li>
+</ul>
+<p>Only some callbacks support the last 3 return values. Check each callback 
+documentation. When nothing is documented then only IUP_DEFAULT is supported.</p>
+<p>An important detail when using callbacks is that they are only called when the user actually executes an action 
+  over an element. A callback is not called when the programmer sets a value via
+  <b>IupSetAttribute</b>. For 
+  instance: when the programmer changes a selected item on a list, no callback is called.</p>
+<p>The order of callback calling is system dependent. For instance, the 
+RESIZE_CB and the SHOW_CB are called in different order in Win32 and in 
+X-Windows 
+when the dialog is shown for the first time.</p>
+<p>To help the definition of callbacks in C, the header &quot;iupcbs.h&quot; can be used, there are typedefs for all the 
+  callbacks.</p>
+<h3><a name="mainloop">Main Loop</a></h3>
+<p>IUP is an event-oriented interface system, so it will keep a loop &#8220;waiting&#8221; for the user to interact with the 
+  application. For this loop to occur, the application must call the 
+  <b>IupMainLoop</b> function, which is generally used right before
+  <b>IupClose</b>.</p>
+<p>When the application is closed by returning IUP_CLOSE in a callback, calling
+<b>IupExitLoop</b> or by hiding the last visible dialog, the 
+  function <b>IupMainLoop</b> will return.</p>
+<p>The <b>IupLoopStep</b> and the <b>IupFlush</b> functions force the processing 
+  of incoming events while inside an application callback.</p>
+<h3><a name="IupLua">IupLua</a></h3>
+<p>Callbacks in Lua have the same names and receive the same parameters as callbacks in C, in the same order. In Lua 
+  the callbacks they can either return a value or not, the IupLua binding will automatically return
+  IUP_DEFAULT if no value is returned. In Lua callbacks can be 
+  Lua functions or strings with Lua code.</p>
+<p>The callbacks can also be implemented as methods, using the language&#8217;s resources for object orientation. Thus, the 
+  element is implicitly passed as the <b>self</b> parameter.</p>
+<p>The following example shows the definition of an action for a button. </p>
+<pre>function myButton:action ()
+  local aux = self.fgcolor
+  self.fgcolor = self.bgcolor
+  self.bgcolor = aux
+end </pre>
+<p>Or you can do</p>
+<pre>function myButton_action(self)
+  ...
+end
+myButton.action = myButton_action</pre>
+<p>Or also</p>
+<pre>myButton.action = function (self)
+  ...
+end
+</pre>
+<p>Or, as a string</p>
+<pre>myButton.action = &quot;local aux = self.fgcolor; 
+                   self.fgcolor = self.bgcolor; 
+                   self.bgcolor = aux&quot;
+</pre>
+<p>Altough some callbacks exists only in specific controls, all the callbacks can be set for all the controls. This is 
+  usefull to set a callback for a box, so it will be inherited by all the elements inside that box which implements that 
+  callback.</p>
+
+</body>
+
+</html>

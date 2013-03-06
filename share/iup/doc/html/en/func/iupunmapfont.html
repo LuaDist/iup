@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupUnMapFont</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupUnMapFont<span class="style1"> (Deprecated since 3.0)</span></h2>
+<p>Retrieves the name of the old IUP FONT names, given 
+  the native font.&nbsp; See the old <a href="../attrib/iup_font.html#Font_Names">Font Names</a> table for a list of names.&nbsp; </p>
+<h3>
+Parameters/Return</h3>
+<pre>char* IupUnMapFont(const char *<strong>driverfont</strong>); [in C]
+iup.UnMapFont(<strong>driverfont</strong> :string) -&gt; (<strong>iupfont</strong> : string) [in Lua]</pre>
+<p><span class="style2">Returns:</span> the name of the IUP 
+  font, given the native font. If such font does not exist, the function will return NULL.</p>
+<h3>See Also</h3>
+<p><a href="iupmapfont.html">IupMapFont</a></p>
+
+</body>
+
+</html>

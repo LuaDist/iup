@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupScanf</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+.style2 {
+	color: #FF0000;
+}
+</style>
+</head>
+<body>
+
+<h2>IupScanf</h2>
+<p>Shows a modal dialog for capturing values 
+  with a format similar to the scanf function in the C stdio library.</p>
+<p><span class="style2"><strong>Deprecated</strong>: Use </span> 
+  <a href="iupgetparam.html">IupGetParam</a> <span class="style2">instead</span>.</p>
+<h3>Creation and Show</h3>
+<pre>int IupScanf(const char *<strong>format</strong>, ...); [in C]
+iup.Scanf(<strong>format</strong>: string, ...) -&gt; (...) [in Lua]</pre>
+<p><strong>format</strong>:
+  Reading format<br>
+  ...:
+  List of variables</p>
+<p><span class="style1">Returns:</span> In C the number of 
+  successfully read fields, or -1 when the user has canceled the operation. In Lua, 
+the code is not returned, the values are returned by the 
+  function in the same order they were passed, or nil when the user has canceled 
+the operation.</p>
+<h3>Notes</h3>
+<p>The <b>fmt</b> format must include a title and the descriptions of the variable fields to be read, 
+  using the following syntax:</p>
+<p><strong>- <b>First line</b></strong>: Window title followed by '\n'</p>
+<p><strong>- <b>Following lines</b></strong>: Must be specified for each variable to be 
+  read, in the following format:</p>
+<p>&quot;<strong>text</strong>%<strong>t</strong>.<strong>v</strong>%<strong>f</strong>\n&quot;, 
+    where:</p>
+<p><strong>text</strong>
+      is a descriptive text, to be placed to the 
+      left of the text field in a label.<br>
+<strong>t</strong>
+      is the maximum number of characters allowed<br>
+<strong>v</strong>
+      is the number of visible characters 
+      in the text field<br>
+<strong>f</strong>
+      is the type (char, float, etc), in the C format for I/O services 
+      (d,i,o,u,x,X,e,f,g,E,G,s, and the modifiers l,h)</p>
+<p>All the fields use a text box for input. If you need better 
+  control of what characters the user enters, you should use 
+  <a href="iupgetparam.html">IupGetParam</a>. 
+  This other dialog also has many other resources not available in <b>IupScanf</b>.</p>
+<p>The dialog uses a global attribute called &quot;PARENTDIALOG&quot; as the parent dialog if it is defined. It also 
+  uses a global attribute called &quot;ICON&quot; as the dialog icon if it is defined.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p>Captures an integer number, a floating-point 
+  value and a character string.</p>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p align="center">
+<img ALIGN="center" src="images/scanf.png">
+</p>
+
+<h3>See Also</h3>
+<p><a href="iupgetfile.html">IupGetFile</a>, <a href="iupmessage.html">IupMessage</a>,
+  <a href="iuplistdialog.html">IupListDialog</a>, <a href="iupalarm.html">IupAlarm</a>, 
+  <a href="iupgetparam.html">IupGetParam</a></p>
+
+</body>
+
+</html>

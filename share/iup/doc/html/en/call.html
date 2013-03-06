@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Events and Callbacks</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h1 align="center">Events and Callbacks</h1>
+<p>IUP is a graphics interface library, so most of the time it waits for an event to occur, such as a button click or a 
+  mouse leaving a window. The application can inform IUP which callback to be called, informing that 
+an event has taken 
+  place. Hence events are handled through callbacks, which 
+  are just functions that the application register in IUP.</p>
+<p>The events are processed only when IUP has the control of the application. After the application creates and shows a 
+  dialog it must return the control to IUP so it can process incoming events. This is done in the IUP main event loop. 
+  And it is usually done once at the application &quot;main&quot; function. One exception is the display of modal dialogs. These 
+  dialogs will have their own event loop and the previous shown dialogs will stop receiving events until the modal 
+  dialog returns.</p>
+
+</body>
+
+</html>

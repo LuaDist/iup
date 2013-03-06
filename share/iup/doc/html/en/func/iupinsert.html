@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupInsert</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupInsert<span class="style1"> (Since 3.0)</span></h2>
+<p>Inserts an interface element <strong>before</strong> another child of 
+  the container. Valid for any element that contains other elements like dialog, 
+frame, hbox, vbox, zbox, menu, etc.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle* IupInsert(Ihandle*<strong> ih</strong>, Ihandle*<strong> ref_child</strong>, Ihandle*<strong> new_child</strong>); [in C]
+iup.Insert(<strong>ih, ref_child, new_child</strong>: ihandle) -&gt; (<strong>parent</strong>: ihandle) [in Lua]</pre>
+<p><strong>ih</strong>: Identifier of a container like hbox, vbox, zbox and menu.<br>
+<strong>ref_child</strong>: Identifier of the element to be used as reference. 
+Can be NULL to insert as the first element.<br>
+<strong>new_child</strong>: Identifier of the element to be inserted before the 
+reference.</p>
+<p><span class="style2">Returns:</span> 
+  the actual <b>parent</b> if the interface element was successfully inserted. Otherwise returns NULL (nil in Lua). 
+Notice that the desired parent can contains a set of elements and containers 
+where the child will be actually attached so the function returns the actual 
+parent of the element.</p>
+<h3>Notes</h3>
+<p>This function can be used when elements that 
+  will compose a container are not known <i>a priori</i> and should be dynamically constructed.</p>
+<p>The new child can NOT be mapped. It will NOT map the new child into the native system. If the parent is already mapped you must explicitly call <b>IupMap</b> for 
+the appended child.</p>
+<p>If the actual parent is a layout box (<strong>IupVbox</strong>, <strong>
+IupHbox</strong> or <strong>IupZbox</strong>) and you try to insert a child that 
+it is already at the parent child list, then the child is moved to the insert 
+position.</p>
+<p>The elements are NOT immediately repositioned. Call
+  <b>IupRefresh</b> for the container* to update the dialog layout (* or any other element in the dialog).</p>
+<h3>See Also</h3>
+<p><a href="iupappend.html">IupAppend</a>, 
+  <a href="iupdetach.html">IupDetach</a>,
+  <a href="../elem/iuphbox.html">IupHbox</a>,
+  <a href="../elem/iupvbox.html">IupVbox</a>,
+  <a href="../elem/iupzbox.html">IupZbox</a>,
+  <a href="../elem/iupmenu.html">IupMenu</a>, 
+<a href="iupmap.html">IupMap</a>, <a href="iupunmap.html">IupUnmap</a>,
+<a href="iuprefresh.html">IupRefresh</a></p>
+
+</body>
+
+</html>

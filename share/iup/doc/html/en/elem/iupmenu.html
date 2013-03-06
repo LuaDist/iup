@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMenu</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	margin-left: 40px;
+}
+.style2 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupMenu</h2>
+
+  <p>
+  Creates a menu element, which groups 3 types of interface elements: item, submenu and separator. Any other interface element defined inside a menu will be 
+	an error.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupMenu(Ihandle *<strong>child</strong>, ...); [in C]
+Ihandle* IupMenuv(Ihandle **<strong>children</strong>); [in C]
+iup.menu{<strong>child</strong>, ...: ihandle} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+menu(<strong>child</strong>, ...) [in LED]</pre>
+  <p><strong>child</strong>, ... :
+  List of identifiers that will be grouped by 
+  the menu. NULL must be used to mark the end of the list in C.&nbsp; It 
+  can be empty.</p>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+<p>
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>: the background color of the 
+menu, affects all items in the menu. (since 3.0)</p>
+
+
+<p><strong><a name="RADIO">RADIO</a></strong> (<font SIZE="3">non inheritable</font>): enables the automatic toggle of 
+one child item. When a child item is selected the other item is automatically 
+deselected. The menu acts like a <strong>IupRadio</strong> for its children. 
+Submenus and their children are not affected.</p>
+<p><a href="../attrib/iup_wid.html">WID</a> (<font SIZE="3">non inheritable</font>): In Windows, returns the HMENU of the 
+menu.</p>
+
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><a href="../call/iup_open_cb.html">OPEN_CB</a>:
+  Called just before the menu is opened.</p>
+  <p><a href="../call/iup_menuclose_cb.html">MENUCLOSE_CB</a>:
+  Called just after the menu is closed.</p>
+    <hr class="style1">
+
+<p> 
+<a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>: common callbacks are 
+supported.</p>
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>A menu can be a menu bar of a dialog, defined by the dialog's MENU attribute, or a popup menu. </p>
+  <p>A popup menu is displayed for the user using the
+  <strong>IupPopup</strong> function (usually on the mouse position) and disappears when an item is selected.</p>
+  <p>
+  <strong>IupDestroy</strong> should be called only for popup menus. Menu bars associated with dialogs are automatically destroyed 
+  when the dialog is destroyed. But if you change the menu of a dialog for another menu, the previous one should be 
+  destroyed using
+  <strong>IupDestroy</strong>. If you replace a menu bar of a dialog, the 
+	previous menu is unmapped.</p>
+  <p>Any item inside a menu bar can retrieve attributes from the dialog using
+	<strong>IupGetAttribute</strong>. It is not necessary to call <strong>
+	IupGetDialog</strong>.</p>
+
+<p>The menu can be created with no elements and be dynamic filled using
+  <a href="../func/iupappend.html">IupAppend</a> or
+<a href="../func/iupinsert.html">IupInsert</a>.&nbsp;</p>
+
+<h4>Lua Binding&nbsp;</h4>
+
+  <p>
+  Offers a &quot;cleaner&quot; syntax than LED for 
+  defining menu, submenu and separator items. The list of elements in the menu is described as a string, with one 
+  element after the other, separated by commas.</p>
+  <p>
+  Each element can be: </p>
+  
+    <pre>{&quot;&lt;item_name&gt;&quot;} - menu item
+{&quot;&lt;submenu_name&gt;&quot;, &lt;menu&gt;} - submenu
+{} - separator</pre>
+<p>For example:</p>
+<p class="style2">
+<img alt="" src="images/iupmenu_fromsyntax.png" width="403" height="78"></p>
+  
+    <pre>mnu = iup.menu
+{
+  iup.submenu
+  {
+    iup.menu
+    {
+      iup.item{title=&quot;IupItem 1 Checked&quot;,value=&quot;ON&quot;},
+      iup.separator{},
+      iup.item{title=&quot;IupItem 2 Disabled&quot;,active=&quot;NO&quot;}
+    } 
+    ;title=&quot;IupSubMenu 1&quot;
+  },
+  iup.item{title=&quot;IupItem 3&quot;},
+  iup.item{title=&quot;IupItem 4&quot;}
+}:popup(iup.CENTER, iup.CENTER)</pre>
+  
+  <p>The same example using the cleaner syntax:</p>
+  
+    <pre>mnu = iup.menu
+{
+  {
+    &quot;IupSubMenu 1&quot;,
+    iup.menu
+    {
+      {&quot;IupItem 1 Checked&quot;;value=&quot;ON&quot;},
+      {},
+      {&quot;IupItem 2 Disabled&quot;;active=&quot;NO&quot;}
+    } 
+  },
+  {&quot;IupItem 3&quot;},
+  {&quot;IupItem 4&quot;}
+}:popup(iup.CENTER, iup.CENTER)</pre>
+<p>It is also possible to mix the cleaner syntax with the normal syntax or with 
+already create elements.</p>
+  
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<table align="center">
+	<tr>
+		<th>Windows <br>
+		Classic</th>
+		<th>Windows <br>
+		w/ Styles</th>
+	</tr>
+	<tr>
+		<td class="bg_win2k"><img src="images/iupmenu_win2k.png"></td>
+		<td class="bg_winxp"><img src="images/iupmenu_winxp.png"></td>
+	</tr>
+	<tr>
+		<th>Motif</th>
+		<th>GTK</th>
+	</tr>
+	<tr>
+		<td class="bg_mot"><img src="images/iupmenu_mot.png"></td>
+		<td class="bg_gtk"><img src="images/iupmenu_gtk.png"></td>
+	</tr>
+</table>
+
+<p>The <strong>IupItem</strong> check is affected by the RADIO attribute in 
+<strong>IupMenu</strong>:</p>
+
+<table align="center">
+	<tr>
+		<th>Windows <br>
+		Classic</th>
+		<th>Windows <br>
+		XP Style</th>
+	</tr>
+	<tr>
+		<td class="bg_win2k"><img src="images/iupmenu_win2k_radio.png"></td>
+		<td class="bg_winxp"><img src="images/iupmenu_winxp_radio.png"></td>
+	</tr>
+	<tr>
+		<th>Motif</th>
+		<th>GTK</th>
+	</tr>
+	<tr>
+		<td class="bg_mot"><img src="images/iupmenu_mot_radio.png"></td>
+		<td class="bg_gtk"><img src="images/iupmenu_gtk_radio.png"></td>
+	</tr>
+</table>
+
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../dlg/iupdialog.html">IupDialog</a>,
+  <a href="iupitem.html">IupItem</a>,
+  <a href="iupseparator.html">IupSeparator</a>, <a href="iupsubmenu.html">IupSubmenu</a>,
+  <a href="../func/iuppopup.html">IupPopup</a>, 
+  <a href="../func/iupdestroy.html">IupDestroy</a></p>
+
+
+</body>
+
+</html>

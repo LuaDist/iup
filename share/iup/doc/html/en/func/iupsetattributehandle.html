@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetAttributeHandle</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>IupSetAttributeHandle</h2>
+<p>Instead of using <strong>IupSetHandle</strong> and <strong>IupSetAttribute</strong> with a new creative name, this function automatically creates a 
+  non conflict name and associates the name with the attribute.</p>
+<p>It is very usefull for associating images and menus.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupSetAttributeHandle(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>, Ihandle *<strong>ih_named</strong>); [in C]
+[There is no equivalent in Lua] </pre>
+<p><strong>ih</strong>: identifier of the interface element.<br>
+  <strong>name</strong>: name of the attribute.<br>
+<b>ih_named</b>: element to associate using a name</p>
+<p>The function will not check for inheritance since all the attributes that 
+associate handles are not inheritable.</p>
+<h3>Notes</h3>
+<p>This work is automatically done in Lua when an attribute that is an element 
+name is set to an element handle. In other words, in Lua you can set a string or 
+a handle as the attribute value, when a handle is used a name is automatically 
+created just as the IupSetAttributeHandle.</p>
+<h3>See Also</h3>
+<p><a href="iupgetattributehandle.html">IupGetAttributeHandle</a>,
+  <a href="iupsetattribute.html">IupSetAttribute</a>, 
+<a href="iupsetattributes.html">IupSetAttributes</a>,
+  <a href="iupstoreattribute.html">IupStoreAttribute</a>, 
+<a href="iupsethandle.html">IupSetHandle</a></p>
+
+</body>
+
+</html>

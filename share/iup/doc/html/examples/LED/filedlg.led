@@ -1,0 +1,4 @@
+#IupFileDlg Example in Led 
+#Shows a typical file-saving dialog. 
+
+dlg = filedlg[TITLE="File save", DIALOGTYPE=SAVE, FILTER="*.bmp", FILTERINFO="Bitmap files"]()

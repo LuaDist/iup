@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>FONT</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style2 {
+	color: #FF0000;
+}
+.style3 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>FONT<span class="style3"> (up to 2.x)</span></h2>
+<p>
+<span style="font-size:12.0pt;mso-bidi-font-size:10.0pt;
+font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">
+Character font of the text shown in the element</span>. See <a href="iup_font.html">
+FONT</a> definition since IUP 3.0.</p>
+<h3>Value</h3>
+<p>
+Pre-defined font name (see <a href="#Font_Names">Font Names</a>) or a string in 
+the native format.</p>
+<p>In <strong>Windows</strong>, the native format is as a string with the 
+following format:</p>
+<blockquote>
+	<p>&quot;<b><span style="font-size:12.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Courier New&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">name:attributes:size</span></b>&quot;</p>
+	<blockquote>
+		<p><b>
+		<span style="font-size:12.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Courier New&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">name</span></b><span style="font-size:12.0pt;mso-bidi-font-size:10.0pt;font-family:&quot;Times New Roman&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA">: The name the user will see (Times New Roman, MS 
+		Sans Serif, etc.</span>).<br>
+		<b>
+		<span style="font-size:12.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Courier New&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">
+		attributes</span></b><span style="font-size:12.0pt;mso-bidi-font-size:10.0pt;font-family:&quot;Times New Roman&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA">: Can be empty, or a list separated by commas 
+		with the following names: </span>
+		<span style="font-size:12.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Courier New&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">BOLD 
+		ITALIC UNDERLINE </span>
+		<span style="font-size: 12.0pt; mso-bidi-font-size: 10.0pt; font-family: Courier New; mso-fareast-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+		STRIKEOUT</span><br>
+		<b>
+		<span style="font-size:12.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Courier New&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">size</span></b><span style="font-size:12.0pt;mso-bidi-font-size:10.0pt;font-family:&quot;Times New Roman&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA">: Size in pixels</span></p>
+	</blockquote>
+	<p>
+	<span style="font-size:12.0pt;mso-bidi-font-size:10.0pt;
+font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">
+	Examples</span>:</p>
+	<blockquote>
+		<p>&quot;<font face="Courier New">Times New Roman::10</font>&quot;<br>
+      	&quot;<font face="Courier New">Ms Sans Serif:ITALIC:20</font>&quot;<br>
+      	&quot;<font face="Courier New">Courier New:BOLD,STRIKEOUT:15</font>&quot;</p>
+	</blockquote>
+	<p>Default: &quot;Tahoma&quot; for Windows 2000 and Windows XP, &quot;MS Sans Serif&quot; for 
+	others. Size default is 8, or 10 if the resolution is greatter than 100 DPI.</p>
+</blockquote>
+<p>In <b>Motif</b>, the native format uses the X-Windows font string format. You 
+can use program <font face="Courier"><strong>xfontsel</strong></font> to select 
+a font and obtain the string. For example:</p>
+<blockquote>
+	<pre>&quot;-*-times-medium-r*-*-10-*&quot;
+&quot;-*-sans serif-*-o-*-*-19-*&quot;
+&quot;-*-courier-*-r-*-*-14-*&quot;</pre>
+	<p>Default: &quot;-misc-fixed-bold-r-normal-*-13-*&quot; if not defined in a user 
+	resource file.</p>
+</blockquote>
+<h3>Affects</h3>
+<p>
+All elements with an associated text.</p>
+<h3>Note</h3>
+<p>
+<span class="style2"><strong>Attention</strong></span>: when consulting this 
+attribute, the user will always be returned the name of the driver font being 
+used, not the name of the IUP font. To get the name of the IUP font, the user 
+must use the
+<a href="../func/iupunmapfont.html">
+IupUnMapFont</a>
+function. 
+</p>
+<h3><b><a name="Font_Names">Font Names</a></b></h3>
+
+<p>Notice that size here is in <b>points</b> in Windows or GTK, and in <b>pixels</b> 
+in Motif.</p>
+<table align="center">
+  <tr>
+    <td>&quot;HELVETICA_NORMAL_8&quot; </td>
+    <td>&quot;COURIER_NORMAL_8&quot; </td>
+    <td>&quot;TIMES_NORMAL_8&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_ITALIC_8&quot; </td>
+    <td>&quot;COURIER_ITALIC_8&quot; </td>
+    <td>&quot;TIMES_ITALIC_8&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_BOLD_8&quot; </td>
+    <td>&quot;COURIER_BOLD_8&quot; </td>
+    <td>&quot;TIMES_BOLD_8&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_NORMAL_10&quot; </td>
+    <td>&quot;COURIER_NORMAL_10&quot; </td>
+    <td>&quot;TIMES_NORMAL_10&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_ITALIC_10&quot; </td>
+    <td>&quot;COURIER_ITALIC_10&quot; </td>
+    <td>&quot;TIMES_ITALIC_10&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_BOLD_10&quot; </td>
+    <td>&quot;COURIER_BOLD_10&quot; </td>
+    <td>&quot;TIMES_BOLD_10&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_NORMAL_12&quot; </td>
+    <td>&quot;COURIER_NORMAL_12&quot; </td>
+    <td>&quot;TIMES_NORMAL_12&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_ITALIC_12&quot; </td>
+    <td>&quot;COURIER_ITALIC_12&quot; </td>
+    <td>&quot;TIMES_ITALIC_12&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_BOLD_12&quot; </td>
+    <td>&quot;COURIER_BOLD_12&quot; </td>
+    <td>&quot;TIMES_BOLD_12&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_NORMAL_14&quot; </td>
+    <td>&quot;COURIER_NORMAL_14&quot; </td>
+    <td>&quot;TIMES_NORMAL_14&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_ITALIC_14&quot; </td>
+    <td>&quot;COURIER_ITALIC_14&quot; </td>
+    <td>&quot;TIMES_ITALIC_14&quot; </td>
+  </tr>
+  <tr>
+    <td>&quot;HELVETICA_BOLD_14&quot; </td>
+    <td>&quot;COURIER_BOLD_14&quot; </td>
+    <td>&quot;TIMES_BOLD_14&quot; </td>
+  </tr>
+</table>
+<h3>See Also</h3>
+<p><font face="Courier New"><a href="../func/iupmapfont.html">IupMapFont</a>,
+  <a href="../func/iupunmapfont.html">IupUnMapFont</a></font>. 
+</p>
+
+</body>
+
+</html>

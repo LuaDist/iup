@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Control Creation Guide</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<center>
+<h2>Control Creation Guide (since 3.0)</h2>
+</center>
+<h3>Introduction</h3>
+<p>All the IUP controls use the same internal API to implement their functionalities. 
+</p>
+<p>Each control, needs to export only one function that register the control so it can be used by IupCreate and other 
+  functions. Actually another utility function is exported to simplify the creation of the control.</p>
+<p>Internally the control must implement the methods of the IUP class, and create functions that handle attributes.</p>
+<h3>Control Class Registration</h3>
+<p>The new control must export function to register the control. This function is quite simple and it is just a call 
+  to <a href="../doxygen/group__register.html">iupRegisterClass</a>. For example:</p>
+<pre>void Iup<b>Xxx</b>Open(void)
+{
+  iupRegisterClass(iupXxxGetClass());
+}</pre>
+<p>The function iupXxxGetClass is internal to the control and it creates the control class.</p>
+<h3>Control Class Implementation</h3>
+<p>The function that creates the class will (1) initialize a base class, then (2) fill its configuration parameters, 
+  (3) set the class methods, (4) register the callbacks and (5) register the attributes. For example:</p>
+<pre>Iclass* iupXxxGetClass(void)
+{
+  /* (1) - initialize the class */
+  <a href="../doxygen/structIclass__.html">Iclass</a>* ic = <a href="../doxygen/group__iclass.html">iupClassNew</a>(NULL); 
+
+  /* (2) - configuration parameters */
+  ic-&gt;name = &quot;xxx&quot;;
+  ic-&gt;format = &quot;&quot;; /* no creation parameters */
+  ic-&gt;nativetype = IUP_TYPECONTROL;
+  ic-&gt;childtype = IUP_CHILDNONE;
+  ic-&gt;interactive = 1;
+
+  /* (3) - class methods */
+  ic-&gt;Create = iXxxCreateMethod;
+  ic-&gt;Map = iXxxMapMethod;
+  ic-&gt;Destroy = iXxxDestroyMethod;
+  ic-&gt;ComputeNaturalSize = iXxxComputeNaturalSizeMethod;
+  ic-&gt;SetCurrentSize = iXxxSetCurrentSizeMethod; 
+  ic-&gt;LayoutUpdate = iXxxLayoutUpdateMethod;
+  ic-&gt;DisplayUpdate = iXxxDisplayUpdateMethod;
+  ic-&gt;SetPosition = iXxxSetPositionMethod;
+
+  /* (4) - callbacks */
+  <a href="../doxygen/group__iclass.html">iupClassRegisterCallback</a>(ic, &quot;XXX_CB&quot;, &quot;i&quot;);
+  iupClassRegisterCallback(ic, &quot;MAP_CB&quot;, &quot;&quot;);
+  iupClassRegisterCallback(ic, &quot;HELP_CB&quot;, &quot;&quot;);
+  iupClassRegisterCallback(ic, &quot;GETFOCUS_CB&quot;, &quot;&quot;);
+  iupClassRegisterCallback(ic, &quot;KILLFOCUS_CB&quot;, &quot;&quot;);
+  iupClassRegisterCallback(ic, &quot;ENTERWINDOW_CB&quot;, &quot;&quot;);
+  iupClassRegisterCallback(ic, &quot;LEAVEWINDOW_CB&quot;, &quot;&quot;);
+  iupClassRegisterCallback(ic, &quot;K_ANY&quot;, &quot;i&quot;); 
+
+  /* (5) - attributes */
+
+  /* Common */
+  <a href="../doxygen/group__iclass.html">iupClassRegisterAttribute</a>(ic, &quot;SIZE&quot;, iupGetSizeAttrib, iupDlgSetSizeAttrib, NULL, IUP_NOT_MAPPED, IUP_NO_INHERIT);
+  iupClassRegisterAttribute(ic, &quot;RASTERSIZE&quot;, iupGetRasterSizeAttrib, iupDlgSetRastersizeAttrib, NULL, IUP_NOT_MAPPED, IUP_NO_INHERIT);
+  iupClassRegisterAttribute(ic, &quot;WID&quot;, iupGetWidAttrib, iupNoSetAttrib, NULL, IUP_MAPPED, IUP_NO_INHERIT);
+  iupClassRegisterAttribute(ic, &quot;FONT&quot;, NULL, iupdrvSetFontAttrib, IupGetGlobal(&quot;DEFAULTFONT&quot;), IUP_NOT_MAPPED, IUP_NO_INHERIT); 
+
+  /* Common, but only after Map */
+  iupClassRegisterAttribute(ic, &quot;ACTIVE&quot;, iupGetActiveAttrib, iupSetActiveAttrib, &quot;YES&quot;, IUP_MAPPED, IUP_INHERIT);
+  iupClassRegisterAttribute(ic, &quot;VISIBLE&quot;, iupGetVisibleAttrib, iupSetVisibleAttrib, &quot;YES&quot;, IUP_MAPPED, IUP_NO_INHERIT);
+  iupClassRegisterAttribute(ic, &quot;ZORDER&quot;, NULL, iupdrvSetZorderAttrib, NULL, IUP_MAPPED, IUP_NO_INHERIT); 
+
+  /* only the default value. */
+  iupClassRegisterAttribute(ic, &quot;BORDER&quot;, NULL, NULL, &quot;YES&quot;, IUP_NOT_MAPPED, 0); 
+
+  return ic;
+}</pre>
+<p>You can use the iupXxxGetClass equivalent function of other controls to initialize a new base class for a 
+  new control that inherits the functionalities of the base class.</p>
+<p>You can also use the <a href="../doxygen/group__iclassbase.html">Base Class</a> 
+methods and attribute functions to simplify your iupXxxGetClass. </p>
+<p>If the control is a native control then it usually will have separate modules for each driver. The 
+iupXxxGetClass function could call a iupdrvXxxInitClass(ic) function to initialize methods and 
+  attributes that are driver dependent.</p>
+<h3>Control Creation</h3>
+<p>All controls can be created using the IupCreate functions. But it is a common pratice to have a convenience 
+  function to create the control:</p>
+<pre>Ihandle* IupXxx(void)
+{
+  return IupCreate(&quot;xxx&quot;);
+}</pre>
+<h3>Control Exported Functions</h3>
+<p>The file header with the exported functions should look like this:</p>
+<pre>#ifndef __IUPXXX_H 
+#define __IUPXXX_H
+
+#ifdef __cplusplus
+extern &quot;C&quot; {
+#endif 
+
+void IupXxxOpen(void); 
+
+Ihandle* IupXxx(void);
+
+#ifdef __cplusplus
+}
+#endif 
+
+#endif</pre>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>GETFOCUS_CB</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>GETFOCUS_CB</h2>
+<p>Action generated when an element is given 
+  keyboard focus.&nbsp;This callback is called after the KILLFOCUS_CB of the 
+element that loosed the focus. The IupGetFocus function during the callback 
+returns the element that loosed the focus.</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<b>ih</b>); [in C]
+<strong>elem</strong>:getfocus_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that received 
+  keyboard focus.</p>
+<h3>Affects</h3>
+<p>All elements with user interaction, 
+  except menus.</p>
+<h3>See Also</h3>
+<p><a href="iup_killfocus_cb.html">KILLFOCUS_CB</a>,
+<a href="../func/iupgetfocus.html">IupGetFocus</a>,
+<a href="../func/iupsetfocus.html">IupSetFocus</a> </p>
+
+</body>
+
+</html>

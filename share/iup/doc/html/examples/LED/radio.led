@@ -1,0 +1,27 @@
+#IupRadio Example in LED 
+#Creates a dialog for the user to select his/her gender. In this case, the radio element is essential to prevent the user from selecting both options. 
+
+#####################################################
+# IupRadio - (mutually exclusive) TWO-STATE BUTTONS #
+#####################################################
+male = TOGGLE [TIP="Two state button - Exclusive - RADIO"]("Male", action_gender)
+female = TOGGLE [TIP="Two state button - Exclusive - RADIO"]("Female",  action_gender)
+exclusive = RADIO [VALUE="female"] ( vbox(male, female) )
+frame = FRAME [TITLE="Gender"] (exclusive)
+body = HBOX
+(
+  FILL(),
+  frame,
+  FILL()
+)
+##########
+# DIALOG #
+##########
+dialog = DIALOG
+[
+  SIZE=140,
+  RESIZE=NO,
+  MINBOX=NO,
+  MAXBOX=NO,
+  TITLE="IupRadio"
+] (body)

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetGlobal</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetGlobal</h2>
+<p>Returns an attribute value from the global 
+  environment. The value can be returned from the driver or from the internal storage.</p>
+<h3>
+Parameters/Return</h3>
+<pre>char *IupGetGlobal(const char *<strong>name</strong>); [in C]
+iup.GetGlobal(<strong>name</strong>: string) -&gt; <strong>value</strong>: string [in Lua]</pre>
+<p><strong>name</strong>: name of the attribute.</p>
+<p><span class="style1">Returns:</span> the attribute value. 
+  If the attribute does not exist, NULL (nil in Lua) is returned.</p>
+<h3>Notes</h3>
+<p>This function&#8217;s return value is not 
+  necessarily the same one used by the application to set the attribute&#8217;s value.&nbsp; 
+</p>
+<p>The subsequent call to the <b>IupGetGlobal</b> function may change the contents of the previously returned pointer, as this is an internal 
+  IUP buffer. The user is in charge of storing the value before calling 
+  IupGetGlobal again. This pointer must not be free either.</p>
+<p><strong>IupGetAttribute</strong> can also be used to get global attributes, just set the element to NULL.</p>
+<h3>See Also</h3>
+<p><a href="iupgetattribute.html">IupGetAttribute</a>, 
+<a href="iupsetglobal.html">IupSetGlobal</a></p>
+
+</body>
+
+</html>

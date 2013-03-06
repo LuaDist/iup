@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupFrame</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupFrame</h2>
+
+  <p>
+  Creates a 
+  Frame interface element, which draws a frame with 
+  a title around an interface element.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupFrame(Ihandle *<strong>child</strong>); [in C]
+iup.frame{<strong>child</strong>: ihandle} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+frame(<strong>child</strong>) [in LED]</pre>
+  <p><strong>child</strong>: Identifier of an interface element which will receive the frame 
+	around. It can be NULL.</p>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p>
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>: ignored, transparent in all 
+systems. Will use the background color of the native parent. Except if TITLE is 
+not defined and BGCOLOR is defined before map (can be changed later), then the frame will have a color 
+background.</p>
+<p><a href="../attrib/iup_expand.html">EXPAND</a> (<font SIZE="3">non inheritable</font>):
+  The default value is &quot;YES&quot;.</p>
+
+  <p><a href="../attrib/iup_fgcolor.html">FGCOLOR</a>: Text title color. Not 
+	available in Windows when using Windows Visual Styles. Default: the global 
+	attribute DLGFGCOLOR.</p>
+  <p><b>SUNKEN</b> (creation only): When not using a title, the frame line defines a 
+  sunken area (lowered area). Valid values: YES or
+  NO<i>.</i> Default:
+  NO.</p>
+  <p><a href="../attrib/iup_title.html">TITLE</a> (<font SIZE="3">non inheritable</font>):
+  Text the user will see at the top of the 
+  frame. If not defined during creation it can not be added lately, to be changed it must be at least &quot;&quot; during 
+  creation. </p>
+  <blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, 
+<a href="../attrib/iup_clientsize.html">CLIENTSIZE</a>, 
+	<a href="../attrib/iup_clientoffset.html">CLIENTOFFSET</a>, 
+	<a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_size.html">SIZE</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.</p>
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p> 
+<a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>:  common callbacks are 
+supported.</p>
+  
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>
+  In Windows, a Frame with TITLE==NULL is not the same control as then 
+	TITLE!=NULL. When TITLE==NULL it does not have Visual Styles and uses a 
+	sharp rectangle border. When TITLE!=NULL it has Visual Styles and the border 
+	is a rounded rectangle. To always use Visual Styles set the title to &quot;&quot; 
+	before mapping, but be aware that a vertical space for the title will be 
+	always reserved at the top border.</p>
+
+<p>The frame can be created with no elements and be dynamic filled using
+  <a href="../func/iupappend.html">IupAppend</a> or
+<a href="../func/iupinsert.html">IupInsert</a>.&nbsp;</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<pre>
+  frame1 = IupFrame
+          (
+            IupVbox
+            (
+              IupLabel("Label1"),
+              IupLabel("Label2"), 
+              IupLabel("Label3"),
+              NULL
+            )
+          );
+
+  frame2 = IupFrame
+          (
+            IupVbox
+            (
+              IupLabel("Label4"), 
+              IupLabel("Label5"),
+              IupLabel("Label6"),
+              NULL
+            )
+          );
+
+  IupSetAttribute(frame1, "TITLE", "Title Text");
+  IupSetAttribute(frame2, "SUNKEN", "YES");
+</pre>
+<div align="center">
+  <center>
+  <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+    <tr>
+      <th>Windows 2000</th>
+    </tr>
+    <tr>
+      <td class="bg_win2k"><img border="0" src="images/iupframe_win2k.png"></td>
+    </tr>
+    <tr>
+      <th>Windows XP</th>
+    </tr>
+    <tr>
+      <td class="bg_winxp"><img border="0" src="images/iupframe_winxp.png"></td>
+    </tr>
+    <tr>
+      <th>Motif</th>
+    </tr>
+    <tr>
+      <td class="bg_mot"><img border="0" src="images/iupframe_mot.png"></td>
+    </tr>
+    <tr>
+      <th>GTK</th>
+    </tr>
+    <tr>
+      <td class="bg_gtk"><img border="0" src="images/iupframe_gtk.png"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+</body>
+
+</html>

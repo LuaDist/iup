@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupHide</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupHide</h2>
+<p>Hides an interface element. This function 
+  has the same effect as attributing value &quot;NO&quot; to the interface element&#8217;s VISIBLE attribute.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupHide(Ihandle *<strong>ih</strong>); [in C]
+iup.Hide(<strong>ih</strong>: ihandle) -&gt; (<strong>ret</strong>: number) [in Lua]
+or <strong>ih</strong>:hide() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><b>ih</b>: Identifier of the interface element.</p>
+<p><span class="style1">Returns:</span> IUP_NOERROR always.</p>
+<h3>Notes</h3>
+<p>Once a dialog is hidden, either by means of
+  <b>IupHide</b> or by changing the VISIBLE attribute or by means of a click in the window close button, the elements inside this dialog 
+  are not destroyed, so that you can show them again. To destroy dialogs, the <b>IupDestroy</b> function must be called.</p>
+<h3>See Also</h3>
+<p><a href="iupshowxy.html">IupShowXY</a>, <a href="iupshow.html">IupShow</a>,
+  <a href="iuppopup.html">IupPopup</a>, <a href="iupdestroy.html">IupDestroy</a>.</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

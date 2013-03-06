@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetAllNames</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetAllNames</h2>
+<p>Returns the names of all interface elements 
+  that have an associated name 
+  using <strong>IupSetHandle</strong> or using LED.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupGetAllNames(char**<strong> names</strong>, int <strong>max_n</strong>); [in C]
+iup.GetAllNames(<strong>[max_n</strong>: number]) -&gt; (<strong>names</strong>: table<strong>, n</strong>: number) [in Lua]</pre>
+<p><b>names</b>: table receiving the names. Only the list of names need to be 
+allocated. Each name will point to an internal string.<br>
+<b>max_n</b>: maximum number of names the table can receive. Can be omitted in 
+Lua.</p>
+<p><span class="style1">Returns:</span> the number of names loaded to the 
+  table. If names==NULL or max_n==0 then returns the actual number of names.</p>
+<h3>Notes</h3>
+<p>This name is not associated to the name of 
+  the Lua variable &#8211; this was inherited from LED and is needed for some functions.</p>
+<h3>See Also</h3>
+<p><a href="iupsethandle.html">IupSetHandle</a>, <a href="iupgethandle.html">IupGetHandle</a>,
+  <a href="iupgetname.html">IupGetName</a>, <a href="iupgetalldialogs.html">IupGetAllDialogs</a>.</p>
+
+</body>
+
+</html>

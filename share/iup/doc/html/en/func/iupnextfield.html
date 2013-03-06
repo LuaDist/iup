@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupNextField</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupNextField</h2>
+<p>Shifts the focus to the next element that 
+  can have the focus. It is relative to the given element and does not depend on the element currently with the focus.</p>
+<p>It will search for the next element first in the children, then in the brothers, then in the uncles and their 
+  children, and so on.</p>
+<p>This sequence is not the same sequence used by the Tab key, which is dependent on the native system.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle* IupNextField(Ihandle* <strong>ih</strong>); [in C]
+iup.NextField(<strong>ih</strong>: ihandle) -&gt; (<strong>next</strong>: ihandle) [in Lua]</pre>
+<p><b>ih</b>: identifier of the interface element. </p>
+<p><span class="style1">Returns:</span> the element that received the focus 
+  or NULL if not found.</p>
+<h3>See Also</h3>
+<p><a href="iuppreviousfield.html">IupPreviousField</a>.</p>
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupReparent</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupReparent<span class="style1"> (Since 3.0)</span></h2>
+<p>Moves an interface element from one position in the hierarchy tree to 
+another.</p>
+<p>Both <strong>new_parent</strong> and <strong>child</strong> must be mapped or unmapped at the same time.</p>
+<p>If <strong>ref_child</strong> is NULL, then it will <em>append</em> the <strong>child</strong> 
+to the <strong>new_parent</strong>. If <strong>ref_child</strong> is NOT NULL 
+then it will <em>insert</em> <strong>child</strong> before <strong>ref_child</strong> inside the <strong>
+new_parent</strong>.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupReparent(Ihandle*<strong> child</strong>, Ihandle*<strong> new_parent</strong>, Ihandle*<strong> ref_child</strong>); [in C]
+iup.Reparent(<strong>child, new_parent, ref_child</strong>: ihandle) -&gt; <strong>error</strong>: number [in Lua]</pre>
+<p><b>child</b>: Identifier of the element to be moved.<br>
+<b>new_parent</b>: Identifier of the new parent.<br>
+<strong>ref_child</strong>: Identifier of the element to be used as reference, 
+where the child will be inserted before it. Can be NULL. (since 3.3)</p>
+<p><span class="style2">Returns:</span> IUP_NOERROR if successfully, IUP_ERROR if failed.</p>
+<h3>Notes</h3>
+<p>This function is faster and easier than doing the sequence <b>unmap</b>, <b>
+detach</b>, <strong>append/insert</strong> and <b>map</b>.</p>
+<p>The elements are NOT immediately repositioned. Call
+  <b>IupRefresh</b> for the container (or any other element in the dialog) to 
+update the dialog layout.</p>
+<p>Motif does not support the re-parent function, but we simulate a re-parent 
+doing a <strong>unmap</strong>/<strong>map</strong> sequence. But some 
+attributes may be lost during the operation, mostly attributes that are id 
+dependent.</p>
+<h3>See Also</h3>
+<p><a href="iupappend.html">IupAppend</a>, 
+  <a href="iupinsert.html">IupInsert</a>, 
+  <a href="iupdetach.html">IupDetach</a>, 
+<a href="iupmap.html">IupMap</a>, <a href="iupunmap.html">IupUnmap</a>,
+<a href="iuprefresh.html">IupRefresh</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMatrix</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupMatrix</h2>
+<p>Creates a matrix of alphanumeric fields. 
+  Therefore, all values of the matrixs fields are strings. The matrix is not a grid container like many systems 
+  have. It inherits from 
+<a href="../elem/iupcanvas.html">IupCanvas</a>.</p>
+<p>This is an additional control that depends on the CD library. It is included 
+in the 
+<a href="../iupcontrols.html">Controls Library</a>.</p>
+<p>It has two modes of operation: normal and callback mode. In normal mode, string values are stored in attributes for 
+  each cell. In callback mode these attributes are ignored and the cells are filled with strings returned by the &quot;VALUE_CB&quot; 
+  callback. So the existence of this callback defines the mode the matrix will operate.</p>
+<h3><a name="Creation">Creation</a></h3>
+<div>
+  <pre>Ihandle* IupMatrix(char *<strong>action_cb</strong>); [in C]
+iup.matrix{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+matrix(<strong>action_cb</strong>) [in LED]</pre>
+</div>
+<p><strong>action_cb</strong>:
+  Name of the action generated when the user 
+  types something.</p>
+<p>Returns the identifier of the created 
+  matrix, or NULL if an error occurs.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<h4>General</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#CURSOR">CURSOR</a><br>
+	<a href="iupmatrix_attrib.html#EDIT_MODE">EDIT_MODE</a></dd>
+	<dd><a href="iupmatrix_attrib.html#EDITNEXT">EDITNEXT</a> <br>
+	<a href="iupmatrix_attrib.html#FOCUS_CELL">FOCUS_CELL</a></dd>
+  <dd><a href="iupmatrix_attrib.html#HIDEFOCUS">HIDEFOCUS</a><br>
+	<a href="iupmatrix_attrib.html#HIDDENTEXTMARKS">HIDDENTEXTMARKS</a> </dd>
+  <dd><a href="iupmatrix_attrib.html#ORIGIN">ORIGIN</a><br>
+	<a href="iupmatrix_attrib.html#ORIGINOFFSET">ORIGINOFFSET</a> </dd>
+  <dd><a href="iupmatrix_attrib.html#READONLY">READONLY</a></dd>
+  <dd><a href="iupmatrix_attrib.html#RESIZEMATRIX">RESIZEMATRIX</a></dd>
+  <dd><a href="iupmatrix_attrib.html#USETITLESIZE">USETITLESIZE</a></dd>
+</dl>
+
+
+<h4>Cell</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#L:C">L:C</a></dd>
+  <dd><a href="iupmatrix_attrib.html#BGCOLOR">BGCOLOR</a></dd>
+  <dd><a href="iupmatrix_attrib.html#FGCOLOR">FGCOLOR</a></dd>
+  <dd><a href="iupmatrix_attrib.html#FONT">FONT</a><br></dd>
+  <dd><a href="iupmatrix_attrib.html#FRAMECOLOR">FRAMECOLOR</a></dd>
+  <dd><a href="iupmatrix_attrib.html#VALUE">VALUE</a><br>
+	<a href="iupmatrix_attrib.html#CELLBGCOLOR">CELLBGCOLOR</a> <br>
+	<a href="iupmatrix_attrib.html#CELLFGCOLOR">CELLFGCOLOR</a> <br>
+	<a href="iupmatrix_attrib.html#CELLOFFSET">CELLOFFSET</a> <br>
+	<a href="iupmatrix_attrib.html#CELLSIZE">CELLSIZE</a></dd>
+</dl>
+<h4>Column</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#ALIGNMENTn">ALIGNMENTn</a><br>
+	<a href="iupmatrix_attrib.html#SORTSIGNn">SORTSIGNn</a></dd>
+</dl>
+<h4>Column Size</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#RASTERWIDTHn">RASTERWIDTHn</a></dd>
+  <dd><a href="iupmatrix_attrib.html#WIDTHn">WIDTHn</a></dd>
+  <dd><a href="iupmatrix_attrib.html#WIDTHDEF">WIDTHDEF</a></dd>
+</dl>
+<h4>Line Size</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#HEIGHTn">HEIGHTn</a></dd>
+  <dd><a href="iupmatrix_attrib.html#HEIGHTDEF">HEIGHTDEF</a></dd>
+  <dd><a href="iupmatrix_attrib.html#RASTERHEIGHTn">RASTERHEIGHTn</a></dd>
+</dl>
+<h4>Number of Cells</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#ADDCOL">ADDCOL</a></dd>
+  <dd><a href="iupmatrix_attrib.html#ADDLIN">ADDLIN</a></dd>
+  <dd><a href="iupmatrix_attrib.html#DELCOL">DELCOL</a></dd>
+  <dd><a href="iupmatrix_attrib.html#DELLIN">DELLIN</a></dd>
+  <dd><a href="iupmatrix_attrib.html#NUMCOL">NUMCOL</a></dd>
+  <dd><a href="iupmatrix_attrib.html#NUMCOL_VISIBLE">NUMCOL_VISIBLE</a><br>
+	<a href="iupmatrix_attrib.html#NUMCOL_NOSCROLL">NUMCOL_NOSCROLL</a> </dd>
+  <dd><a href="iupmatrix_attrib.html#NUMLIN">NUMLIN</a></dd>
+  <dd><a href="iupmatrix_attrib.html#NUMLIN_VISIBLE">NUMLIN_VISIBLE</a><br>
+	<a href="iupmatrix_attrib.html#NUMLIN_NOSCROLL">NUMLIN_NOSCROLL</a> </dd>
+</dl>
+<h4>Mark Attributes</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#MARKAREA">MARKAREA</a></dd>
+  <dd><a href="iupmatrix_attrib.html#MARKMODE">MARKMODE</a></dd>
+  <dd><a href="iupmatrix_attrib.html#MARK">MARK</a></dd>
+  <dd><a href="iupmatrix_attrib.html#MARKED">MARKED</a></dd>
+  <dd><a href="iupmatrix_attrib.html#MARKMULTIPLE">MARKMULTIPLE</a></dd>
+</dl>
+<h4>Action Attributes</h4>
+<dl>
+  <dd>
+	<a href="iupmatrix_attrib.html#FITTOSIZE">FITTOSIZE</a></dd>
+  <dd><a href="iupmatrix_attrib.html#FITTOTEXT">FITTOTEXT</a></dd>
+  <dd><a href="iupmatrix_attrib.html#SHOW">SHOW</a></dd>
+  <dd><a href="iupmatrix_attrib.html#REDRAW">REDRAW</a></dd>
+</dl>
+<h4>Text Editing Attributes</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#CARET">CARET</a></dd>
+  <dd><a href="iupmatrix_attrib.html#MASKL:C">MASKL:C</a><br>
+  <dd><a href="iupmatrix_attrib.html#MULTILINE">MULTILINE</a><br>
+  <dd><a href="iupmatrix_attrib.html#SELECTION">SELECTION</a></dd>
+</dl>
+<h4>Canvas Attributes</h4>
+<dl>
+  <dd><a href="iupmatrix_attrib.html#BORDER">BORDER</a></dd>
+  <dd><a href="iupmatrix_attrib.html#SCROLLBAR">SCROLLBAR</a></dd>
+</dl>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<h4>Interaction</h4>
+<p class="info">
+<a href="iupmatrix_cb.html#ACTION_CB">ACTION_CB</a> -
+    Action generated when a keyboard event 
+    occurs.<a href="iupmatrix_cb.html#CLICK_CB"><br>
+    CLICK_CB</a> -
+    Action generated when any mouse button is 
+    pressed over a cell.<a href="iupmatrix_cb.html#DRAW_CB"><br>
+</a><a href="iupmatrix_cb.html#RELEASE_CB">RELEASE_CB</a> -
+    Action generated when any mouse button is 
+    released over a cell.<a href="iupmatrix_cb.html#DRAW_CB"><br>
+</a><a href="iupmatrix_cb.html#MOUSEMOVE_CB">MOUSEMOVE_CB</a> -
+    Action generated to notify the application 
+    that the mouse has moved over the matrix.<br>
+<a href="iupmatrix_cb.html#ENTERITEM_CB">ENTERITEM_CB</a> -
+    Action generated when a matrix cell is 
+    selected, becoming the current cell.<a href="iupmatrix_cb.html#LEAVEITEM_CB"><br>
+    LEAVEITEM_CB</a> -
+    Action generated when a cell is no longer 
+    the current cell.<br>
+<a href="iupmatrix_cb.html#SCROLL_CB">SCROLLTOP_CB</a> -
+    Action generated when the matrix is scrolled 
+    with the scrollbars or with the keyboard.</p>
+<h4>Drawing</h4>
+<p class="info">
+<a href="iupmatrix_cb.html#BGCOLOR_CB">BGCOLOR_CB</a> -
+    Action generated to retrieve the background 
+    color of a cell when it needs to be redrawn. 
+    <br>
+    <a href="iupmatrix_cb.html#FGCOLOR_CB">FGCOLOR_CB</a> -
+    Action generated to retrieve the foreground 
+    color of a cell when it needs to be redrawn. 
+    <br>
+    <a href="iupmatrix_cb.html#FONT_CB">FONT_CB</a> -
+    Action generated to retrieve the font 
+    of a cell when it needs to be redrawn. 
+    <br>
+    <a href="iupmatrix_cb.html#DRAW_CB">DRAW_CB</a> -
+    Action generated before the cell is drawn. 
+    Allow a custom cell draw.<br>
+<a href="iupmatrix_cb.html#DROPCHECK_CB">DROPCHECK_CB</a> -
+    Action generated to determine if a dropdown 
+    feedback should be shown.</p>
+<h4>Editing</h4>
+<p class="info">
+<a href="iupmatrix_cb.html#DROP_CB">DROP_CB</a> -
+    Action generated to determine if a text 
+    field or a dropdown will be shown.<br>
+<a href="iupmatrix_cb.html#DROPSELECT_CB">DROPSELECT_CB</a> -
+    Action generated when an element in the 
+    dropdown list is selected.<a href="iupmatrix_cb.html#EDITION_CB"><br>
+    EDITION_CB</a> -
+    Action generated when the current cell 
+    enters or leaves the edition mode.</p>
+<h4>Callback Mode</h4>
+<p class="info">
+<a href="iupmatrix_cb.html#VALUE_CB">VALUE_CB</a> -
+    Action generated to verify the value of a 
+    cell. 
+    <br>
+<a href="iupmatrix_cb.html#VALUE_EDIT_CB">VALUE_EDIT_CB</a> -
+    Action generated to notify the application 
+    that the value of a cell was edited. <br>
+<a href="iupmatrix_cb.html#MARK_CB">MARK_CB</a> -
+    Action generated to verify the selection 
+    state of a cell. <a href="iupmatrix_cb.html#MARKEDIT_CB"><br>
+    MARKEDIT_CB</a> -
+    Action generated to notify the application 
+    that the selection state of a cell was changed. 
+  </p>
+<h3>Utility Functions </h3>
+<p>These functions can be used to help set and get attributes from the matrix:</p>
+<pre>void  IupMatSetAttribute(Ihandle* ih, const char* name, int lin, int col, const char* value);
+void  IupMatStoreAttribute(Ihandle* ih, const char* name, int lin, int col, const char* value);
+char* IupMatGetAttribute(Ihandle* ih, const char* name, int lin, int col);
+int   IupMatGetInt(Ihandle* ih, const char* name, int lin, int col);
+float IupMatGetFloat(Ihandle* ih, const char* name, int lin, int col);
+void  IupMatSetfAttribute(Ihandle* ih, const char* name, int lin, int col, const char* format, ...);</pre>
+<p>They work just like the respective traditional set and get functions. But the attribute string is complemented with 
+  the L and C values. When only one value is needed then use the Iup*AttributeId 
+functions. For ex:</p>
+<pre>IupMatSetAttribute(ih, &quot;&quot;, 30, 10, value) == IupSetAttribute(ih, &quot;30:10&quot;, value)
+IupMatSetAttribute(ih, &quot;BGCOLOR&quot;, 30, 10, value) == IupSetAttribute(ih, &quot;BGCOLOR30:10&quot;, value)
+IupSetAttributeId(ih, &quot;ALIGNMENT&quot;, 10, value) == IupSetAttribute(ih, &quot;ALIGNMENT10&quot;, value)</pre>
+<p>But these functions are faster than the traditional functions because they do 
+not need to parse the attribute name string and the application does not need to 
+concatenate the attribute name with the id.</p>
+<p>Some of these functions are also available in Lua:</p>
+<pre>iup.MatSetAttribute(<strong>ih</strong>: ihandle, <strong>name</strong>: string, <strong>lin</strong>: number, <strong>col</strong>: number, <strong>value</strong>: string)
+iup.MatStoreAttribute(<strong>ih</strong>: ihandle, <strong>name</strong>: string, <strong>lin</strong>: number, <strong>col</strong>: number, <strong>value</strong>: string)
+iup.MatGetAttribute(<strong>ih</strong>: ihandle, <strong>name</strong>: string, <strong>lin</strong>: number, <strong>col</strong>: number) -&gt; <strong>value</strong>: string</pre>
+<p>They are used by the additional methods in Lua:</p>
+<pre><strong>elem</strong>:setcell(<strong>lin, col</strong>: number, <strong>value</strong>: string)
+<strong>elem</strong>:getcell(<strong>lin, col</strong>: number) -&gt; (<strong>cell</strong>: string)</pre>
+<p>But you can also use the traditional functions when typing:</p>
+<pre><strong>elem</strong>[&quot;bgcolor&quot;..l..&quot;:&quot;..c] = v
+   or
+<strong>elem</strong>[&quot;bgcolor30:10&quot;] = v</pre>
+<h3><a name="Notes">Notes</a></h3>
+<h4>Storage</h4>
+<p>Before mapped to the native system, all attributes are stored in the hash 
+table, independently from the size of the matrix or its operation mode. The 
+action attributes like ADDLIN and DELCOL will NOT work.</p>
+<p>When the matrix is mapped, and it is NOT in callback mode, then the cell values and 
+mark state are moved from the hash table to an internal storage at the matrix. 
+Other cell attributes remains on the hash table. Cell values with indices 
+greater than (NUMLIN,NUMCOL) are ignored. When in callback mode cell 
+values stored in the hash table are ignored.</p>
+<h4>Callback Mode</h4>
+<p>Very large matrices must use the callback 
+  mode to set the values, and not the regular 
+  value attributes of the cells. The idea is the following:</p>
+<p>1 -
+    Register the VALUE_CB callback<br>
+    2 -
+    No longer set the value of the cells. They 
+    will be set one by one by the callback. Note that the values of the cells must now be stored by the user.<br>
+    3 -
+    If the matrix is editable, set the VALUE_EDIT_CB callback.<br>
+    4 -
+    When the matrix must be invalidated, use the REDRAW attribute to force a matrix redraw.</p>
+<p>A negative aspect is that, when VALUE_CB is defined, after it is mapped the matrix never verifies attributes of type 
+L:C again.</p>
+<p>If VALUE_CB is defined and VALUE_EDIT_CB is not defined when the matrix is 
+mapped then READONLY will be set to YES.</p>
+<h4>Number of Cells</h4>
+<p>If you do not plan to use ADDLIN nor ADDCOL, and plan to set sparse cell 
+values, then you must set NUMLIN and 
+NUMCOL before mapping.</p>
+<h4>Titles</h4>
+<p>A matrix might have titles for lines and columns. Titles are always non scrollable, 
+non editable and presented with a different default background color. A matrix 
+will have a line of titles if an attribute of the &quot;<em>L</em>:0&quot; type is defined, where L 
+is a line number, or if the HEIGHT0 attribute is defined. It will have a column of titles if an attribute of the 
+&quot;0:<em>C</em>&quot; type is defined, where C is a column number, or if the 
+WIDTH0 attribute is defined.</p>
+<p>When allowed the
+  width of a column can be changed by holding and dragging its title right border, 
+see RESIZEMATRIX.</p>
+<p>Any cell can have more than one text line, just use the \n control character. 
+Multiple text lines will be considered when calculating the title cell size 
+based on its contents. The contents of ordinary cells (not a title) do not 
+affect the cell size.</p>
+<h4>Natural Size</h4>
+<p>The Natural size is calculated using only the 
+title cells size plus the size of NUMCOL_VISIBLE and NUMLIN_VISIBLE cells, but it is also affected if SCROLBAR is 
+enabled. The natural height is the sum of the line heights from line 0 to 
+NUMLIN_VISIBLE (inclusive). The natural width is the sum of the column width 
+from column 0 to NUMCOL_VISIBLE (inclusive). Notice that since NUMCOL_VISIBLE 
+and NUMLIN_VISIBLE do not include the titles then NUMCOL_VISIBLE+1 columns and 
+NUMLIN_VISIBLE+1 lines are included in the sum.</p>
+<p>The height of a line L depends on several attributes, first it checks the 
+HEIGHT<em>L</em> attribute, then checks RASTERHEIGHT<em>L</em>, then when 
+USETITLESIZE=YES or not in callback mode the height 
+of the title text for the line or if L=0 it searches for the highest column 
+title, if still could not define a height then if L!=0 it will use HEIGHTDEF, if 
+L=0 then height will be 0.</p>
+<p>A similar approach is valid for the column width. The 
+width of a column C first checks the WIDTH<em>C</em> attribute, then checks 
+RASTERWIDTH<em>C</em>, then when USETITLESIZE=YES or not in callback mode the width of the title text for the column or if C=0 
+it searches for the widest line title, if still could not define a width then if 
+C!=0 it will use WIDTHDEF, if C=0 then height will be 0.</p>
+<h4>Virtual Size</h4>
+<p>When the scrollbars are enabled if the matrix area is greater than the 
+visible area then scrollbars will be displayed so the cells can be scrolled to 
+be visible area. When dragging the scrollbar the position of cells is free, when 
+clicking on its buttons it will move in cell steps, aligning to the left border 
+of the cell.</p>
+<p>By default EXPAND=Yes, so matrix will be automatically resized when the 
+dialog is resized. So more columns and lines will be displayed. But the matrix 
+Natural size will be used as minimum size. To remove the minimum size limitation set 
+NUMCOL_VISIBLE and NUMLIN_VISIBLE to 0 after showing it for the first time.</p>
+<h4>Keyboard Navigation</h4>
+<p>Keyboard navigation through the matrix cells outside the edition 
+  mode is done by using the following keys:</p>
+<ul>
+  <li><strong>Arrows</strong>: Moves the focus to the next cell, according to 
+    the arrows direction.</li>
+  <li><strong>Page Up</strong> and <strong>Page Down</strong>: Moves a visible page up or down.</li>
+  <li><strong>Home</strong>: Moves the focus to the fist column in the line.</li>
+  <li><strong>Home</strong> <strong>Home</strong>: Moves the focus to the upper left corner of the 
+    visible page.</li>
+  <li><strong>Home</strong> <strong>Home</strong> <strong>Home</strong>: 
+    Moves the focus to the upper left corner of the 
+    first page of the matrix.</li>
+  <li><strong>End</strong>: Moves the focus to the last column in the line.</li>
+  <li><strong>End</strong> <strong>End</strong>: Moves the focus to the lower right corner of the 
+    visible page.</li>
+  <li><strong>End</strong> <strong>End</strong> <strong>End</strong>: Moves the focus to the lower right corner of the 
+    last page in the matrix.</li>
+	<li> <b>F2, Enter</b> or 
+<b>Space</b>: enters editing mode.</li>
+	<li><strong>Del</strong>: remove the selected cells contents.</li>
+</ul>
+<p>When the matrix is outside the edition mode, pressing any character key makes the current key to enter in the edition 
+  mode, the old text is replaced by the new one being typed. If <b>F2, Enter</b> or 
+<b>Space</b> is pressed, the current cell enters the edition mode with the 
+current text of the cell. Double-clicking a cell also 
+  enters the edition mode (in Motif the 
+  user must click again to the edit control get the focus).</p>
+<p>When using the keyboard to change the focus cell if the limit of the visible 
+area is reached then the cells are automatically scrolled. Also if a cell 
+partially visible is edited then first it is scrolled to the visible area.</p>
+<p>Inside the <b>edition mode</b>, the 
+  following keys are used 
+  for a text field:</p>
+<ul>
+  <li><strong>Left, Right, Up and Down arrows</strong>: if the caret is at the extremes of the text 
+    being edited then leave the edition mode and moves the focus accordingly. 
+	The value is confirmed.</li>
+  <li><strong>Ctrl + arrows</strong>:
+    leave the edition mode and moves the focus 
+    accordingly independent of caret position. The value is confirmed.</li>
+	<li><strong>Enter</strong>: leave the edition mode. The value is confirmed. 
+	Moves the focus to the cell below.</li>
+	<li><strong>Esc</strong>: leave the edition mode. The new value is ignored 
+	and the old value remains.</li>
+</ul>
+<p>The cell will also leave the edition mode if the user clicked 
+  in another cell or in another control, then the value will be confirmed. When pressing 
+<b>Enter</b> 
+  to confirm the value the focus goes to the cell below the current cell, if at the last line then the focus goes to 
+  the cell on the left. The value confirmation depends on the
+  EDITION_CB callback return code.</p>
+<h4>Marks</h4>
+<p>When a mark mode is set the cells can be marked using mouse.</p>
+<p>A marked cell will have its background attenuated to indicate that it is marked. 
+A title cell appears marked only when MARKMODE=LIN, COL or LINCOL.</p>
+<p>Cells can be selected individually or can be restricted to lines or columns. Also multiple cells can 
+  be marked simultaneously in continuous or in segmented areas. Lines and columns are marked only when the user clicks 
+  in their respective titles, if MARKMODE=CELL then all the cells of the line 
+or column will be marked. Continuous areas are marked holding and dragging the mouse or holding the 
+<b>Shift</b> 
+  key when clicking at the end of the area. Segmented areas are marked or 
+unmarked holding the <b>Ctrl</b> key, the mark state is inverted. Clicking on 
+the cell 0:0 will select all the items depending on MARKMODE, except for 
+LINCOL.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p align="center">
+<img src="images/iupmatrix1.png"></p>
+<p align="center">
+<img src="images/iupmatrix2.png"></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupcanvas.html">IupCanvas</a></p>
+
+</body>
+
+</html>

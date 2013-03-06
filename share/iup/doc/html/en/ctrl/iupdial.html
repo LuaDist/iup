@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupDial</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupDial</h2>
+<p>Creates a dial for regulating a given 
+  angular variable. </p>
+<p>This is an additional control that depends on the CD library. It is included 
+in the 
+<a href="../iupcontrols.html">Controls Library</a>.</p>
+<p>It inherits from 
+<a href="../elem/iupcanvas.html">IupCanvas</a>.</p>
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupDial(const char *<strong>orientation</strong>); [in C]
+iup.dial{<strong>orientation</strong>: string} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+dial(<strong>orientation</strong>) [in LED] </pre>
+<p><strong>orientation</strong>: optional dial orientation, can be NULL. See ORIENTATION attribute.</p>
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>DENSITY</strong>:
+  number of
+  lines per pixel in the handle of the dial. Default is &quot;0.2&quot;.</p>
+<p><a href="../attrib/iup_expand.html">EXPAND</a>: the default is &quot;NO&quot;.</p>
+
+
+<p><a href="../attrib/iup_fgcolor.html">FGCOLOR</a>: foreground color. The default value is &quot;64 64 64&quot;. 
+Not used for the circular dial.</p>
+<p> <a href="../attrib/iup_size.html">SIZE</a> (<font SIZE="3">non inheritable</font>): 
+the initial size is &quot;16x80&quot;, &quot;80x16&quot; or &quot;40x35&quot; according to the dial orientation. Set 
+to NULL to allow the automatic layout use smaller values.</p>
+<p><strong>ORIENTATION</strong> (creation only) (<font SIZE="3">non inheritable</font>):&nbsp; dial layout configuration &quot;VERTICAL&quot;, 
+  &quot;HORIZONTAL&quot; or &quot;CIRCULAR&quot;. Default: &quot;HORIZONTAL&quot;.</p>
+<p><strong>UNIT</strong>: unit of the angle. Can be &quot;DEGREES&quot; 
+  or &quot;RADIANS&quot;. Default is &quot;RADIANS&quot;. Used only in the 
+callbacks.</p>
+<p><strong>VALUE </strong>(<font SIZE="3">non inheritable</font>):
+  The dial angular value in radians. 
+  The value is reset to zero when the interaction is started, except for 
+ORIENTATION=CIRCULAR. When orientation is vertical or horizontal, the dial measures relative 
+angles. When orientation is circular the dial measure absolute angles, where the origin 
+is at 3 O'clock.</p>
+<blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>,
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+
+<p><strong>BUTTON_PRESS_CB</strong>:
+  Called when the user presses the left mouse 
+  button over the dial. The angle here is always zero, except for the circular dial.</p>
+<div align="left">
+  <pre>int function(Ihandle *<strong>ih</strong>, double <strong>angle</strong>)
+<strong>elem</strong>:button_press_cb(<strong>angle</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+</div>
+    <p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>angle</strong>: the dial value converted according to UNIT.</p>
+<p><strong>BUTTON_RELEASE_CB</strong>:
+  Called when the user releases the left mouse 
+  button after pressing it over the dial.</p>
+<div align="left">
+  <pre>int function(Ihandle *<strong>ih</strong>, double <strong>angle</strong>)
+<strong>elem</strong>:button_release_cb(<strong>angle</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+</div>
+<div align="left">
+    <p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>angle</strong>:
+    the dial value converted according to UNIT.</p>
+</div>
+
+<p><strong>MOUSEMOVE_CB</strong>: 
+  Called each time the user moves the dial with the
+  mouse
+  button pressed. 
+  The angle the dial rotated since it was initialized is passed as a parameter.</p>
+<div align="left">
+  <pre>int function(Ihandle *<strong>ih</strong>, double <strong>angle</strong>); [in C]
+<strong>elem</strong>:mousemove_cb(<strong>angle</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+</div>
+    <p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>angle</strong>:
+    the dial value converted according to UNIT.</p>
+
+
+<p><strong>VALUECHANGED_CB</strong>:
+  Called after the value was interactively changed by the user. It is called 
+whenever a <strong>BUTTON_PRESS_CB</strong>, a <strong>BUTTON_RELEASE_CB</strong> 
+or a<strong> MOUSEMOVE_CB</strong> would also be called, but if defined those 
+callbacks will not be called. (since 3.0)</p>
+
+<pre>int function(Ihandle *<strong>ih</strong>); [in C]<br><strong>elem</strong>:valuechanged_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+
+  <blockquote>
+  <hr>
+</blockquote>
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>,  
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, 
+<a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+<h3><a name="Notes">Notes</a></h3>
+<p>When the keyboard arrows are pressed and released the mouse press and the mouse release callbacks are called in 
+  this order. If you hold the key down the mouse move callback is also called 
+for every repetition.</p>
+<p>When the wheel is rotated only the mouse move callback is called, and it increments the last angle the dial was 
+  rotated.</p>
+<p>In all cases the value is incremented or decremented by PI/10 (18 degrees). 
+</p>
+<p>If you press Shift while using the arrow keys the increment is reduced to PI/100 
+(1.8 degrees). Press the Home key in the circular dial to reset to 0. (since 
+3.0)</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p align="center"><img src="images/iupdial.gif" width="225" height="346"></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupcanvas.html">IupCanvas</a></p>
+
+</body>
+
+</html>

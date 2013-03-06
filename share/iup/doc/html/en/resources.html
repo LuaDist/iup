@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Resources</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h1 align="center" style="text-align:center">
+Resources</h1>
+<p>Resources are several auxiliary tools including menus, images, fonts and 
+  global names. </p>
+<p>Some objects like menus and images, that are not inserted in a dialog 
+  children tree, are in fact &quot;associated&quot; with dialogs or controls. 
+</p>
+<p>Menus can be associated with dialogs only. Images can be associated with 
+  labels, buttons, toggles and menu items (this last in Windows only).</p>
+<p>Both images and menus to be associated use a global table of names. This 
+  exist because of the LED scripts. First you associate the image or menu 
+  Ihandle to a name, then you associated the MENU or IMAGE attribute to the 
+  respective name. </p>
+<p>For example, in C:</p>
+<pre>Ihandle* img = IupImage (11, 11, pixmap) ;
+IupSetHandle(&quot;myImg&quot;, img);
+IupSetAttribute(myButton, &quot;IMAGE&quot;, &quot;myImg&quot;) ;</pre>
+<p>or in LED:</p>
+<pre>myImg = image[...] (
+...
+)
+myButton = button[IMAGE = myImg](&quot;&quot;)</pre>
+<p>or in Lua:</p>
+<pre>myImg = iupimage {
+...
+}
+myButton = iupbutton { title = &quot;&quot;, image = myImg }
+</pre>
+<p>Only dialogs, timers, popup menus and images can be destroyed. Menu bars 
+  associated with dialogs are automatically destroyed. </p>
+
+</body>
+
+</html>

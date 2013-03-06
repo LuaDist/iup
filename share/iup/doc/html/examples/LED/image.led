@@ -1,0 +1,11 @@
+#IupImage Example in LED 
+#Creates a label with the image of a green X with black background. 
+
+xis = image[0="0 0 0",1="0 255 0"](
+       5,5, 1,0,0,0,1,
+       0,1,0,1,0,
+       0,0,1,0,0,
+       0,1,0,1,0,
+       1,0,0,0,1)
+
+     label_xis = label[IMAGE = xis]("")

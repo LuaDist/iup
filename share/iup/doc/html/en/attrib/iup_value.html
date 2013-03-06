@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>VALUE</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>VALUE<span class="style1"> (non inheritable)</span></h2>
+
+<p>Affects
+    several elements differently - that is, its behavior is element dependent.
+    It is often used to change the control's main value, such as the text of a
+    <a href="../elem/iuptext.html">IupText</a>.
+    </p>
+<p>For
+    the <a href="../elem/iupradio.html">IupRadio</a>
+    and <a href="../elem/iupzbox.html">IupZbox</a>,
+    elements,
+    which are categorized as composition elements, this attribute represents the
+    element "selected" among the others in the designed
+    composition. To
+    change this attribute in such cases, different mechanisms are necessary
+    according to the programming environment used. When the elements taking part
+    in a composition were created in C, this attribute's contents is a name
+    that must be defined by the 
+<a href="../func/iupsethandle.html">IupSetHandle</a>
+    function.
+    When the elements were created in Lua, this attribute's contents is the
+    name of a variable - more precisely, the one receiving the return from the
+    function that created the element you wish to select. In LED it is not
+    possible to dynamically change the value of any attribute, so the elements
+    created in this environment must be identified and manipulated in C by means
+    of their identifying name.
+    </p>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSetHandle</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupSetHandle</h2>
+<p>Associates a name with an interface element.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle *IupSetHandle(const char *<strong>name</strong>, Ihandle *<strong>ih</strong>); [in C]
+iup.SetHandle(<strong>name</strong>: string, <strong>ih</strong>: ihandle) -&gt; <strong>old_ih</strong>: ihandle [in Lua]</pre>
+<p><b>name</b>: name of the interface element.<br>
+<b>ih</b>: identifier of the interface element. Use NULL to remove the association.</p>
+<p><span class="style1">Returns:</span> the identifier of the interface 
+  element previously associated to the parameter <b>name</b>.</p>
+<h3>Notes</h3>
+<p>This function is used so it is possible to set attributes values that are in 
+fact other elements that were created in C. For example:</p>
+<pre>IupSetHandle(&quot;test_image&quot;, image);
+IupSetAttribute(button, &quot;IMAGE&quot;, &quot;test_image&quot;);</pre>
+<p>But this code can be replaced by a more convenient function call:</p>
+<pre>IupSetAttributeHandle(button, &quot;IMAGE&quot;, image);</pre>
+<p>In Lua this is not necessary, you can simply do:</p>
+<pre>button.image = image</pre>
+<p>that the association will be automatically made.</p>
+<hr>
+<p>In fact, any pointer can be stored and retrieved with <strong>IupSetHandle</strong> 
+and <strong>IupGetHandle</strong>.</p>
+<p>Also <strong>IupSetHandle</strong> can be called several times with the same 
+pointer and different names. There is no restriction for the number of names a 
+pointer can have, but <strong>IupGetName</strong> will return the first name 
+found.</p>
+<h3>See Also</h3>
+<p><a href="iupgethandle.html">IupGetHandle</a>, <a href="iupsetattributehandle.html">IupSetAttributeHandle</a></p>
+
+</body>
+
+</html>

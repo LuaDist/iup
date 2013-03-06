@@ -1,0 +1,120 @@
+#IupMatrix Example in Led 
+#Creates a matrix with two columns and three lines. The dialog in which the matrix is located has an associated menu that allows changing titles, dimensions, colors, alignment, marking mode and edition mode, as well as inserting or removing a line or column. 
+
+
+# initializing elements
+# creating cancel button
+cancel = button ( "Cancel", cancel_act )
+
+# creating elements in the title menu
+titulo_ok = button ( "OK", titulo_ok_act )
+titulo_texto = text [ EXPAND = YES, BORDER = YES ] (titulo_texto_act)
+dlg_titulo = dialog [ SIZE = EIGHTH, DEFAULTENTER = titulo_ok, DEFAULTESC = cancel ] ( titulo_texto )
+
+# creating elements in the dimension menu
+dimensao_ok = button ( "OK", dimensao_ok_act )
+dimensao_texto = text [ EXPAND = YES, BORDER = YES, VALUE = 0, CARET = 2 ] (dimensao_texto_act)
+dlg_dimensao = dialog [ SIZE =EIGHTH, DEFAULTENTER = dimensao_ok, DEFAULTESC = cancel ] ( dimensao_texto )
+
+# initializing menu
+# creating the items that compose the ‘titulos’ menu
+titulogeral = item ( "Geral" , titulogeral_act )
+titulocol = item ( "de Coluna" , titulocol_act )
+titulolin = item ( "de Linha" , titulolin_act )
+
+# creating the items that compose the ‘adicionar’ menu
+adicionarcolesq = item ( "Coluna à esquerda", adicionarcolesq_act ) 
+adicionarcoldir = item ( "Coluna à direita" , adicionarcoldir_act )
+adicionarlinacima = item ( "Linha acima" , adicionarlinacima_act )
+adicionarlinabaixo = item ( "Linha abaixo" , adicionarlinabaixo_act )
+
+# creating the items that compose the ‘remover’ menu
+removercolesq = item ( "Coluna à esquerda" , removercolesq_act )
+removercoldir = item ( "Coluna à direita" , removercoldir_act )
+removerlinacima = item ( "Linha acima" , removerlinacima_act )
+removerlinabaixo = item ( "Linha abaixo" , removerlinabaixo_act )
+
+# creating the items that compose the ‘dimensoes’ menu
+altura = item ( "Altura", altura_act )
+largura = item ( "Largura", largura_act )
+
+# creating the items that compose the ‘alinhamento’ menu
+alinesq = item ( "à Esquerda" , alinesq_act )
+alincent = item ( "Centralizado" , alincent_act )
+alindir = item ( "à Direita" , alindir_act )
+
+# creating the items that compose the ‘marcacao’ menu
+marcacao_multipla = item ( "Marcação múltipla" , marcacao_multipla_act )
+marcacao_continua = item [VALUE = ON] ( "Marcação contínua" , marcacao_continua_act )
+tamanho_editavel = item ( "Tamanho editável" , tamanho_editavel_act )
+
+# creating the items in the ‘cor de frente’ menu
+cor_de_frente_vermelha = item ( "Vermelho" , cor_de_frente_vermelha_act )
+cor_de_frente_verde = item ( "Verde" , cor_de_frente_verde_act )
+cor_de_frente_azul = item ( "Azul" , cor_de_frente_azul_act )
+cor_de_frente_preta = item ( "Preto" , cor_de_frente_preta_act )
+cor_de_frente_branca = item ( "Branco" , cor_de_frente_branca_act )
+
+# creating the items in the ‘cor de fundo’ menu
+cor_de_fundo_vermelha = item ( "Vermelho" , cor_de_fundo_vermelha_act )
+cor_de_fundo_verde = item ( "Verde" , cor_de_fundo_verde_act )
+cor_de_fundo_azul = item ( "Azul" , cor_de_fundo_azul_act )
+cor_de_fundo_preta = item ( "Preto" , cor_de_fundo_preta_act )
+cor_de_fundo_branca = item ( "Branco" , cor_de_fundo_branca_act )
+
+# creating the ‘cor de frente’ submenu
+cor_de_frente_menu = menu ( cor_de_frente_vermelha, cor_de_frente_verde, 
+  cor_de_frente_azul, cor_de_frente_preta, cor_de_frente_branca )
+cor_de_frente = submenu ( "de Frente" , cor_de_frente_menu )
+
+# creating the ‘cor de fundo’ submenu
+cor_de_fundo_menu = menu ( cor_de_fundo_vermelha, cor_de_fundo_verde, 
+  cor_de_fundo_azul, cor_de_fundo_preta, cor_de_fundo_branca )
+cor_de_fundo = submenu ( "de Fundo", cor_de_fundo_menu )
+
+# creating the ‘titulos’ submenu
+titulos_menu = menu ( titulogeral, titulocol, titulolin )
+titulos = submenu ( "Títulos" ,titulos_menu )
+
+# creating the ‘adicionar’ submenu
+adicionar_menu = menu ( adicionarcolesq, adicionarcoldir, adicionarlinacima, adicionarlinabaixo )
+adicionar = submenu ( "Adicionar" ,adicionar_menu )
+
+# creating the ‘remover’ submenu
+remover_menu = menu ( removercolesq, removercoldir, removerlinacima, removerlinabaixo )
+remover = submenu ( "Remover" , remover_menu )
+
+# creating the ‘dimensoes’ submenu
+dimensoes_menu = menu ( altura, largura )
+dimensoes = submenu ( "Dimensões" , dimensoes_menu )
+
+# creating the ‘alinhamento’ submenu
+alinhamento_menu = menu ( alinesq, alincent, alindir )
+alinhamento = submenu ( "Alinhamento" , alinhamento_menu )
+
+# creating the ‘marcacao’ submenu
+configuracao_menu = menu ( marcacao_multipla, marcacao_continua, tamanho_editavel )
+configuracao = submenu ( "Configuração" , configuracao_menu )
+
+# creating the ‘alteracao_de_cor’ submenu
+alteracao_de_cor_menu = menu ( cor_de_frente, cor_de_fundo )
+alteracao_de_cor = submenu ( "Cor" , alteracao_de_cor_menu )
+
+# creating the ‘alterar’ menu
+alterar_menu = menu ( titulos, adicionar, remover, dimensoes, alinhamento, alteracao_de_cor, configuracao )
+
+# creating the bar menu
+alterar_submenu = submenu ( "Alterar" , alterar_menu )
+main_menu = menu ( alterar_submenu )
+
+#initializing matrix
+matriz = MATRIX[NUMCOL=2, NUMLIN=3, NUMCOL_VISIBLE = 2, NUMLIN_VISIBLE = 3, MARKMODE = CELL, 0:0 = Inflação,
+1:0 = Remédios, 2:0 = Alimentos, 3:0 = Energia, 0:1 = "Janeiro 2000", 0:2 = "Fevereiro 2000", 1:1 = 5.6, 2:1 = 2.2, 3:1 = 7.2, 1:2 = 4.5,
+2:2 = 8.1, 3:2 = 3.4](NULL)
+
+# places matrix inside a frame
+moldura = frame ( matriz )
+
+# places matrix in the dialog
+dlg = dialog [TITLE = "IupMatrix", MENU = main_menu] ( moldura )
+

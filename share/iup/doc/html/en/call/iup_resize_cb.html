@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>RESIZE_CB</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>RESIZE_CB</h2>
+<p>Action generated when the element size is 
+  changed.</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>width</strong>, int <strong>height</strong>); [in C]
+<strong>elem</strong>:resize_cb(<strong>width</strong>, <strong>height</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+<strong>width</strong>:
+  the width of the internal element size in pixels not considering the 
+decorations (client size)<br>
+<strong>height</strong>: the height of the internal element size in pixels not 
+considering the decorations (client size)</p>
+<h3>Notes</h3>
+<p>This action is also generated when 
+  the dialog is mapped, after the map and before the show.</p>
+<h3>Affects</h3>
+<p><a href="../elem/iupcanvas.html">IupCanvas</a>,
+  <a href="../ctrl/iupglcanvas.html">IupGLCanvas</a>, 
+  <a href="../dlg/iupdialog.html">IupDialog</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+  <title>IupToggle</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css">
+
+  <style type="text/css">
+.style1 {
+	margin-left: 40px;
+}
+  </style>
+</head>
+
+
+<body>
+
+<div id="navigation">
+  
+<ul>
+
+    <li><a href="#Creation">Creation</a></li>
+
+    <li><a href="#Attributes">Attributes</a></li>
+
+    <li><a href="#Callbacks">Callbacks</a></li>
+
+    <li><a href="#Notes">Notes</a></li>
+
+    <li><a href="#Examples">Examples</a></li>
+
+    <li><a href="#SeeAlso">See Also</a></li>
+
+  
+</ul>
+
+</div>
+
+
+<h2>IupToggle</h2>
+
+
+  
+<p>
+  Creates the toggle interface element. It is a two-state (on/off) button that, when selected, generates an 
+  action that activates a function in the associated application. Its visual representation can contain a text or an 
+  image.</p>
+
+
+<h3><a name="Creation">Creation</a></h3>
+
+
+<pre>Ihandle* IupToggle(const char *<strong>title</strong>, const char *<strong>action</strong>); [in C]<br>iup.toggle{[title = <strong>title</strong>: string]} -&gt; (<strong>elem</strong>: ihandle) [in Lua]<br>toggle(<strong>title</strong>, <strong>action</strong>) [in LED]</pre>
+
+  
+<p><b>
+  title</b>: Text to be shown on the toggle. It can be NULL. It will set the 
+  TITLE attribute.<br>
+
+  <b>
+  action</b>: name of the action generated when the toggle is selected. It can be NULL.</p>
+
+  
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+
+<p><b>ALIGNMENT</b> (<font size="3">non inheritable</font>):
+  horizontal and vertical alignment when IMAGE is defined. Possible values:
+  "ALEFT", "ACENTER" and "ARIGHT",&nbsp; combined to "ATOP", "ACENTER" 
+  and "ABOTTOM". 
+  Default:
+  "ACENTER:ACENTER". Partial values are also accepted, like "ARIGHT" or 
+  ":ATOP", the other value will be used from the current alignment. In Motif, 
+  vertical alignment is restricted to "ACENTER". In Windows works only 
+when Visual Styles is active. Text is always left aligned. (since 3.0)</p>
+
+
+
+<p><a href="../attrib/iup_bgcolor.html">BGCOLOR</a>: Background color of toggle 
+mark when displaying a text. The text background is transparent, it will use the 
+background color of the native parent. When displaying an image in Windows the 
+background is ignored and the system color is used. Default: the global 
+attribute DLGBGCOLOR.</p>
+
+<p><strong>CANFOCUS</strong> (creation only)<strong> </strong>(<font size="3">non inheritable</font>): enables the focus traversal of the control. In Windows the control will still get the focus when clicked. Default: YES. (since 3.0)</p>
+
+  
+<p><a href="../attrib/iup_fgcolor.html">FGCOLOR</a>: Color of the text shown on 
+the toggle. In Windows, when using Visual Styles FGCOLOR is ignored. Default: the 
+global attribute DLGFGCOLOR.</p>
+
+  
+<p><b>FLAT</b> (creation only): Hides the toggle borders until the mouse enter the 
+  toggle area when the toggle is not checked. If the toggle is checked, then the 
+borders will be shown even if flat is enabled. Used only when IMAGE is defined. Can be YES or NO. 
+Default: NO. (since 3.3)</p>
+
+  
+<p><strong>IMAGE</strong> (<font size="3">non inheritable</font>): Image name. When the IMAGE attribute is defined, the TITLE is not shown. 
+	This makes the toggle looks just like a button with an image, but its 
+	behavior remains the same. Use <a href="../func/iupsethandle.html">
+	IupSetHandle</a> or <a href="../func/iupsetattributehandle.html">
+	IupSetAttributeHandle</a> to associate an image to a name. See also <a href="iupimage.html">IupImage</a>. 
+(GTK 2.6)</p>
+
+  
+<p><strong>IMPRESS</strong> (<font size="3">non inheritable</font>): Image 
+	name of the pressed toggle. Unlike buttons, toggles always display the button border when IMAGE and IMPRESS are both defined. 
+(GTK 2.6)</p>
+
+  
+<p><strong>IMINACTIVE</strong> (<font size="3">non inheritable</font>):
+  Image name of the inactive toggle. If 
+  it is not defined but IMAGE is defined then for inactive toggles the colors will be replaced by a 
+	modified version of the background color creating the disabled effect. (GTK 
+2.6)</p>
+
+  
+<p><b>MARKUP</b> [GTK only]: allows the title string to contains pango markup 
+  commands. Works only if a mnemonic is NOT defined in the title. Can be "YES" or "NO". Default: "NO". </p>
+
+  
+<p><b>PADDING</b>: internal margin when IMAGE is defined. Works just like the MARGIN attribute of 
+  the <strong>IupHbox</strong> and <strong>IupVbox</strong> containers, but uses a different name to avoid 
+  inheritance problems. Default value: "0x0". 
+	(since 3.0)</p>
+
+<p><strong>RADIO</strong> (read-only): returns if the toggle is inside a radio. 
+Can be "YES" or "NO". Valid only after the element is mapped, before returns 
+NULL. (since 3.0)</p>
+
+<p><strong>RIGHTBUTTON</strong> (Windows Only) (creation only): place the check button at the 
+right of the text. Can be "YES" or "NO". Default: "NO".</p>
+
+
+
+  
+<p><b>VALUE</b> (<font size="3">non inheritable</font>):
+  Toggle's state. Values can be "ON" 
+  or
+  "OFF". 
+  If 3STATE=YES then can also be "NOTDEF". Default: "OFF". 
+	In GTK if you change the state of a radio, the unchecked toggle will receive 
+	an ACTION callback notification.</p>
+
+  
+<p><a href="../attrib/iup_title.html">TITLE</a> (<font size="3">non inheritable</font>):
+Toggle's text. If IMAGE is not defined before map, then the default
+behavior is to contain a text. The button behavior can not be changed
+after map. The natural size will be larger enough to include all the
+text in the selected font, even using multiple lines, plus the button
+borders or check box if any. The '\n' character is accepted for line
+change. The "&amp;" character can be used to define a mnemonic, the
+next character will be used as key. Use "&amp;&amp;" to show the
+"&amp;" character instead on defining a mnemonic. The toggle can be
+activated from any control in the dialog using the "Alt+key"
+combination. (mnemonic support since 3.0)</p>
+
+  
+<p><b>3STATE </b>(creation only): Enable a three state toggle. Valid for toggles with text only 
+	and that do not belong to a radio. Can 
+  be "YES" or NO". Default: "NO".</p>
+
+
+
+  
+<blockquote>
+    
+  <hr>
+</blockquote>
+
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_font.html">FONT</a>, 
+    <a href="../attrib/iup_expand.html">EXPAND</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, <a href="../attrib/iup_size.html">SIZE</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.</p>
+
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+
+<p><a href="../call/iup_action.html">ACTION</a>:
+  Action generated when the toggle's state 
+  (on/off) was changed. The callback also receives the toggle's state.</p>
+
+  
+    
+<pre>int function(Ihandle*<strong> ih</strong>, int <strong>state</strong>); [in C]<br><strong>elem</strong>:action(<strong>state</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+
+    <strong>state</strong>:
+    1 if the toggle's state was shifted to on; 0 if it was shifted to off.</p>
+
+<p class="info"><u>Returns</u>: IUP_CLOSE will be processed.</p>
+
+
+<p><strong>VALUECHANGED_CB</strong>: Called after the value was interactively 
+changed by the user. Called after the ACTION callback, but under the same 
+context. (since 3.0)</p>
+
+<pre>int function(Ihandle *<strong>ih</strong>); [in C]<br><strong>elem</strong>:valuechanged_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+
+    
+<hr class="style1">
+
+<p> 
+<a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, <a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+
+
+
+<h3><a name="Notes">Notes</a></h3>
+
+
+<p>Toggle with image or text can not change its behavior after mapped. This is a creation attribute. But after 
+  creation the image can be changed for another image, and the text for another text.</p>
+
+  
+<p>Toggles are activated using the Space key.</p>
+
+  
+<p>To build a set of mutual exclusive toggles, insert them in a <strong>IupRadio</strong>
+container. They must be inserted before creation, and their behavior
+can not be changed. If you need to dynamically remove toggles that
+belongs to a radio in Windows, then put the radio inside a <strong>IupFrame</strong> that has a title.</p>
+
+
+<h3><a name="Examples">Examples</a></h3>
+
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<table align="center">
+
+	<tbody>
+    <tr>
+
+		<th>Motif</th>
+
+		<th>Windows <br>
+
+		Classic</th>
+
+		<th>Windows <br>
+
+		w/ Styles</th>
+
+		<th>GTK</th>
+
+	</tr>
+
+	<tr>
+
+		<td class="bg_mot"><img src="images/iuptoggle_mot_image.png"></td>
+
+		<td class="bg_win2k"><img src="images/iuptoggle_win2k_image.png"></td>
+
+		<td class="bg_winxp"><img src="images/iuptoggle_winxp_image.png"></td>
+
+		<td class="bg_gtk"><img src="images/iuptoggle_gtk_image.png"></td>
+
+	</tr>
+
+	<tr>
+
+		<td class="bg_mot"><img src="images/iuptoggle_mot_text.png"></td>
+
+		<td class="bg_win2k"><img src="images/iuptoggle_win2k_text.png"></td>
+
+		<td class="bg_winxp"><img src="images/iuptoggle_winxp_text.png"></td>
+
+		<td class="bg_gtk"><img src="images/iuptoggle_gtk_text.png"></td>
+
+	</tr>
+
+	<tr>
+
+		<td class="bg_mot"><img src="images/iuptoggle_mot_3state.png"></td>
+
+		<td class="bg_win2k"><img src="images/iuptoggle_win2k_3state.png"></td>
+
+		<td class="bg_winxp"><img src="images/iuptoggle_winxp_3state.png"></td>
+
+		<td class="bg_gtk"><img src="images/iuptoggle_gtk_3state.png"></td>
+
+	</tr>
+
+	<tr>
+
+		<td class="bg_mot"><img src="images/iuptoggle_mot_radio.png"></td>
+
+		<td class="bg_win2k"><img src="images/iuptoggle_win2k_radio.png"></td>
+
+		<td class="bg_winxp"><img src="images/iuptoggle_winxp_radio.png"></td>
+
+		<td class="bg_gtk"><img src="images/iuptoggle_gtk_radio.png"></td>
+
+	</tr>
+
+  </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<h3><a name="SeeAlso">See Also</a></h3>
+
+
+<p><a href="iupimage.html">IupImage</a>, <a href="iupbutton.html">IupButton</a>,
+  <a href="iuplabel.html">IupLabel</a>, <a href="iupradio.html">IupRadio</a>. </p>
+
+
+
+</body>
+</html>

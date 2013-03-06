@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetClassType</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetClassType <span class="style1">(Since 3.0)</span></h2>
+<p>Returns the name of the native type of an interface 
+  element.</p>
+<h3>
+Parameters/Return</h3>
+<pre>char* IupGetClassType(Ihandle* ih); [in C]
+iup.GetClassType(<strong>ih</strong>: ihandle) -&gt; (<strong>name</strong>: string) [in Lua]</pre>
+<p><b>ih</b>: Identifier of the interface element.</p>
+<p><span class="style2">Returns</span>: the class type.</p>
+<h3>Notes</h3>
+<p>There are only a few pre-defined class types:</p>
+<pre>&quot;void&quot; - No native representation - HBOX, VBOX, ZBOX, FILL, RADIO
+&quot;control&quot; - Native controls - BUTTON, LABEL, TOGGLE, LIST, TEXT, MULTILINE, ITEM, SEPARATOR, SUBMENU, FRAME, others
+&quot;canvas&quot; - Drawing canvas, also used as a base control for custom controls.
+&quot;dialog&quot;
+&quot;image&quot;
+&quot;menu&quot;</pre>
+
+<h3>See Also</h3>
+<p>
+<a href="iupgetclassname.html">IupGetClassName</a>,
+<a href="iupgetclassattributes.html">IupGetClassAttributes</a></p>
+
+</body>
+
+</html>

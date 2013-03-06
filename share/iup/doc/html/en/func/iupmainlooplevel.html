@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMainLoopLevel</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupMainLoopLevel<span class="style1"> (since 3.0)</span></h2>
+<p>Returns the current cascade level of <strong>IupMainLoop</strong>. When no calls 
+were done, 
+return value is 0.</p>
+<h3>
+Parameters/Return</h3>
+<div>
+  <pre>int IupMainLoopLevel(void); [in C]
+iup.MainLoopLevel() -&gt; <strong>ret</strong>: number [in Lua]</pre>
+</div>
+<p><span class="style2">Returns:</span> the cascade level.</p>
+<h3>Notes</h3>
+<p>You can use this function to check if <strong>IupMainLoop</strong> was already called and 
+avoid calling it again.</p>
+<p>A call to <strong>IupPopup</strong> will increase one level.</p>
+<h3>See Also</h3>
+<p><a href="iupopen.html">IupOpen</a>, <a href="iupclose.html">IupClose</a>,
+  <a href="iuploopstep.html">IupLoopStep</a>, 
+<a href="../guide.html#sistema">Guide/System Control</a>, 
+<a href="../call/iup_idle_action.html">IDLE_ACTION</a>,
+  <a href="../attrib/iup_globals.html#lockloop">LOCKLOOP</a>.</p>
+
+</body>
+
+</html>

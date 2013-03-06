@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Visual C++ 7 Guide</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<h2 align="center" style="text-align:center">Visual C++ 7 IDE Project Properties 
+Guide</h2>
+<h3 align="center">
+<a href="http://msdn2.microsoft.com/en-us/vstudio/aa700867.aspx">
+http://msdn2.microsoft.com/en-us/vstudio/aa700867.aspx</a></h3>
+<p>This guide was built using Microsoft Visual Studio .NET 2003, which 
+  includes Visual C++ 7.1.</p>
+<p>To create a new project go to the menu &quot;File / New / Project&quot;:</p>
+<p align="center"><a href="msvc1.gif">
+<img border="2" src="msvc1_small.gif" xthumbnail-orig-image="msvc1.gif" width="200" height="141"></a></p>
+<p>Select &quot;Win32 Project&quot; on the Templates. Before finishing the Wizard, 
+  select &quot;Application Settings&quot;. Mark &quot;Windows application&quot; and &quot;Empty project&quot;.</p>
+<p align="center"><a href="msvc2.gif">
+<img border="2" src="msvc2_small.gif" xthumbnail-orig-image="msvc2.gif" width="200" height="130"></a></p>
+<p>You can also create a &quot;Console application&quot;, and whenever you execute your 
+  application a text console will also be displayed. But this is a very useful 
+  situation so you can the use standard C printf function to display textual 
+  information for debugging purposes.</p>
+<p>Then add your files in the menu &quot;Project / Add New Item&quot; or &quot;Project / Add 
+  Existing Item&quot;.</p>
+<p>After creating the project you must configure it to find the IUP includes 
+  and libraries. In Visual Studio there are two places where you can do this.</p>
+<p>One is in the menu &quot;Tools / Options&quot;, then select &quot;Project / Visual C++ 
+  Directories&quot;. Select &quot;Include Files&quot; or &quot;Library Files&quot; in &quot;Show directories 
+  for:&quot;. In this dialog you will configure parameters that will affect all the 
+  projects you open.</p>
+<p align="center"><a href="msvc3.gif">
+<img border="2" src="msvc3_small.gif" xthumbnail-orig-image="msvc3.gif" width="200" height="130"></a></p>
+<p>Or you can configure the parameters only for the project you created. In 
+  this case go the menu &quot;Project / Properties&quot;. To configure the include files 
+  location select &quot;C/C++ / General&quot; in the left tree, then write the list of 
+  folders separated by &quot;;&quot; in &quot;Additional Include Directories&quot;.</p>
+<p align="center"><a href="msvc4.gif">
+<img border="2" src="msvc4_small.gif" xthumbnail-orig-image="msvc4.gif" width="200" height="140"></a></p>
+<p>To configure the library files location select &quot;Linker / General&quot; in the 
+  left tree, then write the list of folders separated by &quot;;&quot; in &quot;Additional 
+  Library Directories&quot;.</p>
+<p align="center"><a href="msvc5.gif">
+<img border="2" src="msvc5_small.gif" xthumbnail-orig-image="msvc5.gif" width="200" height="140"></a></p>
+<p>Now you must add the libraries you use. In this same dialog, select &quot;Linker 
+  / Input&quot; in the left tree, then write the list of files separated by spaces &quot; 
+  &quot; in &quot;Additional Dependencies&quot;.</p>
+<p align="center"><a href="msvc6.gif">
+<img border="2" src="msvc6_small.gif" xthumbnail-orig-image="msvc6.gif" width="200" height="140"></a></p>
+<p>In this sample configuration the project is using the additional library of 
+  Controls that uses the <a href="http://www.tecgraf.puc-rio.br/cd">CD library</a>, 
+  also available at the download page. </p>
+<p>When you build the project the Visual C++ linker will display the following 
+  message:</p>
+<pre>LINK : warning LNK4098: defaultlib 'LIBC' conflicts with use of other libs; use /NODEFAULTLIB:library</pre>
+<p>The default configuration use the C run time library with debug 
+  information, and IUP uses the C run time library without debug information. 
+  You can simply ignore this warning or change your project properties in &quot;C/C++ 
+  / Code Generation&quot; in the left tree, then change &quot;Run Time Library&quot; to &quot;Single 
+  Threaded (/ML)&quot;. </p>
+<p align="center"><a href="msvc7.gif">
+<img border="2" src="msvc7_small.gif" xthumbnail-orig-image="msvc7.gif" width="200" height="140"></a></p>
+<p>If you want to use multithreading then you must use the DLL version of the 
+  IUP libraries. They are built with the &quot;Multi-threaded DLL (/MD)&quot; option. Or 
+  you must rebuild the libraries with your own parameters.</p>
+
+</body>
+
+</html>

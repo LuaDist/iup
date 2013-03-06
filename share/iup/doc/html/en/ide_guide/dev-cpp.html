@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Dev-C++ Guide</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">Dev-C++ IDE Project Options Guide</h2>
+<h3 align="center">
+<a target="_blank" href="http://www.bloodshed.net/devcpp.html">http://www.bloodshed.net/devcpp.html</a></h3>
+<p>&quot;Bloodshed Dev-C++ is a full-featured Integrated Development Environment (IDE) for the C/C++ 
+  programming language. It uses Mingw port of GCC (GNU Compiler Collection) as it's compiler. Dev-C++ can also be used 
+  in combination with Cygwin or any other GCC based compiler.&quot;</p>
+<p>It has many features, and integrated debug and it is free! To use IUP with Dev-C++ you will need to download the 
+  &quot;mingw3&quot; binaries in the download page.</p>
+<p>After unpacking the file in your conputer, you must create a new Project and configure your Project Options. In the 
+  Project Options dialog there are 3 important places:</p>
+<ul>
+  <li>General / Type - you can configure Win32 GUI or Win32 Console, but if you set to console it will always create a 
+    console screen behind your window when the program starts. Do not select &quot;Support Windows XP Themes&quot;.</li>
+</ul>
+<p align="center"><a href="dev_cpp1.gif">
+<img border="2" src="dev_cpp1_small.gif" xthumbnail-orig-image="dev_cpp1.gif" width="200" height="144"></a></p>
+<ul>
+  <li>Parameters / Linker - where you are going to list the libraries you use, for example: 
+  </li>
+</ul>
+<pre>-liup
+-liupcontrols
+-lcd
+-liupcd
+-lcomctl32
+-lole32
+-lgdi32 (if Win32 Console)
+-lcomdlg32 (if Win32 Console)</pre>
+<p>In this configuration you are using also the additional library of Controls that uses the
+    <a href="http://www.tecgraf.puc-rio.br/cd">CD library</a>, also available at the download page. 
+</p>
+<p align="center"><a href="dev_cpp2.gif">
+<img border="2" src="dev_cpp2_small.gif" xthumbnail-orig-image="dev_cpp2.gif" width="200" height="144"></a></p>
+<ul>
+  <li>Directories / Library Directories and Include Directories - where you are going to list the include path, for 
+    example:</li>
+</ul>
+<pre>..\..\iup\lib\mingw3
+..\..\cd\lib\mingw3
+or
+c:\tecgraf\iup\lib\mingw3 
+c:\tecgraf\cd\lib\mingw3</pre>
+<p>And:</p>
+<pre>..\..\iup\include
+..\..\cd\include
+or
+c:\tecgraf\iup\include
+c:\tecgraf\cd\include</pre>
+<p align="center"><a href="dev_cpp3.gif">
+<img border="2" src="dev_cpp3_small.gif" xthumbnail-orig-image="dev_cpp3.gif" width="200" height="144"></a>
+<a href="dev_cpp4.gif">
+<img border="2" src="dev_cpp4_small.gif" xthumbnail-orig-image="dev_cpp4.gif" width="200" height="144"></a></p>
+<p>In some cases the IDE may force the compilation of C files as C++. If do not want that then uncheck the option in 
+  the settings for each file. Still in the Project Options dialog, in the Files tab, select the file and uncheck 
+  &quot;Compile File as C++&quot;.</p>
+<p align="center"><a href="dev_cpp5.gif">
+<img border="2" src="dev_cpp5_small.gif" xthumbnail-orig-image="dev_cpp5.gif" width="200" height="144"></a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>WOM_CB</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>WOM_CB</h2>
+<p>Action generated when an audio device receives an event.</p>
+<p>[Windows Only]</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<b>ih</b>, int <b>state</b>); [in C]
+<strong>elem</strong>:wom_cb(<b>state</b>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p style="line-height: 130%"><strong>ih</strong>:
+  identifies the element that activated the event.<br>
+<b>state</b>: can be opening=1, done=0, or closing=-1.</p>
+<h3>Notes</h3>
+<p>This callback is used to syncronize video playback with audio. It is sent when the audio device:</p>
+<div align="center">
+  <center>
+  <table cols="2" cellPadding="5" rules="rows" border="0" frame="below" style="border-collapse: collapse" bordercolor="#111111" cellspacing="0">
+    <tr vAlign="top">
+      <th width="83">Message</th>
+      <th width="503">Description</th>
+    </tr>
+    <tr>
+      <td width="83">opening</td>
+      <td width="503">is opened by using the <b>waveOutOpen</b> function.</td>
+    </tr>
+    <tr>
+      <td width="83">done</td>
+      <td width="503">is finished with a data block sent by using the <b>waveOutWrite</b> function.</td>
+    </tr>
+    <tr vAlign="top">
+      <td width="83">closing</td>
+      <td width="503">is closed by using the <b>waveOutClose</b> function.</td>
+    </tr>
+  </table>
+  </center></div>
+<p>You must use the HWND attribute when calling <b>waveOutOpen</b> in the <i>dwCallback</i> parameter and set 
+<i>fdwOpen</i> to CALLBACK_WINDOW.</p>
+<h3>Affects</h3>
+<p><a href="../dlg/iupdialog.html">IupDialog</a>,
+  <a href="../elem/iupcanvas.html">IupCanvas</a>,
+  <a href="../ctrl/iupglcanvas.html">IupGLCanvas</a></p>
+
+</body>
+
+</html>

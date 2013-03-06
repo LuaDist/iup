@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>ACTION</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>ACTION</h2>
+<p>Action generated when the element is 
+  activated. Affects each element differently.</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<strong>ih</strong>); [in C]
+<strong>elem</strong>:action() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+<p>In some elements, this callback may receive 
+  more parameters, apart from <b>ih</b>. Please refer to each element's documentation.</p>
+<h3>Affects</h3>
+<p align="left">
+<a href="../elem/iupbutton.html">IupButton</a>, 
+<a href="../elem/iupitem.html">IupItem</a>,
+  <a href="../elem/iuplist.html">IupList</a>,
+  <a href="../elem/iuptext.html">IupText</a>,
+  <a href="../elem/iupcanvas.html">IupCanvas</a>,
+  <a href="../elem/iupmultiline.html">IupMultiline</a>,
+  <a href="../elem/iuptoggle.html">IupToggle</a></p>
+
+</body>
+
+</html>

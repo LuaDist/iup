@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupMap</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupMap</h2>
+<p>Creates (<b>maps</b>) the native interface objects 
+  corresponding to the given IUP interface elements. </p>
+<p>It will also create the native element of all the children in the element's tree.</p>
+<p>The element must be already <b>attached</b> to a container if not a dialog.</p>
+<h3>
+Parameters/Return</h3>
+<pre>int IupMap(Ihandle* <strong>ih</strong>); [in C]
+iup.Map(<strong>ih</strong>: ihandle) -&gt; <strong>ret</strong>: number [in Lua]
+or <strong>ih</strong>:map() [in Lua]</pre>
+<p><b>ih</b>: Identifier of an interface element.</p>
+<p><span class="style1">Returns:</span> IUP_NOERROR if successful. If the element was already mapped returns IUP_NOERROR. If the native creation failed returns IUP_ERROR.</p>
+<h3>Notes</h3>
+<p>If the element is a dialog then the abstract layout will be updated even if the element is already mapped. If the 
+  dialog is visible the elements will be immediately repositioned. Calling
+<strong>IupMap</strong> for an already mapped dialog is the same as only calling
+<strong>IupRefresh</strong> for the dialog.</p>
+<p>If you add new elements to an already mapped dialog you must call
+  <b>IupMap</b> for that elements. And then call <b>IupRefresh</b> to update the dialog layout.</p>
+<p>If the WID attribute is NULL, it means the element was not already mapped. 
+Some containers do not have a native element associated, like VBOX and HBOX. In 
+this case their WID is a fake (-1) value.</p>
+<p>A child is only mapped if its parent is already mapped.</p>
+<p>This function is automatically called before 
+  the dialog is shown in 
+  <b>IupShow</b>, 
+  <b>IupShowXY</b> or 
+  <b>IupPopup</b>.&nbsp; </p>
+<p>It is usefull for the application to call
+  <b>IupMap</b> when the value of the WID attribute must be known, or the native element 
+must exist, before a dialog is made visible.</p>
+<p>The
+  MAP_CB callback is called just after the native element is created and the dialog layout updated, so it can 
+  also be used to create other things that depend on
+  the WID attribute.</p>
+<h3>See Also</h3>
+<p><a href="iupappend.html">IupAppend</a>, <a href="iupdetach.html">IupDetach</a>, <a href="iupunmap.html">IupUnmap</a>,
+<a href="iupcreate.html">IupCreate</a>, <a href="iupdestroy.html">IupDestroy</a>, <a href="iupshowxy.html">IupShowXY</a>, <a href="iupshow.html">IupShow</a>,
+  <a href="iuppopup.html">IupPopup</a>,
+  <a href="../call/iup_map_cb.html">MAP_CB</a></p>
+
+</body>
+
+</html>

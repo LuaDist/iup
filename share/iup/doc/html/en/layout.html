@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Layout Composition</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../style.css">
+<style type="text/css">
+.style1 {
+	font-weight: bold;
+	border-width: 0;
+}
+.style2 {
+	border-width: 0;
+}
+.style3 {
+	border-width: 0;
+}
+.style4 {
+	font-weight: bold;
+	border-width: 0;
+}
+</style>
+</head>
+<body>
+
+<h1 align="center" style="text-align:center">Layout Composition</h1>
+<h3>Abstract Layout</h3>
+<p>Most interface toolkits employ the concrete layout model, that is, control 
+positioning in the dialog is absolute in coordinates relative to the upper left 
+corner of the dialog’s client area. This makes it easy to position the controls 
+on it by using an interactive tool usually provided with the system. It is also 
+easy to dimension them. Of course, this positioning intrinsically depends on the 
+graphics system’s resolution. Moreover, when the dialog size is altered, the 
+elements remain on the same place, thus generating an empty area below and to 
+the right of the elements. Besides, if the graphics system’s resolution changes, 
+the dialog inevitably will look larger or smaller according to the resolution 
+increase or decrease.<u1:p> </u1:p>
+<u1:p></u1:p>
+</p>
+<p>IUP implements an abstract layout concept, in which the positioning of 
+controls is done relatively instead of absolutely. For such, composition 
+elements are necessary for composing the interface elements. They are boxes and 
+fillings invisible to the user, but that play an important part. When the dialog 
+size changes, these containers expand or retract to adjust the positioning of 
+the controls to the new situation. </p>
+<p>Watch the codes below. The first one refers to the creation of a dialog for 
+the Microsoft Windows environment using its own resource API. The second uses 
+IUP. Note that, apart from providing the specification greater flexibility, the 
+IUP specification is simpler, though a little larger. In fact, creating a dialog 
+on IUP with several elements will force you to plan your dialog more carefully – 
+on the other hand, this will actually make its implementation easier.<u1:p> </u1:p>
+</p>
+<p>&nbsp;Moreover, this IUP dialog has an indirect advantage: if the user changes its 
+size, the elements (due to being positioned on an abstract layout) are 
+automatically re-positioned horizontally.</p>
+<p>The composition elements includes vertical boxes (<b>vbox</b>), horizontal 
+boxes (<b>hbox</b>) and filling (<b>fill</b>). There is also a depth box (<b>zbox</b>) 
+in which layers of elements can be created for the same dialog, and the elements 
+in each layer are only visible when that given layer is active.<u1:p>
+</u1:p>
+</p>
+<div align="center">
+  <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td style="padding: .75pt" class="style1">
+      <p align="center" style="text-align:center">in Windows</td>
+      <td style="padding: .75pt" class="style1">
+      <p align="center" style="text-align:center">in IupLua</td>
+    </tr>
+    <tr>
+      <td style="border-style: solid; padding: .75pt" class="style2">
+      <div style="text-align: left">
+      <pre class="sourcecode" style="text-align: left">dialog DIALOG 0, 0, 117, 32
+STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX |
+      WS_CAPTION | WS_SYSMENU |
+      WS_THICKFRAME
+CAPTION &quot;Title&quot;
+BEGIN
+    PUSHBUTTON &quot;Ok&quot;,IDOK,17,9,33,15
+    PUSHBUTTON &quot;Cancel&quot;,IDCANCEL,66,9,33,15
+END
+</pre>
+      </div>
+      </td>
+      <td style="border-style: solid; padding: .75pt" class="style2">
+      <div style="text-align: left">
+      <pre class="sourcecode" style="text-align: left">dialog = iup.dialog
+{
+  iup.hbox
+  {
+    iup.fill{},
+    iup.button{title=&quot;Ok&quot;,size=&quot;40&quot;}, 
+    iup.button{title=&quot;Cancel&quot;,size=&quot;40&quot;},
+    iup.fill{}
+    ;margin=&quot;15x15&quot;, gap=&quot;10&quot;
+  }
+  ;title=&quot;Title&quot;
+}</pre>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: .75pt" class="style2">
+      <p align="center" style="text-align:center">
+      <img src="images/dlg_rc.png"></td>
+      <td style="padding: .75pt" class="style2">
+      <p align="center" style="text-align:center">
+      <img src="images/dlg_led.png"></td>
+    </tr>
+  </table>
+</div>
+<p>Now see the same dialog in LED and in C:</p>
+<div align="center">
+  <table class="MsoNormalTable" border="0" cellpadding="0" bordercolor="#000000" cellspacing="0" style="border-collapse: collapse">
+    <tr>
+      <td style="padding: .75pt" class="style1">
+      <p align="center" style="text-align:center">in LED</td>
+      <td style="padding: .75pt" class="style1">
+      <p align="center" style="text-align:center">in C</td>
+    </tr>
+    <tr>
+      <td style="border-style: solid; padding: .75pt" class="style2">
+      <div style="text-align: left">
+      <pre class="sourcecode" style="text-align: left">dialog = DIALOG[TITLE=&quot;Title&quot;]
+(
+  HBOX[MARGIN=&quot;15x15&quot;, GAP=&quot;10&quot;]
+  (
+    FILL(),
+    BUTTON[SIZE=&quot;40&quot;](&quot;Ok&quot;,do_nothing),
+    BUTTON[SIZE=&quot;40&quot;](&quot;Cancel&quot;,do_nothing),
+    FILL()
+  )
+)</pre>
+      </div>
+      </td>
+      <td style="border-style: solid; padding: .75pt" class="style2">
+      <div style="text-align: left">
+      <pre class="sourcecode" style="text-align: left">dialog = IupSetAttributes(IupDialog
+(
+  IupSetAttributes(IupHbox
+  (
+    IupFill(),
+    IupSetAttributes(IupButton(&quot;Ok&quot;, NULL), &quot;SIZE=40&quot;),
+    IupSetAttributes(IupButton(&quot;Cancel&quot;, NULL), &quot;SIZE=40&quot;),
+    IupFill(),
+    NULL
+  ), &quot;MARGIN=15x15, GAP=10&quot;)),
+), &quot;TITLE=Title&quot;)</pre>
+      </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>Following, the abstract layout representation of this dialog:</p>
+<div align="center">
+  <table class="MsoNormalTable" border="0" cellspacing="4" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td style="padding:3.0pt 3.0pt 3.0pt 3.0pt" class="style4">
+      <p align="center" style="text-align:center">Layout Hierarchy</td>
+      <td style="padding:3.0pt 3.0pt 3.0pt 3.0pt" class="style4">
+      <p align="center" style="text-align:center">Layout Visualization</td>
+    </tr>
+    <tr>
+      <td style="padding:3.0pt 3.0pt 3.0pt 3.0pt" class="style3">
+      <div style="text-align: left">
+      <pre class="sourcecode" style="text-align: left">Dialog
+  HBox
+    Fill
+    Button
+    Button
+    Fill</pre>
+      </div>
+      </td>
+      <td style="padding:3.0pt 3.0pt 3.0pt 3.0pt" class="style3">
+      <p>
+      <img src="images/layout.gif" alt="layout.gif (2278 bytes)" width="262" height="90"></td>
+    </tr>
+  </table>
+</div>
+
+</body>
+
+</html>

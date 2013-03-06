@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupFill</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupFill</h2>
+
+  <p>
+  Creates a 
+  Fill composition element, which dynamically 
+  occupies empty spaces always trying to expand itself.
+  Its parent <b>must</b> be an <strong>IupHbox</strong> or an <strong>IupVbox</strong>. 
+	If an EXPAND is set on at least one of the other children of the box, then 
+	the Fill is ignored.</p>
+
+  <p>
+  It does not have a native representation.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupFill(void); [in C]
+iup.fill{} -&gt; <strong>elem</strong>: ihandle [in Lua]
+fill() [in LED]</pre>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+  <p><a href="../attrib/iup_expand.html">EXPAND</a> (<font SIZE="3">non 
+inheritable</font>): Ignored. If <b>User</b> size 
+  is not defined, then when inside a <strong>IupHbox</strong> EXPAND is HORIZONTAL, when inside a 
+  IupVbox EXPAND is VERTICAL. If <b>User</b> size is defined then EXPAND is NO.</p>
+
+
+<p><a href="../attrib/iup_size.html">SIZE</a> /
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a> (<font SIZE="3">non 
+inheritable</font>): Defines the width, if inside a <strong>IupHbox</strong>, or the height, if 
+it is inside a <strong>IupVbox</strong>. When consulted behaves as the standard SIZE/RASTERSIZE 
+attributes. The standard format &quot;wxh&quot; can also be used, but width will be 
+ignored if inside a <strong>IupVbox </strong>and height will be ignored if 
+inside a <strong>IupHbox</strong> (since 3.3).</p>
+
+  <p><b>WID</b> (read-only): returns -1 if mapped.</p>
+
+  <blockquote>
+    <hr>
+  </blockquote>
+
+  <p> 
+<a href="../attrib/iup_font.html">FONT</a>,
+    <a href="../attrib/iup_position.html">POSITION</a>, 
+<a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>: 
+also accepted.</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="iuphbox.html">IupHbox</a>, <a href="iupvbox.html">IupVbox</a>.</p>
+
+
+</body>
+
+</html>

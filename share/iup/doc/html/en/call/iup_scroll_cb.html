@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>SCROLL_CB</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>SCROLL_CB</h2>
+<p>Called when some manipulation is made to the scrollbar. The canvas is 
+automatically redrawn only if this callback is NOT defined.</p>
+<p>(GTK 2.8)</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>op</strong>, float <strong>posx</strong>, float <strong>posy</strong>); [in C]
+<strong>elem</strong>:scroll_cb(<strong>op</strong>, <strong>posx</strong>, <strong>posy</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that activated the event.<br>
+<strong>op</strong>:
+  indicates the operation performed on the 
+  scrollbar.</p>
+<blockquote>
+<p>If the manipulation was made on the vertical 
+  scrollbar, it can have the following values:</p>
+</blockquote>
+<pre>IUP_SBUP - line up
+IUP_SBDN - line down
+IUP_SBPGUP - page up
+IUP_SBPGDN - page down
+IUP_SBPOSV - vertical positioning
+IUP_SBDRAGV - vertical drag </pre>
+<blockquote>
+<p>If it was on the horizontal scrollbar, the 
+  following values are valid:</p>
+</blockquote>
+<pre>IUP_SBLEFT - column left
+IUP_SBRIGHT - column right
+IUP_SBPGLEFT - page left
+IUP_SBPGRIGHT - page right
+IUP_SBPOSH - horizontal positioning
+IUP_SBDRAGH - horizontal drag</pre>
+<p><strong>posx</strong>, <strong>posy</strong>:
+  the same as the <b>ACTION</b>
+  canvas callback (corresponding to the values 
+  of attributes  POSX and  POSY).</p>
+
+<h3>Notes</h3>
+
+<p>IUP_SBDRAGH and IUP_SBDRAGV are not supported in GTK.</p>
+
+<h3>Affects</h3>
+<p><a href="../elem/iupcanvas.html">IupCanvas</a>,
+  <a href="../ctrl/iupglcanvas.html">IupGLCanvas</a>,
+<a href="../attrib/iup_scrollbar.html">SCROLLBAR</a></p>
+
+</body>
+
+</html>

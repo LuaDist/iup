@@ -1,0 +1,59 @@
+#IupColorBrowser Example in LED
+
+#===========================================================================#
+# Main Dialog                                                               #
+#===========================================================================#
+
+main_cb = COLORBROWSER[RGB="128 0 128", DRAG_CB=drag_cb, CHANGE_CB=change_cb]()
+r_txt = TEXT[SIZE=30, VALUE="128", K_CR = k_cr](do_nothing)
+g_txt = TEXT[SIZE=30, VALUE="0", K_CR = k_cr](do_nothing)
+b_txt = TEXT[SIZE=30, VALUE="128", K_CR = k_cr](do_nothing)
+state_lb = LABEL[SIZE=40]("Iddle")
+
+#---------------------------------------------------------------------------#
+# Main Dialog                                                               #
+#---------------------------------------------------------------------------#
+main_dlg = DIALOG
+[
+ TITLE="Color Browser Test",
+ RESIZE=NO,
+ MAXBOX=NO
+]
+(
+ HBOX
+ (
+  FILL[SIZE=5](),  
+  VBOX
+  (
+   FILL[SIZE=5](),
+   main_cb,
+   FILL[SIZE=5]()
+  ),
+  FILL[SIZE=5](),
+  VBOX
+  (
+   FILL(),  
+   HBOX[ALIGNMENT=ACENTER]
+   (
+    LABEL[SIZE=30]("Red:"),
+    r_txt
+   ),
+   FILL[SIZE=2](),
+   HBOX[ALIGNMENT=ACENTER]
+   (
+    LABEL[SIZE=30]("Green:"),
+    g_txt
+   ),
+   FILL[SIZE=2](),
+   HBOX[ALIGNMENT=ACENTER]
+   (
+    LABEL[SIZE=30]("Blue:"),
+    b_txt
+   ),
+   FILL[SIZE=2](),
+   state_lb,
+   FILL()
+  ),
+  FILL[SIZE=5]()
+ )
+)

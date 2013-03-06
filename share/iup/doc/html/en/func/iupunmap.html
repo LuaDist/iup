@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupUnmap</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>IupUnmap <span class="style1">(since 3.0)</span></h2>
+<p><b>Unmap</b> the element from the native system. It will also unmap all its children.</p>
+<p>It will NOT <b>detach</b> the element from its parent, and it will NOT <b>destroy</b> 
+the IUP element.</p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupUnmap(Ihandle* <strong>ih</strong>); [in C]
+iup.Unmap(<strong>ih</strong>: ihandle) [in Lua]
+or <strong>ih</strong>:unmap() [in Lua]</pre>
+<p><b>ih</b>: Identifier of an interface element.</p>
+<h3>Notes</h3>
+<p>When the element is mapped some attributes are stored only in the native 
+system. If the element is <b>unmaped</b> those attributes are lost. Use the 
+function <a href="iupsaveclassattributes.html">IupSaveClassAttributes</a> when 
+you want to <b>unmap</b> the element and keep its attributes.</p>
+<h3>See Also</h3>
+<p><a href="iupappend.html">IupAppend</a>, <a href="iupdetach.html">IupDetach</a>, 
+<a href="iupmap.html">IupMap</a>, <a href="iupcreate.html">IupCreate</a>, <a href="iupdestroy.html">IupDestroy</a></p>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

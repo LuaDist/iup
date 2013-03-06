@@ -1,0 +1,276 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Global Attributes</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+.style2 {
+	font-size: medium;
+}
+</style>
+</head>
+<body>
+
+<h1 align="center">Global Attributes</h1>
+<p>Global attributes are not associated with any particular element. They 
+represent and affect the global behavior of the toolkit.</p>
+<p>To access global attributes use the 
+<a href="../func/iupgetglobal.html">IupGetGlobal</a>, 
+<a href="../func/iupstoreglobal.html">IupStoreGlobal</a> and 
+<a href="../func/iupsetglobal.html">IupSetGlobal</a> functions. In Lua global 
+attributes can only be accessed trough those functions. In C, the functions
+<a href="../func/iupgetattribute.html">IupGetAttribute</a>,
+<a href="../func/iupstoreattribute.html">IupStoreAttribute</a>, 
+<a href="../func/iupsetattribute.html">IupSetAttribute</a> and others can also 
+be used if you set the element handle to NULL.</p>
+<hr>
+<h2 style="text-align: center"><a name="General">General</a>&nbsp;</h2>
+<h3><strong><a name="LANGUAGE">LANGUAGE</a></strong></h3>
+<p>The
+  language used by some pre-defined dialogs.</p>
+<p>Can have the values ENGLISH and PORTUGUESE. 
+    Default: ENGLISH. Can also be set by <b>IupSetLanguage</b>.</p>
+<h3><strong><a name="version">VERSION</a></strong> (read-only)</h3>
+<p>Returns the name of IUP's version.</p>
+<p>The value follows the &quot;major.minor.micro&quot; 
+    format, major 
+    referring to broader changes, 
+    minor 
+    referring to smaller changes, and 
+    micro 
+    referring to corrections only. Ex.: &quot;1.7.2&quot;.</p>
+<h3><a name="copyright"><strong>COPYRIGHT</strong></a> (read-only)</h3>
+<p>Returns the IUP's copyright.</p>
+<p>&nbsp;Ex: &quot;Copyright (C) 1994-2004 Tecgraf/PUC-Rio and PETROBRAS S/A&quot;.</p>
+<h3>LASTERROR [Windows Only]<span class="style2"> (since 3.6)</span></h3>
+<p>If an error is found, returns a string with the system error description.</p>
+<h3>IUPLUA_THREADED<span class="style2"> (since 3.6)</span></h3>
+<p>If defined allow IUP to be used inside coroutines in Lua.</p>
+<h3><a name="driver"><strong>DRIVER</strong></a> (read-only)</h3>
+<p>Informs the current driver being used.</p>
+<p>Two drivers are available now, one for each platform: "GTK", "Motif" and "Win32".</p>
+<h2 style="text-align: center">System <a name="Control">Control</a></h2>
+<h3><strong>LOCKLOOP</strong></h3>
+<p>When the last visible dialog is closed the <b>IupExitLoop</b> function is called. To avoid that set 
+LOCKLOOP=YES before hiding the last dialog. Possible values: &quot;YES&quot; or &quot;NO&quot;. 
+Default: &quot;NO&quot;. </p>
+<h3><strong><a name="UTF8AUTOCONVERT">UTF8AUTOCONVERT</a></strong> [GTK Only]</h3>
+<p>GTK uses UTF-8 as its charset for all displayed text, so IUP will 
+automatically convert all strings to (SetAttribute) and from (GetAttribute) 
+UTF-8. Default: YES. If the default locale is already UTF-8, but the given 
+string is not UTF-8 then it will be assumed that the string uses the ISO8859-1 
+charset.</p>
+<h3>SHOWMENUIMAGES [GTK Only] <span class="style2">(since 3.5)</span></h3>
+<p>Force the display of images in menus. Default: Yes</p>
+<h3>GLOBALMENU [GTK Only] <span class="style2">(since 3.6)</span></h3>
+<p>Flag indicating that GTK is using a global menu instead of a per window menu. 
+This was introduced in the new Ubuntu Unity desktop.</p>
+<h3><strong>SINGLEINSTANCE</strong> [Windows Only]<span class="style2"> (since 3.2)</span></h3>
+<p>Restricts the number of instances of the application by using a name to 
+identify it. The value must also be a partial match to the title of a dialog 
+that will receive the COPYDATA_CB callback with the command line of the second 
+instance. When consulted returns NULL if inside the second instance. So usually 
+in the application initialization after <strong>IupOpen</strong>, set SINGLEINSTANCE 
+and then consult its value, if NULL abort the second instance by calling <strong>
+IupClose</strong> and returning from <em>main</em>.</p>
+<h2 style="text-align: center">System <a name="Keyboard">Mouse and Keyboard</a></h2>
+<h3><strong><a name="cursorpos">CURSORPOS</a></strong></h3>
+<p>Controls and returns the cursor position in absolute coordinates relative to the upper left corner 
+of the screen. Accept values in the format &quot;X<b>x</b>Y&quot; (in C &quot;%dx%d), example &quot;200x200&quot;. 
+In GTK and Motif also generates mouse motion messages. (since GTK 2.8)</p>
+<h3><strong><a name="MOUSEBUTTON">MOUSEBUTTON</a> </strong>(write-only) 
+<span class="style2">(since 3.3)</span></h3>
+<p>Simulates a mouse button press, release or motion at the given coordinates. The position 
+is in absolute coordinates relative to the upper left corner 
+of the screen. Accept values in the format &quot;X<b>x</b>Y button state&quot; 
+(in C &quot;%dx%d %c %d&quot;), example &quot;200x200 1 1&quot;. 
+<strong>button</strong> can be one of the IUP_BUTTON1,... definitions. <strong>
+state</strong> can be 2=double click, 1=pressed, 0=released, or -1=motion. The cursor position 
+is always updated. In Windows button can be &#39;W&#39; and state=delta, so a wheel 
+button scroll is simulated.</p>
+<p><strong>IMPORTANT</strong>: <span class="style1">not fully working</span>. In 
+Windows and GTK, menu items are not activated. Although submenus open, menu 
+items even in the menu bar are not activated. In Windows, inside the <strong>
+IupFileDlg</strong> dialog, clicks in the folder navigation list are not 
+correctly interpreted. In Motif click and drag operations are not performed.</p>
+<h3><a name="SHIFTKEY"><strong>SHIFTKEY</strong></a> (read-only)<span class="style2"> (since 3.0)</span></h3>
+<p>Returns the state of the Shit keys (left and right). Possible values: &quot;ON&quot; or &quot;OFF&quot;.</p>
+<h3><a name="CONTROLKEY"><strong>CONTROLKEY</strong></a> (read-only) 
+<span class="style2">(since 3.0)</span></h3>
+<p>Returns the state of the Control keys (left and right). Possible values: &quot;ON&quot; or &quot;OFF&quot;.</p>
+<h3><a name="MODKEYSTATE"><strong>MODKEYSTATE</strong></a> (read-only) 
+<span class="style2">(since 
+3.0)</span></h3>
+<p>Returns the state of the keyboard modifier keys: Shift, Ctrl, Alt and sYs(Win/Apple). In the format of 4 
+  characters: &quot;SCAY&quot;. When not pressed the respective letter is replaced by a space &quot; &quot;. 
+</p>
+<h3><strong>KEYPRESS</strong> (write-only)<span class="style2"> (since 
+3.0)</span></h3>
+<p>Sends a key press message to the element with the focus. The value is a key 
+code. See the <a href="key.html">Keyboard Codes</a>
+  table for a list of the possible values. 
+</p>
+<h3><strong>KEY</strong>RELEASE (write-only) <span class="style2">(since 
+3.0)</span></h3>
+<p>Sends a key release message to the element with the focus. The value is a key 
+code. See the <a href="key.html">Keyboard Codes</a>
+  table for a list of the possible values. 
+</p>
+<h3><strong>KEY</strong> (write-only) <span class="style2">(since 
+3.0)</span></h3>
+<p>Sends a key press and a key release messages to the element with the focus. 
+The value is a key code. See the <a href="key.html">Keyboard Codes</a>
+  table for a list of the possible values. 
+</p>
+<h3><strong><a name="AUTOREPEAT">AUTOREPEAT</a></strong> [Motif Only]</h3>
+<p>Turns on/off&nbsp; (&quot;YES&quot; or 
+    &quot;NO&quot;) the auto-repeat of keyboard keys in 
+    the whole system. May be used as an optimization in high performance applications.</p>
+<h3><a name="INPUTCALLBACKS">INPUTCALLBACKS</a> <span class="style2">(since 3.4)</span></h3>
+<p>Turns on/off&nbsp; (&quot;YES&quot; or 
+    &quot;NO&quot;) the global callbacks used to intercept global mouse and 
+keyboard events. The callbacks must be set using the
+<a href="../func/iupsetfunction.html">IupSetFunction</a> function using the 
+following names: GLOBAL<a href="../call/iup_keypress_cb.html">KEYPRESS_CB</a>, 
+GLOBAL<a href="../call/iup_motion_cb.html">MOTION_CB</a>, GLOBAL<a href="../call/iup_button_cb.html">BUTTON_CB</a> 
+and GLOBAL<a href="../call/iup_wheel_cb.html">WHEEL_CB</a> (Windows Only). Their parameters are 
+the same as the standard callbacks, but without the <strong>Ihandle</strong>* 
+parameter.</p>
+<h2 style="text-align: center">System <a name="Information">Information</a></h2>
+<h3><strong>SYSTEM</strong> (read-only)</h3>
+<p>
+Informs the current operating system.
+On UNIX, it is equivalent to the command &quot;uname -s&quot; (sysname). On Windows, it 
+identifies if you are on Windows 2000, Windows XP or Windows Vista. Some known 
+names: </p>
+<blockquote>
+<ul>
+  <li>&quot;MacOS&quot;</li>
+	<li>&quot;FreeBSD&quot;</li>
+	<li>&quot;Linux&quot;</li>
+  <li>&quot;SunOS&quot;</li>
+  <li>&quot;Solaris&quot;</li>
+  <li>&quot;IRIX&quot;</li>
+  <li>&quot;AIX&quot;</li>
+  <li>&quot;HP-UX&quot;</li>
+  <li>&quot;Win2K&quot;</li>
+  <li>&quot;WinXP&quot;</li>
+  <li>&quot;Vista&quot;</li>
+	<li>&quot;Win7&quot;</li>
+</ul>
+</blockquote>
+<h3><strong>SYSTEMVERSION</strong> 
+(read-only)</h3>
+<p>Informs the current operating system version number.</p>
+<p>On UNIX, it is equivalent to the command 
+    &nbsp;&quot;uname 
+    -r&quot; (release). 
+    On Windows, it identifies the system version number and service pack version. 
+On MacOSX is system version.</p>
+<h3><strong>SYSTEMLANGUAGE</strong> 
+(read-only)</h3>
+<p>Returns a text with a description of the system language.</p>
+<h3><strong>SYSTEM</strong>LOCALE 
+(read-only)<span class="style2"> (since 3.4)</span></h3>
+<p>Returns a text with a description of the system locale.</p>
+<h3><strong><a name="GTKVERSION">GTKVERSION</a></strong> (read-only) [GTK Only]</h3>
+<p>Returns the run time version of the GTK toolkit. This is the version being used at the time of the IupOpen function was called by the application.</p>
+<h3><strong><a name="GTKDEVVERSION">GTKDEVVERSION</a></strong> (read-only) [GTK 
+Only]</h3>
+<p>Returns the development version of the GTK toolkit. This is the version at the time
+    the IUP library was compiled. </p>
+<h3><a name="MOTIFVERSION"><strong>MOTIFVERSION</strong></a> 
+  (read-only) [Motif Only]</h3>
+<p>Returns the version of the run time Motif.</p>
+<h3><strong><a name="MOTIFNUMBER">MOTIFNUMBER</a></strong> (read-only) [Motif 
+Only]</h3>
+<p>Returns the number of the Motif Version if full form, e.x: 2.2.3 = &quot;2203&quot;.</p>
+<h3><strong><a name="computername">COMPUTERNAME</a></strong> (read-only)</h3>
+<p>Returns the hostname.</p>
+<h3><strong><a name="username">USERNAME</a></strong> (read-only)</h3>
+<p>Returns the user logged in.</p>
+<h3><strong><a name="XSERVERVENDOR">XSERVERVENDOR</a></strong> 
+  (read-only) [GTK and Motif Only] <span class="style2">(since 3.0)</span></h3>
+<p>X-Windows Server Vendor string.</p>
+<h3><strong><a name="XVENDORRELEASE">XVENDORRELEASE</a></strong> 
+  (read-only) [GTK and Motif Only] <span class="style2">(since 3.0)</span></h3>
+<p>X-Windows Server Vendor release number.</p>
+
+<h2 style="text-align: center"><a name="Screen">Screen</a> Information</h2>
+<h3><strong>FULLSIZE</strong> (read-only)</h3>
+<p>Returns the full screen size in pixels.</p>
+<p>String in the &quot;<i>width</i>x<i>height</i>&quot; format.</p>
+<h3><strong>SCREENSIZE</strong> (read-only)</h3>
+<p>Returns the screen size in pixels available for dialogs, i.e. not including menu bars, task bars, etc. In Motif has 
+  the same value as the FULLSIZE attribute. The main screen size does not 
+include additional monitors.</p>
+<p>String in the &quot;<i>width</i>x<i>height</i>&quot; format.</p>
+<h3><strong>SCREENDEPTH</strong> (read-only)</h3>
+<p>Returns the screen depth in bits per pixel.</p>
+<h3><strong>SCREENDPI</strong> (read-only)</h3>
+<p>Returns the screen resolution in dots or pixels per inch (DPI).</p>
+<h3><a name="TRUECOLORCANVAS"><strong>TRUECOLORCANVAS</strong></a> 
+(read-only)</h3>
+<p>Indicates if the display allows creating 
+  TrueColor (&gt; 8bpp) <strong>IupCanvas</strong> controls, even if PseudoColor is the default, 
+i.e. even if SCREENDEPTH&lt;=8 . Returns 
+  &quot;YES&quot; or 
+  &quot;NO&quot;. Usefull in Motif.</p>
+<h3><strong><a name="VIRTUALSCREEN">VIRTUALSCREEN</a></strong> (read-only) [Win32 and GTK Only]<span class="style2"> 
+(since 3.0)</span></h3>
+<p>Returns the virtual screen position and size in pixels. It is the virtual 
+space defined by all monitors in the system.</p>
+<p>String in the &quot;<i>x y width height</i>&quot; format.</p>
+<h3><a name="MONITORSINFO">MONITORSINFO</a> (read-only) [Win32 and 
+GTK Only] <span class="style2">(since 3.0)</span></h3>
+<p>Returns the position and size in pixels of all monitors. Each monitor 
+information is terminated by a &quot;\n&quot; character.</p>
+<p>String in the &quot;<i>x y width height</i>\n<i>x y width height</i>\n...&quot; format.</p>
+<h2 align="center">System <a name="Data">Data</a>&nbsp;</h2>
+<h3><a name="HINSTANCE"><strong>HINSTANCE</strong></a> (read-only) [Win32 Only]</h3>
+<p>Returns a handle (HINSTANCE) that identifies the application in the native system.</p>
+<h3><a name="DLL_HINSTANCE"><strong>DLL_HINSTANCE</strong></a> [Win32 Only]<span class="style2"> (since 
+3.0)</span></h3>
+<p>Changes and returns a handle (HINSTANCE) that identifies the DLL where resources are stored.</p>
+<h3><a name="APPSHELL"><strong>APPSHELL</strong></a> (read-only) [Motif Only] 
+<span class="style2">(since 3.0)</span></h3>
+<p>Returns the shell Widget created by XtOpenApplication.</p>
+<h3><a name="XDISPLAY"><strong>XDISPLAY</strong></a> (read-only) [GTK and Motif 
+Only] <span class="style2">(since 3.0)</span></h3>
+<p>Returns the X-Windows Display. </p>
+<h3><a name="XSCREEN"><strong>XSCREEN</strong></a> (read-only) [GTK and Motif 
+Only] <span class="style2">(since 3.0)</span></h3>
+<p>Returns the X-Windows
+    Screen. </p>
+<h2 style="text-align: center"><a name="Default">Default</a> Attributes</h2>
+<h3><strong><a name="DLGBGCOLOR">DLGBGCOLOR</a></strong></h3>
+<p>The default background color for all elements that have the background 
+similar of the dialog.</p>
+<h3><strong><a name="DLGFGCOLOR">DLGFGCOLOR</a></strong> <span class="style2">(since 3.0)</span></h3>
+<p>The default foreground color for all elements that have text over the 
+background of the dialog or similar. Usually is &quot;0 0 0&quot;.</p>
+<h3><strong><a name="MENUBGCOLOR">MENUBGCOLOR</a></strong> <span class="style2">(since 3.0)</span></h3>
+<p>The default menu background color. Usually is &quot;255 255 255&quot;.</p>
+<h3><strong><a name="MENUFGCOLOR">MENUFGCOLOR</a></strong> (<span class="style2">since 3.0)</span></h3>
+<p>The default menu foreground color. Usually is &quot;0 0 0&quot;.</p>
+<h3><strong><a name="TXTBGCOLOR">TXTBGCOLOR</a></strong> <span class="style2">(since 3.0)</span></h3>
+<p>The default background color for editable text, also used by lists and tree. 
+Usually is &quot;255 255 255&quot;.</p>
+<h3><strong><a name="TXTFGCOLOR">TXTFGCOLOR</a></strong> <span class="style2">(since 3.0)</span></h3>
+<p>The default foreground color for editable text, also used by lists and tree. 
+Usually is &quot;0 0 0&quot;.</p>
+<h3><strong><a name="DEFAULTFONT">DEFAULTFONT</a></strong></h3>
+<p>The default font used by all elements, except for menus.</p>
+<h3><strong><a name="DEFAULTFONTSIZE">DEFAULTFONTSIZE</a></strong> 
+<span class="style2">(since 3.0)</span></h3>
+<p>Auxiliar attribute to retrieve and set the default font size used by all elements. 
+It retrieves the size from DEFAULTFONT. When changed will actually change the 
+DEFAULTFONT.</p>
+
+</body>
+
+</html>

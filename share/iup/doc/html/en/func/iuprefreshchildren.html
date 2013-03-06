@@ -1,0 +1,41 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupRefreshChildren</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>IupRefreshChildren<span class="style1"> (Since 3.3)</span></h2>
+<p>Updates the size and layout of controls after changing size attributes. Can be used for any element inside a 
+  dialog, only its children will be updated. It can change the layout of all the controls inside the 
+given element because 
+  of the dynamic layout positioning. </p>
+<h3>
+Parameters/Return</h3>
+<pre>void IupRefreshChildren(Ihandle *<strong>ih</strong>); [in C]
+iup.RefreshChildren(<strong>ih</strong>: ihandle) [in Lua]</pre>
+<p><b>ih</b>: identifier of the interface element.</p>
+<h3>Notes</h3>
+<p>The given element must be a container. It must be inside a dialog hierarchy 
+and must be mapped. It can not be a dialog. For dialogs use <strong>IupRefresh</strong>.</p>
+<p>The children are immediately repositioned, if the dialog is visible then the 
+change will be immediately reflected on the display.</p>
+<p>This function will NOT change the size of the given element, even if the 
+natural size of its children would increase its natural size.</p>
+<p>If your dialog has too many controls and you want to hide or destroy some, 
+then add some other in the same place, so you actually know that the dialog 
+layout would not change, this is a much faster function than <strong>IupRefresh</strong>.</p>
+<h3>See Also</h3>
+<p><a href="iuprefresh.html">IupRefresh</a></p>
+
+</body>
+
+</html>

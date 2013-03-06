@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IUP-IM</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+.style2 {
+	background-color: #CEE7FF;
+}
+</style>
+</head>
+<body>
+
+<h2>IUP-IM Functions</h2>
+<p>Functions to load/save an <strong>IupImage</strong> from/to a file using the 
+IM library. The function can load or save the formats: BMP, JPEG, GIF, TIFF, 
+PNG, PNM, PCX, ICO and others. For more information about the IM library see 
+<a target="_blank" href="http://www.tecgraf.puc-rio.br/im">
+http://www.tecgraf.puc-rio.br/im</a>.</p>
+<h3>Initialization and Usage</h3>
+<p>To generate an application that uses this function, the program must be 
+linked with the IM library and with the function library (im and iupim 
+libraries). The &quot;iupim.h&quot; file must also be included in the source code. 
+</p>
+<p>To make the functions available in Lua use require&quot;iupluaim&quot; or manually 
+call the initialization function in C, iupimlua_open, after calling <b>iuplua_open</b>. 
+When manually calling the function the iupluaim.h file must also 
+be included in the source code and the program must be linked to the iupluaim library.</p>
+<h3>Load</h3>
+<div>
+  <pre>Ihandle* IupLoadImage(const char* <strong>file_name</strong>); [in C]
+iup.LoadImage(<strong>file_name</strong>: string) -&gt; (<strong>elem</strong>: ihandle) [in Lua]</pre>
+</div>
+<p><strong>file_name</strong>: Name of the file to be loaded.</p>
+<p><span class="style1">Returns:</span> the identifier of the created image, or 
+NULL if an error occurs. When failed the global attribute &quot;IUPIM_LASTERROR&quot; is 
+set with a message describing the error.</p>
+<h3>Save</h3>
+<div>
+  <pre>int IupSaveImage(Ihandle* <b>ih</b>, const char* <strong>file_name, </strong>const char* <strong>format</strong>); [in C]
+iup.SaveImage(<strong>ih</strong>: ihandle<strong>, file_name, format</strong>: string) -&gt; (<b>ret</b>: boolean) [in Lua]</pre>
+</div>
+<p><strong>ih:</strong> handle of the <strong>IupImage</strong>.<br>
+  <strong>file_name</strong>: Name of the file to be loaded.<br>
+  <strong>format</strong>: format descriptor for IM. For ex: &quot;BMP&quot;, &quot;JPEG&quot;, 
+&quot;GIF&quot;, &quot;TIFF&quot;, &quot;PNG&quot;, &quot;PNM&quot;, &quot;PCX&quot;, &quot;ICO&quot;, etc.</p>
+<p><span class="style1">Returns:</span> zero if failed. When failed the global 
+attribute &quot;IUPIM_LASTERROR&quot; is set with a message describing the error.</p>
+<h3>Native Handle to imImage</h3>
+<div>
+  <pre>imImage* IupGetNativeHandleImage(void* <strong>handle</strong>); [in C]
+iup.GetNativeHandleImage(<strong>handle</strong>: <span class="style2">userdata</span>) -&gt; (<strong>image</strong>: imImage) [in Lua]</pre>
+</div>
+<p><strong>handle:</strong> image native handle. In Win32 is a <strong>HANDLE</strong> 
+of a DIB. In GTK is a <strong>GdkPixbuf*</strong>. In Motif is a <strong>Pixmap</strong>. 
+Its memory is released after the <strong>imImage</strong> is created. In Lua is 
+a light user data.</p>
+<p><span class="style1">Returns:</span> the <strong>imImage</strong>* handle. 
+Useful when pasting data from a <strong>IupClipboard</strong>.</p>
+<p>You must include the &quot;im_image.h&quot; header before the &quot;iupim.h&quot; to enable these 
+functions.</p>
+<h3>imImage to Native Handle</h3>
+<div>
+  <pre>imImage* IupGetImageNativeHandle(imImage* <strong>image</strong>); [in C]
+iup.GetImageNativeHandle(<strong>image</strong>: imImage) -&gt; (<strong>handle</strong>: <span class="style2">userdata</span>) [in Lua]</pre>
+</div>
+<p><strong>image:</strong> the <strong>imImage</strong>* handle. Must be a 
+bitmap image.</p>
+<p><span class="style1">Returns:</span> the image native handle. In Win32 is a <strong>
+HANDLE</strong> for a DIB. In GTK is a <strong>GdkPixbuf*</strong>. In Motif is 
+a <strong>Pixmap</strong>. Usefull when copying data to a <strong>IupClipboard</strong>. 
+In Lua is a light user data.</p>
+<p>You must include the &quot;im_image.h&quot; header before the &quot;iupim.h&quot; to enable these 
+functions.</p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="elem/iupimage.html">IupImage</a>,
+<a href="func/iupsaveimageastext.html">IupSaveImageAsText</a>,
+<a href="elem/iupclipboard.html">IupClipboard</a></p>
+
+</body>
+
+</html>

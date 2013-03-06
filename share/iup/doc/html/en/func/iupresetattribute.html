@@ -1,0 +1,47 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+
+  <title>IupResetAttribute</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css">
+
+  <style type="text/css">
+.style1 {
+	font-size: large;
+}
+</style>
+
+  </head>
+
+
+<body>
+
+
+<h2>IupResetAttribute<span class="style1"> (Since 3.2)</span></h2>
+
+<p>Removes an attribute from the hash table of the element, and its children if 
+the attribute is inheritable. It is useful to reset the state of inheritable 
+attributes in a tree of elements.</p>
+
+<h3>
+Parameters/Return</h3>
+
+<pre>void IupResetAttribute(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>); [in C]<br>iup.ResetAttribute(<strong>ih</strong>: ihandle, <strong>name</strong>: string) [in Lua] </pre>
+
+<p><b>ih</b>: Identifier of the interface element. If
+  NULL will set in the global environment.<br>
+
+<b>name</b>: name of the attribute.</p>
+
+<h3>See Also</h3>
+
+<p><a href="iupgetattribute.html">IupGetAttribute</a>, 
+<a href="iupsetattribute.html">IupSetAttribute</a></p>
+
+
+</body>
+</html>

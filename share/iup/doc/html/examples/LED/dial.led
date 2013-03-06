@@ -1,0 +1,47 @@
+#IupDial Example in Led 
+
+lbl_h = label[SIZE=30x]("0")
+lbl_v = label[SIZE=30x]("0")
+lbl_c = label[SIZE=30x]("0")
+
+dial_v = DIAL
+[
+  UNIT=DEGREES,
+  MOUSEMOVE_CB="mousemove"
+] ("VERTICAL")
+
+dial_h = DIAL
+[
+  DENSITY=0.1,
+  BUTTON_PRESS_CB="button_press"
+] ("HORIZONTAL")
+
+dial_c = DIAL
+[
+  BUTTON_RELEASE_CB="button_release"
+] ("CIRCULAR")
+
+dlg = DIALOG[TITLE="IupDial", RESIZE=NO]
+(
+  VBOX[MARGIN=10x10, GAP=10]
+  (
+    HBOX[ALIGNMENT=ACENTER]
+    (
+      FILL(),
+      dial_v,
+      lbl_v
+    ),
+    HBOX[ALIGNMENT=ACENTER]
+    (
+      FILL(),
+      dial_h,
+      lbl_h
+    ),
+    HBOX[ALIGNMENT=ACENTER]
+    (
+      FILL(),
+      dial_c,
+      lbl_c
+    )
+  )
+)

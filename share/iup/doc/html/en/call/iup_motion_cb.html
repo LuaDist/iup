@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>MOTION_CB</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>MOTION_CB</h2>
+<p>Action generated when the mouse moves.</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>x</strong>, int <strong>y</strong>, char *<strong>status</strong>); [in C]
+<strong>elem</strong>:motion_cb(<strong>x</strong>, <strong>y</strong>: number, <strong>status</strong>: string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+<strong>x</strong>, <strong>y</strong>:
+  position in the canvas where the event has 
+  occurred, in pixels.<br>
+<strong>status</strong>: status of mouse buttons and certain keyboard keys at 
+the moment the event was generated. The same macros used for
+<a href="../call/iup_button_cb.html">BUTTON_CB</a> can be used for this status.</p>
+<h3>Affects</h3>
+<p><a href="../elem/iupcanvas.html">IupCanvas</a>,
+  <a href="../ctrl/iupglcanvas.html">IupGLCanvas</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+
+  <title>IupGetAttribute</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css">
+	<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+
+
+<body>
+
+
+<h2>IupGetAttribute</h2>
+
+<p>Returns the name of an interface element attribute. See also the
+<a href="../attrib_guide.html">Attributes Guide</a> section.</p>
+
+<h3>
+Parameters/Return</h3>
+
+<pre>char *IupGetAttribute(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>); [in C]<br>iup.GetAttribute(<strong>ih</strong>: ihandle, <strong>name</strong>: string) -&gt; <strong>value</strong>: string [in Lua]
+char *IupGetAttributeId(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>, int <strong>id</strong>); [in C]<br>iup.GetAttributeId(<strong>ih</strong>: ihandle, <strong>name</strong>: string, <strong>id</strong>: number) -&gt; <strong>value</strong>: string [in Lua]</pre>
+
+<p><b>ih</b>: Identifier of the interface element. If
+  NULL will retrieve from the global environment.<br>
+
+  <strong>name</strong>: name of the attribute.<br>
+<strong>id</strong>: used when the attribute has an additional id.</p>
+
+<p><span class="style1">Returns:</span> the attribute value or NULL (nil in Lua) 
+if 
+  the attribute is not set or does not exist.<br>
+
+</p>
+<h3>Notes</h3>
+
+<p>See the <a href="../attrib_guide.html">Attributes Guide</a> for more details.</p>
+<p>This function return value is not 
+  necessarily the same pointer used by the application to define the attribute value.&nbsp;The pointers of internal IUP attributes 
+  returned by <strong>IupGetAttribute</strong> should <b>never</b> be freed or changed, 
+except when you allocated the memory for that pointer at set it using <strong>
+IupSetAttribute</strong>.</p>
+
+<h4>IupLua</h4>
+
+<p>In IupLua, only known internal pointer attributes are returned as <strong>user data</strong> 
+or as an ihandle, all other attributes are returned as 
+  strings. To access attribute data always as <strong>user data</strong> use iup.GetAttributeData:</p>
+
+<pre>iup.GetAttributeData(<strong>ih</strong>: ihandle) -&gt; <strong>value</strong>: userdata [in Lua]</pre>
+
+<h3>Examples</h3>
+
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+<h3>See Also</h3>
+
+<p><a href="iupsetattribute.html">IupSetAttribute</a>, <a href="iupgetint.html">IupGetInt</a>,
+  <a href="iupgetfloat.html">IupGetFloat</a>, <a href="iupsetattributes.html">IupSetAttributes</a>,
+  <a href="iupgethandle.html">IupGetHandle</a>.</p>
+
+
+</body>
+</html>

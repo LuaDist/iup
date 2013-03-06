@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupSubmenu</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	margin-left: 40px;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupSubmenu</h2>
+
+  <p>
+  Creates a menu item that, when selected, opens another menu.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+<pre>Ihandle* IupSubmenu(const char *<strong>title</strong>, Ihandle *<strong>menu</strong>); [in C]
+iup.submenu{<strong>menu</strong>: ihandle[; title = <strong>title</strong>: string]} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+submenu(<strong>title</strong>, <strong>menu</strong>) [in LED]</pre>
+  <p><b>
+  title</b>: String containing the text to be shown on the item. It can be NULL. 
+	It will set the TITLE attribute.<br>
+  <b>
+  menu</b>: optional child menu identifier. Can be NULL.</p>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>IMAGE</strong> [Windows and GTK Only] (<font SIZE="3">non inheritable</font>): Image name of the submenu 
+image. 
+  In Windows, an item in a menu bar cannot have a 
+	check mark. Ignored if submenu in a menu bar. A recommended size would be 
+16x16 to fit the image in the menu item. In Windows, if larger than the check 
+mark area it will be cropped. (since 3.0)</p>
+
+
+<p><a href="../attrib/iup_key.html">KEY</a> (<font SIZE="3">non inheritable</font>): Underlines a key character in the submenu 
+title. It 
+is updated only when TITLE is updated. <strong>Deprecated</strong>, use the 
+mnemonic support directly in the TITLE attribute.</p>
+  <p><a href="../attrib/iup_title.html">TITLE</a> (<font SIZE="3">non inheritable</font>): Submenu Text. The &quot;&amp;&quot; 
+	character can be used to define a mnemonic, the next character will be used 
+	as key. Use &quot;&amp;&amp;&quot; to show the &quot;&amp;&quot; character instead on defining a mnemonic. </p>
+<p> <a href="../attrib/iup_wid.html">WID</a> (<font SIZE="3">non inheritable</font>): In Windows, returns the HMENU of 
+the parent menu and it is actually created only when its child menu is mapped.</p>
+
+
+  <blockquote>
+    <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>: also accepted.</p>
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+  <p><a href="../call/iup_highlight_cb.html">HIGHLIGHT_CB</a>:
+  Action generated when the submenu is 
+  highlighted.</p>
+    <hr class="style1">
+
+<p> 
+<a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>: common callbacks are 
+supported.</p>
+
+<h3><a name="Notes">Notes</a></h3>
+
+<p>In Motif and GTK, the text font will be affected by the dialog font when the menu is 
+mapped.</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p align="center">
+<img src="images/iupsubmenu.png"></p>
+<p>See the <strong>IupMenu</strong> element for more screenshots.</p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="iupitem.html">IupItem</a>, <a href="iupseparator.html">IupSeparator</a>,
+  <a href="iupmenu.html">IupMenu</a>.</p>
+
+
+</body>
+
+</html>

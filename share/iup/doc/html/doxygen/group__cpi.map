@@ -1,0 +1,9 @@
+<map id="structs" name="structs">
+<area shape="rect" id="node1" href="$group__register.html" title="Class Registration" alt="" coords="217,5,369,37"/>
+<area shape="rect" id="node2" href="$group__dlglist.html" title="List of Dialogs" alt="" coords="231,61,356,93"/>
+<area shape="rect" id="node3" href="$group__iclass.html" title="Ihandle Class" alt="" coords="233,117,353,149"/>
+<area shape="rect" id="node4" href="$group__attrib.html" title="Attribute Environment" alt="" coords="205,173,381,205"/>
+<area shape="rect" id="node5" href="$group__object.html" title="Ihandle Object" alt="" coords="231,229,356,261"/>
+<area shape="rect" id="node6" href="$group__focus.html" title="Keyboard Focus" alt="" coords="223,285,364,317"/>
+<area shape="rect" id="node7" href="$group__key.html" title="Key Coding and Key Callbacks" alt="" coords="169,341,417,373"/>
+</map>

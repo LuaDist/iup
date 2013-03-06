@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupPreviousField</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupPreviousField</h2>
+<p>Shifts the focus to the previous element 
+  that can have the focus. It is relative to the given element and does not depend on the element currently with the 
+  focus.</p>
+<h3>
+Parameters/Return</h3>
+<pre>Ihandle* IupPreviousField(Ihandle* <strong>ih</strong>); [in C]
+iup.PreviousField(<strong>ih</strong>: ihandle) -&gt; (<strong>previous</strong>: ihandle) [in Lua]</pre>
+<p><b>ih</b>: identifier of the interface element. </p>
+<p><span class="style1">Returns:</span> the element that received the focus 
+  or NULL if not found.</p>
+<h3>See Also</h3>
+<p><a href="iupnextfield.html">IupNextField</a>.</p>
+
+</body>
+
+</html>

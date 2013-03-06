@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupCells</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupCells</h2>
+<p>Creates a grid widget (set of cells) that enables 
+  several application-specific drawing, such as: chess tables, tiles editors, degrade scales, drawable spreadsheets and 
+  so forth. </p>
+<p>This element is mostly based on application callbacks 
+  functions that determine the number of cells (rows and columns), their 
+appearance and interaction. This mechanism offers 
+  full flexibility to applications, but requires programmers attention to avoid infinite loops inside this functions. 
+  Using callbacks, cells can be also grouped to form 
+  major or hierarchical elements, such as headers,&nbsp; footers etc. This callback approach was intentionally chosen to allow all cells
+  to be dynamically and directly changed based on 
+  application's data structures. Since the size of each cell is given by the application the size of the 
+  control also must be given using SIZE or RASTERSIZE attributes.</p>
+<p>This is an additional control that depends on the CD library. It is included 
+in the 
+<a href="../iupcontrols.html">Controls Library</a>.</p>
+<p>It inherits from
+  <a href="../elem/iupcanvas.html">IupCanvas</a>. </p>
+<p>Originally implemented by André 
+  Clinio.</p>
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupCells(void); [in C]
+iup.cells{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+cells() [in LED] </pre>
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><b>BOXED:</b> Determines if the bounding cells' regions should be drawn with black 
+  lines. It can be &quot;YES&quot; or &quot;NO&quot;. Default:
+  &quot;YES&quot;. If the span attributes are used, set this attribute to &quot;NO&quot; 
+  to avoid grid drawing over spanned cells.</p>
+<p><b>BUFFERIZE:</b> Disables the automatic redrawing of the control, so many 
+attributes can be changed without many redraws. When set to &quot;NO&quot; the control is 
+redrawn. When REPAINT attribute is set, BUFFERIZE is automatically set to &quot;NO&quot;. 
+  Default: &quot;NO&quot;. </p>
+<p><b>CANVAS</b> (read-only) (<font SIZE="3">non inheritable</font>): Returns the internal IUP CD canvas. This attribute 
+  should be used only in specific cases and by experienced CD programmers.</p>
+<p><b>CLIPPED:</b> Determines if, before cells drawing, each bounding region should be 
+  clipped. This attribute should the changed in few specific cases.&nbsp; It can be &quot;YES&quot; 
+  or &quot;NO&quot;. Default: &quot;YES&quot;.</p>
+<p><b>FIRST_COL</b> (read-only) (<font SIZE="3">non inheritable</font>): Returns the number of the first visible column. 
+</p>
+<p><b>FIRST_LINE</b>&nbsp;(read-only) (<font SIZE="3">non inheritable</font>): Returns the number of the first visible line. 
+</p>
+<p><b>FULL_VISIBLE </b>(write-only) (<font SIZE="3">non inheritable</font>)<b>:</b> Tries to show completely a specific cell (considering any 
+  vertical or horizontal header or scrollbar position) .This attribute is set by a formatted string 
+&quot;%d:%d&quot; 
+  (C syntax), where each &quot;%d&quot; represent the line and column integer indexes respectively.</p>
+<p><b>IMAGE_CANVAS</b> (read-only) (<font SIZE="3">non inheritable</font>): Returns the internal image CD canvas. This 
+  attribute should be used only in specific cases and by experienced CD programmers.</p>
+<p><b>LIMITS</b><em>L:C</em> (read-only) (<font SIZE="3">non inheritable</font>): Returns the limits of a given cell. Input format is &quot;lin:col&quot; 
+  or &quot;%d:%d&quot; in C. Output format is &quot;xmin:xmax:ymin:ymax&quot; or 
+&quot;%d:%d:%d:%d&quot; in C.</p>
+<p><b>NON_SCROLLABLE_LINES:</b> Determines the number of non-scrollable lines 
+  (vertical headers) that should always be visible despite the vertical scrollbar position. It can&nbsp; be any 
+  non-negative integer value. Default: &quot;0&quot;</p>
+<p><b>NON_SCROLLABLE_COLS:</b> Determines the number of non-scrollable columns 
+  (horizontal headers) that should always be visible despite the horizontal scrollbar position. It can be any 
+  non-negative integer value. Default: &quot;0&quot;</p>
+<p><b>ORIGIN:</b> Sets the first visible line and column positions. This attribute is 
+  set by a formatted string &quot;%d:%d&quot; (C syntax), where each &quot;%d&quot; represent the line and column integer 
+  indexes respectively.</p>
+<p><b>REPAINT</b>(write-only) (<font SIZE="3">non inheritable</font>)<b>:</b> When set with any value, provokes the control 
+to be redrawn.</p>
+<p> <a href="../attrib/iup_size.html">SIZE</a> (<font SIZE="3">non inheritable</font>): there 
+is no initial size. You 
+must define SIZE or RASTERSIZE.</p>
+  <p><a href="../attrib/iup_scrollbar.html">SCROLLBAR</a> (creation only):
+  Default: &quot;YES&quot;.</p>
+  <blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>,
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_size.html">SIZE</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><strong>DRAW_CB</strong><tt>:</tt> called when a specific cell needs to be 
+redrawn.</p>
+<pre>int function(Ihandle* <b>ih</b>, int <b>line</b>, int <b>column</b>, int <b>xmin</b>, int <b>xmax</b>, int <b>ymin</b>, int <b>ymax</b>, cdCanvas* <strong>canvas</strong>);  [in C]<strong>
+elem</strong>:draw_cb(<b>line</b>, <b>column</b>, <b>xmin</b>, <b>xmax</b>, <b>ymin</b>, <b>ymax</b>: number, <strong>canvas</strong>: cdCanvas) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>line</strong>, <strong>column</strong>:
+    the grid position inside the control that is being 
+    redrawn, in grid coordinates.<br>
+<strong>xmin, xmax, ymin, ymax</strong>: the raster bounding box of the redrawn 
+    cells, where the application can use CD functions to draw anything. If the 
+attribute IUP_CLIPPED is set (the 
+    default), all CD graphical primitives is clipped to the bounding region.<br>
+<strong>canvas</strong>: internal canvas CD used to draw the cells.</p>
+
+<p><strong>HEIGHT_CB</strong><tt>:</tt> called when the controls needs to know a (eventually new) line 
+  height.</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <b>line</b>);  [in C]
+<strong>elem</strong>:height_cb(<strong>line</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <b>line:</b> the line index</p>
+<p class="info"><u>Returns</u>: an integer that specifies the desired height (in 
+pixels). Default is 30 pixels.</p>
+<p><strong>HSPAN_CB</strong><tt>:</tt> called when the control needs to know if a cell should be 
+  horizontally spanned.</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <b>line</b>, int <b>column</b>);  [in C]
+<strong>elem</strong>:hspan_cb(<strong>line, column</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>line, column</strong><b>:</b> the line and column indexes (in grid coordinates)</p>
+<p class="info"><u>Returns</u>: an integer that specifies the desired span. 
+Default is 1 (no span).</p>
+
+<p><strong>MOUSECLICK_CB</strong><tt>:</tt> called when a color is selected. The primary color is
+  selected with the left mouse button, and if existent the secondary is
+  selected with the right mouse button.</p>
+<pre>int function(Ihandle* <b>ih</b>, int <b>button</b>, int <b>pressed</b>, int <b>line</b>, int <b>column</b>, int <b>x</b>, int <b>y</b>, char* <b>status</b>);  [in C]<strong>
+elem</strong>:mouseclick_cb(<strong>button, pressed, line, column, x, y</strong>: number, <b>string: </b>status) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info">Same as the <a href="../call/iup_button_cb.html">BUTTON_CB</a> 
+IupCanvas callback with two additional parameters:</p>
+<p class="info"><strong>line</strong>, <strong>column</strong>:
+    the grid position in the control where the event has 
+    occurred, in grid coordinates.<br>
+</p>
+<p><strong>MOUSEMOTION_CB</strong><tt>:</tt> 
+  called when the mouse moves over the control.</p>
+<pre>int function(Ihandle *<strong>ih</strong>, int <b>line</b>, int <b>column</b>, int <strong>x</strong>, int <strong>y</strong>, char *<strong>r</strong>); [in C]
+<strong>elem</strong>:mousemotion_cb(<strong>x</strong>, <strong>y</strong>: number, <strong>r</strong>: string) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info">Same as the <a href="../call/iup_motion_cb.html">MOTION_CB</a> 
+IupCanvas callback with two additional parameters:</p>
+<p class="info"><strong>line</strong>, <strong>column</strong>:
+    the grid position in the control where the event has 
+    occurred, in grid coordinates.<br>
+</p>
+<p><strong>NCOLS_CB</strong><tt>:</tt> called when then controls needs to know its number of columns.</p>
+<pre>int function(Ihandle* <b>ih</b>);  [in C]
+<strong>elem</strong>:ncols_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+<p class="info"><u>Returns</u>: an integer that specifies the number of columns. 
+Default is 10 columns.</p>
+<p><strong>NLINES_CB</strong><tt>:</tt> called when then controls needs to know its number of lines.</p>
+<pre>int function(Ihandle* <b>ih</b>);  [in C]
+<strong>elem</strong>:nlines_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+<p class="info"><u>Returns</u>: an integer that specifies the number of lines. 
+Default is 10 lines.</p>
+<p><strong>SCROLLING_CB</strong><tt>:</tt> called when the scrollbars are 
+activated.</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <b>line</b>, int <b>column</b>);  [in C]
+<strong>elem</strong>:scrolling_cb(<strong>line, column</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>line, column</strong><b>:</b> the first visible line and column indexes (in grid coordinates)</p>
+<p class="info"><u>Returns</u>: If IUP_IGNORE the cell is not redrawn. By default 
+the cell is always redrawn.</p>
+  <p><strong>VSPAN_CB</strong><tt>:</tt> called when the control needs to know if a cell should be 
+  vertically spanned.</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <b>line</b>, int <b>column</b>);  [in C]
+<strong>elem</strong>:vspan_cb(<strong>line, column</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>line, column</strong><b>:</b> the line and column indexes (in grid coordinates)</p>
+<p class="info"><u>Returns</u>: an integer that specifies the desired span. 
+Default is 1 (no span).</p>
+<p><strong>WIDTH_CB</strong><tt>:</tt> called when the controls needs to know 
+the column 
+  width</p>
+<pre>int function(Ihandle* <strong>ih</strong>, int <b>column</b>);  [in C]
+<strong>elem</strong>:width_cb(<strong>column</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <b>column:</b> the column index</p>
+<p class="info"><u>Returns</u>: an integer that specifies the desired width (in 
+pixels). Default is 60 pixels.</p>
+<blockquote>
+  <hr>
+</blockquote>
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>,  
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, 
+<a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p align="center"><b>Checkerboard Pattern<br>
+</b><img border="0" src="images/iupcells_chess.jpg" width="436" height="456"></p>
+<p align="center"><b>Numbering Cells<br>
+</b><img border="0" src="images/iupcells_num.jpg" width="486" height="511"></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupcanvas.html">IupCanvas</a></p>
+
+</body>
+
+</html>

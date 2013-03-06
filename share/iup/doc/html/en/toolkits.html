@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Other Toolkits</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">Comparing IUP with Other Interface Toolkits</h2>
+<h3>Why to still maintain IUP if today we have so many other popular toolkits?</h3>
+<p>This is a question we always ask to ourselves before going on for another year.</p>
+<p>To answer that question we must first define the characteristics of the 
+reference toolkit, list the available 
+  toolkits and compare them with the reference and with IUP.</p>
+<p>We would like a toolkit that has:</p>
+<ul>
+  <li><b>Portability.</b> That provides an abstraction for Graphical User Interface in Windows, UNIX and Macintosh. 
+  Also called Cross platform and multi-platform GUI toolikit.</li>
+  <li><b>Free License and Open Source.</b> This means that we can also produce commercial applications. The pure GPL 
+    license can not be used but the LGPL can but must contain an exception stating that derived works in binary form may 
+    be distributed on the user's own terms. This is a solution that satisfies those who wish to produce GPL'ed software 
+    and also those producing proprietary software. Many libraries are distributed with this license combination.</li>
+  <li><b>Small and Simple API. </b>This is rare. Many libraries assume that an Interface toolkit is also a synonymous 
+    of a system abstraction and accumulate thousands of extra functions that are not related to User Interface. At 
+    Tecgraf we like many small libraries instead of one big library. Almost all available toolkits today are in C++ 
+    only, so C applications are excluded, also this means a hundred classes to include and understand each member 
+    function. The use of attributes makes a lot of things more elegant and simpler to understand.</li>
+  <li><b>Native Look &amp; Feel</b>. Many toolkits draw their own controls. This gives an uniformity among systems, but 
+    also a disparity among the available applications in the same system. Native controls are also faster because they 
+    are drawn by the system. But the problem is what's &quot;native&quot; in UNIX? Some commercial applications in UNIX start 
+    using Motif as the &quot;native&quot; option. It was the official standard but because of license restrictions, before the 
+    OpenMotif event, the system became old and some good alternatives were developed, including GTK and Qt.</li>
+</ul>
+<h3>Toolkits</h3>
+<p>With these characteristics in mind we select some of the available toolkits:</p>
+<table align="center">
+  <tr>
+    <th>Name</th>
+    <th>License</th>
+    <th>Last Update</th>
+    <th>Version</th>
+    <th>Language</th>
+    <th>Platforms</th>
+    <th>Controls</th>
+    <th>Team</th>
+    <th>Comments</th>
+  </tr>
+  <tr>
+    <td>
+    <p align="center" style="text-align:center"><a href="http://www.fox-toolkit.org/">FOX</a></td>
+    <td>LGPL*</td>
+    <td>1997-2011/09</td>
+    <td>1.6.44</td>
+    <td>
+    <o:p>C++</o:p></td>
+    <td>Win, X</td>
+    <td>
+    <o:p>own</o:p></td>
+    <td>3</td>
+    <td>great look, license restrictions</td>
+  </tr>
+  <tr>
+    <td>
+    <p align="center" style="text-align:center"><a href="http://www.fltk.org/">FLTK</a></td>
+    <td>LGPL*</td>
+    <td>1998-2011/10</td>
+    <td>1.3.1</td>
+    <td>
+    <o:p>C++</o:p></td>
+    <td>Win, X, Mac</td>
+    <td>
+    <o:p>own</o:p></td>
+    <td>4</td>
+    <td>was from<o:p> Digital Domain. Easy to learn.</o:p></td>
+  </tr>
+  <tr>
+    <td>
+    <p align="center" style="text-align:center"><a href="http://www.gtk.org/">GTK+</a></td>
+    <td>LGPL*</td>
+    <td>1997-2011/07</td>
+    <td>3.0.12</td>
+    <td>
+    <o:p>C</o:p></td>
+    <td>Win, X, Mac</td>
+    <td>
+    <o:p>own</o:p></td>
+    <td>12</td>
+    <td>target for<o:p> X-Windows, basis of GNOME, Windows is apart, Mac using X</o:p></td>
+  </tr>
+  <tr>
+    <td>
+    <p align="center" style="text-align:center"><a href="http://www.trolltech.com">Qt</a></td>
+    <td>GPL</td>
+    <td>1994-2011/09</td>
+    <td>4.7.4</td>
+    <td>
+    <o:p>C++</o:p></td>
+    <td>Win, X, Mac</td>
+    <td>own</td>
+    <td>(many)</td>
+    <td>Is free for Non Commercial, a dual-licensing model, basis of KDE, Emulates the native look and feel</td>
+  </tr>
+  <tr>
+    <td>
+    <p align="center" style="text-align:center"><a href="http://www.wxwidgets.org/">wxWidgets</a></td>
+    <td>LGPL*</td>
+    <td>1992-2011/07</td>
+    <td>2.9.2</td>
+    <td>
+    <o:p>C++</o:p></td>
+    <td>Win, X, Mac</td>
+    <td>native</td>
+    <td>6</td>
+    <td>X can use Motif or GTK, has many contributors</td>
+  </tr>
+  <tr>
+    <td>
+    <p align="center"><a href="http://www.tecgraf.puc-rio.br/iup/">IUP</a></td>
+    <td>MIT</td>
+    <td>1994-2011/04</td>
+    <td>3.5</td>
+    <td>C</td>
+    <td>Win, X, Mac</td>
+    <td>native</td>
+    <td>2</td>
+    <td>
+    <o:p>X can use Motif or GTK, Mac using X</o:p></td>
+  </tr>
+</table>
+<p>Table Last Update: November 2011</p>
+<p>More toolkits can be found here:
+  <a ADD_DATE="851377089" href="http://www.atai.org/guitool/" LAST_MODIFIED="851377011" LAST_VISIT="857454078">The GUI Toolkit, Framework Page</a> 
+and <a href="http://en.wikipedia.org/wiki/List_of_widget_toolkits">List of 
+widget toolkits</a>.<br>
+  Interesting articles can be found here: </p>
+<ul>
+	<li><a href="http://freshmeat.net/articles/view/928/">GUI Toolkits for The X 
+  Window System</a> </li>
+	<li><a href="http://www.informit.com/articles/article.aspx?p=787261">Bad UI 
+	of the Week: The Cross-Platform User Interface</a> </li>
+	<li>
+	<a href="http://www.cs.up.ac.za/cs/jbishop/Homepage/Pubs/Pubs2006/Bishop-ICSE-2006.pdf">
+	Multi-platform User Interface Construction – a Challenge for Software 
+	Engineering-in-the-Small</a> </li>
+</ul>
+<h3>Discussion</h3>
+<p>FOX has a great look but the license can be restrictive in some cases. </p>
+<p>FLTK promises a new version with a better look and new features, but there 
+are no concrete release dates. The FLTK 
+  documentation also does not help.</p>
+<p>GTK+ can be used as a replacement for Motif, but not as a fully &quot;portable&quot; toolkit since 
+it is was originally target for 
+  X-Windows. Nowadays GTK+ 2 is a great free C toolkit. But some predefined dialogs could be the native ones, like the 
+  File Selection, specially in Windows. The Windows port has a look and feel 
+very similar to the 
+Windows native look and feel, but it is different from a native application. A MacOS X port without using X-Windows is on 
+the way, but very slowly. Unfortunately the Windows port has been orphan for 
+some time and there is no release of new binaries for a while.</p>
+<p>Qt had several license limitations, but since mid 2009 a new license model 
+take place and it became more attractive. It is a very stable and powerful 
+toolkit. </p>
+<p>wxWidgets is an excellent choice because of the native controls and its 
+portability.</p>
+<p>It is hard to compare IUP with wxWidgets and Qt since they are much more than an 
+User Interface Toolkit. They are 
+  complete development platforms that include several secondary libraries not related to User Interface. In IUP we focus 
+  only in Graphical User Interface.</p>
+<h3>Developing IUP</h3>
+<p>IUP has a C API, only has functions for Graphical User Interface, and uses &quot;Native Controls&quot; in Windows, Motif and 
+  GTK+. These are the major differences between IUP and other toolkits. Because of that IUP is small, fast and very 
+  powerful.</p>
+<p>We have a small but very active team and we have many Tecgraf and foreign applications that today use IUP, 
+  collaborating for its evolution. Our objective is to surpass the Tecgraf needs, keeping backward compatibility and 
+  improving the internal code.</p>
+<p>IUP does not have a wide localization feature, it only includes support for messages in English and Portuguese. And 
+  it does not have support for Unicode characters.</p>
+<p><b>Why Not Mac? </b>The first Mac driver was developed for MacOS 9 and had several memory limitations so it was 
+  abandoned. With Mac OS X we have the opportunity to do something better. Today IUP runs on Mac OS X using X11 
+with 
+  Motif or GTK. We plan for the future to build a native driver, but it is not a 
+Tecgraf priority.</p>
+<p><b>Why Still Motif? </b>Motif is very important for non Linux systems, some Tecgraf applications run on 
+old AIX, SGI 
+  and Sun systems, that only have Motif installed and we can not force the installation of other toolkits like GTK. 
+</p>
+<p><em>.. &quot;Make it Reusable, Make it Simple, Make it Small&quot; ...</em></p>
+
+</body>
+
+</html>

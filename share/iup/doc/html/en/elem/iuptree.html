@@ -1,0 +1,488 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupTree</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	text-align: center;
+}
+.style3 {
+	background-color: #CEE7FF;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupTree <span class="style1">(since 3.0)</span></h2>
+<p>Creates a tree containing nodes of branches or leaves. Both branches and 
+leaves can have an associated text and image.</p>
+<p>The branches can be expanded or collapsed. When a branch is expanded, its immediate children are visible, and when it 
+  is collapsed they are hidden.</p>
+<p>The leaves can generate an &quot;executed&quot; or &quot;renamed&quot; actions, branches can only generate 
+a &quot;renamed&quot; action. 
+</p>
+<p>The focus node is the node with the focus rectangle, marked nodes have their background inverted. 
+</p>
+<h3><a name="Creation">Creation</a></h3>
+<div>
+  <pre>Ihandle* IupTree(<strong>void</strong>); [in C] 
+iup.tree{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+tree() [in LED]</pre>
+</div>
+
+  
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<h4><a href="iuptree_attrib.html#global">General</a></h4>
+<p class="info"><strong>ADDEXPANDED<br>
+BGCOLOR<br>
+CANFOCUS<br>
+COUNT</strong> <strong><br>
+EXPAND<br>
+FGCOLOR<br>
+HIDELINES</strong> <strong><br>
+HIDEBUTTONS</strong> <strong><br>
+INDENTATION</strong> <strong><br>
+RASTERSIZE<br>
+SHOWDRAGDROP<br>
+SHOWTOGGLE<br>
+SPACING<br>
+TOPITEM</strong></p>
+<h4><a href="iuptree_attrib.html#nodes">Nodes</a></h4>
+<p class="info"><strong>CHILDCOUNT<br>
+    FGCOLOR<br>
+    DEPTH<br>
+    KIND<br>
+    PARENT<br>
+    STATE<br>
+    TITLE<br>
+TITLEFONT<br>
+USERDATA</strong></p>
+<h4><a href="iuptree_attrib.html#images">Images</a></h4>
+<p class="info"><strong>IMAGELEAF<br>
+    IMAGEBRANCHCOLLAPSED<br>
+    IMAGEBRANCHEXPANDED<br>
+    IMAGEid<br>
+    IMAGEEXPANDEDid</strong></p>
+<h4><a href="iuptree_attrib.html#focus">Focus Node</a></h4>
+<p class="info"><strong>VALUE</strong></p>
+<h4><a href="iuptree_attrib.html#marks">Marks</a></h4>
+<p class="info"><strong>MARK<br>
+MARKED<br>
+    MARKEDMODE<br>
+MARKSTART<br>
+TOGGLEVALUE</strong></p>
+<h4><a href="iuptree_attrib.html#tree">Hierarchy</a></h4>
+<p class="info"><strong>ADDLEAF<br>
+    ADDBRANCH<br>
+COPYNODE<br>
+DELNODE<br>
+</strong>
+<b>EXPANDALL<br>
+    </b><strong>INSERTLEAF<br>
+    INSERTBRANCH<br>
+MOVENODE</strong></p>
+<h4><a href="iuptree_attrib.html#edit">Editing</a></h4>
+<p class="info"><b>RENAMENODE<br>
+</b> <strong>RENAMECARET<br>
+    RENAMESELECTION<br>
+    SHOWRENAME</strong></p>
+<h3><a href="iuptree_cb.html">Callbacks</a></h3>
+<p><strong>SELECTION_CB</strong>:
+  Action generated when an node is selected or 
+  deselected.<br>
+<strong>MULTISELECTION_CB</strong>:
+  Action generated when multiple nodes are 
+  selected with the mouse and the shift key pressed.<br>
+<strong>BRANCHOPEN_CB</strong>:
+  Action generated when a branch is expanded. <br>
+<strong>BRANCHCLOSE_CB</strong>:
+  Action generated when a branch is collapsed.<br>
+<strong>EXECUTELEAF_CB</strong>:
+  Action generated when a leaf is to be 
+  executed. <br>
+<strong>SHOWRENAME_CB</strong>:
+  Action generated before a node is renamed. 
+  <br>
+<strong>RENAME_CB</strong>:
+  Action generated after a node is renamed. <br>
+<strong>DRAGDROP_CB</strong>:
+  Action generated when an internal drag &amp; drop is 
+  executed. <br>
+<strong>NODEREMOVED_CB</strong>:
+  Action generated when a node is about to be removed.<br>
+<strong>RIGHTCLICK_CB</strong>:
+  Action generated when the right mouse button 
+  is pressed over a node.<br>
+<strong>TOGGLEVALUE_CB</strong>:
+  Action generated when the toggle&#39;s state was changed. The callback also 
+receives the new toggle&#39;s state.</p>
+<p>
+<a href="../attrib/iup_dragdrop.html">Drag &amp; Drop</a> attributes and 
+callbacks are supported, but
+SHOWDRAGDROP must be set no No.</p>
+
+
+
+<h3><a name="Notes">Notes</a></h3>
+<h4>Hierarchy</h4>
+<p>Branches can contain other branches or leaves. When ADDROOT=Yes the tree has 
+initially one branch, 
+  the <b>root</b>. 
+The first node always has id=0 and depth=0. The tree nodes have a sequential identification number 
+  (id), starting by the first, with id=0, and increases for each node independent 
+from the node depth. The following picture illustrates the numbering of the nodes 
+in a tree.</p>
+<p class="style2">
+<img src="images/iuptree.png"><br>
+<strong>Tree nodes and Ids</strong></p>
+<p>Since you have to add each node the creation of this tree can be done in 
+several ways because the action attributes ADD* and INSERT* use an existent node 
+to position the new node. The following pseudo code initializes the tree from top to 
+bottom sequentially:</p>
+<pre>
+TITLE0 = "Figures"
+  ADDLEAF0 = "Other"    // Use the previous node as reference
+  ADDBRANCH1 = "triangle"
+    ADDLEAF2 = "equilateral"
+    ADDLEAF3 = "isoceles"
+    ADDLEAF4 = "scalenus"
+  INSERTBRANCH2 = "parallelogram"  // Use the previous node at the same depth as reference
+    ADDLEAF6 = "square"
+    ADDLEAF7 = "diamond"
+  INSERTBRANCH6 = "2D"
+  INSERTBRANCH9 = "3D"
+</pre>
+<p>The following pseudo code initializes the tree from bottom to top 
+sequentially (except for branches), and also uses the focus node:</p>
+<pre>
+VALUE = 0  // Set the focus node at the first (default for a new element)
+TITLE = "Figures"
+ADDBRANCH = "3D"
+ADDBRANCH = "2D"
+ADDBRANCH = "parallelogram"
+ADDLEAF1 = "diamond"
+ADDLEAF1 = "square"
+ADDBRANCH = "triangle"
+ADDLEAF1 = "scalene"
+ADDLEAF1 = "isosceles"
+ADDLEAF1 = "equilateral"
+ADDLEAF = "Other"
+</pre>
+<p>Notice that in both cases the initialization of the tree is highly dependent 
+on the order of the operations. Currently we can NOT guarantee the order before 
+mapping to the native system, so the initialization must be performed after the 
+tree is mapped.</p>
+<p>Scrollbars are automatically displayed if the tree is greater than its 
+display area.</p>
+<p>The first node added to an empty tree will always be the focus node.</p>
+<p>Branches may be added in IupLua using a Lua Table, see 
+<a href="#TreeAddNodes">iup.TreeAddNodes</a>.&nbsp; </p>
+<h4>Manipulation</h4>
+<p>Node insertion or removal is done by means 
+  of attributes. It is allowed to remove nodes and branches inside callbacks associated to opening or closing branches.
+  </p>
+<p>This means that the user may insert nodes and branches only when necessary 
+when the parent branch is opened, allowing the use of a larger IupTree without 
+too much overhead. Then when the parent branch is closed the subtree can be 
+removed. But the subtree must have at least 1 node so the branch can be opened 
+and closed, empty branches can NOT be opened.</p>
+<h4>User Data</h4>
+<p>The node id does not always correspond to the same 
+  node as the tree is modified. For example, an id=2 will always refer to the third node in the tree, 
+so if you add a node before the third node, the node with id=2 will now refer to 
+the new node, and the old node will now have id=3. For that 
+  reason, each node can store an user data pointer uniquely identifying the 
+node. To set or retrieve the user data of a node use the <strong>USERDATAid</strong> 
+attribute, or the <strong><a href="#Extra_Functions">Extra Functions</a></strong> 
+below to associate a user data to a node and to find a node given its user data.</p>
+<h4>Images</h4>
+<p>IupTree has three types of images: one associated to the leaf, one to the collapsed branch and 
+  the other to the expanded branch. Each image can be changed, both globally and individually.</p>
+<p>The predefined images used in IupTree can be obtained by means of function IupGetHandle. The names of the 
+  predefined images are: IMGLEAF, IMGCOLLAPSED, IMGEXPANDED, IMGBLANK (blank sheet of paper) and 
+  IMGPAPER (written sheet of paper). By default:</p>
+<pre>&quot;IMAGELEAF&quot; uses &quot;IMGLEAF&quot;
+&quot;IMAGEBRANCHCOLLAPSED&quot; uses &quot;IMGCOLLAPSED&quot;
+&quot;IMAGEBRANCHEXPANDED&quot; uses &quot;IMGEXPANDED&quot;</pre>
+<pre>&quot;IMGBLANK&quot; and &quot;IMGPAPER&quot; are designed for use as &quot;IMAGELEAF&quot;</pre>
+<h4>Simple Marking</h4>
+<p>Is the IupTree default operation mode (MARKMODE=SINGLE). In this mode only one node can 
+be selected.</p>
+<h4>Multiple Marking</h4>
+<p>IupTree allows marking several nodes simultaneously using the Shift and Control keys. To use 
+  multiple marking set MARKMODE=MULTIPLE. In GTK and Motif multiple nodes can 
+also be selected using a rubber band if SHOW_DRAGDROP=NO.</p>
+<p>When a user keeps the Control key pressed, 
+  the individual marking mode is used. This way, the focus node can be modified without changing the marked node. To 
+  reverse a node marking, the user simply has to press the space bar.</p>
+<p>When the user keeps the Shift key pressed, 
+  the block marking mode is used. This way, all nodes between the focus node and the initial node are marked, and all 
+  others are unmarked. The initial node is changed every time a node is marked without the Shift key being pressed. This 
+  happens when any movement is done without Shift or Control keys being pressed, or when the space bar is pressed together 
+  with Control.</p>
+<h4><a name="navigation">Navigation</a></h4>
+<p>Using the keyboard: </p>
+<ul>
+  <li><b>Arrow Up/Down</b>: Moves the focus node to the neighbor 
+    node, according to the arrow direction.</li>
+  <li><b>Home/End</b>: Moves the focus node to the first/last node.</li>
+  <li><b>Page Up/Page Down</b>: Moves the focus node to the node one visible page above/below the 
+    focus node.</li>
+  <li><b>Enter</b>: If the focus node is an expanded branch, it is collapsed; if it is a collapsed
+    branch, it is expanded; if it is a leaf, it is executed.</li>
+	<li><b>Ctrl+Arrow Up/Down</b>: Moves only the 
+	focus node.</li>
+  <li><b>Ctrl+Space</b>:&nbsp;Marks or unmark the node at focus.</li>
+	<li><strong>F2</strong>: Calls the rename callback or invoke the in place 
+	rename.</li>
+	<li><strong>Esc</strong>: cancels in place rename.</li>
+</ul>
+<p>In Motif when pressing Tab the focus goes to the next visible node, if there 
+are no next visible node then the next control in the dialog receives the focus. 
+In Windows and GTK the focus simply goes directly to the next control.</p>
+<p>Using the left mouse button: </p>
+<ul>
+  <li><b>Clicking a node</b>: Moves the focus node to the clicked node.</li>
+  <li><b>Clicking a (-/+) box</b>: Makes the branch to the right of the (-/+) 
+    box collapse/expand.</li>
+  <li><b>Double-clicking a node</b>: 
+	Moves the focus node to the clicked node. If the node is an expanded 
+    branch, it is collapsed; if it is a collapsed branch, it is expanded; if it is a leaf, it is executed. 
+  </li>
+  <li><b>Clicking twice a node</b>: Calls the rename callback 
+    or invoke the in place rename.</li>
+	<li><strong>Clicking and dragging a node</strong>: if SHOWDRAGDROP=Yes 
+	starts a drag. When mouse is released, the DRAGDROP_CB callback is called. 
+	If the callback does not exist or if it returns IUP_CONTINUE then the node is moved 
+	to the new position. If Ctrl is pressed then the node is copied instead of 
+	moved. In Motif drag is performed with the middle mouse 
+	button.</li>
+</ul>
+<h4>Removing a Node with &quot;Del&quot;</h4>
+<p>By default the Del key is not processed, but you can implement it using a 
+simple K_ANY callback:</p>
+<pre>int k_any(Ihandle* ih, int c)
+{
+  if (c == K_DEL) 
+   IupSetAttribute(ih,&quot;DELNODE&quot;,&quot;MARKED&quot;);
+  return IUP_CONTINUE;
+}</pre>
+<h3><a name="Extra_Functions">Extra Functions</a></h3>
+<p>IupTree has functions that allow associating a pointer (or a user defined id) to 
+  a node. In order to do that, you provide the id of the node and the pointer (userid); even 
+  if the node's id changes later on, the userid will still be associated with the given node. In IupLua, instead of a 
+  pointer the same functions are defined for table and userdata. These functions 
+use the <strong>USERDATAid</strong> attribute.</p>
+<hr>
+<pre>int IupTreeSetUserId(Ihandle *<strong>ih</strong>, int <strong>id</strong>, void *<strong>userid</strong>); [in C]
+iup.TreeSetUserId(<strong>ih: </strong>ihandle, <strong>id: </strong>number, <strong>userid: </strong>userdata/table) [in Lua]</pre>
+<p><strong>ih</strong>: Identifier of the interface element. <br>
+<strong>id</strong>:
+      Node identifier. <br>
+<strong>userid</strong>:
+      User pointer or Lua table to be associated with the node. 
+      Use NULL (nil) value to remove the association.</p>
+<p>Returns a non zero value if the node was found.</p>
+<p>Associates an userid with a given id. If the id of the node is changed, the 
+userid remains the same.</p>
+<p>Associations to Lua objects in Lua 5 are referenced in the Lua REGISTRY. So they can be retrieved later. This 
+      means also that the associated object will not be garbage collected until its reference is removed. Also, the user should not use the same table to reference different nodes (neither in the same nor across 
+      different trees.)</p>
+<p>It is similar of setting the <strong>USERDATAid</strong> attribute, but with 
+the additional feature of storing the Lua object in the registry.</p>
+<pre>void* IupTreeGetUserId(Ihandle *<strong>ih</strong>, int <strong>id</strong>); [in C] 
+iup.TreeGetUserId(<strong>ih: </strong>ihandle, <strong>id: </strong>number) -&gt; (<b>ret:</b> userdata/table) [in Lua]
+</pre>
+<p><strong>ih</strong>: Identifier of the interface element. <br>
+<strong>id</strong>:
+      Node identifier.</p>
+<p>Returns the pointer or Lua table associated to 
+      the node or NULL if none was associated. <strong>SetUserId</strong> must 
+have been called for the node with the given id.</p>
+<p>It is similar of retrieving the <strong>USERDATAid</strong> attribute, but 
+the Lua object is retrieved from the REGISTRY.</p>
+<pre>int IupTreeGetId(Ihandle *<strong>ih</strong>, void *<strong>userid</strong>); [in C] 
+iup.TreeGetId(<strong>ih: </strong>ihandle, <strong>userid: </strong>userdata/table) -&gt; (<b>ret:</b> number) [in Lua]
+</pre>
+<p><strong>ih</strong>: Identifier of the interface element. <br>
+<strong>userid</strong>:
+      Pointer or Lua table associated to the node.</p>
+<p>Returns the id of the node that has the userid on success or -1 
+      (nil) if not found. <strong>SetUserId</strong> must have been called with 
+the same userid.</p>
+<hr>
+<p>Here are some utilities exclusive for Lua.</p>
+
+
+
+<pre>iup.<a name="TreeAddNodes">TreeAddNodes</a>(<strong>ih: </strong>ihandle, <strong>tree: </strong>table, [<strong>id</strong>: number]) [in Lua]</pre>
+<p><strong>ih</strong>: Identifier of the interface element.<br>
+<strong>tree</strong>: table of nodes.<br>
+<strong>id</strong>: optional existing node. The default is the first (0).</p>
+<p>Initializes the tree using the given Lua table as values for the tree nodes 
+using <a href="iuptree_attrib.html#tree">ADDBRANCH</a> and ADDLEAF (so it also 
+must be done after map). For example:</p>
+<pre>tree_nodes = 
+{
+  branchname = &quot;Figures&quot;,
+  &quot;Other",
+  {
+    branchname = &quot;triangle&quot;,
+    state = &quot;COLLAPSED&quot;,
+    &quot;equilateral&quot;,
+    &quot;isoceles&quot;,
+    "scalenus",
+  },
+  {
+    branchname = &quot;parallelogram&quot;,
+    &quot;square&quot;,
+    { leafname = &quot;diamond&quot;, color = &quot;92 92 255&quot;, titlefont = &quot;Courier, 14&quot; },
+  },
+  { branchname = &quot;2D&quot; },
+  { branchname = &quot;3D&quot; },
+}
+
+tree = iup.tree{}
+dlg = iup.dialog{tree}
+
+dlg:map()
+
+iup.TreeAddNodes(tree, tree_nodes)
+
+dlg:show()</pre>
+<p>Inside a table <strong>branchname</strong> defines a branch and its title,
+<strong>leafname</strong> defines a leaf and its title. When a node inside a 
+branch is not a table then it is a leaf and only defines the leaf title. When
+<strong>leafname</strong> or <strong>branchname</strong> are used you can also 
+define other node attributes: <strong>color</strong>, <strong>state</strong>,
+<strong>titlefont</strong>, <strong>marked</strong>, <strong>image</strong> and
+<strong>imageexpanded</strong>; without specifying the node id. You can also use
+<strong>userid</strong> to associate an userdata or table just like in <strong>
+iup.TreeSetUserId</strong>. (since 3.0)</p>
+
+
+
+<pre>iup.TreeSetNodeAttributes(<strong>ih: </strong>ihandle, <strong>id</strong>: number, <strong>attrs: </strong>table) [in Lua]</pre>
+<p><strong>ih</strong>: Identifier of the interface element.<br>
+<strong>id</strong>: existing node.<br>
+<strong>tree</strong>: table of attributes.</p>
+<p>Sets a group of attributes stored in a table in the form attrs = {name = 
+value, ...}.</p>
+<font SIZE="3">
+
+
+
+<pre>iup.TreeSetAncestorsAttributes(<strong>ih: </strong>ihandle, <strong>id</strong>: number, <strong>attrs: </strong>table) [in Lua]</pre>
+<p><strong>ih</strong>: Identifier of the interface element.<br>
+<strong>id</strong>: existing node.<br>
+<strong>tree</strong>: table of attributes.</p>
+<p>Calls <strong>iup.TreeSetNodeAttributes</strong> for all ancestors of the 
+given node (not including the node).</p>
+
+
+
+<pre>iup.TreeSetDescentsAttributes(<strong>ih: </strong>ihandle, <strong>id</strong>: number, <strong>attrs: </strong>table) [in Lua]</pre>
+<p><strong>ih</strong>: Identifier of the interface element.<br>
+<strong>id</strong>: existing node.<br>
+<strong>tree</strong>: table of attributes.</p>
+<p>Calls <strong>iup.TreeSetNodeAttributes</strong> for all descendents of the 
+given node (not including the node).</p>
+</font>
+<h3>Utility Functions </h3>
+<p>These functions can be used to set and get attributes from the element:</p>
+<pre>void  IupSetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+void  IupStoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+char* IupGetAttribute<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+int   IupGetInt<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+float IupGetFloat<span class="style3">Id</span>(Ihandle *ih, const char* name, int id);
+void  IupSetfAttribute<span class="style3">Id</span>(Ihandle *ih, const char* name, int id, const char* format, ...);</pre>
+<p>They work just like the respective traditional set and get functions. But the attribute string is complemented with 
+  the id value. For ex:</p>
+<pre>IupSetAttributeId(ih, &quot;KIND&quot;, 30, value) == IupSetAttribute(ih, &quot;KIND30&quot;, value)
+IupSetAttributeId(ih, &quot;ADDLEAF&quot;, 10, value) == IupSetAttribute(ih, &quot;ADDLEAF10&quot;, value)</pre>
+<p>But these functions are faster than the traditional functions because they do 
+not need to parse the attribute name string and the application does not need to 
+concatenate the attribute name with the id.</p>
+<hr>
+<p>See also the <a href="../guide.html#IupTreeUtil">IupTreeUtil</a> 
+contributed by Sergio Maffra and Frederico Abraham. It 
+  is an utility wrapper in C++ for the <strong>IupTree</strong> with some limitations.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<div align="center">
+  
+<center>
+  
+<table style="border-collapse: collapse;" id="AutoNumber1" border="0" bordercolor="#111111" cellpadding="5" cellspacing="0">
+
+    <tbody>
+    <tr>
+
+      <th>Windows</th>
+
+    </tr>
+
+    <tr>
+
+      <td class="bg_winxp"><img src="images/iuptree_win.png" border="0"></td>
+
+    </tr>
+
+    <tr>
+
+      <th>Motif</th>
+
+    </tr>
+
+    <tr>
+
+      <td class="bg_mot"><img src="images/iuptree_mot.png" border="0"></td>
+
+    </tr>
+
+    <tr>
+
+      <th>GTK</th>
+
+    </tr>
+
+    <tr>
+
+      <td class="bg_gtk"><img src="images/iuptree_gtk.png" border="0"></td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+  </center>
+
+</div>
+
+
+</body>
+
+</html>

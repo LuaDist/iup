@@ -1,0 +1,70 @@
+#IupToggle Example in Led 
+#Creates 9 toggles: the first one has an image; the second has an image and is deactivated; the third is regular; the fourth has its foreground color changed; the fifth has its background color changed; the sixth has its foreground and background colors changed; the seventh is deactivated; the eight has its font changed; the ninth has its size changed.. 
+
+
+img_1 = image[1="255 255 255",2="0 192 0"](16,16,
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,2,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,2,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,2,2,2,2,2,2,2,2,2,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 )
+
+img_2 = image[1="255 255 255",2="0 192 0"](16,16,
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+  1,1,1,1,2,2,2,2,2,2,1,1,1,1,1,1,
+  1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,
+  1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,
+  1,1,1,2,2,2,2,2,2,2,2,2,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 )
+ 
+toggle1 = toggle[IMAGE=img_1]("toggle with image", toggle1cb )
+toggle2 = toggle[IMAGE=img_2,ACTIVE=NO]("deactivated toggle with image", toggle2cb )
+toggle3 = toggle("regular toggle", toggle3cb )
+toggle4 = toggle[FGCOLOR="0 0 255"]("toggle with blue foreground color", toggle4cb )
+toggle5 = toggle[BGCOLOR="255 0 0"]("toggle with red background color", toggle5cb )
+toggle6 = toggle[FGCOLOR="0 255 0",BGCOLOR="0 0 0"]("toggle with black backgrounf color and green foreground color", toggle6cb )
+toggle7 = toggle[ACTIVE=NO]("deactivated toggle", toggle7cb )
+toggle8 = toggle[FONT="COURIER_BOLD_14"]("toggle with Courier 14 Bold font", toggle8cb )
+toggle9 = toggle[SIZE="EIGHTHxEIGHTH"]("toggle with size EIGHTxEIGHT", toggle9cb )
+
+box = 
+  VBOX
+  (
+    toggle1,
+    toggle2,
+    toggle3,
+    toggle4,
+    toggle5,
+    toggle6,
+    toggle7,
+    toggle8,
+    toggle9
+  )
+
+toggles = radio[EXPAND=YES]( box )
+
+dialog_name = DIALOG[TITLE="IupToggle", RESIZE=NO, MARGIN=5x5,GAP=5]
+(
+  toggles
+)

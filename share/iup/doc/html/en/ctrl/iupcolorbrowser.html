@@ -1,0 +1,163 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupColorBrowser</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupColorBrowser</h2>
+<p>Creates an element for selecting a color. The selection is done using a 
+cylindrical projection of the RGB cube. The transformation defines a coordinate 
+color system called HSI, that is still the RGB color space but using cylindrical 
+coordinates.</p>
+<p><strong>H</strong> is for Hue, and it is the angle around the RGB cube diagonal starting at 
+red (RGB=255 0 0).</p>
+<p><strong>S</strong> is for Saturation, and it is the normal distance from the 
+color to the diagonal, normalized by its maximum value at the specified Hue. 
+This also defines a point at the diagonal used to define <strong>I</strong>.</p>
+<p><strong>I</strong> is for Intensity, and it is the distance from the point defined at the 
+diagonal to black (RGB=0 0 0). <strong>I</strong> can also be seen as the 
+projection of the color vector onto the diagonal. But <strong>I</strong> is not 
+linear, see <a href="#Notes">Notes</a> below.</p>
+<p>This is an additional control that depends on the CD library. It is included 
+in the 
+<a href="../iupcontrols.html">Controls Library</a>.</p>
+<p>For a dialog that simply returns the selected color, you can use function 
+<a href="../dlg/iupgetcolor.html">IupGetColor</a> or
+<a href="../dlg/iupcolordlg.html">IupColorDlg</a>.</p>
+<h3><a name="Creation">Creation</a></h3>
+<div>
+  <pre>Ihandle* IupColorBrowser(void); [in C]
+iup.colorbrowser{} (<strong>elem</strong>: ihandle) [in Lua]
+colorbrowser() [in LED]</pre>
+</div>
+<div>
+<p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+</div>
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><a href="../attrib/iup_expand.html">EXPAND</a>: The default is &quot;NO&quot;.
+  </p>
+<p> <a href="../attrib/iup_rastersize.html">RASTERSIZE</a> (<font SIZE="3">non inheritable</font>): the 
+initial size is &quot;181x181&quot;. Set to NULL to allow the automatic layout 
+use smaller values.</p>
+
+
+<p><b>RGB</b> (<font SIZE="3">non inheritable</font>): the color selected in the control, in the 
+&quot;r g b&quot; format; 
+r, g and b are integers ranging from 0 to 255. Default: &quot;255 0 0&quot;.</p>
+<p><strong>HSI</strong> (<font SIZE="3">non inheritable</font>): the color selected in the control, in the "h s i" 
+format; h, s and i are floating point numbers ranging from 0-360, 0-1 and 0-1 
+respectively. </p>
+
+
+<blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>,
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_x.html">X</a>, 
+<a href="../attrib/iup_y.html">Y</a>, <a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_size.html">SIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><b>CHANGE_CB</b>: Called when the user releases the left mouse button over the control, defining the 
+  selected color.</p>
+<pre>int change(Ihandle *<strong>ih</strong>, unsigned char <b>r, </b>unsigned char <b>g, </b>unsigned char <b>b</b>); [in C]
+<strong>elem</strong>:change_cb(<b>r</b>: number, <b>g</b>: number, <b>b</b>: number) -&gt; (<b>ret</b>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>r, g, b</strong>: color value.</p>
+
+<p><b>DRAG_CB</b>: Called several times while the color is being changed by dragging the mouse over the 
+  control.</p>
+<pre>int drag(Ihandle *<strong>ih</strong>, unsigned char <b>r, </b>unsigned char <b>g, </b>unsigned char <b>b</b>); [in C]
+<strong>elem</strong>:drag_cb(<b>r</b>: number, <b>g</b>: number, <b>b</b>: number) -&gt; (<b>ret</b>: number) [in Lua]</pre>
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.<br>
+    <strong>r, g, b</strong>: color value.</p>
+
+
+<p><strong>VALUECHANGED_CB</strong>:
+  Called after the value was interactively changed by the user. It is called 
+whenever a <b>CHANGE_CB </b>or a<strong> </strong><b>DRAG_CB </b>would also be called, 
+it is just&nbsp; called after them. (since 3.0)</p>
+
+<pre>int function(Ihandle *<strong>ih</strong>); [in C]<br><strong>elem</strong>:valuechanged_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+
+    
+<p class="info"><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+
+<blockquote>
+  <hr>
+</blockquote>
+
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>,  
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>, 
+<a href="../call/iup_getfocus_cb.html">GETFOCUS_CB</a>,
+  <a href="../call/iup_killfocus_cb.html">KILLFOCUS_CB</a>, 
+<a href="../call/iup_enterwindow_cb.html">ENTERWINDOW_CB</a>,
+  <a href="../call/iup_leavewindow_cb.html">LEAVEWINDOW_CB</a>, 
+<a href="../call/iup_k_any.html">K_ANY</a>,
+  <a href="../call/iup_help_cb.html">HELP_CB</a>: All common callbacks are 
+supported.</p>
+<h3><a name="Notes">Notes</a></h3>
+<p>When the control has the focus the keyboard can be used to change the color 
+value. Use the arrow keys to move the cursor inside the SI triangle, and use 
+Home(0), PageUp, PageDn and End(180) keys to move the cursor inside the Hue 
+circle.</p>
+<p>The Hue in the HSI coordinate system defines a plane that it is a triangle in 
+the RGB cube. But the maximum saturation in this triangle is different for each 
+Hue because of the geometry of the cube. In ColorBrowser this point is fixed 
+at the center of the <strong>I</strong> axis. So the <strong>I</strong> axis is not completely linear, it is 
+linear in two parts, one from 0 to 0.5, and another from 0.5 to 1.0. Although 
+the selected values are linear specified you can notice that when Hue is changed 
+the gray scale also changes, visually compacting values above or below the 
+I=0.5 line according to the selected Hue.</p>
+<p>This is the same HSI specified in the
+<a target="_top" href="http://www.tecgraf.puc-rio.br/im">IM</a> toolkit, except 
+for the non linearity of <strong>I</strong>. This non linearity were introduced 
+so a simple triangle could be used to represent the SI plane.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p class="style1"><img src="images/iupcolorbrowser.png"></p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p> 
+<a href="../dlg/iupgetcolor.html">IupGetColor</a>,
+<a href="../dlg/iupcolordlg.html">IupColorDlg</a>.</p>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>System Guide</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../style.css">
+<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+</style>
+</head>
+<body>
+
+<h2 align="center" style="text-align:center">System Guide</h2>
+<h3><a name="init">Initialization</a></h3>
+<p>Before running any of IUP’s functions, function <b>IupOpen</b> must be run to 
+initialize the toolkit.</p>
+<p>After running the last IUP function, function <b>IupClose</b> must be run so 
+that the toolkit can free internal memory and close the interface system.</p>
+<p>Executing these functions in this order is crucial for the correct 
+functioning of the toolkit.</p>
+<p>Between calls to the IupOpen and IupClose functions, the application can 
+create dialogs and display them. </p>
+<p>Therefore, usually an application employing IUP will have a code in the main 
+function similar to the following:</p>
+<pre>int main(int argc, char* argv[])
+{
+  if (IupOpen(&amp;argc, &amp;argv) == IUP_ERROR)
+  {
+    fprintf(stderr, &quot;Error Opening IUP.&quot;)
+    return;
+  }
+
+  ...
+  IupMainLoop();
+  IupClose();
+
+  return 0;
+}</pre>
+<h3><a name="led">LED</a></h3>
+<p>LED is a dialog-specification language whose purpose is not to be a complete 
+programming language, but rather to make dialog specification simpler than in C. </p>
+<p>In LED, attributes and expressions follow this form:</p>
+<p>elem = element[<b>attribute1=value1,attribute2=value2,</b>...](...expression...)</p>
+<p>The names of the elements must not contain the “iup” prefix. Attribute values 
+are always interpreted as strings, but they need to be in quotes (“…”) only when 
+they include spaces. The “IUP_” prefix must not be added to the names of the 
+attributes and predefined values. Expressions contain parameters for creating 
+the element.<u1:p>
+</u1:p>
+<u1:p></u1:p>
+</p>
+<p>In LED there is no distinction between upper and lower case, except for 
+attribute names.<u1:p>
+</u1:p>
+<u1:p></u1:p>
+</p>
+<p>Though the LED files are text files, there is no way to interpret a text in 
+memory – there is only the IupLoad function, which loads a LED file and creates 
+the IUP elements defined in it. Naturally, the same file cannot be loaded more 
+than once, because the elements would be created again. This file interpretation 
+does not map the elements to the native system.</p>
+<p>The LED files are dynamically loaded and must be sent together with the 
+application’s executable. However, this often becomes an inconvenience. To deal 
+with it, there is the 
+<a href="ledc.html">LEDC</a> compiler that creates a C module from the LED 
+contents. </p>
+<p>To simply view a LED file objects use the LED viewer application, see <b>
+IupView</b> in the applications included in the distribution.
+  <u1:p>Available at the <a href="download.html">Download</a>.</u1:p></p>
+
+</body>
+
+</html>

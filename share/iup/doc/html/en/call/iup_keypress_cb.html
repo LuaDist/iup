@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>KEYPRESS_CB</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+
+<h2>KEYPRESS_CB</h2>
+<p>Action generated when a key is pressed or 
+  released. If the key is pressed and held several calls will occur. It is called after the callback 
+<b>K_ANY</b> is processed.</p>
+<h3>Callback</h3>
+<pre>int function(Ihandle *<strong>ih</strong>, int <strong>c, </strong>int <strong>press</strong>); [in C]
+<strong>elem</strong>:keypress_cb(<strong>c</strong>, <strong>press</strong>: number) -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+<p><strong>ih</strong>:
+  identifier of the element that activated the event.<br>
+<strong>c</strong>:
+  identifier of typed key. Please refer to the
+  <a href="../attrib/key.html">Keyboard Codes</a>
+  table for a list of possible values.<br>
+<strong>press</strong>: 1 is the user 
+  pressed the key or 0 otherwise.</p>
+<p><u>Returns</u>: If IUP_IGNORE is returned the key is ignored by the system. IUP_CLOSE will be processed.</p>
+<h3>Affects</h3>
+<p><a href="../elem/iupcanvas.html">IupCanvas</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGetFloat</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>IupGetFloat</h2>
+<p>Returns the value of an interface element attribute 
+  as a floating point number.</p>
+<h3>
+Parameters/Return</h3>
+<pre>float IupGetFloat(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>)  [in C]
+float IupGetFloatId(Ihandle *<strong>ih</strong>, const char *<strong>name</strong>, int <strong>id</strong>)  [in C]
+float IupGetFloatId2(Ihandle* <strong>ih</strong>, const char* <strong>name</strong>, int <strong>lin</strong>, int <strong>col</strong>)  [in C]
+[There is no equivalent in Lua]</pre>
+<p><b>ih</b>: Identifier of the interface element.<br>
+<b>name</b>: name of the attribute.<br>
+<strong>id, lin, col</strong>: used when the attribute has additional ids.</p>
+<p><span class="style1">Returns:</span> a float corresponding 
+  to the attribute&#8217;s value.</p>
+<h3>See Also</h3>
+<p><a href="iupgetattribute.html">IupGetAttribute</a>, <a href="iupgetint.html">IupGetInt</a>.</p>
+
+</body>
+
+</html>

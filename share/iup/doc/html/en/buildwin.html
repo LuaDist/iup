@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Guide</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<h1 align="center" style="text-align:center">Building Lua, IM, CD and IUP in 
+Windows</h1>
+<p>This is a guide to build all the Lua, IM, CD and IUP libraries in Windows. 
+Notice that you may not use all the libraries, although this guide will show you 
+how to build all of 
+them. You may then choose to build specific libraries.</p>
+<h3>System Configuration</h3>
+<p>The Tecmake configuration files are for the GNU <strong>make</strong> tool. 
+So first the GNU <strong>make</strong> must be installed, and it must be in the 
+PATH before other makes. <a href="http://www.mingw.org/">MingW</a>,
+<a href="http://www.cygwin.com/">Cygwin</a> and
+<a href="http://gnuwin32.sourceforge.net/">GnuWin32</a> distributions have GNU
+<strong>make</strong> binaries ready for download. Some utilities are also 
+necessary, specially to build the dependencies file: <strong>mkdir</strong>,
+<strong>rm </strong>(both in CoreUtils)<strong> [</strong>, <strong>which, sed</strong> and <strong>g++]</strong>. If 
+you don't need the dependencies or some other options just ignore them. Also 
+some features will work best if <strong>bash</strong> is installed.</p>
+<p>When installing <strong>Cygwin</strong> unmark all pre-selected items. This is easier to do in 
+&quot;Partial&quot; mode view. Then select only &quot;<strong>make</strong>&quot;, it will 
+automatically select other packages that &quot;<strong>make</strong>&quot; depends on. And 
+select the <strong>mkdir</strong>, <strong>rm</strong>, <strong>which, sed</strong> 
+and <strong>g++</strong> packages. Change PATH in &quot;Control Panel/System/Advanced/Environment 
+Variables&quot; and add &quot;<a href="file:///c:/cygwin/bin;">c:\cygwin\bin;</a>&quot;.</p>
+<p>When installing <strong>MingW</strong> mark C Compiler, C++ Compiler, MSYS 
+Basic System, and MinGW Developer Toolkit. Change PATH in &quot;Control 
+Panel/System/Advanced/Environment Variables&quot; and add &quot;<a href="file:///C:/mingw4/msys/1.0/bin;C:/mingw4/bin;">C:\mingw4\msys\1.0\bin;C:\mingw4\bin;</a>&quot;.</p>
+<p>For <strong>GnuWin32</strong> it is faster to manually download and install the selected tools 
+packages. But it does not include a compiler and does not include bash.</p>
+<p><a href="http://win-bash.sourceforge.net/">Win-Bash</a> contains a &quot;<a href="http://sourceforge.net/projects/win-bash/files/shell-complete/latest/shell.w32-ix86.zip/download">Shell-Complete</a>&quot; 
+distribution and can also be used. It contains all the tools and bash. It does not include a compiler.</p>
+<p>Then install the compiler of your choice, among the following supported 
+compilers:</p>
+<font face="verdana, helvetica" size="3">
+<ul>
+	<li><a href="http://www.microsoft.com/express/vc/">Visual C++</a> or just 
+	the <a href="http://www.microsoft.com/download/en/details.aspx?id=8279">Windows SDK</a>.</li>
+	<li>Gnu gcc (<a href="http://www.mingw.org/">MingW</a> or
+	<a href="http://www.cygwin.com/">Cygwin</a>)</li>
+	<li><a href="http://www.openwatcom.org/">Open Watcom C++</a></li>
+	<li><a href="https://downloads.embarcadero.com/free/c_builder">Embarcadero 
+	C++ (ex-Borland)</a></li>
+</ul>
+</font>
+<h3>Tecmake Configuration</h3>
+<p>Since the compilers in Windows are not in the path, you must set a few 
+environment variables to configure their location. For example:</p>
+<pre>VC10=c:/progra~2/micros~1/vc               (C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC)
+VC10SDK=c:/progra~1/micros~1/Windows\v7.1  (C:\Program Files\Microsoft SDKs\Windows\v7.1)
+                                  (if you only installed the Windows SDK with its own compiler set, 
+                                   then set both variables to the same location)
+                                  (VC9,VC9SDK,VC8 and PLATSDK can also be set)
+MINGW4=c:/mingw
+GCC4=c:/cygwin
+OWC1=d:/lng/owc1
+BC6=d:/lng/bc6</pre>
+<p>If you installed the Visual Studio compiler set, then to use it in the 
+command line run the &quot;Visual Studio Command Prompt&quot; item in the &quot;Microsoft 
+Visual Studio 2010\Visual Studio Tools&quot; start menu.</p>
+<p>In Windows, there are several compilers that build for the same platform. So 
+when using the Makefiles included in the distributions of those libraries you 
+must first specify which compiler you want to use. To do that set the TEC_UNAME 
+environment variable. This variable will also define if you are going to build 
+static or dynamic (DLL) libraries, and if building 32 or 64 bits binaries. For 
+example:</p>
+<pre>TEC_UNAME=vc10      (Visual C++ 10, static library, 32bits)
+TEC_UNAME=dll10     (Visual C++ 10, dynamic library, 32bits) 
+TEC_UNAME=vc10_64   (Visual C++ 10, static library, 64bits)
+TEC_UNAME=dll10_64  (Visual C++ 10, dynamic library, 64bits) 
+TEC_UNAME=mingw4    (MingW gcc 4, static library, 32bits)
+TEC_UNAME=dllw4     (MingW gcc 4, dynamic library, 32bits)
+TEC_UNAME=gcc4      (Cygwin Win32 gcc 4, static library, 32bits)
+TEC_UNAME=cygw17    (Cygwin Posix gcc 4, both static and dynamic libraries, 32bits)
+TEC_UNAME=owc1      (Open Watcom C++ 1, static library, 32bits)
+TEC_UNAME=bc6       (Embarcadero C++ 6, static library, 32bits) </pre>
+<p>Here is an example for MingW:</p>
+<pre>Download MingW installation tool:
+  <a href="http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/">http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/</a>
+Install MingW:
+  Select C and C++ Compiles, MSYS Basic System, and MinGW Developer Toolkit.
+Configure Environment (Minimum):
+  set path=C:\mingw4\msys\1.0\bin;C:\mingw4\bin;C:\Windows\system32;C:\Windows;
+  set MINGW4=c:/mingw4
+  set TEC_UNAME=mingw4
+Start Building:
+  make</pre>
+<h3>Source Download</h3>
+<p>Download the &quot;xxx-X.X_Sources.tar.gz&quot; package from the &quot;<strong>Docs and Sources</strong>&quot; 
+directory for the version you want to build. Here are links for the <strong>Files</strong> section 
+in <strong>Source Forge</strong>:</p>
+<p>Lua - <a href="http://sourceforge.net/projects/luabinaries/files/">
+http://sourceforge.net/projects/luabinaries/files/</a><br>
+IM - <a href="http://sourceforge.net/projects/imtoolkit/files/">
+http://sourceforge.net/projects/imtoolkit/files/</a><br>
+CD - <a href="http://sourceforge.net/projects/canvasdraw/files/">
+http://sourceforge.net/projects/canvasdraw/files/</a><br>
+IUP - <a href="http://sourceforge.net/projects/iup/files/">
+http://sourceforge.net/projects/iup/files/</a></p>
+<h3>Unpacking</h3>
+<p>To extract the files use the tar command at a common directory, for example:</p>
+<pre>mkdir -p xxxx
+cd xxxx
+
+[copy the downloaded files, to the xxxx directory]
+
+tar -xpvzf lua5_1_4_Sources.tar.gz    [optional, see note below]
+tar -xpvzf im-3.6.2_Sources.tar.gz
+tar -xpvzf cd-5.4_Sources.tar.gz
+tar -xpvzf iup-3.2_Sources.tar.gz
+</pre>
+<p>If you are going to build all the libraries, the makefiles and projects 
+expect the following directory tree:</p>
+<pre>/xxxx/
+      lua5.1/
+      im/
+      cd/
+      iup/</pre>
+
+<p>If you unpack all the source packages in the same directory, that structure will 
+be automatically created.</p>
+<h3>Building</h3>
+
+<p>As a general rule (excluding system dependencies): IUP depends on CD and IM, 
+and CD depends on IM. So start by build IM, then CD, then IUP.</p>
+<p>To start building go the the &quot;<strong>src</strong>&quot; directory and type &quot;<strong>make</strong>&quot;. In IUP there are 
+many &quot;srcxxx&quot; folders, so go to the up directory &quot;iup&quot; and type 
+&quot;<strong>make</strong>&quot; that all the 
+sub folders will be built. For example:</p>
+<pre>cd im/src
+make
+cd ../..
+
+cd cd/src
+make
+cd ../..
+
+cd iup
+make
+cd ..</pre>
+<p><strong>TIP</strong>: Instead of building all the libraries, try building only the libraries you 
+are going to use. The provided makefiles will build all the libraries, but take 
+a look inside them and you will figure out how to build just one library.</p>
+<h3>Pre-compiled Binaries</h3>
+<p>Instead of building from sources you can try to use the pre-compiled 
+binaries. Usually they were build in the latest Windows versions for 32 and 64 
+bits. The packages are located in the &quot;<strong>Windows Libraries</strong>&quot; 
+directory 
+under the <strong>Files</strong> section 
+in <strong>Source Forge</strong>, with <strong>&quot;xxx-X.X_Win32_xx_lib</strong>.<strong>tar.gz&quot;</strong> 
+and <strong>&quot;xxx-X.X_Win64_xx_lib.tar.gz&quot;</strong> names.</p>
+<p>Do not extract different pre-compiled binaries in the same directory, create a 
+subdirectory for each one, for example:</p>
+<pre>mkdir im
+cd im
+tar -xpvzf ../im-3.6.2_Win32_vc10_lib.tar.gz
+cd ..
+
+mkdir cd
+cd cd
+tar -xpvzf ../cd-5.4_Win32_vc10_lib.tar.gz
+cd ..
+
+mkdir iup
+cd iup
+tar -xpvzf ../iup-3.2_Win32_vc10_lib.tar.gz
+cd ..
+</pre>
+<h3><a name="usage">Usage</a></h3>
+<p>For makefiles use:</p>
+<pre>1) &quot;-I/xxxx/iup/include&quot; to find include files
+2) &quot;-L/xxxx/iup/lib/vc10&quot; to find library files
+3) &quot;-liup&quot; to specify the library files</pre>
+<p>For IDEs the configuration involves the same 3 steps above, but each IDE has a different dialog. The IUP toolkit 
+  has a Guide for some IDEs:</p>
+<p class="info">
+    <strong>Borland C++ BuilderX</strong> - 
+<a href="http://www.tecgraf.puc-rio.br/iup/en/ide_guide/cppbx.html">http://www.tecgraf.puc-rio.br/iup/en/ide_guide/cppbx.html</a><br>
+<strong>Code Blocks</strong> - <a href="http://www.tecgraf.puc-rio.br/iup/en/ide_guide/codeblocks.html">http://www.tecgraf.puc-rio.br/iup/en/ide_guide/codeblocks.html</a><br>
+    <strong>Dev-C++</strong> - <a href="http://www.tecgraf.puc-rio.br/iup/en/ide_guide/dev-cpp.html">http://www.tecgraf.puc-rio.br/iup/en/ide_guide/dev-cpp.html</a>
+<br>
+<strong>Eclipse for C++</strong> -
+<a href="http://www.tecgraf.puc-rio.br/iup/en/ide_guide/eclipse.html">
+http://www.tecgraf.puc-rio.br/iup/en/ide_guide/eclipse.html</a>
+<br>
+<strong>Microsoft Visual C++</strong> (Visual Studio 2003) - 
+<a href="http://www.tecgraf.puc-rio.br/iup/en/ide_guide/msvc.html">http://www.tecgraf.puc-rio.br/iup/en/ide_guide/msvc.html</a><br>
+    <strong>Microsoft Visual C++</strong> (Visual Studio 2005) - 
+<a href="http://www.tecgraf.puc-rio.br/iup/en/ide_guide/msvc8.html">http://www.tecgraf.puc-rio.br/iup/en/ide_guide/msvc8.html</a><br>
+<strong>Open Watcom</strong> - <a href="http://www.tecgraf.puc-rio.br/iup/en/ide_guide/owc.html">http://www.tecgraf.puc-rio.br/iup/en/ide_guide/owc.html</a>
+</p>
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+#IupText Example in LED 
+#Defines a IupText with text “Example” and blue foreground color. It calls action key_act
+
+text[VALUE="Example",FGCOLOR="0 0 255"](key_act)

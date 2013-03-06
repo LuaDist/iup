@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>iupMask</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+.style2 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+<h2>iupMask<span class="style2"> (deprecated since 3.0, will be removed in a future version)</span></h2>
+<p class="style1"><strong>Since IUP 3.0, IupText and 
+IupMatrix have several MASK* attributes to support masks. See the </strong> <a href="../attrib/iup_mask.html">
+<strong>MASK</strong></a><strong> attribute for more information.</strong></p>
+<p>Functions to associate an input mask to a
+  <strong>IupText</strong> or a <strong>IupMatrix</strong> element.</p>
+<p>These functions are included in the 
+<a href="../iupcontrols.html">Controls Library</a>.</p>
+<h3>Functions</h3>
+<pre>int <strong>iupMaskSet</strong>(Ihandle *<strong>ih</strong>, const char *<strong>mask</strong>, int <strong>autofill</strong>, int <strong>casei</strong>);
+int <strong>iupMaskMatSet</strong>(Ihandle *<strong>ih</strong>, const char *<strong>mask</strong>, int <strong>autofill</strong>, int <strong>casei</strong>, int <strong>lin</strong>, int <strong>col</strong>);</pre>
+<p>These functions are responsible for setting 
+    the mask to be used.</p>
+<p><strong>ih</strong>:
+    Ihandle of IupText or IupMatrix<br>
+<strong>mask</strong>:
+    Mask to be used<br>
+<strong>autofill</strong>:
+    When 1, turns the auto-fill mode on. In 
+    auto-fill mode, whenever possible, literal characters will be automatically added to the field
+<span class="style1">(NOT supported since 3.0)</span><br>
+<strong>casei</strong>:
+    When 1, uppercase or lowercase characters 
+    will be treated indistinctly&nbsp; <strong><br>
+    lin, col</strong>:
+    Line and column numbers in the matrix
+    </p>
+<p>They return 1 if the mask is set, or 0 if there is an error (e.g., invalid mask). 
+</p>
+<pre>int <strong>iupMaskSetInt</strong>(Ihandle *<strong>ih</strong>, int <strong>autofill</strong>, int <strong>min</strong>, int <strong>max</strong>);
+int <strong>iupMaskSetFloat</strong>(Ihandle *<strong>ih</strong>, int <strong>autofill</strong>, float <strong>min</strong>, float <strong>max</strong>);
+int <strong>iupMaskMatSetInt</strong>(Ihandle *<strong>ih</strong>, int <strong>autofill</strong>, int <strong>min</strong>, int   <strong>max</strong>, int <strong>lin</strong>, int <strong>col</strong>);
+int <strong>iupMaskMatSetFloat</strong>(Ihandle *<strong>ih</strong>, int <strong>autofill</strong>, float <strong>min</strong>, float <strong>max</strong>, int <strong>lin</strong>, int <strong>col</strong>);</pre>
+<p>These functions set a mask that defines a 
+    limit to a number. Works only for integers and floats. Limitations: since the validation process is performed key by 
+    key, the user cannot type intermediate numbers (even inside the limit) if they are not following the mask rules.</p>
+<p><strong>ih</strong>:
+    Ihandle of IupText or IupMatrix<br>
+<strong>autofill</strong>:
+    When 1, turns the auto-fill mode on. In 
+    auto-fill mode, whenever possible, literal characters will be automatically added to the field
+<span class="style1">(NOT supported since 3.0)</span><br>
+<strong>min</strong>:
+    Minimum value accepted in the field<br>
+<strong>max</strong>:
+    Maximum value accepted in the field<br>
+<strong>lin, col</strong>:
+    Line and column numbers in the matrix</p>
+<p>They always return 
+    1.
+    </p>
+<pre>int <strong>iupMaskRemove</strong>(Ihandle *<strong>ih</strong>);
+int <strong>iupMaskMatRemove</strong>(Ihandle *<strong>ih</strong>, int <strong>lin</strong>, int <strong>col</strong>);</pre>
+<p>These functions are responsible for removing 
+    the mask from the control.</p>
+<p><strong>ih</strong>:
+    Ihandle of IupText or IupMatrix<br>
+<strong>lin, col</strong>:
+    Line and column numbers in the matrix
+    </p>
+<pre>int <strong>iupMaskCheck</strong> (Ihandle *<strong>ih</strong>);
+int <strong>iupMaskMatCheck</strong>(Ihandle *<strong>ih</strong>, int <strong>lin</strong>, int <strong>col</strong>);</pre>
+<p>These functions verify if what was typed by 
+    the user is valid for the defined mask. For IupMatrix they work only when in 
+edition mode.</p>
+<p><strong>ih</strong>:
+    Ihandle of IupText or IupMatrix<br>
+<strong>lin, col</strong>:
+    Line and column numbers in the matrix</p>
+<p>They return 1 if the text satisfies the mask, or 0 otherwise. </p>
+<pre>int <strong>iupMaskGet</strong>(Ihandle *<strong>ih</strong>, char **<strong>val</strong>);
+int <strong>iupMaskGetFloat</strong>(Ihandle *<strong>ih</strong>, float *<strong>fval</strong>);
+int <strong>iupMaskGetInt</strong>(Ihandle *<strong>ih</strong>, int *<strong>ival</strong>);
+int <strong>iupMaskMatGet</strong>(Ihandle *<strong>ih</strong>, char **<strong>val</strong>, int <strong>lin</strong>, int <strong>col</strong>);
+int <strong>iupMaskMatGetFloat</strong>(Ihandle *<strong>ih</strong>, float  *<strong>fval</strong>, int <strong>lin</strong>, int <strong>col</strong>);
+int <strong>iupMaskMatGetDouble</strong>(Ihandle *<strong>ih</strong>, double *<strong>dval</strong>, int <strong>lin</strong>, int <strong>col</strong>);
+int <strong>iupMaskMatGetInt</strong>(Ihandle *<strong>ih</strong>, int *<strong>ival</strong>, int lin, int col);</pre>
+<p>These functions check if the text 
+    satisfies the mask, and they retrieve the fields value in 
+    only one call. For IupMatrix they work only when in edition mode.</p>
+<p><strong>ih</strong>:
+    Ihandle of IupText or IupMatrix<br>
+<strong>val, fval, ival</strong>:
+    Pointers used to complete the return value<br>
+<strong>lin, col</strong>:
+    Line and column numbers in the matrix.</p>
+<p>They return 1 if the text satisfies the mask, or 0 otherwise. </p>
+<h3><a name="Notes">Notes</a></h3>
+<p>To make the use of masks simpler, the 
+  following predefined masks were created:<br>
+</p>
+<p class="info">IUPMASK_FLOAT -
+    Float number<br>
+    IUPMASK_UFLOAT -
+    Unsigned Float number<br>
+    IUPMASK_EFLOAT -
+    Float number with exponential notation<br>
+    IUPMASK_INT -
+    Integer number<br>
+    IUPMASK_UINT -
+    Unsigned Integer number<br>
+</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+</body>
+
+</html>

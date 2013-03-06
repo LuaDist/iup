@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupGauge</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	color: #FF0000;
+}
+</style>
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupGauge <span class="style1">(Deprecated since 3.0, will be removed in a 
+future version)</span></h2>
+<p class="style2"><span class="style2"><strong>Use the </strong></span>
+<a href="../elem/iupprogressbar.html"><strong>IupProgressBar</strong></a><strong> 
+control of the main library.</strong></p>
+<p>Creates a Gauge control. Shows a percent 
+  value that can be updated to simulate a progression. It inherits from
+  <a href="../elem/iupcanvas.html">IupCanvas</a>.</p>
+<p>This is an additional control that depends on the CD library. It is included 
+in the 
+<a href="../iupcontrols.html">Controls Library</a>.</p>
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupGauge(void); [in C]
+iup.gauge{} -&gt; (<strong>elem</strong>: ihandle) [in Lua]
+gauge() [in LED] </pre>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>DASHED</strong>: Changes the style of the gauge for a dashed pattern. 
+  Default is &quot;NO&quot;.</p>
+<p><a href="../attrib/iup_fgcolor.html">FGCOLOR</a>: Controls the gauge and text color. The default is
+  &quot;64 96 192&quot;.</p>
+<p><strong>MAX </strong>(<font SIZE="3">non inheritable</font>):
+  Contains the maximum value. Default 
+  is &quot;1&quot;.</p>
+
+
+<p><strong>MIN </strong>(<font SIZE="3">non inheritable</font>):
+  Contains the minimum value. Default 
+  is &quot;0&quot;.</p>
+  <p><b>PADDING</b>: internal margin. Works just like the MARGIN attribute of 
+  the <strong>IupHbox</strong> and <strong>IupVbox</strong> containers, but uses a different name to avoid 
+  inheritance problems. Default value: &quot;0x0&quot;. 
+	(since 3.0)</p>
+
+
+  <p><strong>SHOW_TEXT</strong>:
+  Indicates if the text inside the Gauge is to 
+  be shown or not. If the gauge is dashed the text is never shown. Possible values: &quot;YES&quot; or &quot;NO&quot;. Default: 
+    &quot;YES&quot;.</p>
+<p><a href="../attrib/iup_size.html">SIZE</a> (<font SIZE="3">non inheritable</font>): The 
+  initial size is &quot;120x14&quot;. Set to NULL to allow the automatic layout 
+use smaller values.</p>
+<p><strong>TEXT </strong>(<font SIZE="3">non inheritable</font>):
+  Contains a text to be shown inside the 
+  Gauge when SHOW_TEXT=YES. If it is NULL, the 
+  percentage calculated from VALUE will be used. If the gauge is dashed the text is never shown.</p>
+<p><strong>VALUE </strong>(<font SIZE="3">non inheritable</font>):
+  Contains a number between &quot;MIN&quot; and &quot;MAX&quot;, controlling the 
+current position.</p>
+<blockquote>
+  <hr>
+</blockquote>
+<p>
+<a href="../attrib/iup_active.html">ACTIVE</a>,
+<a href="../attrib/iup_bgcolor.html">BGCOLOR</a>,
+    <a href="../attrib/iup_expand.html">EXPAND</a>, 
+<a href="../attrib/iup_font.html">FONT</a>, <a href="../attrib/iup_screenposition.html">SCREENPOSITION</a>, 
+<a href="../attrib/iup_position.html">
+POSITION</a>, <a href="../attrib/iup_minsize.html">
+MINSIZE</a>, <a href="../attrib/iup_maxsize.html">
+MAXSIZE</a>,
+    <a href="../attrib/iup_wid.html">WID</a>, <a href="../attrib/iup_tip.html">TIP</a>, 
+<a href="../attrib/iup_rastersize.html">RASTERSIZE</a>,
+    <a href="../attrib/iup_zorder.html">ZORDER</a>, <a href="../attrib/iup_visible.html">VISIBLE</a>: 
+also accepted.&nbsp;</p>
+<h3><a name="Callbacks">Callbacks</a></h3>
+<p><a href="../call/iup_map_cb.html">MAP_CB</a>, 
+<a href="../call/iup_unmap_cb.html">UNMAP_CB</a>: common callbacks are 
+supported.</p>
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p align="center">
+<img src="images/iupgauge.png" alt="iupgauge.png"><br>
+The Two Types of Gauge</p>
+<h3><a name="SeeAlso">See Also</a></h3>
+
+<p><a href="../elem/iupcanvas.html">IupCanvas</a></p>
+
+</body>
+
+</html>

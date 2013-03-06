@@ -1,0 +1,32 @@
+#IupZbox Example in LED 
+#An application of a zbox could be a program requesting several entries from the user according to a previous selection. In this example, a list of possible layouts is presented, and according to the selected option the dialog below the list is changed. 
+
+layout1 = FILL()
+
+layout2 = FRAME [TITLE="Layout 2"](LABEL [FGCOLOR="255 0 0"]("Warning: Type 2 Layout"))
+
+layout3 = FRAME [TITLE="Layout 3"]
+					(
+						HBOX (BUTTON ("Button1",null), TEXT[VALUE=12345](null), TEXT[VALUE="Exemplo Zbox"](null))
+					)
+
+layout4 = FRAME [TITLE="Layout 4"](BUTTON [SIZE=70]("Button2",null))
+
+z = ZBOX [ALIGNMENT=ACENTER](layout3, layout1, layout2, layout4)
+
+dialogoz = DIALOG[TITLE=IupZbox]
+(
+	VBOX
+	(
+		FRAME [TITLE="Change Layout"]
+		(
+			HBOX
+			(
+				FILL(),
+				LIST [1=layout1,2=layout2,3=layout3,4=layout4](troca_layout),
+				FILL()
+			)
+		),
+		z
+	)
+)

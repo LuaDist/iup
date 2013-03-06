@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+  <title>Migration Guide</title>
+
+
+  <link rel="stylesheet" type="text/css" href="../style.css">
+
+  <style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+.style2 {
+	font-size: medium;
+}
+</style>
+</head>
+
+
+<body>
+
+<h2 align="center">Migration Guide<br>
+
+IUP 2.x to IUP 3.x</h2>
+
+<h3>Critical Changes (from 2.x to 2.7/3.0)</h3>
+
+<p>All critical changes were packed in version 2.7 so you can
+prepare your code to work with both 2.7 and 3.0 versions. And you will
+be able to alternate between both versions without having to add
+"ifdef"s to your code. The differences in the "iup.h" header file from
+2.7 to 3.0 should&nbsp;contains only the new features introduced in
+3.0.</p>
+
+<p><b style="color: rgb(255, 0, 0);">IupOpen</b><span style="color: rgb(255, 0, 0);"> function declaration now
+include command line arguments used by X-Windows and GTK</span> -
+The most important change is the signature of the <span style="font-weight: bold;">IupOpen</span> function. It
+was changed to include the main function arguments. The GTK and Motif
+toolkits use them. In IUP prior to version 2.7 they were ignored for
+Motif. In Windows they are always ignored. If for some reason you do
+not have access to the main function arguments you can use NULL in
+<strong>IupOpen</strong>. As a general rule the change is:</p>
+
+<pre>IupOpen()&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp; IupOpen(&amp;argc,&amp;argv)</pre>
+
+<p>You will also have to search&amp;replace a few things in
+your source code:<span style="color: rgb(255, 0, 0);"></span></p>
+
+<pre>the attribute<span style="">&nbsp;</span>"WIN_SAVEBITS"<span style="">&nbsp; &gt;&gt;</span><span style="">&nbsp; </span>"SAVEUNDER"<br>the function IupGetType<span style="">&nbsp;</span> &gt;&gt;<span style="">&nbsp; </span>IupGetClassName</pre>
+
+<p class="MsoPlainText"><span style="">&nbsp;Although
+the following were considered obsolete in IUP 2.6, their backward
+compatibility code were removed in 2.7. So you may have to&nbsp;</span>search&amp;replace
+for:</p>
+
+<pre><span style=""></span>the attributes <span style=""></span>"MOTIF_FONT" and "WINFONT"<span style="">&nbsp; </span>&gt;&gt;<span style="">&nbsp; </span>"FONT"<br><span style="">the v</span>alue of the attribute "CURSOR" =<span style="">&nbsp; </span>"IUP"<span style="">&nbsp;&nbsp; &gt;</span>&gt;<span style="">&nbsp;&nbsp;&nbsp;</span>"HELP"<span style="">&nbsp;&nbsp;&nbsp; <br></span>the definition IUP_ANYWHERE<span style="">&nbsp;&nbsp;&gt;</span>&gt;<span style="">&nbsp;&nbsp; </span>IUP_CURRENT<br>the constructor IupColor<span style="">&nbsp;</span>(removed) <span style="">&nbsp;&gt;&gt;</span><span style="">&nbsp; </span>use the color value</pre>
+
+<p><span style="color: rgb(255, 0, 0);">The "cdiup"
+and "cdluaiup" libraries moved from CD to IUP under the name "iupcd"
+and "iupluacd" </span>- Also you will have to change your
+makefile or IDE project because we changed some library names to solve
+the cross dependencies between IUP, CD and IM libraries.</p>
+
+<h3>Strategic Changes (from 2.7 to 3.x)</h3>
+
+<p>All the changes described here are backward compatible with
+2.7. So after doing them you will still be able to go back to 2.7.</p>
+<p>Some global attributes like DEFAULTFONT, *BGCOLOR and *FGCOOR are now 
+obtained from the system instead of hardcoded, this affects mainly applications 
+in Windows were the hardcoded DEFAULTFONT was &quot;Tahoma, 8&quot; and the user changed the default font or used the Large Fonts option. If your 
+dialog is too big in the new font then you can simply set DEFAULTFONTSIZE 
+to force a 
+smaller value. </p>
+
+<p><span style="color: rgb(255, 0, 0);">The
+following headers were deprecated iupcb.h, iupcells.h, iupcolorbar.h,
+iupdial.h, iupgauge.h, iupmatrix.h, iuptree.h</span> - they now
+simply include iupcontrols.h. You can replace them by iupcontrols.h in
+your code.</p>
+
+<p><span style="color: rgb(255, 0, 0);">The
+following headers were deprecated iupcbox.h, iupsbox.h, iupgetparam.h,
+iupspin.h, iuptabs.h, iupval.h</span> -&nbsp;they now simply
+include iup.h. You can remove them from your code.</p>
+
+<p><span style="color: rgb(255, 0, 0);">The ACTION
+callback in </span><strong style="color: rgb(255, 0, 0);">IupText</strong><span style="color: rgb(255, 0, 0);">/</span><span style="font-weight: bold; color: rgb(255, 0, 0);">IupMultiline</span><span style="color: rgb(255, 0, 0);"> now does NOT process
+extended keys anymore</span> - the callback is called only if the
+text is edited, and key=0 if it is not a valid character. In 2.x the
+key parameter were used for some navigation keys, but now is used only
+for keys associated with characters. This is the most impacting change
+from 2.7 to 3.0, because some functionality in your application could
+stop working. Use the K_ANY or K_* callbacks instead to process
+navigation keys.</p>
+
+<p><span style="color: rgb(255, 0, 0);">The Natural
+Size of </span><strong style="color: rgb(255, 0, 0);">IupText</strong><span style="color: rgb(255, 0, 0);">/</span><span style="font-weight: bold; color: rgb(255, 0, 0);">IupMultiline</span><span style="color: rgb(255, 0, 0);"> does not uses the text
+contents anymore</span> - to control the Natural Size use the
+SIZE/RASTERSIZE attributes, or the VISIBLECOLUMNS/VISIBLELINES
+attributes, or the EXPAND attribute.&nbsp;This will avoid the
+automatic resize of the <span style="font-weight: bold;">IupText/IupMultiline</span>
+if its content is changed by the user and the size of the dialog is
+changed so the layout is recalculated.</p>
+
+<p>Now in <span style="font-weight: bold;">IupCanvas</span>
+the scrollbar parameters X/YMIN, X/YMAX and X/YLINE are updated only
+when DX/Y are updated. POSX/Y&nbsp;will only update the position of
+the scrollbar. In version 2.x was necessary to set POSX/Y to update
+those parameters.</p>
+
+<p>The BGCOLOR attribute is now ignored in <strong>IupLabel</strong>,
+<strong>IupFrame</strong>, <strong>IupToggle</strong>
+(for the text background) and <strong>IupVal</strong>.
+They will use the background color of the native parent. <strong>IupFrame</strong> 
+can has a color background when not using TITLE, and BGCOLOR is set before map.</p>
+<p><span class="style1">The <strong>IupItem</strong> in GTK must have its VALUE 
+attribute defined (ON or OFF) before mapping</span> - so it can have the check 
+mark, or define HIDEMARK=NO. If not done the item will not be checkable.</p>
+    <p>
+        The new <strong>IupTabs</strong> does not supports the inactive tab feedback. So the tabs will be
+        always active, although its children will be sucessfully disabled. The return value
+        of the TABCHANGE_CB callback is not processed anymore.<span class="style1"> The most impacting feature is the TABORIENTATION attribute 
+that has limited support in the native controls.</span></p>
+
+<p>In <strong>IupMatrix</strong> the selection 
+is made only using the mouse, pressing a key will NOT clear the selection 
+anymore. You can still do that setting MARKED=NULL in the K_ANY callback.</p>
+
+<p><span class="style1">In <strong>IupTree</strong> DEPTH is now a read-only attribute, 
+use the INSERT* attributes to properly add nodes.</span> <span class="style1">
+The SELECTION_CB and MULTISELECTION_CB callbacks now ignore their return value. 
+Now you can only add nodes to the tree after it has been mapped to hte native 
+system.
+</span>NAMEid attribute renamed to TITLE, old attribute still works but will be 
+	removed in future versions.</p>
+
+<h3>Deprecated Controls <span class="style2">(will be removed in a future 
+version)</span> </h3>
+
+<p>The <strong>IupGauge</strong> was superseded by <strong>IupProgressBar</strong>. 
+The new control does NOT supports the display of a text inside the progress bar 
+area. If you use the text in the <strong>IupGauge</strong> you will have to add 
+a label on top or bottom of the progress bar to obtain a similar result. A less 
+critical change is the DASHED attribute which has limited support in the <strong>
+IupProgressBar</strong>.</p>
+
+</body>
+</html>

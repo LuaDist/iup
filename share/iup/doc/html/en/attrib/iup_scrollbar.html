@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>SCROLLBAR</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	font-size: large;
+}
+.style2 {
+	color: #FF0000;
+}
+.style3 {
+	color: #008000;
+}
+</style>
+</head>
+<body>
+
+<h2>SCROLLBAR<span class="style1"> (creation only) </span> </h2>
+<p>Associates a horizontal and/or vertical scrollbar to the element.</p>
+<h3>Value</h3>
+<p>&quot;VERTICAL&quot;, &quot;HORIZONTAL&quot;, &quot;YES&quot; (both) or
+  &quot;NO&quot; (none).</p>
+<p>Default: &quot;NO&quot;</p>
+<h3>Notes</h3>
+<p>The 
+  scrollbar allows you to create a virtual space associated to the element. In 
+  the image below, such space is marked in <span class="style2"><strong>red</strong></span>, 
+  as well as the attributes that affect the composition of this space. In 
+<span class="style3"><strong>green</strong></span> you can see how these attributes are 
+  reflected on the scrollbar.</p>
+<p align="center">
+<img src="images/scrollbar.gif" alt="images/scrollbar.gif (2113 bytes)" border="2" hspace="2" vspace="2"></p>
+<p>Hence you can clearly deduce that POSX is limited to XMIN and
+  XMAX-DX, or&nbsp; <strong>XMIN&lt;=POSX&lt;=XMAX-DX</strong>. When the virtual space has the same size as the canvas, DX equals XMAX-XMIN, 
+ 
+the scrollbar can be automatically hidden. See the attribute XAUTOHIDE.</p>
+<p>
+The same is valid for YMIN, YMAX, DY and POSY. But remember that the Y axis is 
+oriented from top to bottom in IUP. So if you want to consider YMIN and YMAX as 
+bottom-up oriented, then the actual YPOS must be obtained using <strong>
+YMAX-DY-POSY</strong>.</p>
+<p>
+Important: the LINE*, *MAX and *MIN are only updated in the scrollbar when the 
+respective D* is updated.</p>
+<p>
+If you have to change the properties of the scrollbar (XMIN, XMAX and DX) but 
+you want to keep the thumb still (if possible) in the same relative position, 
+then you have to also recalculate its position (POSX) using the old position as 
+reference to the new one. For example, you can convert it to a 0-1 interval and 
+then scale to the new limits:</p>
+<pre>old_posx_relative = (old_posx - old_xmin)/(old_xmax - old_xmin)
+posx = (xmax - xmin)*old_posx_relative + xmin</pre>
+<p>
+<strong>IupList</strong> and <strong>IupMultiline</strong> scrollbars are 
+automatically managed and do NOT have the POS, MIN, MAX and D attributes.</p>
+<h3>Affects</h3>
+<p><a href="../elem/iuplist.html">IupList</a>,
+<a href="../elem/iupmultiline.html">IupMultiline</a>, <a href="../elem/iupcanvas.html">IupCanvas</a>, <a href="iup_posx.html">POSX</a>,
+<a href="iup_xmin.html">XMIN</a>, <a href="iup_xmax.html">XMAX</a>,
+<a href="iup_dx.html">DX</a>, <a href="../elem/iupcanvas.html#XAUTOHIDE">XAUTOHIDE</a>, <a href="iup_posy.html">POSY</a>,
+<a href="iup_ymin.html">YMIN</a>, <a href="iup_ymax.html">YMAX</a>,
+<a href="iup_dy.html">DY</a>, <a href="../elem/iupcanvas.html#YAUTOHIDE">YAUTOHIDE</a>.</p>
+
+</body>
+
+</html>

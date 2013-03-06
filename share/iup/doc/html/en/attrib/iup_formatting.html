@@ -1,0 +1,162 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>FONT</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style9 {
+	font-size: large;
+}
+</style>
+</head>
+<body>
+
+<h2>FORMATTING<span class="style9"> [Windows and GTK Only] (non inheritable) (since 3.0)</span></h2>
+<p>When enabled allow the use of text formatting attributes. In GTK is always 
+enabled, but only when MULTILINE=YES. Default: NO.</p>
+<h3>Value</h3>
+<p>Can be: YES or NO. Default: NO.</p>
+<h3>Affects</h3>
+<p><a href="../elem/iuptext.html">IupText</a></p>
+
+<h3>Auxiliary Attributes</h3>
+<h4>ADDFORMATTAG [write only] (non inheritable) </h4>
+<p>Name of a format tag element to be added to the <b>IupText</b>. The name is 
+associated in C using <a href="../func/iupsethandle.html">IupSetHandle</a>. The 
+name association must be done before setting the attribute. It will set the 
+ADDFORMATTAG_HANDLE with the associated handle.</p>
+<h4>ADDFORMATTAG_HANDLE [write only] (non inheritable) </h4>
+<p>Handle of a format tag element to be added to the <b>IupText</b>. The tag 
+element will be automatically destroyed when the <b>IupText</b> is mapped. If 
+the <b>IupText</b> is already mapped, the format tag is immediately destroyed 
+when the attribute is set. The format tag can NOT be reused.</p>
+<h4>REMOVEFORMATTING [write only] (non inheritable) </h4>
+<p>Removes the formatting of the current selection if Yes or NULL, and from all 
+text if ALL is used.</p>
+<h3>Format Tag</h3>
+<p>The format tag element is a simple <a href="../elem/iupuser.html">IupUser</a> 
+element with some known attributes that will be interpreted when the tag is 
+updated in the native system. </p>
+<p>The formatting depends on the existing text, so if VALUE attribute is set, 
+all formatting is lost. You must set it again for the new text.</p>
+<p>If the FONT attribute of the <b>IupText</b> is set then it will affect the 
+format of all characters in the text.</p>
+<p>The default values can not be dynamically changed.</p>
+<h4>General Format Tag Attributes</h4>
+<p><b>BULK</b>: flag that means this tag is composed by several tags as its 
+children. Used to optimize format tag modifications. Default: NO. (since 3.3)</p>
+<p><strong>CLEANOUT</strong>: when BULK=Yes is used to clear all the formatting 
+at start. Default: NO. (since 3.3)</p>
+<p><b>SELECTION/</b><strong>SELECTIONPOS</strong>: same as the <strong>IupText</strong>
+<a href="../elem/iuptext.html#SELECTION">SELECTION/SELECTIONPOS</a> attributes. If not defined 
+the <b>IupText</b> attribute will be used. If the <b>IupText</b> attribute is 
+also not defined then the current position will receive the format, so new text 
+inserted or typed will be formatted with the tag (this is not working in GTK). Different tags that use the same selection 
+interval are combined. Setting these attributes here will not change the current 
+setting in <strong>IupText</strong> (since 3.3).</p>
+<p><b>UNITS</b> [Windows Only]: By default all distance units are integers in 
+pixels, but in Windows you can also specify integer units in TWIPs (one twip is 
+1/1440 of an inch). Can be TWIP or PIXELS. Default: PIXELS.</p>
+<h4>Paragraph Format Tag Attributes</h4>
+<p><b>ALIGNMENT</b>: Can be JUSTIFY, RIGHT, CENTER and LEFT. Default: LEFT.</p>
+<p><b>INDENT</b>: paragraph indentation, the distance between the margin and the 
+paragraph. In Windows the right indentation, and the indentation of the second 
+and subsequent lines (relative to the indentation of the first line) can be 
+independently set using the <b>INDENTRIGHT</b> and <b>INDENTOFFSET</b> 
+attributes, but only when <b>INDENT</b> is set.</p>
+<p><b>LINESPACING</b>: the distance between lines of the same paragraph. In 
+Windows, the values SINGLE, ONEHALF and DOUBLE can be used.</p>
+<p><b>NUMBERING</b> [Windows Only]: Can be BULLET (bullet symbol), ARABIC 
+(arabic numbers - 1,2,3...), LCLETTER (lowercase letters - a,b,c...), UCLETTER 
+(uppercase letters - A,B,C...), LCROMAN (lowercase Roman numerals - 
+i,ii,iii...), UCROMAN (uppercase Roman numerals - I,II,III...) and NONE. 
+Default: NONE.</p>
+<p><b>NUMBERINGSTYLE</b> [Windows Only]: Can be RIGHTPARENTESES &quot;a)&quot;, PARENTESES 
+&quot;(a)&quot;, PERIOD &quot;a.&quot;, NONUMBER (it will skip the numbering or bullet for the item) 
+and NONE &quot;&quot;. Default: NONE.</p>
+<p><b>NUMBERINGTAB</b> [Windows Only]: Minimum distance from a paragraph 
+numbering or bullet to the paragraph text.</p>
+<p><b>SPACEAFTER</b>: distance left empty above the paragraph.</p>
+<p><b>SPACEBEFORE</b>: distance left empty below the paragraph.</p>
+<p><b>TABSARRAY</b>: a sequence of tab positions and alignment up to 32 tabs. It 
+uses the format:&quot;pos align pos align pos align...&quot;. Position is the distance 
+relative to the left margin and alignment can be LEFT, CENTER, RIGHT and 
+DECIMAL. In GTK only LEFT is currently supported. When DECIMAL alignment is 
+used, the text is aligned according to a decimal point or period in the text, it 
+is normally used to align numbers.</p>
+<h4>Character Format Tag Attributes</h4>
+<p><b>BGCOLOR</b>: string containing a color in the format &quot;rrr ggg bbb&quot; for the 
+background of the text.</p>
+<p><b>DISABLED</b> [Windows Only]: Can be YES or NO. Default NO. Set the visual 
+appearance to disabled.</p>
+<p><b>FGCOLOR</b>: string containing a color in the format &quot;rrr ggg bbb&quot; for the 
+text.</p>
+<p><b>FONTSCALE</b>: a size scale relative to the selected or current size. 
+Values greatter than 1 will increase the font. Values smaller than 1 will shirnk 
+the font. Default: 1.0. The following values are also accpeted: &quot;XX-SMALL&quot; 
+(0.58), &quot;X-SMALL&quot; (0.64), &quot;SMALL&quot; (0.83), &quot;MEDIUM&quot; (1.0), &quot;LARGE&quot; (1.2), 
+&quot;X-LARGE&quot; (1.44), &quot;XX-LARGE&quot; (1.73).</p>
+<p><b>FONTFACE</b>: the face name of the font.</p>
+<p><b>FONTSIZE</b>: the size of the font in pixels or points. Pixel size uses 
+negative values.</p>
+<p><b>ITALIC</b>: Can be YES or NO. Default NO.</p>
+<p><b>LANGUAGE</b> [GTK Only]: A text with a description of the text language. 
+The same value can be used in the &quot;SYSTEMLANGUAGE&quot; global attribute.</p>
+<p><b>RISE</b>: the distance, positive or negative from the base line. Can also 
+use the values SUPERSCRIPT and SUBSCRIPT, but this values will also reduce the 
+size of the font.</p>
+<p><b>SMALLCAPS</b> [GTK Only]: Can be YES or NO. Default NO. (Does not work 
+always, depends on the font)</p>
+<p><b>PROTECTED</b>: Can be YES or NO. Default NO. When set to YES the selected 
+text can NOT be edited.</p>
+<p><b>STRETCH</b> [GTK Only]: Can be EXTRA_CONDENSED, CONDENSED, SEMI_CONDENSED, 
+NORMAL, SEMI_EXPANDED, EXPANDED and EXTRA_EXPANDED. Default NORMAL. (Does not 
+work always, depends on the font)</p>
+<p><b>STRIKEOUT</b>: Can be YES or NO. Default NO.</p>
+<p><b>UNDERLINE</b>: Can be SINGLE, DOUBLE, DOTTED or NONE. Default NONE. DOTTED 
+is supported only in Windows.</p>
+<p><b>WEIGHT</b>: Can be EXTRALIGHT, LIGHT, NORMAL, SEMIBOLD, BOLD, EXTRABOLD 
+and HEAVY. Default: NORMAL.</p>
+<h3>Examples</h3>
+<p>In C:</p>
+<pre>Ihandle* formattag;
+IupSetAttribute(text, "FORMATTING", "YES");
+
+formattag = IupUser();
+IupSetAttribute(formattag, "ALIGNMENT", "CENTER");
+IupSetAttribute(formattag, "SPACEAFTER", "10");
+IupSetAttribute(formattag, "FONTSIZE", "24");
+IupSetAttribute(formattag, "SELECTION", "3,1:3,50");
+IupSetAttribute(text, "ADDFORMATTAG_HANDLE", (char*)formattag);
+
+formattag = IupUser();
+IupSetAttribute(formattag, "BGCOLOR", "255 128 64");
+IupSetAttribute(formattag, "UNDERLINE", "SINGLE");
+IupSetAttribute(formattag, "WEIGHT", "BOLD");
+IupSetAttribute(formattag, "SELECTION", "3,7:3,11");
+IupSetAttribute(text, "ADDFORMATTAG_HANDLE", (char*)formattag);
+    
+formattag = IupUser();
+IupSetAttribute(formattag, "ITALIC", "YES");
+IupSetAttribute(formattag, "STRIKEOUT", "YES");
+IupSetAttribute(formattag, "SELECTION", "2,1:2,12");
+IupSetAttribute(text, "ADDFORMATTAG_HANDLE", (char*)formattag);
+</pre>
+<p>In Lua using BULK:</p>
+<pre>tags = iup.user { bulk = &quot;Yes&quot;, cleanout = &quot;Yes&quot; }
+iup.Append(tags, iup.user { selectionpos = &quot;0:3&quot;, fgcolor = &quot;255 0 0&quot;})
+iup.Append(tags, iup.user { selectionpos = &quot;5:10&quot;, fgcolor = &quot;0 0 255&quot;})
+text.addformattag = tags</pre>
+<p>Check the <a href="../../examples/Lua/indent.lua">Indentation library</a> created by Kristofer Karlsson and ported to IUP 
+by Nicolas Noble that adds syntax highlighting to a Lua code text in a <strong>
+IupText</strong> control. It is not fast because it process the entire text from 
+time to time. For example:</p>
+<pre>require&quot;indent&quot; -- indent.lua must be available
+text = iup.text { multiline = &quot;Yes&quot;, font = &quot;Courier&quot;, expand = &quot;Yes&quot;, value = someluacode }
+IndentationLib.enable(text)</pre>
+<p>&nbsp;</p>
+</body>
+
+</html>

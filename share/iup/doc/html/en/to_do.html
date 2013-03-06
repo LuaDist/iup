@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+
+  <meta http-equiv="Content-Language" content="en-us">
+
+
+  <title>To Do</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+
+  <style type="text/css">
+.style1 {
+	color: #FF0000;
+	font-weight: bold;
+}
+.style2 {
+	color: #008000;
+	font-weight: bold;
+}
+.style3 {
+	font-weight: bold;
+}
+  .style5 {
+	font-weight: normal;
+}
+  .style6 {
+	color: #008000;
+}
+  </style>
+</head>
+
+
+<body>
+
+
+<h2 align="center">To Do</h2>
+
+<h3>Roadmap for the Next Versions</h3>
+
+<ul>
+	<li>IupMatrix improvements</li>
+	<li>New controls: ScrollBox, GridBox </li>
+	<li>UTF-8 in all drivers and in text callbacks</li>
+	<li>New dialogs: Scripter</li>
+	<li>RPM, Debian and LuaRocks packages</li>
+</ul>
+
+<p>[Suggestions?]</p>
+
+<h3>General</h3>
+
+<ul>
+
+	<li><strong><span class="style6">Priority:</span></strong> better focus 
+	control when changing the current tab in <strong>IupTabs</strong>.</li>
+	<li><strong><span class="style6">Priority:</span></strong> RPM, Debian and 
+	LuaRocks distribution packages.</li>
+
+	<li><strong><span class="style6">Priority:</span></strong> Unicode Support (UTF-8) in Windows and Motif.</li>
+
+	<li><strong><span class="style6">Priority:</span></strong> A tutorial section in the 
+	documentation. One big Controls Demo just like GTK, wxWidgets and Qt have.</li>
+
+	<li><strong><span class="style6">Priority:</span></strong> Customization of
+	<strong>IupGetParam</strong> to add other applications controlled elements.</li>
+	<li><strong><span class="style6">Priority:</span></strong> detection of the 
+	minimum size of a child inside <strong>IupSplit</strong>.</li>
+	<li><strong><span class="style6">Priority:</span></strong> IupGLCanvas in 
+	MACOS X using native OpenGL support.</li>
+
+	<li>A MacOS X native driver using Carbon or Cocoa.</li>
+	<li>The actual model for control data structure in the internal SDK is 
+	restricted for derived classes.</li>
+
+	<li>Loading and saving RTF files in 
+	<strong>IupText</strong>. Add support for images inside the text.</li>
+
+	<li>Possibility to change the system menu in Windows. Support for cascading <strong>
+	IupPopup</strong> for menus.</li>
+	<li>Support for Portuguese in the <strong>IupView</strong> application.</li>
+	<li>Vertical text in labels and buttons.</li>
+	</ul>
+
+<h3>Windows</h3>
+
+<ul>
+
+	<li><span class="style1">Known Issue:</span> when an <strong>IupVal</strong> 
+	is inside an <strong>IupTabs</strong>, the tabs disappear when the mouse 
+	moves over it after being used in the valuator. A workaround is to put the 
+	valuator inside an <strong>IupFrame</strong> and then inside the <strong>
+	IupTabs</strong>, so the problem does not occur.</li>
+	<li><span class="style1">Known Issue:</span> when the dialog background is 
+	dynamically changed the <strong>IupVal</strong> background is only updated 
+	after the user click on the control or when the control is redisplayed.</li>
+
+	<li><span class="style1">Known Issue:</span> in Windows Vista the 
+	COMPOSITE=YES attribute of the <strong>IupDialog</strong> is not working as expected. There 
+	is still flicker when the dialog is resized. <strong>IupTabs</strong> in Windows Vista when 
+	COMPOSITE=YES works only if MULTILINE=YES. (since 3.0)</li>
+
+	<li><span class="style1">Known Issue:</span> in Windows when CANFOCUS=NO 
+	only the Tab key navigation is not done, when clicked the control will still 
+	get the focus. The only exceptions are button and canvas.</li>
+	<li><span class="style1">Known Issue (Compiler):</span> the <strong>IupImgLib</strong> 
+	takes an very long time to compile under Visual C++. (since 3.0)</li>
+
+	<li><span class="style1">Known Issue (Compiler):</span> when building with Open Watcom 
+	the additional controls crash. When you add debug information to the main 
+	IUP library the problem solves. We tried to track down this error but it 
+	does not occurs with debug information and our attempts without debug does 
+	not gives any results. So the IUP main library for Watcom is now distributed 
+	with debug information. (since 3.0)</li>
+
+</ul>
+
+<h3>GTK</h3>
+
+<ul>
+
+	<li><span class="style1">Known Issue:</span> in Ubuntu 11.10 the canvas 
+	scrollbar is not notifying IUP that the user dragged the control. To solve 
+	the problem remove the overlay-scrollbar, this is the package that makes the 
+	scrollbar invisible until the mouse is near it.</li>
+
+</ul>
+
+<h3>Motif</h3>
+
+<ul>
+
+	<li><span class="style1">Known Issue:</span> when the <strong>IupList</strong> 
+	has DROPDOWN=Yes in Motif, and the list has items with the same string, the 
+	ACTION callback will return the index of the item with the first instance of 
+	the string only. This seems to be a bug or limitation in Motif.</li>
+
+</ul>
+
+<h3>IupMatrix</h3>
+
+<ul>
+
+	<li><strong><span class="style2">Priority: </span></strong>image, check mark 
+	and gauge for cells.</li>
+	<li>Mark using the keyboard.</li>
+	<li>Drag&amp;drop of 
+	columns position.</li>
+
+</ul>
+
+<h3>IupTree</h3>
+
+<ul>
+
+	<li><span class="style1">Known Issue:</span> the rubber band gets lost 
+	depending on what you do inside the SELECTION_CB callback in GTK. To avoid 
+	that set&nbsp; RUBBERBAND=NO.</li>
+
+	<li><span class="style1">Known Issue:</span> the SELECTION_CB callback may 
+	be called more than once for the same node with the same status.</li>
+	<li><span class="style1">Known Issue:</span> in Windows XP, when using a font 
+	for an node with TITLEFONTid in <strong>IupTree</strong> that is larger than 
+	the element FONT the item text will be cropped at right and bottom because 
+	the system uses the element font to calculate the item size. The only 
+	exception is when you just change the font to add a Bold style.</li>
+
+	<li><span class="style1">Important:</span> old NAMEid attribute conflicts with the common attribute NAME. Should be 
+	replaced by the new TITLEid. NAMEid will be removed in future versions. 
+	(since 3.0)</li>
+
+	<li>RENAMEEDIT_CB callback and RENAMEMASKid attribute.</li>
+
+	<li>Add new nomenclature option for id, for example &quot;:2:1:4&quot;</li>
+
+  <li>Define minimum size based on tree nodes.</li>
+
+	<li>drag&amp;drop of multiple selected nodes.</li>
+
+</ul>
+
+<h3>IupPPlot</h3>
+<ul>
+	<li>Allow to select multiple nodes at once dragging the mouse within a 
+	region.</li>
+  <li>Add support of legend text near each dataset plot.</li>
+  <li>Adjust AutoScale to start and end at major axis ticks.</li>
+  <li>Improve the display of values near each sample.</li>
+	<li>Custom legend position.</li>
+  <li>PPlot force the definitions of the margins. It should have a way to 
+	automatic calculate the margins when doing automatic scaling.</li>
+  <li>PPlot force the Grid to be automatically spaced following the major ticks.</li>
+  <li><font SIZE="3">PPlot generates lots of warnings on all compilers.</font></li>
+</ul>
+
+<h3>New Controls</h3>
+
+<ul>
+
+  <li><strong><span class="style2">Priority:</span> Scripter - </strong>Project Manager/Dialog Editor/Integrated Debugger for IupLua</li>
+
+  <li><strong><span class="style2">Priority: </span>ScrollBox</strong> -&nbsp; a 
+	box that can scroll the elements inside</li>
+
+  <li><strong><span class="style2">Priority: </span>GridBox </strong>- container 
+	to distribute elements in a grid.</li>
+	<li class="style3">-----------------------------</li>
+
+	<li><strong>Table</strong> - similar to IupMatrix but using native controls</li>
+
+	<li><strong>UrlButton</strong> - Button that activates a URL (looks like a 
+	flat label, but gives visual feedback when mouse is hover)</li>
+
+	<li><strong>FrameEx</strong> - Expandable/Closeable Frames</li>
+
+	<li class="style3">-----------------------------</li>
+
+  <li><strong>DropDownButton</strong> - 
+	Mix between a drop down list and a button</li>
+
+	<li><strong>CanvasCD</strong> - an IupCanvas with a CD canvas associated.</li>
+
+	<li class="style3"><strong>Scrollbar</strong> <span class="style5">- just 
+	the scrollbar as a control.</span><li><strong>Toobar -</strong> button/toggle/list, detachable</li>
+
+	<li><strong>PropertyGrid</strong> -&nbsp;a 2 column matrix with expandable/closeable items</li>
+
+	<li>-----------------------------</li>
+
+	<li>Lookup Table, maps a set of values in another set using a curve.</li>
+
+	<li>Statusbar</li>
+
+	<li>Calendar </li>
+
+</ul>
+
+
+</body>
+</html>

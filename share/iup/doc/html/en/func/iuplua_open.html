@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>iuplua_open</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<h2>iuplua_open</h2>
+<p>Initializes the Lua Binding. This function 
+  should be called by the host program before running any Lua functions, but it is important to call it after 
+<b>IupOpen</b>.</p>
+<p>It is also allowed to call <b>iuplua_open</b> without calling <b>IupOpen</b>. Then 
+<b>IupOpen</b> 
+  will be internally called. This is also valid for all 
+  the additional controls when IUP is&nbsp; dynamically loaded. To call <b>IupClose</b> in this way you must call 
+<b>iuplua_close</b>.</p>
+<p>This enable you to dynamically load IUP using Lua 5 &quot;require&quot;. </p>
+<h3>
+Parameters/Return</h3>
+<pre>int iuplua_open(lua_State *L); [in C]
+[There is no equivalent in Lua]</pre>
+<p><span class="style1">Returns</span>: 0 (the number of elements in the stack).</p>
+<h3>Notes</h3>
+<p>For a more detailed explanation on the 
+  system control for the Lua Binding, please refer to 
+  <a href="../sys_guide.html">System Guide</a>.</p>
+<h3>See Also</h3>
+<p><a href="iupopen.html">IupOpen</a>,
+  <a href="../guide.html#sistema">Guide / System Control</a></p>
+
+</body>
+
+</html>

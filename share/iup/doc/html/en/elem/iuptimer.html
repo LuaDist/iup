@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupTimer</title>
+<link rel="stylesheet" type="text/css" href="../../style.css">
+</head>
+<body>
+<div id="navigation">
+  <ul>
+    <li><a href="#Creation">Creation</a></li>
+    <li><a href="#Attributes">Attributes</a></li>
+    <li><a href="#Callbacks">Callbacks</a></li>
+    <li><a href="#Notes">Notes</a></li>
+    <li><a href="#Examples">Examples</a></li>
+    <li><a href="#SeeAlso">See Also</a></li>
+  </ul>
+</div>
+
+<h2>IupTimer</h2>
+
+  <p>
+  Creates a timer which periodicaly invokes a callback when the time is up. Each timer should be destroyed using
+  <a href="../func/iupdestroy.html">IupDestroy</a>.</p>
+
+<h3><a name="Creation">Creation</a></h3>
+
+<pre>Ihandle* IupTimer(void); [in C]
+iup.timer{} -&gt; (<strong>elem</strong>: ihandle) [in Lua] 
+timer() [in LED]</pre>
+  <p>
+  <u>Returns:</u> the identifier of the 
+  created element, or NULL if an error occurs.</p>
+
+<h3><a name="Attributes">Attributes</a></h3>
+
+
+<p><strong>TIME</strong>: The time interval 
+  in milliseconds. In Windows the minimum value is 10ms.</p>
+
+
+  <p><strong>RUN</strong>: Starts and stops 
+  the timer. Possible values: &quot;YES&quot; or &quot;NO&quot;. Returns the 
+  current timer state. If you have multiple threads start the timer in the main 
+	thread.</p>
+
+
+  <p><b>WID</b> (read-only): Returns the native serial number of the timer. Returns -1 if 
+  not running. A timer is mapped only when it is running.</p>
+
+<h3><a name="Callbacks">Callbacks</a></h3>
+
+<p><strong>ACTION_CB</strong>: 
+  Called when the time is up.</p>
+  
+    <pre>int function(Ihandle *<strong>ih)</strong>; [in C]
+<strong>elem</strong>:action_cb() -&gt; (<strong>ret</strong>: number) [in Lua]</pre>
+    <blockquote>
+    <p><strong>ih</strong>:
+  identifier of the element that activated the 
+  event.</p>
+  
+
+    <p><u>Returns</u>: IUP_CLOSE will be processed.</p>
+  
+
+</blockquote>
+  
+
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+
+</body>
+
+</html>

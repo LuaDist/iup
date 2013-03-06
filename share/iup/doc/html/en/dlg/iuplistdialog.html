@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>IupListDialog</title>
+
+<link rel="stylesheet" type="text/css" href="../../style.css">
+<style type="text/css">
+.style1 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+<h2>IupListDialog</h2>
+<p>Shows a modal dialog to select items from 
+  a simple or multiple selection list.</p>
+<h3>Creation and Show</h3>
+<pre>int IupListDialog(int <strong>type</strong>, const char *<strong>title</strong>, int <strong>size</strong>, const char**<strong> list</strong>, int <strong>op</strong>, int <strong>max_col</strong>, int <strong>max_lin</strong>, int* <strong>marks</strong>); [in C]
+iup.ListDialog(<strong>type</strong>: number, <strong>title</strong>: string, <strong>size</strong>: number, <strong>list</strong>: table of strings, <strong>op</strong>: number, <strong>max_col</strong>: number, <strong>max_lin</strong>: number, <strong>marks</strong>: table of numbers) -&gt; <strong>status</strong>: number [in Lua]</pre>
+<p><strong>type</strong>:
+  1=simple selection; 2=multiple selection<br>
+<strong>title</strong>:
+  Text for the dialog&#8217;s title<br>
+<strong>size</strong>:
+  Number of options<br>
+<strong>list</strong>:
+  List of options. Must have <strong>size</strong> elements<br>
+<strong>op</strong>:
+  Initial selected item when type=1. starts at 1 (note 
+  that this index is different from the return value, kept for compability reasons)<br>
+<strong>max_col</strong>:
+  Maximum number of columns in the list<br>
+<strong>max_lin</strong>:
+  Maximum number of lines in the list<br>
+<strong>marks</strong>:
+  List of the items selection state, used only when type=2. Can be NULL when type=1. When type=2 must 
+have <strong>size</strong> elements</p>
+<p><u>Returns:</u> When type=1, the function returns the number of the selected option (starts 
+at 0), or -1 if the user cancels the operation.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When type=2, the function returns -1 when the user cancels the operation. If the user does not cancel the operation the function 
+  returns 1 and the <strong>marks</strong> parameter will have value 1 for the options selected by the user and value 0 for non-selected options. 
+In Lua, the input table mark is changed.</p>
+<h3>Notes</h3>
+<p>The dialog uses a global attribute called &quot;PARENTDIALOG&quot; as the parent dialog if it is defined. It also uses a 
+  global attribute called &quot;ICON&quot; as the dialog icon if it is defined.</p>
+<h3><a name="Examples">Examples</a></h3>
+<p><a href="../../examples/">Browse for Example Files</a></p>
+<p class="style1"><img src="images/listdialog.png"></p>
+<h3>See Also</h3>
+<p><a href="iupmessage.html">IupMessage</a>, 
+<a href="iupscanf.html">IupScanf</a>,
+  <a href="iupgetfile.html">IupGetFile</a>, <a href="iupalarm.html">
+IupAlarm</a></p>
+
+</body>
+
+</html>
